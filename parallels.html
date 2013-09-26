@@ -1,0 +1,19 @@
+<head>
+  <title>parallels-meteor</title>
+</head>
+
+<body>
+	<div id="map">
+  		{{> map}}
+  	</div>
+</body>
+
+<template name="map">
+
+  {{#each bits}}
+  	<div class="bit">
+	  	<div class="content"> {{content}} </div>
+   	</div>
+  {{/each}}
+
+</template>
