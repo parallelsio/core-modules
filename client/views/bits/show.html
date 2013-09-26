@@ -1,5 +1,36 @@
 <template name="bit">
-  	<div class="bit">
-	  	<div class="content"> {{ content }} </div>
-   	</div>
+
+  	<div id=" {{ id }} " class="bit {{ type }}" style="left: {{ position_x }}px; top: {{ position_y }}px;">
+			<div class="container">
+				<div class="face front {{ color }}">
+					<div class="content">
+
+					{{#if image }}
+						<div class="zoom">
+							<a href="{{ image_url }}">
+								<img src="{{ image_url_thumb }}" id="bit_image_{{ id }}">
+							</a>
+						</div>
+
+					    
+					{{else}}
+					    {{ content }}
+					{{/if}}
+
+					</div>
+				</div>
+
+				<div class="face back">
+					<div class="content">
+
+
+
+					</div>
+				</div>
+
+				<p class="ui-widget-header"></p>
+
+			</div>
+
+		</div>
 </template>
