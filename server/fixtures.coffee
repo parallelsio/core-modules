@@ -1,4 +1,4 @@
-if Bits.find().count() == 0
+if Bits.find().count() is 0
 
 	Bits.insert
 		id: 1
@@ -29,7 +29,7 @@ if Bits.find().count() == 0
 		format: null
 
 	Bits.insert
-		id: 2
+		id: 3
 		type: "image"
 		position_x: 400
 		position_y: 500

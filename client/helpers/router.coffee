@@ -1,2 +1,15 @@
+Router.configure {
+	# layout: 'layout'
+	loadingTemplate: 'loading'
+}
+
+
 # not working yet
-# Meteor.Router.add "/": "bit"
+Router.map ->
+	this.route 'map', { 
+		template: 'map'
+		path: '/' }
+
+	this.route 'home', {
+		path: '/home'
+	}
