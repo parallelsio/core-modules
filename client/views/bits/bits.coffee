@@ -1,9 +1,9 @@
+##########################################################################################
+root = global ? window
+##########################################################################################
+
 Template.map.helpers bits: ->
 	Bits.find()
-
-# Template.bit.events = "click .bit": (event) ->
-# 	console.log "bit click"
-# 	$("#" + event.currentTarget.id).slideUp "slow"
 
 
 
@@ -17,22 +17,17 @@ Template.bit.rendered = ->
 
 		stop: (event, ui) ->
 
-			# TODO : dont send drag of a form to save
-			request = $.ajax( 
-				url: '/bits/' + $(this).data('bit-id')
-				type: 'PUT'
-				data: {
-					position_x: Math.round(ui.position.left)
-					position_y: Math.round(ui.position.top)
-					content: $(this).find('.face.front .content').text().trim()
-				}
-			)
+			bitId = $(this).attr('id')
+		
+			positionX = Math.round(ui.position.left)
+			positionY = Math.round(ui.position.top)
 
-			request.done (data) -> 
-				console.log "drag done"
-				showNotification("bit #{ data.id } position saved: x: #{ data.position_x } y: #{ data.position_y }")
-				true
+			Bits.update( _id: bitId, { position_x: positionX, position_y: positionY  })
 
-			request.fail (data) -> $('#notice').text "bit #{ data.id } position save failed ", "error"
+
+			# content: $(this).find('.face.front .content').text().trim()
+			# url: '/bits/' + $(this).attr('id')
+
+			root.showNotification("bit #{ bitId } position saved: x: #{ positionX } y: #{ positionY }")
 
 			true
