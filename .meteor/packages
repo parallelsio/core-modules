@@ -10,3 +10,6 @@ less
 coffeescript
 iron-router
 jquery
+
+jquery-ui-bootstrap
+jquery-ui
