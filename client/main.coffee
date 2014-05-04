@@ -12,20 +12,20 @@ root.showNotifications = true
 
 
 
-root.showNotification = (message, type) ->
+# root.showNotification = (message, type) ->
 
-	# default to info. other options: success, error, notice
-	type = "info" if typeof (type) is "undefined"
+# 	# default to info. other options: success, error, notice
+# 	type = "info" if typeof (type) is "undefined"
 
-	if root.showNotifications
-		$.pnotify
-			text: message
-			shadow: false
-			animation: 'fade'
-			type: type
-			delay: 1500
+# 	if root.showNotifications
+# 		$.pnotify
+# 			text: message
+# 			shadow: false
+# 			animation: 'fade'
+# 			type: type
+# 			delay: 1500
 
-	console.log message
+# 	console.log message
 
 
 #########################################
