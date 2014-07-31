@@ -1,11 +1,5 @@
-
-
-
 <head>
   <title>parallels-meteor</title>
-
-
-
 </head>
 
 <body>
@@ -14,41 +8,6 @@
   		{{renderPage}}
 
   	</div>
-
-
-<script>
-
-var Websocket = Npm.require('socket.io');
-var socket = Websocket.connect('http://10.10.10.10:80'); // Sample IP
-
-if (Meteor.isClient) {
-
-    socket.on('message', function(res){
-        console.log(res);
-    });
-
-    // Template.hello.greeting = function () {
-    //     return "Test";
-    // };
-
-    // Template.hello.events({
-    //     'click input' : function () {
-    //         // template data, if any, is available in 'this'
-    //         if (typeof console !== 'undefined')
-    //             console.log("You pressed the button");
-    //     }
-    // });
-}
-
-
-	// $(function() {
-	//             /* DATA SOCKET */
-	//             var socket = io.connect('http://10.3.20.71:8083');
-	// });
-
-</script>
-
-
 
 </body>
 

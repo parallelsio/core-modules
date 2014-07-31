@@ -24,7 +24,6 @@ Template.bit.rendered = ->
 
 			Bits.update( _id: bitId, { position_x: positionX, position_y: positionY  })
 
-
 			# content: $(this).find('.face.front .content').text().trim()
 			# url: '/bits/' + $(this).attr('id')
 
