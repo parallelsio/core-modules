@@ -5,12 +5,10 @@
 
 standard-app-packages
 insecure
-less
 coffeescript
 jquery
 
-jquery-ui-bootstrap
 jquery-ui
 
-iron-router
-blaze-layout
+scss
+bourbon

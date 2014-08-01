@@ -1,4 +1,7 @@
-@bg_color: #e7e4e4;
+@import "packages/bourbon/bourbon";
+
+
+$bg_color: #e7e4e4;
 
 @font-face {
       font-family: 'ChaparralPro-Light';
@@ -47,7 +50,7 @@
 
 
 body {
-  background: @bg_color;
+  background: $bg_color;
   color: #333; 
   font-family: 'ChaparralPro-Regular', sans-serif;
   color:gray;
