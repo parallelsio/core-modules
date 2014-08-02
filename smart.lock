@@ -7,7 +7,9 @@
       "bourbon": {},
       "Dropzonejs": {},
       "pnotify": {},
-      "mousetrap": {}
+      "mousetrap": {},
+      "normalize.css": {},
+      "img-area-select": {}
     },
     "packages": {
       "iron-router": {
@@ -39,6 +41,16 @@
         "git": "https://github.com/awatson1978/mousetrap.git",
         "tag": "v1.5.2",
         "commit": "77fef1e9dd64fc99cf0fc128dcb10d038c0fe860"
+      },
+      "normalize.css": {
+        "git": "https://github.com/rithis/meteor-normalize.css",
+        "tag": "v2.0.1",
+        "commit": "671aba13223dd7d7ec1d26a6b2461943d7c4fa18"
+      },
+      "img-area-select": {
+        "git": "https://github.com/HedCET/meteor-img-area-select.git",
+        "tag": "v0.2.0",
+        "commit": "a594861d91e752989d2671ce7bf1cb34ebd06bca"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
