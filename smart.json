@@ -1,8 +1,8 @@
 {
   "packages": {
     "iron-router": {},
-    "jquery-ui-bootstrap": {},
     "scss": {},
     "bourbon": {}
-  }
+	}
 }
+
