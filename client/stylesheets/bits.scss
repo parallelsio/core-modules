@@ -1,7 +1,5 @@
 .bit {
     position: absolute;
-    /* for flip : ;
-    http: //24ways.org/2010/intro-to-css-3d-transforms/ */ -webkit-perspective: 800px;
 }
 
 
@@ -9,13 +7,6 @@
     color: #666;
     display: inline-block;
     font-size: 16px;
-    
-    /* for flip : ;
-    http: //24ways.org/2010/intro-to-css-3d-transforms/ */ max-width: 500px;
-    height: 100%;
-    -webkit-transform-style: preserve-3d;
-    -webkit-transition: -webkit-transform .1s;
-    width: auto !important;  /* override bootstrap.csss */
 }
 
 .bit .container .ui-widget-header {
@@ -37,8 +28,6 @@
 
 .bit .face {
     display: block;
-
-    -webkit-backface-visibility: hidden;
 }
 
 
@@ -56,20 +45,6 @@
 
 .bit.image .content .zoom a { cursor:default;}
 
-/* for flip 
-  http://24ways.org/2010/intro-to-css-3d-transforms/
-  */
-
-.bit .container .face.back {
-    display: none;
-    background: #ccc;
-    -webkit-transform: rotateY(180deg);
-}
-
-.bit .container.flipped { -webkit-transform: rotateY(180deg) }
-
-
-.white { }
 
 .blue { background: #f0f0fa !important;
     font-family: 'Merriweather Sans', sans-serif;
