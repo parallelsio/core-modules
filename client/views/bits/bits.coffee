@@ -12,7 +12,6 @@ Template.bit.rendered = ->
 
 
 
-
 	# BIT : DRAG + DROP
 	$(".bit").draggable
 		handle: "p"		# wire drag to handle only
