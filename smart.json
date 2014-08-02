@@ -3,6 +3,7 @@
     "iron-router": {},
     "scss": {},
     "bourbon": {},
-    "Dropzonejs": {}
+    "Dropzonejs": {},
+    "pnotify": {}
   }
 }

@@ -5,7 +5,8 @@
       "iron-router": {},
       "scss": {},
       "bourbon": {},
-      "Dropzonejs": {}
+      "Dropzonejs": {},
+      "pnotify": {}
     },
     "packages": {
       "iron-router": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/devonbarrett/meteor-dropzone.git",
         "tag": "v3.10.2-rev01",
         "commit": "561e6110aa8487003f926a4eb7d4d5520a3a365b"
+      },
+      "pnotify": {
+        "git": "https://github.com/kidovate/meteor-pnotify.git",
+        "tag": "v2.0.6",
+        "commit": "cbd0bb220d03b20b247e4a6a7bdfc3d2c8064216"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
