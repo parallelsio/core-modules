@@ -4,7 +4,8 @@
     "basePackages": {
       "iron-router": {},
       "scss": {},
-      "bourbon": {}
+      "bourbon": {},
+      "Dropzonejs": {}
     },
     "packages": {
       "iron-router": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/chicagogrooves/meteor-bourbon.git",
         "tag": "v3.1.8.1",
         "commit": "b55f0968fe7d4a2886898cd8e81394de066a3ae1"
+      },
+      "Dropzonejs": {
+        "git": "https://github.com/devonbarrett/meteor-dropzone.git",
+        "tag": "v3.10.2-rev01",
+        "commit": "561e6110aa8487003f926a4eb7d4d5520a3a365b"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

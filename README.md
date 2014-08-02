@@ -1,6 +1,4 @@
 TODO:
 
-- clean up bits.css, use less vars
+- remove insecure package
 - load order of js?
-- use package for jquery UI 
-- HAML/ JADE?

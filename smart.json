@@ -2,7 +2,7 @@
   "packages": {
     "iron-router": {},
     "scss": {},
-    "bourbon": {}
-	}
+    "bourbon": {},
+    "Dropzonejs": {}
+  }
 }
-
