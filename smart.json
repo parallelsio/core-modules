@@ -4,6 +4,7 @@
     "scss": {},
     "bourbon": {},
     "Dropzonejs": {},
-    "pnotify": {}
+    "pnotify": {},
+    "mousetrap": {}
   }
 }

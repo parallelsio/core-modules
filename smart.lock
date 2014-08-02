@@ -6,7 +6,8 @@
       "scss": {},
       "bourbon": {},
       "Dropzonejs": {},
-      "pnotify": {}
+      "pnotify": {},
+      "mousetrap": {}
     },
     "packages": {
       "iron-router": {
@@ -33,6 +34,11 @@
         "git": "https://github.com/kidovate/meteor-pnotify.git",
         "tag": "v2.0.6",
         "commit": "cbd0bb220d03b20b247e4a6a7bdfc3d2c8064216"
+      },
+      "mousetrap": {
+        "git": "https://github.com/awatson1978/mousetrap.git",
+        "tag": "v1.5.2",
+        "commit": "77fef1e9dd64fc99cf0fc128dcb10d038c0fe860"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

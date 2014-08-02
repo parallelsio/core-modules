@@ -44,4 +44,9 @@ Deps.autorun ->
 Meteor.startup ->
 	console.log "ready!"
 
+	Mousetrap.bind "4", ->
+		console.log "pressed 4"
+		return
+
+
 	return
