@@ -9,7 +9,8 @@
       "pnotify": {},
       "mousetrap": {},
       "normalize.css": {},
-      "img-area-select": {}
+      "img-area-select": {},
+      "spin": {}
     },
     "packages": {
       "iron-router": {
@@ -51,6 +52,11 @@
         "git": "https://github.com/HedCET/meteor-img-area-select.git",
         "tag": "v0.2.0",
         "commit": "a594861d91e752989d2671ce7bf1cb34ebd06bca"
+      },
+      "spin": {
+        "git": "https://github.com/SachaG/meteor-spin.git",
+        "tag": "v2.0.4",
+        "commit": "f7b1e12a7caff1283cdb3671a393c182d0ae9862"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

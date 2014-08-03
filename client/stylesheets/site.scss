@@ -57,6 +57,48 @@ body {
   position:relative;
 }
 
-
-
 strong { font-family:'ChaparralPro-Semibold', sans-serif;}
+
+
+
+
+
+
+
+
+// loading spinner
+// modified from : http://codepen.io/markmurray/pen/EfLBG
+
+$size: 10em;
+
+.circle {
+  position: absolute;
+  top: 300px; 
+  left: 50%;
+  width: 0; 
+  height: 0;
+  border-radius: 50%;
+  z-index: 1;
+  @include transform(translate(-50%, -50%));
+  @include transition(all 200ms ease);
+  
+  $duration: 1s;
+  
+  &:nth-child(1){
+    z-index: 2;
+    background: #e74c3c;
+     @include animation(explode $duration ease 0 infinite);
+  }
+  
+  &:nth-child(2){
+    background: #34495e;
+    @include animation(explode $duration ease 0.5s infinite);
+  }
+}
+
+@-webkit-keyframes explode {
+  0% { width: 0; height: 0; z-index: 1 }
+  50% { width: $size; height: $size; z-index: 1 }
+  100% { display: none; }
+}
+

@@ -16,3 +16,4 @@ TODO:
 
 - evaluate sound lib http://lowlag.alienbill.com/
 
+- make spinner cross browser animation properties, etc
