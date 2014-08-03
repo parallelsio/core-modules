@@ -30,7 +30,6 @@ root.showNotification = (message, type) ->
 
 #########################################
 
-Meteor.subscribe('bits')
 
 Deps.autorun -> 
 	console.log Bits.find().count() + ' bits'

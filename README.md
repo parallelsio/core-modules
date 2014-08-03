@@ -1,5 +1,7 @@
 TODO:
 
+- loadingTemplate: 'loading', Parallels loading GIF
+- bits related to specific map
 - use em generator to set up file structure
 - remove insecure package
 - load order of draggbility

@@ -1,8 +1,7 @@
 Router.configure {
 	layout: 'layout'
-
-	onBeforeAction: ->
-    	console.log "onBeforeAction:"
+	waitOn: ->
+		return Meteor.subscribe('bits')
 }
 
 
