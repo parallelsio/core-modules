@@ -1,9 +1,8 @@
 Router.configure {
-	# layout: 'layout'
-	loadingTemplate: 'loading'
+	layout: 'layout'
 
 	onBeforeAction: ->
-    	# console.log "yo!"
+    	console.log "onBeforeAction:"
 }
 
 
