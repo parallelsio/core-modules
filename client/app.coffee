@@ -1,3 +1,25 @@
+_.extend App, {
+
+
+}
+
+App.helpers = {
+
+
+}
+
+_.each App.helpers, (helper, key) ->
+  Handlebars.registerHelper key, helper
+  return
+
+
+
+
+# UI.body.bits
+
+
+
+
 ##########################################################################################
 root = global ? window
 ##########################################################################################
@@ -32,7 +54,7 @@ root.showNotification = (message, type) ->
 
 
 Deps.autorun -> 
-	console.log Bits.find().count() + ' bits'
+	console.log Bits.find().count() + ' bits. deps'
 
 
 

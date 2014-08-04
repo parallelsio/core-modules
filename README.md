@@ -1,5 +1,6 @@
 TODO:
 
+- fix bit update, id instead of _id
 - loadingTemplate: 'loading', Parallels loading GIF
 - bits related to specific map
 - use em generator to set up file structure

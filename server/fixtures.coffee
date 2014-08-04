@@ -7,7 +7,6 @@ if Bits.find().count() is 0
 		position_y: 200
 		content: "Hello world!"
 		color: "white"
-		image: null
 		created_at: null
 		updated_at: null
 		height: null
@@ -21,7 +20,6 @@ if Bits.find().count() is 0
 		position_y: 300
 		content: "This is parallels!"
 		color: "white"
-		image:  null
 		created_at: null
 		updated_at: null
 		height:  null
