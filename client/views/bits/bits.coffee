@@ -6,32 +6,26 @@ root = global ? window
 
 Template.bit.rendered = ->
 
-	this.$(".bit").addClass("test")
+	# this.$(".bit").addClass("debug")
+	console.log "Template.bit.rendered: #{ this.data._id }"
+	console.log this.data
+	console.log this
+	console.log ""
 
-	console.log "Template.bit.rendered"
-
-
-
-	# BIT : DRAG + DROP
 	$(".bit").draggable
 		handle: "p"		# wire drag to handle only
 
 		stop: (event, ui) ->
 
-			bitId = $(this).attr('id')
-		
+			mongoId = UI.getElementData(this)._id
 			positionX = Math.round(ui.position.left)
 			positionY = Math.round(ui.position.top)
-			# console.log "#{ bitId } : #{ positionX } : #{ positionY }"
 
-			Bits.update( id: bitId, { position_x: positionX, position_y: positionY  })
+			console.log "stop dragging: #{ mongoId } : #{ positionX } : #{ positionY }"
+
+			Bits.update( mongoId, { $set: {"position_x": positionX, "position_y": positionY } })
 			
-			# Bits.insert( { id: 8, type: 'text', content: 'yow3za', position_x:544, position_y: 400 })
-
-			content: $(this).find('.face.front .content').text().trim()
-			# url: '/bits/' + $(this).attr('id')
-
-			root.showNotification("bit #{ bitId } position saved: x: #{ positionX } y: #{ positionY }")
+			root.showNotification("#{ mongoId } position saved: x: #{ positionX } y: #{ positionY }")
 
 			true
 
@@ -43,7 +37,15 @@ Template.bit.events =
 		# prevent browser from executing event’s default behavior
 		event.preventDefault()
 
-		console.log "The button was clicked"
+		console.log "bit was clicked"
+
+		# $(event.currentTarget).addClass("debug")
+
+		# debug
+		# console.log event.currentTarget
+		# console.log $(event.currentTarget)
+		# console.log this
+
 
 
 
