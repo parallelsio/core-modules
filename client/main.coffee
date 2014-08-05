@@ -1,5 +1,17 @@
-# UI.body.bits
+###########################################
+# init
 
+Meteor.startup ->
+
+	require("draggabilly");
+
+	console.log "ready!"
+
+	Mousetrap.bind "4", ->
+		console.log "pressed 4"
+		return
+
+	return
 
 
 
@@ -41,18 +53,6 @@ Deps.autorun ->
 
 
 
-
-###########################################
-# init
-
-Meteor.startup ->
-	console.log "ready!"
-
-	Mousetrap.bind "4", ->
-		console.log "pressed 4"
-		return
-
-	return
 
 
 

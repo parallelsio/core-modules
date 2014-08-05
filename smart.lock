@@ -10,7 +10,8 @@
       "mousetrap": {},
       "normalize.css": {},
       "img-area-select": {},
-      "spin": {}
+      "spin": {},
+      "famono": {}
     },
     "packages": {
       "iron-router": {
@@ -57,6 +58,11 @@
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v2.0.4",
         "commit": "f7b1e12a7caff1283cdb3671a393c182d0ae9862"
+      },
+      "famono": {
+        "git": "https://github.com/raix/Meteor-famono.git",
+        "tag": "v0.6.9",
+        "commit": "893cdd0e0d68804b7812ea9ca73702f3bdfd7cd2"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

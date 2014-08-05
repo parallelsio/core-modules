@@ -1,0 +1,9 @@
+{
+	  "classie": {
+	    "bower": "classie"
+	  },
+
+	  "draggabilly": {
+		"git": "https://github.com/desandro/draggabilly.git"
+	  }
+}

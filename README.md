@@ -18,3 +18,11 @@ TODO:
 - evaluate sound lib http://lowlag.alienbill.com/
 
 - make spinner cross browser animation properties, etc
+
+
+NOTES:
+
+- famono used to include draggabilly
+http://atmospherejs.com/package/famono
+
+- add force-ssl, img-area-select
