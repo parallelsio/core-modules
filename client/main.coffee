@@ -1,15 +1,26 @@
 ###########################################
 # init
 
+
 Meteor.startup ->
 
-	require("draggabilly");
+
+	console.log "startup"
+	
+	# http://draggabilly.desandro.com/
+	Draggabilly = require('draggabilly')
+
+	bits = document.querySelector('.bit')
+	draggie = new Draggabilly(bits, {
+
+		})
+
 
 	console.log "ready!"
 
-	Mousetrap.bind "4", ->
-		console.log "pressed 4"
-		return
+	# Mousetrap.bind "4", ->
+	# 	console.log "pressed 4"
+	# 	return
 
 	return
 

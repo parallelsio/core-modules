@@ -13,9 +13,10 @@ Template.bit.rendered = ->
 	console.log this
 	console.log ""
 
-	new Draggabilly(".bit")
+	
 
-
+	# jquery implementation drag + drop works,
+	# but want to replace to use Draggabilly instead
 
 	# $(".bit").draggable
 	# 	handle: "p"		# wire drag to handle only
