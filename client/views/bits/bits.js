@@ -32,17 +32,17 @@ Template.bit.rendered = function() {
       var x = instance.position.x;
       var y = instance.position.y;
 
-      // var mongoId = (this)._id;
-      var mongoId = 'dummy';
+      var mongoId = instance.element.id;
+      // var mongoId = 'dummy';
 
       console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
       
-      Bits.update(mongoId, {
-        $set: {
-          "position_x": x,
-          "position_y": y
-        }
-      });
+      // Bits.update(mongoId, {
+      //   $set: {
+      //     "position_x": x,
+      //     "position_y": y
+      //   }
+      // });
 
       showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
       return true;
