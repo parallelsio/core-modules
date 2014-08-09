@@ -1,66 +1,69 @@
-var root;
+// use lodash instead of underscore
+// https://github.com/meteor/meteor/issues/1009
+_ = lodash;
 
 
-Meteor.startup(function() {
 
-  var bits, drag;
-  
-  console.log("startup");
-  bits = document.querySelector('.bit');
+Meteor.startup(function(){
 
-	var Draggabilly;
-	Draggabilly = require('draggabilly');
+  console.log("Meteor.startup start.");
 
-  /*
-  define("draggabilly", [
-  	"classie/classie", 
-  	"eventEmitter/eventEmitter", 
-  	"eventie/eventie", 
-  	"get-style-property/get-style-property", 
-  	"get-size/get-size"],
+  var bits = document.querySelector('.bit');
 
-  	function(require, exports, module) {
+  console.log(bits);
 
-  		new draggabilly('.bit', {
-  			grid: [20, 20]
-  		});
-	});
-	*/
+  // var Draggabilly;
+  // Draggabilly = require('draggabilly');
 
-
-  drag = new draggabilly('.bit', {
-    grid: [20, 20]
+  define("draggabilly", function(){
+    console.log("loaded draggabilly");
   });
 
-  console.log("ready!");
+  // define("draggabilly", [
+  //   "classie", 
+  //   "eventEmitter/eventEmitter", 
+  //   "eventie/eventie", 
+  //   "get-style-property/get-style-property", 
+  //   "get-size/get-size"],
+
+  //   function(require, exports, module) {
+
+  //     // new draggabilly('.bit', {
+  //     //   grid: [20, 20]
+  //     // });
+  // });
+  
+
+
+  // var drag = new draggabilly('.bit', {
+  //   grid: [20, 20]
+  // });
+
 
   Mousetrap.bind("4", function() {
-  	console.log("pressed 4");
-	});
+    console.log("pressed 4");
+  });
 
+  console.log("Meteor.startup done.");
 
 });
 
 
 
-/*************************************************************************/
-root = typeof global !== "undefined" && global !== null ? global : window;
-/*************************************************************************/
-
 // keep track of current mouse position
 // used when bit:new/create, use mouse position to create bit at that location
-root.x = 0;
-root.y = 0;
+x = 0;
+y = 0;
 
-root.showNotifications = true;
+showNotifications = true;
 
-root.showNotification = function(message, type) {
+showNotification = function(message, type) {
 
-	// default to info. other options: success, error, notice
+  // default to info. other options: success, error, notice
   if (typeof type === "undefined") {
     type = "info";
   }
-  if (root.showNotifications) {
+  if (showNotifications) {
     $.pnotify({
       text: message,
       shadow: false,
@@ -73,9 +76,9 @@ root.showNotification = function(message, type) {
 };
 
 Deps.autorun(function() {
-  console.log(Bits.find().count() + ' bits. deps');
+  console.log(Bits.find().count() + ' bits... updated via deps');
 });
 
 
 
-	
+  

@@ -11,7 +11,8 @@
       "normalize.css": {},
       "img-area-select": {},
       "spin": {},
-      "famono": {}
+      "famono": {},
+      "lodash": {}
     },
     "packages": {
       "iron-router": {
@@ -61,8 +62,13 @@
       },
       "famono": {
         "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.6.9",
-        "commit": "893cdd0e0d68804b7812ea9ca73702f3bdfd7cd2"
+        "tag": "v0.7.2",
+        "commit": "f6993990198051b5cab2f48b0f19bd83d6b3d87e"
+      },
+      "lodash": {
+        "git": "https://github.com/alethes/meteor-lodash.git",
+        "tag": "v0.7.1",
+        "commit": "57bbeb3e21c31b64641f9885bb2f390b84f8b925"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
