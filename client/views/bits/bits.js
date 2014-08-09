@@ -1,44 +1,59 @@
 Template.bit.rendered = function() {
 
-  bits = document.getElementsByClassName('.bit');
-
-  // this.$(".bit").addClass("debug");
-
   console.log("Template.bit.rendered: " + this.data._id);
-  console.log(bits);
-  console.log(this.data);
-  console.log(this);
-  console.log("");
+  // console.log(bits);
+  // console.log(this.data.id);
+  // console.log(this);
 
-  // var drag = new draggabilly('.bit', {
-  //   grid: [20, 20]
-  // });
+  // TODO: this should work according to:
+  // http://www.meteorpedia.com/read/Blaze_Notes
+  // but does not. why?
+  // var elem = this.$('.bit');
 
-  // jquery implementation drag + drop works,
-  // but want to replace to use Draggabilly instead
+  var elem = document.querySelector('#bit-' + this.data.id);
+  console.log("elem: #" +  elem.id );
 
-  $(".bit").draggable({
-    
-    // wire drag to handle only
-    handle: "p",
-    
-    stop: function(event, ui) {
-      var mongoId, positionX, positionY;
-      mongoId = UI.getElementData(this)._id;
-      positionX = Math.round(ui.position.left);
-      positionY = Math.round(ui.position.top);
-      console.log("stop dragging: " + mongoId + " : " + positionX + " : " + positionY);
+  var drag = new Draggabilly(elem, { 
+    handle: 'p'
+  });
+
+  drag.on('dragStart', function( instance, event, pointer ) {
+      console.log(event.type + ": " + instance.position.x + " : " + instance.position.y);
+    }
+  );
+
+  drag.on('dragEnd', function( instance, event, pointer ) {
+
+      console.log(instance);
+      console.log(instance.element);
+      console.log($(instance.element));
+      console.log(instance.element.id);
+
+      var x = instance.position.x;
+      var y = instance.position.y;
+
+      // var mongoId = (this)._id;
+      var mongoId = 'dummy';
+
+      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+      
       Bits.update(mongoId, {
         $set: {
-          "position_x": positionX,
-          "position_y": positionY
+          "position_x": x,
+          "position_y": y
         }
       });
 
-      showNotification("" + mongoId + " position saved: x: " + positionX + " y: " + positionY);
+      showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
       return true;
     }
-  });
+
+  );
+
+
+
+
+
 };
 
 

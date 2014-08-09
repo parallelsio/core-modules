@@ -11,7 +11,6 @@
       "normalize.css": {},
       "img-area-select": {},
       "spin": {},
-      "famono": {},
       "lodash": {}
     },
     "packages": {
@@ -59,11 +58,6 @@
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v2.0.4",
         "commit": "f7b1e12a7caff1283cdb3671a393c182d0ae9862"
-      },
-      "famono": {
-        "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.7.2",
-        "commit": "f6993990198051b5cab2f48b0f19bd83d6b3d87e"
       },
       "lodash": {
         "git": "https://github.com/alethes/meteor-lodash.git",

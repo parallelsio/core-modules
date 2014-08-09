@@ -21,6 +21,7 @@ mousetrap
 
 img-area-select
 underscore
-famono
 
 lodash
+
+inject-initial
