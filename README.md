@@ -1,5 +1,14 @@
+REQUIREMENTS
+
+HTML5 compatible browser only. Not supporting old browsers
+
+
+
+
+
 TODO:
 
+- browser compatibility check
 - fix bit update, id instead of _id
 - loadingTemplate: 'loading', Parallels loading GIF
 - bits related to specific map

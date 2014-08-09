@@ -8,9 +8,6 @@ Meteor.startup(function(){
 
   console.log("Meteor.startup start.");
 
-  var bits = document.querySelector('.bit');
-
-  console.log(bits);
 
   // var Draggabilly;
   // Draggabilly = require('draggabilly');
@@ -33,11 +30,6 @@ Meteor.startup(function(){
   //     // });
   // });
   
-
-
-  // var drag = new draggabilly('.bit', {
-  //   grid: [20, 20]
-  // });
 
 
   Mousetrap.bind("4", function() {
