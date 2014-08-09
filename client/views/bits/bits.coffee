@@ -7,6 +7,7 @@ root = global ? window
 Template.bit.rendered = ->
 
 
+
 	# this.$(".bit").addClass("debug")
 	console.log "Template.bit.rendered: #{ this.data._id }"
 	console.log this.data

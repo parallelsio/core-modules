@@ -1,20 +1,5 @@
  {
- 	  "classie": {
-	    "bower": "classie"
-	  },
-	  "eventEmitter": {
-	    "bower": "eventEmitter"
-	  },
-	  "eventie": {
-	    "bower": "eventie"
-	  },
-	  "get-size": {
-	    "bower": "get-size"
-	  },
-	  "get-style-property": {
-	    "bower": "get-style-property"
-	  },
-	  "Draggabilly": {
-		"bower": "draggabilly"
+	  "draggabilly": {
+		"http": "http://github.com/desandro/draggabilly/blob/master/draggabilly.js"
 	  }
 }
