@@ -8,6 +8,8 @@ HTML5 compatible browser only. Not supporting old browsers
 
 TODO:
 
+- bug: consecutive drags of a bit don't work 
+- parallels deploy with no stylesheets?
 - browser compatibility check
 - loadingTemplate: 'loading', Parallels loading GIF
 - bits related to specific map

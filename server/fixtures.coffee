@@ -1,8 +1,6 @@
 if Bits.find().count() is 0
 
 	Bits.insert
-		_id : new Meteor.Collection.ObjectID()
-		id: 1
 		type: "text"
 		position_x: 100
 		position_y: 200
@@ -15,8 +13,6 @@ if Bits.find().count() is 0
 		format: null
 		
 	Bits.insert
-		_id : new Meteor.Collection.ObjectID()
-		id: 2
 		type: "text"
 		position_x: 200
 		position_y: 300
