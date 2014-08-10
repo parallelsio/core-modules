@@ -14,12 +14,14 @@ Template.map.events({
 		console.log("bit:create");
 
 		if(event.target.className === 'map'){
-      		var id = Bit.insert( { name:'new bit', position_x: event.pageX, position_y: event.pageY });
+      		var id = Bits.insert( { 
+      			content:'new bit',
+      			type: 'text', 
+      			color:'white',
+      			position_x: event.pageX, 
+      			position_y: event.pageY });
       		Session.set('editing_table', id);
     	}
-
 	}
-
-
 
 });
