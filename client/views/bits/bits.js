@@ -51,6 +51,34 @@ Template.bit.rendered = function() {
 };
 
 
+Template.bit.events({
+
+  'mouseenter .bit': function (event, template){
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.target.classList.contains('bit')) {
+      Session.set('hoveredBitID', template.data._id);
+      console.log("bit:hover:in " + Session.get('hoveredBitID'));
+    }
+  },
+
+  'mouseleave .bit': function (event, template){
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.target.classList.contains('bit')) {
+      Session.set('hoveredBitID', '');
+      console.log("bit:hover:out " + Session.get('hoveredBitID'));
+    }
+  }
+
+});
+
+
+
+
+
 
 
 
