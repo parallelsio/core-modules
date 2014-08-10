@@ -58,8 +58,8 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('hoveredBitID', template.data._id);
-      console.log("bit:hover:in " + Session.get('hoveredBitID'));
+      Session.set('bitHovering', template.data._id);
+      console.log("bit:hover:in " + Session.get('bitHovering'));
     }
   },
 
@@ -68,8 +68,8 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('hoveredBitID', '');
-      console.log("bit:hover:out " + Session.get('hoveredBitID'));
+      Session.set('bitHovering', '');
+      console.log("bit:hover:out " + Session.get('bitHovering'));
     }
   }
 

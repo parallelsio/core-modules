@@ -13,7 +13,7 @@ Template.map.events({
 
     console.log("bit:create");
 
-    if(event.target.className === 'map'){
+    if(event.target.classList.contains('map')){
       var id = Bits.insert( { 
         content:'new bit',
         type: 'text', 
@@ -21,7 +21,7 @@ Template.map.events({
         position_x: event.pageX, 
         position_y: event.pageY });
 
-      Session.set('editing_table', id);
+      Session.set('bitEditing', id);
       }
   }
 });

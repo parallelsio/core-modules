@@ -18,9 +18,23 @@ Meteor.startup(function(){
   // var elem = $('.bit');
   // console.log(elem);
 
-  Mousetrap.bind("4", function() {
-    console.log("pressed 4");
+
+  // TODO: belong here, or on map?
+  Mousetrap.bind("d", function() {
+
+    console.log("pressed d");
+
+    var bitHovering = Session.get('bitHovering');
+    console.log();
+
+    if(bitHovering)
+    {
+      Bits.remove(bitHovering);
+      console.log("bit:delete: " + bitHovering);
+    }
   });
+
+
 
   console.log("Meteor.startup done.");
 
