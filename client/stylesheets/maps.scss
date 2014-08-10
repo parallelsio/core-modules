@@ -1,4 +1,4 @@
-#map {	  
+.map {	  
 
 	// required to get jquery x/y coordinates to return non 0 values
 	min-height:2000px;
@@ -6,12 +6,11 @@
 	
 	height:100%;
   	width:1000%;
-  	
   }
 
 
 
-#image_upload {
+.image_upload {
 
 /*	position:fixed;
 	left:100px;

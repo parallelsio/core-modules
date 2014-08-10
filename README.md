@@ -4,18 +4,16 @@ HTML5 compatible browser only. Not supporting old browsers
 
 
 
-
-
 TODO:
 
-- bug: consecutive drags of a bit don't work 
+- bug: bit:drag consecutively: updates 1st only
 - parallels deploy with no stylesheets?
 - browser compatibility check
 - loadingTemplate: 'loading', Parallels loading GIF
+- add force-ssl, img-area-select
 - bits related to specific map
 - use em generator to set up file structure
 - remove insecure package
-- load order of draggbility
 - cleaner way to group static assets to their JS libs used (crop, notify)
 - style pnotify alerts. where is the css?
 - add global back to mousetrap, carry over first set of shortcuts from rails prototype
@@ -29,10 +27,3 @@ TODO:
 
 - make spinner cross browser animation properties, etc
 
-
-NOTES:
-
-- famono used to include draggabilly
-http://atmospherejs.com/package/famono
-
-- add force-ssl, img-area-select

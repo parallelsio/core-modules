@@ -48,6 +48,8 @@ $bg_color: #e7e4e4;
         font-style: normal;
     }
 
+* { box-sizing: border-box;}
+
 
 body {
   background: $bg_color;

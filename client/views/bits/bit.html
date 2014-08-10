@@ -1,6 +1,6 @@
 <template name="bit">
 
-  	<div data-id="{{ _id }}" class="bit {{ type }}" style="left: {{ position_x }}px; top: {{ position_y }}px;">
+  	<div data-id="{{ _id }}" class="bit">
 			<div class="container">
 				<div class="face front {{ color }}">
 					<div class="content">
@@ -11,7 +11,6 @@
 								<img src="{{ image_url_thumb }}" id="bit_image_{{ id }}">
 							</a>
 						</div>
-
 					    
 					{{else}}
 					    {{ content }}
@@ -31,6 +30,6 @@
 				<p class="ui-widget-header"></p>
 
 			</div>
-
 		</div>
+
 </template>

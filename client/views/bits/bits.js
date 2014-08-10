@@ -10,6 +10,9 @@ Template.bit.rendered = function() {
   // var elem = this.$('.bit');
 
   var elem = document.querySelector("[data-id='" + this.data._id + "']");
+  elem.style.left = this.data.position_x + "px";
+  elem.style.top = this.data.position_y + "px";
+  elem.classList.add(this.data.type);
 
   var drag = new Draggabilly(elem, { 
     handle: 'p'
