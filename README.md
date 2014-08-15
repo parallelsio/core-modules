@@ -1,13 +1,13 @@
 REQUIREMENTS
 
-HTML5 compatible browser only. Not supporting old browsers
+HTML5 compatible browser only. Not supporting older browsers
 
 
 
 TODO:
 
+- bug: mobile doesn't reacively update after desktop updates
 - wrap console.logs in debug mode
-- escape key gets rid of form
 - style bit edit form
 - bits related to specific map
 - bug: bit:drag consecutively: updates 1st only
