@@ -1,35 +1,37 @@
 <template name="bit">
 
-  	<div data-id="{{ _id }}" class="bit">
-			<div class="container">
-				<div class="face front {{ color }}">
-					<div class="content">
+  <div data-id="{{ _id }}" class="bit">
+    <div class="container">
+      <div class="face front {{ color }}">
+        <div class="content">
 
-					{{#if image }}
-						<div class="zoom">
-							<a href="{{ image_url }}">
-								<img src="{{ image_url_thumb }}" id="bit_image_{{ id }}">
-							</a>
-						</div>
-					    
-					{{else}}
-					    {{ content }}
-					{{/if}}
+          {{#if isEditingThisBit }}
 
-					</div>
-				</div>
+            <input class="editbit" type="text" value={{ content }}>
 
-				<div class="face back">
-					<div class="content">
+          {{ else }}
+
+            {{#if image }}
+                <div class="zoom">
+                    <a href="{{ image_url }}">
+                        <img src="{{ image_url_thumb }}" id="bit_image_{{ id }}">
+                    </a>
+                </div>
+                
+            {{ else }}
+                {{ content }}
+            {{/if}}
 
 
+          {{/if }}
 
-					</div>
-				</div>
+        </div>
+      </div>
 
-				<p class="ui-widget-header"></p>
 
-			</div>
-		</div>
+      <p class="ui-widget-header"></p>
+
+    </div>
+  </div>
 
 </template>

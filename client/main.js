@@ -5,9 +5,6 @@
 _ = lodash;
 
 
-
-
-
 Meteor.startup(function(){
 
   console.log("Meteor.startup start.");

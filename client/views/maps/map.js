@@ -15,7 +15,7 @@ Template.map.events({
 
     if(event.target.classList.contains('map')){
       var id = Bits.insert( { 
-        content:'new bit',
+        content:'',
         type: 'text', 
         color:'white',
         position_x: event.pageX, 
@@ -24,4 +24,7 @@ Template.map.events({
       Session.set('bitEditing', id);
       }
   }
+
+  
+
 });

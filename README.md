@@ -6,6 +6,9 @@ HTML5 compatible browser only. Not supporting old browsers
 
 TODO:
 
+- wrap console.logs in debug mode
+- escape key gets rid of form
+- style bit edit form
 - bits related to specific map
 - bug: bit:drag consecutively: updates 1st only
 - refactor away from using Session ID's (globals) to keep track of hovering bit, editing bit

@@ -1,8 +1,6 @@
 Template.bit.rendered = function() {
 
   console.log("Template.bit.rendered: " + this.data._id);
-  // console.log(bits);
-  // console.log(this);
 
   // TODO: this should work according to:
   // http://www.meteorpedia.com/read/Blaze_Notes
@@ -18,10 +16,6 @@ Template.bit.rendered = function() {
     handle: 'p'
   });
 
-  // drag.on('dragStart', function( instance, event, pointer ) {
-  //     console.log(event.type + ": " + instance.position.x + " : " + instance.position.y);
-  //   }
-  // );
 
   drag.on('dragEnd', function( instance, event, pointer ) {
 
@@ -31,7 +25,7 @@ Template.bit.rendered = function() {
       var mongoId = instance.element.dataset.id;
       console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
       
-      Bits.update(  { _id: mongoId } , {
+      Bits.update( mongoId , {
         $set: {
           "position_x": x,
           "position_y": y
@@ -41,13 +35,7 @@ Template.bit.rendered = function() {
       showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
       return true;
     }
-
   );
-
-
-
-
-
 };
 
 
@@ -71,10 +59,44 @@ Template.bit.events({
       Session.set('bitHovering', '');
       console.log("bit:hover:out " + Session.get('bitHovering'));
     }
+  },
+
+  'dblclick .bit': function (event, template){
+    event.preventDefault();
+    event.stopPropagation();
+
+    Session.set('bitEditing',this._id);
+    $('editbit').focus();
+    console.log("bit:edit: " + Session.get('bitEditing'));
+  },
+
+  'keyup .bit': function (event, template){
+    event.stopPropagation();
+    event.preventDefault();
+
+    // console.log('bit:key up: key code:' + event.which + ': ');
+
+    if(event.which === 13){
+      Bits.update( this._id , {
+        $set: { "content": template.find('.editbit').value }
+      });
+
+      Session.set('bitEditing',null);
+    }
+
+    else if (event.which === 27) {
+      console.log('escape key');
+      Session.set('bitEditing', null);
+    }
   }
 
 });
 
+
+
+Template.bit.isEditingThisBit = function() {
+  return Session.equals('bitEditing', this._id);
+};
 
 
 
