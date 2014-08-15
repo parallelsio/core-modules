@@ -66,7 +66,6 @@ Template.bit.events({
     event.stopPropagation();
 
     Session.set('bitEditing',this._id);
-    $('editbit').focus();
     console.log("bit:edit: " + Session.get('bitEditing'));
   },
 
