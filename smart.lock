@@ -11,7 +11,8 @@
       "normalize.css": {},
       "img-area-select": {},
       "spin": {},
-      "lodash": {}
+      "lodash": {},
+      "kadira": {}
     },
     "packages": {
       "iron-router": {
@@ -63,6 +64,11 @@
         "git": "https://github.com/alethes/meteor-lodash.git",
         "tag": "v0.7.1",
         "commit": "57bbeb3e21c31b64641f9885bb2f390b84f8b925"
+      },
+      "kadira": {
+        "git": "https://github.com/meteorhacks/kadira.git",
+        "tag": "v2.4.13",
+        "commit": "1f3c1a427084af5a2eca2e299eb65bc01387df8a"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

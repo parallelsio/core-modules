@@ -9,6 +9,7 @@
     "normalize.css": {},
     "img-area-select": {},
     "spin": {},
-    "lodash": {}
+    "lodash": {},
+    "kadira": {}
   }
 }
