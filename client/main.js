@@ -56,16 +56,9 @@ showNotification = function(message, type) {
   if (typeof type === "undefined") {
     type = "info";
   }
-  if (showNotifications) {
-    $.pnotify({
-      text: message,
-      shadow: false,
-      animation: 'fade',
-      type: type,
-      delay: 1500
-    });
-  }
+
   console.log(message);
+  
 };
 
 
