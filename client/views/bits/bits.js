@@ -36,6 +36,8 @@ Template.bit.rendered = function() {
   //     return true;
   //   }
   // );
+
+
 };
 
 
