@@ -12,30 +12,30 @@ Template.bit.rendered = function() {
   elem.style.top = this.data.position_y + "px";
   elem.classList.add(this.data.type);
 
-  var drag = new Draggabilly(elem, { 
-    handle: 'p'
-  });
+  // var drag = new Draggabilly(elem, { 
+  //   handle: 'p'
+  // });
 
 
-  drag.on('dragEnd', function( instance, event, pointer ) {
+  // drag.on('dragEnd', function( instance, event, pointer ) {
 
-      var x = instance.position.x;
-      var y = instance.position.y;
+  //     var x = instance.position.x;
+  //     var y = instance.position.y;
 
-      var mongoId = instance.element.dataset.id;
-      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+  //     var mongoId = instance.element.dataset.id;
+  //     console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
       
-      Bits.update( mongoId , {
-        $set: {
-          "position_x": x,
-          "position_y": y
-        }
-      });
+  //     Bits.update( mongoId , {
+  //       $set: {
+  //         "position_x": x,
+  //         "position_y": y
+  //       }
+  //     });
 
-      showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
-      return true;
-    }
-  );
+  //     showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
+  //     return true;
+  //   }
+  // );
 };
 
 
