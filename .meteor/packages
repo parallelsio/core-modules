@@ -14,3 +14,5 @@ mrt:img-area-select@0.2.0
 underscore
 alethes:lodash@0.7.1
 inject-initial
+meteorhacks:kadira
+
