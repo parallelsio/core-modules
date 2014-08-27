@@ -15,4 +15,5 @@ underscore
 alethes:lodash@0.7.1
 inject-initial
 meteorhacks:kadira
+fourseven:scss
 

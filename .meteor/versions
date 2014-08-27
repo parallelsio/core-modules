@@ -18,6 +18,7 @@ deps@1.0.1
 ejson@1.0.0
 email@1.0.2
 follower-livedata@1.0.0
+fourseven:scss@0.9.4
 geojson-utils@1.0.0
 html-tools@1.0.0
 htmljs@1.0.0
