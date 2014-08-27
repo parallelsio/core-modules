@@ -51,4 +51,5 @@ standard-app-packages@1.0.0
 templating@1.0.4
 ui@1.0.0
 underscore@1.0.0
+waitingkuo:normalize@0.1.0
 webapp@1.0.2
