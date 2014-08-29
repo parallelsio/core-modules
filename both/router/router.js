@@ -16,10 +16,10 @@ Router.map(function() {
 Router.onBeforeAction('loading');
 
 
-// http://famous.vararu.org
-// TODO:
-// I have no idea how to clean the famous container.
-// So I'll just do this.
-Router.onRun(function() {
-  $('.famous-container').remove();
-});
+// // http://famous.vararu.org
+// // TODO:
+// // I have no idea how to clean the famous container.
+// // So I'll just do this.
+// Router.onRun(function() {
+//   $('.famous-container').remove();
+// });

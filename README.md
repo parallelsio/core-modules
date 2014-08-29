@@ -7,7 +7,7 @@ HTML5 compatible browser only. Not supporting older browsers
 TODO:
 
 
-
+- escape rids form
 - package: pnotify
 - bug: mobile doesn't reacively update after desktop updates
 - wrap console.logs in debug mode
