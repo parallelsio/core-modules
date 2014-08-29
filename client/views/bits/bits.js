@@ -38,6 +38,14 @@ Template.bit.rendered = function() {
   // );
 
 
+
+
+
+
+
+
+
+
 };
 
 

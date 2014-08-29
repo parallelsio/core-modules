@@ -6,7 +6,8 @@ HTML5 compatible browser only. Not supporting older browsers
 
 TODO:
 
-
+- refactor fixtures to nested obj. 
+- reenable kadira when stable
 - escape rids form
 - package: pnotify
 - bug: mobile doesn't reacively update after desktop updates
@@ -27,11 +28,12 @@ TODO:
 - loadingTemplate: 'loading', Parallels loading GIF
 
 - first set of tests
-- carry over typefaces, refactor: http://www.456bereastreet.com/archive/201012/font-face_tip_define_font-weight_and_font-style_to_keep_your_css_simple/
+- carry over typefaces, refactor: http://www.456bereastreet.com/archive/201012/font-face_tip_define_font weight_and_font-style_to_keep_your_css_simple/
 
 - imagemagick, s3, p5
 
 - evaluate sound lib http://lowlag.alienbill.com/
 
 - make spinner cross browser animation properties, etc
+
 
