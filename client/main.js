@@ -36,15 +36,6 @@ Meteor.startup(function(){
   console.log("Meteor.startup done.");
 
   Deps.autorun(function() {
-    
-    // Trigger the layout whenever the collection updates in any way.
-    Bits.find().observe({
-      
-      changed: function() {
-        myLayout.toggle();
-      }
-    });
-
     console.log(Bits.find().count() + ' bits... updated via deps');
   });
 
