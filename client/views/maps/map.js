@@ -17,7 +17,8 @@ Template.map.rendered = function() {
   var mainContext = Engine.createContext();
 
   var originMod = new Modifier({
-    origin: [0.0, 0.0]
+    origin: [0.0, 0.0],
+    size: [200, 200]
   });
 
   mainContext = mainContext.add(originMod);
@@ -66,8 +67,6 @@ Template.map.rendered = function() {
 
     else if (bit.type === "image")
     {
-      // var x = document.getElementById("myImg").naturalWidth;
-      // var y = document.getElementById("myImg").naturalHeight;
 
       bitSurface = new ImageSurface({
         size: [250, bit.nativeHeight / 4],
@@ -75,15 +74,13 @@ Template.map.rendered = function() {
         properties: {
           backgroundColor: 'hsla(' + ((counter * 5 + counter) * 10 % 360) + ', 60%, 55%, 0.8)',
         },
-        content: "images/1000/" + bit.filename
+        content: "images/1000/" + bit.filename + ".jpg"
       });
     }
 
     else {
       console.log('error: cant bit with no type (image, text, ?)');
     }
-
-    // console.log(bitSurface.content);
 
     var stateModifier = new StateModifier({
       transform: Transform.translate(bit.position_x, bit.position_y, 0)
@@ -95,9 +92,10 @@ Template.map.rendered = function() {
       console.log('click', this._id, this.content);
     });
 
-    bitSurface.on('onmouseover', function() {
-      console.log('onmouseover', this._id, this.content);
-    });
+    // TODO: why is this not working?
+    // bitSurface.on('onmouseover', function() {
+    //   console.log('onmouseover', this._id, this.content);
+    // });
 
 
     surfaces.push(bitSurface);
@@ -131,13 +129,15 @@ Template.map.events({
 
     if(event.target.classList.contains('map')){
       var id = Bits.insert( { 
-        content:'',
-        type: 'text', 
-        color:'white',
-        position_x: event.pageX, 
-        position_y: event.pageY });
+                  content: '',
+                  type: 'text', 
+                  color: 'white',
+                  position_x: event.pageX, 
+                  position_y: event.pageY });
 
       Session.set('bitEditing', id);
+
+      document.querySelector("[data-id='" + id + "']").focus();
     }
   }
   
