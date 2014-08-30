@@ -3,8 +3,9 @@
 // https://github.com/tvararu/meteor-famous-playground/tree/master/client/views
 
 Meteor.startup(function() {
+
   // Add polyfills.
-  // require("famous-polyfills");
+  require("famous.polyfills");
 
   // Add the default CSS file.
   require("famous/core/famous");
