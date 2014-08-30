@@ -16,6 +16,8 @@ Meteor.startup(function() {
   window.Deck = require('famous/views/Deck');
   window.Group = require('famous/core/Group');
   window.Surface = require('famous/core/Surface');
+  window.ImageSurface = require('famous/surfaces/ImageSurface');
+
   window.Modifier = require('famous/core/Modifier');
   window.Transform = require('famous/core/Transform');
   window.Utility = require('famous/utilities/Utility');

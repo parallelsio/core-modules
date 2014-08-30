@@ -6,6 +6,7 @@ HTML5 compatible browser only. Not supporting older browsers
 
 TODO:
 
+- double click to edit: only for text bits
 - refactor fixtures to nested obj. 
 - reenable kadira when stable
 - escape rids form
