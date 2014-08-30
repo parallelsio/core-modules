@@ -81,13 +81,14 @@ Template.map.rendered = function() {
       transform: Transform.translate(bit.position_x, bit.position_y, 0)
     });
 
+    // TODO: why is this not affecting the size of the image container?
     var sizeModifier = new Modifier({
-        size: [200, 200]
+        size: [50, 50]
     });
 
     context
-        .add(sizeModifier)
         .add(stateModifier)
+        .add(sizeModifier)
         .add(bitSurface);
 
     bitSurface.on('click', function() {

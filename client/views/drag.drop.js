@@ -2,6 +2,9 @@
     /*
     // https://stackoverflow.com/questions/24614367/droppable-in-famous-js
     // DRAG + DROP via HTML5
+
+    // but wont get any famous physics with this?
+
     bitSurface.on('dragenter', function(evt){
       console.log('dragenter');
       evt.preventDefault();
