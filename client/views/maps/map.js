@@ -71,9 +71,6 @@ Template.map.rendered = function() {
       bitSurface = new ImageSurface({
         size: [250, bit.nativeHeight / 4],
         classes: ['bit','image'],
-        properties: {
-          backgroundColor: 'hsla(' + ((counter * 5 + counter) * 10 % 360) + ', 60%, 55%, 0.8)',
-        },
         content: "images/1000/" + bit.filename + ".jpg"
       });
     }
