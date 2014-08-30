@@ -14,14 +14,13 @@ Template.map.rendered = function() {
   // Adds the `.famous-container` div to the <body> element, sets the
   // fpsCap to 60, and starts the render loop.
   // You can pass options to change any/all of these.
-  var mainContext = Engine.createContext();
+  var context = Engine.createContext();
 
-  var originMod = new Modifier({
-    origin: [0.0, 0.0],
-    size: [200, 200]
-  });
+    var originModifier = new Modifier({
+        origin: [0.0, 0.0]
+    });
 
-  mainContext = mainContext.add(originMod);
+  context = context.add(originModifier);
 
   // Surfaces are the basic "divs" of the Famous rendering engine.
   // They take a size array, a content string, a CSS classes array
@@ -30,7 +29,7 @@ Template.map.rendered = function() {
   // That's the job of Modifiers.
   var surfaces = [];
 
-  var myLayout = new Deck({
+  var mapLayout = new Deck({
     itemSpacing: 10,
     transition: {
       method: 'spring',
@@ -40,10 +39,9 @@ Template.map.rendered = function() {
     stackRotation: 0.1
   });
 
-  myLayout.sequenceFrom(surfaces);
+  mapLayout.sequenceFrom(surfaces);
 
   var counter = 0;
-
   Bits.find().forEach(function (bit) {
     
     console.log(bit._id, ":", "x:", bit.position_x, "y:", bit.position_y, ":", bit.type);
@@ -83,7 +81,14 @@ Template.map.rendered = function() {
       transform: Transform.translate(bit.position_x, bit.position_y, 0)
     });
 
-    mainContext.add(stateModifier).add(bitSurface);
+    var sizeModifier = new Modifier({
+        size: [200, 200]
+    });
+
+    context
+        .add(sizeModifier)
+        .add(stateModifier)
+        .add(bitSurface);
 
     bitSurface.on('click', function() {
       console.log('click', this._id, this.content);
@@ -102,13 +107,13 @@ Template.map.rendered = function() {
 
 
 
-  mainContext.add(myLayout);
+  context.add(mapLayout);
 
   // Trigger the layout whenever the collection updates in any way.
   Bits.find().observe({
     
     changed: function() {
-      myLayout.toggle();
+      mapLayout.toggle();
     }
   });
 

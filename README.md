@@ -7,6 +7,7 @@ HTML5 compatible browser only. Not supporting older browsers
 TODO:
 
 
+- refactor logic of bit:image size initialization
 - why does bit:text:create only focus the first time?
 - why does famous.on (hover) not working?
 - how to select, deselect bits [for grouping into a cluster]?
