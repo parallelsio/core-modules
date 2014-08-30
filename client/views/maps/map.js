@@ -41,12 +41,12 @@ Template.map.rendered = function() {
 
   myLayout.sequenceFrom(surfaces);
 
-  var count = 0;
+  var counter = 0;
 
   Bits.find().forEach(function (bit) {
     
     console.log(bit._id, ":", "x:", bit.position_x, "y:", bit.position_y, ":", bit.type);
-    count += 1;
+    counter += 1;
     var bitSurface;
 
     if (bit.type === "text")
@@ -55,7 +55,7 @@ Template.map.rendered = function() {
         size: [300, 100],
         classes: ['bit', 'text'],
         properties: {
-          backgroundColor: 'hsla(' + ((count * 5 + count) * 10 % 360) + ', 60%, 55%, 0.8)',
+          backgroundColor: 'hsla(' + ((counter * 5 + counter) * 10 % 360) + ', 60%, 55%, 0.8)',
           color: 'white',
           lineHeight: '100px',
           textAlign: 'center'
@@ -66,13 +66,16 @@ Template.map.rendered = function() {
 
     else if (bit.type === "image")
     {
+      // var x = document.getElementById("myImg").naturalWidth;
+      // var y = document.getElementById("myImg").naturalHeight;
+
       bitSurface = new ImageSurface({
-        size: [300, 100],
+        size: [250, bit.nativeHeight / 4],
         classes: ['bit','image'],
         properties: {
-          backgroundColor: 'hsla(' + ((count * 5 + count) * 10 % 360) + ', 60%, 55%, 0.8)',
+          backgroundColor: 'hsla(' + ((counter * 5 + counter) * 10 % 360) + ', 60%, 55%, 0.8)',
         },
-        content: "images/" + bit.filename
+        content: "images/1000/" + bit.filename
       });
     }
 
@@ -89,7 +92,11 @@ Template.map.rendered = function() {
     mainContext.add(stateModifier).add(bitSurface);
 
     bitSurface.on('click', function() {
-      console.log(this.content);
+      console.log('click', this._id, this.content);
+    });
+
+    bitSurface.on('onmouseover', function() {
+      console.log('onmouseover', this._id, this.content);
     });
 
 
