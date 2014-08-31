@@ -13,7 +13,6 @@ Template.map.rendered = function() {
 
   // Adds the `.famous-container` div to the <body> element, sets the
   // fpsCap to 60, and starts the render loop.
-  // You can pass options to change any/all of these.
   var context = Engine.createContext();
 
     var originModifier = new Modifier({
@@ -30,7 +29,7 @@ Template.map.rendered = function() {
   var surfaces = [];
 
   var mapLayout = new Deck({
-    itemSpacing: 10,
+    itemSpacing: 0,
     transition: {
       method: 'spring',
       period: 300,
@@ -93,6 +92,7 @@ Template.map.rendered = function() {
 
     bitSurface.on('click', function() {
       console.log('click', this._id, this.content);
+      mapLayout.toggle();
     });
 
     // TODO: why is this not working?
@@ -111,6 +111,8 @@ Template.map.rendered = function() {
   context.add(mapLayout);
 
   // Trigger the layout whenever the collection updates in any way.
+  // this is a Meteor.observe(), but not working.
+  // TODO: when a bit is deleted, why doesn't this update?
   Bits.find().observe({
     
     changed: function() {
