@@ -16,7 +16,7 @@ Template.map.rendered = function() {
   var context = Engine.createContext();
 
     var originModifier = new Modifier({
-        origin: [0.0, 0.0]
+        origin: [0.2, 0.35]
     });
 
   context = context.add(originModifier);
@@ -29,7 +29,7 @@ Template.map.rendered = function() {
   var surfaces = [];
 
   var mapLayout = new Deck({
-    itemSpacing: 0,
+    itemSpacing: 10,
     transition: {
       method: 'spring',
       period: 300,
@@ -104,9 +104,6 @@ Template.map.rendered = function() {
     surfaces.push(bitSurface);
 
   });
-
-
-
 
   context.add(mapLayout);
 

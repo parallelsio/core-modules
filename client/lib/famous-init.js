@@ -35,6 +35,8 @@ Meteor.startup(function() {
   window.SnapTransition = require('famous/transitions/SnapTransition');
   window.SpringTransition = require('famous/transitions/SpringTransition');
 
+
+
   // Initialize two basic transitions.
   Transitionable.registerMethod('snap', SnapTransition);
   Transitionable.registerMethod('spring', SpringTransition);
