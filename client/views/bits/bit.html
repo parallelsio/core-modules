@@ -1,6 +1,6 @@
 <template name="bit">
 
-  <div data-id="{{ _id }}" class="bit">
+  <div data-id="{{ _id }}" class="bit {{ type }}">
     <div class="container">
       <div class="face front {{ color }}">
         <div class="content">
@@ -11,17 +11,12 @@
 
           {{ else }}
 
-            {{#if image }}
-                <div class="zoom">
-                    <a href="{{ image_url }}">
-                        <img src="{{ image_url_thumb }}" id="bit_image_{{ id }}">
-                    </a>
-                </div>
+            {{#if filename }}
+              <img src="images/1000/{{ filename }}.jpg">
                 
             {{ else }}
-                {{ content }}
+              {{ content }}
             {{/if}}
-
 
           {{/if }}
 

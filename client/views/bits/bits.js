@@ -8,34 +8,48 @@ Template.bit.rendered = function() {
   // var elem = this.$('.bit');
 
   var elem = document.querySelector("[data-id='" + this.data._id + "']");
-  elem.style.left = this.data.position_x + "px";
-  elem.style.top = this.data.position_y + "px";
+
+  // hide off canvas for now, while experimenting with famous
+  var offset = -2000;
+
+  elem.style.left = this.data.position_x + offset + "px";
+  elem.style.top = this.data.position_y + offset + "px";
   elem.classList.add(this.data.type);
 
-  var drag = new Draggabilly(elem, { 
-    handle: 'p'
-  });
+  // var drag = new Draggabilly(elem, { 
+  //   handle: 'p'
+  // });
 
 
-  drag.on('dragEnd', function( instance, event, pointer ) {
+  // drag.on('dragEnd', function( instance, event, pointer ) {
 
-      var x = instance.position.x;
-      var y = instance.position.y;
+  //     var x = instance.position.x;
+  //     var y = instance.position.y;
 
-      var mongoId = instance.element.dataset.id;
-      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+  //     var mongoId = instance.element.dataset.id;
+  //     console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
       
-      Bits.update( mongoId , {
-        $set: {
-          "position_x": x,
-          "position_y": y
-        }
-      });
+  //     Bits.update( mongoId , {
+  //       $set: {
+  //         "position_x": x,
+  //         "position_y": y
+  //       }
+  //     });
 
-      showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
-      return true;
-    }
-  );
+  //     showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
+  //     return true;
+  //   }
+  // );
+
+
+
+
+
+
+
+
+
+
 };
 
 

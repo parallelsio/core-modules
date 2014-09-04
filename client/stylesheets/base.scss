@@ -60,7 +60,7 @@ strong { font-family:'ChaparralPro-Semibold', sans-serif;}
 
 
 
-
+.famous-root { overflow:auto; }
 
 
 
@@ -100,6 +100,7 @@ $size: 10em;
   50% { width: $size; height: $size; z-index: 1 }
   100% { display: none; }
 }
+
 
 
 
