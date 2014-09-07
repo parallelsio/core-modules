@@ -28,17 +28,17 @@ Template.map.rendered = function() {
   // That's the job of Modifiers.
   var surfaces = [];
 
-  var mapLayout = new Deck({
+  var cluster = new Deck({
     itemSpacing: 10,
     transition: {
       method: 'spring',
       period: 300,
       dampingRatio: 0.5
     },
-    stackRotation: 0.1
+    stackRotation: 0.2
   });
 
-  mapLayout.sequenceFrom(surfaces);
+  cluster.sequenceFrom(surfaces);
 
   var counter = 0;
   Bits.find().forEach(function (bit) {
@@ -58,7 +58,8 @@ Template.map.rendered = function() {
           lineHeight: '100px',
           textAlign: 'center'
         },
-        content: bit.content
+        content: bit.content,
+        mongoId: bit._id
       });
     }
 
@@ -68,7 +69,8 @@ Template.map.rendered = function() {
       bitSurface = new ImageSurface({
         size: [250, bit.nativeHeight / 4],
         classes: ['bit','image'],
-        content: "images/1000/" + bit.filename + ".jpg"
+        content: "images/1000/" + bit.filename + ".jpg",
+        mongoId: bit._id
       });
     }
 
@@ -91,9 +93,26 @@ Template.map.rendered = function() {
         .add(bitSurface);
 
     bitSurface.on('click', function() {
-      console.log('click', this._id, this.content);
-      mapLayout.toggle();
+      // bitSurface.setProperties({
+      //   backgroundColor: '#878785'
+      // });
+
+      console.log('click', bitSurface.mongoId, this.content);
+      cluster.toggle();
     });
+
+    bitSurface.on('mouseover', function() {
+      bitSurface.addClass('blinking');
+      Session.set('bitHovering', bit._id);
+      console.log("bit:hover:in " + Session.get('bitHovering'));
+    });
+
+    bitSurface.on('mouseout', function() {
+      bitSurface.removeClass('blinking');
+      Session.set('bitHovering', '');
+      console.log("bit:hover:out " + Session.get('bitHovering'));
+    });
+
 
     // TODO: why is this not working?
     // bitSurface.on('onmouseover', function() {
@@ -105,7 +124,7 @@ Template.map.rendered = function() {
 
   });
 
-  context.add(mapLayout);
+  context.add(cluster);
 
   // Trigger the layout whenever the collection updates in any way.
   // this is a Meteor.observe(), but not working.
@@ -113,7 +132,7 @@ Template.map.rendered = function() {
   Bits.find().observe({
     
     changed: function() {
-      mapLayout.toggle();
+      cluster.toggle();
     }
   });
 
