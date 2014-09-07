@@ -16,14 +16,6 @@ if Bits.find().count() is 0
 
   Bits.insert
     type: "image"
-    position_x: 100
-    position_y: 200
-    filename: "mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_img_5077-cropped"
-    nativeWidth: 1695
-    nativeHeight: 1599
-
-  Bits.insert
-    type: "image"
     position_x: 200
     position_y: 200
     filename: "mine_collage_mai__img_8939"
