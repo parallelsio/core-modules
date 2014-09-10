@@ -55,8 +55,7 @@ We're a diverse, distributed team of designers, developers and researchers with 
 
 Current challenges:
 
-* A coordinate system for map-based content
-* A zoomable/panning user interface
+* A zoomable/panning user interface with coordinate system for map-based layout/content
 * Modeling documents in graph based data structures with Neo4J
 * Decentralized (no-cloud) infrastructure / file storage
 * Browser extensions for clipping web content
