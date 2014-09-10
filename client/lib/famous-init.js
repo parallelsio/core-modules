@@ -24,17 +24,16 @@ Meteor.startup(function() {
   window.Utility = require('famous/utilities/Utility');
   window.Draggable = require('famous/modifiers/Draggable');
   window.StateModifier = require('famous/modifiers/StateModifier');
-  window.ScrollContainer = require('famous/views/ScrollContainer');
   window.RenderController = require('famous/views/RenderController');
 
-  window.Scrollview = require('famous/views/Scrollview');
-  window.HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
+  window.ModifierChain = require('famous/modifiers/ModifierChain');
 
   window.Easing = require('famous/transitions/Easing');
   window.Transitionable = require('famous/transitions/Transitionable');
   window.SnapTransition = require('famous/transitions/SnapTransition');
   window.SpringTransition = require('famous/transitions/SpringTransition');
 
+  window.TransitionableTransform = require("famous/transitions/TransitionableTransform");
 
 
   // Initialize two basic transitions.
