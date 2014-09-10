@@ -125,7 +125,7 @@ Template.map.rendered = function() {
     bitSurface.on('mouseover', function() {
       console.log("bit:hover:in " + Session.get('bitHovering'));
       Session.set('bitHovering', bit._id);
-      transitionableTransform.setScale( [ 3, 3 ,1 ], { duration: 250 } );
+      // transitionableTransform.setScale( [ 3, 3 ,1 ], { duration: 250 } );
 
 
     });
@@ -133,7 +133,7 @@ Template.map.rendered = function() {
     bitSurface.on('mouseout', function() {
       console.log("bit:hover:out " + Session.get('bitHovering'));
       Session.set('bitHovering', '');
-      transitionableTransform.setScale( [ 1, 1 ,1 ], { duration: 250 } );
+      // transitionableTransform.setScale( [ 1, 1 ,1 ], { duration: 250 } );
     });
 
 

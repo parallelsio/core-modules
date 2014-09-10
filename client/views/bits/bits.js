@@ -41,15 +41,6 @@ Template.bit.rendered = function() {
   //   }
   // );
 
-
-
-
-
-
-
-
-
-
 };
 
 

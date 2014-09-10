@@ -1,71 +1,74 @@
-REQUIREMENTS
-
-HTML5 compatible browser only. Not supporting older browsers
-
+# parallels.io alpha app
+## based on Meteor + Famo.us + Neo4J 
 
 
+## Requirements
 
-TODO:
-
-
-- drag and drop with famous? https://famo.us/docs/modifiers/Draggable
-
-- how does the Grid 18th century grid layout work? Where is the non-obfuscated SceneController code in the libs? http://codepen.io/befamous/pen/kbxnH
-
-- create Cluster 
-- how can i use meteor template as famous views?
-
-- comment out famous libs not used
-- make deck -> cluster
-- non-deck bits 
-
-- refactor logic of bit:image size initialization
-- why does bit:text:create only focus the first time?
-- why does famous.on (hover) not working?
-- how to select, deselect bits [for grouping into a cluster]?
-
-- better way to init images in famous.ImageSurfaces to nativeHeight, nativeWidth?
-- bit:add + bit:delete updates collection, refreshes famous cluster: famous-views?
-   https://github.com/jperl/famous-meteor/blob/master/client/famous.js
-   or
-   manually via collection hooks? https://github.com/matb33/meteor-collection-hooks ? 
-   https://github.com/raix/Meteor-famono/issues/10
+* OSX / Linux
+* Node (tested with v0.10.29)
+* NPM (tested with v1.4.14) 
+* Meteor 0.9.0.1
+* git, prefer 2.0+
+* Browser
+* Desktop browser with CSS3/HTML5 support:
+   * No legacy browsers
+   * Mobile and touch devices - beta only, not yet
+   * Special message for Internet Explorer: go home, you're tired.
 
 
-- s3/dropzone/meteor
-- p5 hover test
+## Quick Start
 
-- events logger -> history/undo?
+Install [node.js + NPM](http://thechangelog.com/install-node-js-with-homebrew-on-os-x) via Homebrew
 
-- double click to edit: only for text bits
-- refactor fixtures to nested obj. 
-- escape get rid of bit:text editing form
-- package: pnotify
-- bug: mobile doesn't reacively update after desktop updates
-- wrap console.logs in debug mode
-- style bit edit form
-- bits related to specific map
-- bit: drag + drop famous?
-- refactor away from using Session ID's (globals) to keep track of hovering bit, editing bit
-- parallels deploy with no stylesheets?
-- browser compatibility check
-- add force-ssl, img-area-select
-- use em generator to set up file structure
-- remove insecure package
-- cleaner way to group static assets to their JS libs used (crop, notify)
-- add global back to mousetrap, carry over first set of shortcuts from rails prototype
-- set up bourbon and get loading indicator working again
-- loadingTemplate: 'loading', Parallels loading GIF
+### install [Meteor JS](http://www.meteor.com)
+`$ curl install.meteor.com | sh`
 
-- first set of tests. how to test famous positioning?
-- carry over typefaces, refactor: http://www.456bereastreet.com/archive/201012/font-face_tip_define_font weight_and_font-style_to_keep_your_css_simple/
+### go into wherever you want the Parallels code folder created
+`$ cd your-code-directory`
 
-- imagemagick
+### pull down the project, puts all files in a new folder
+`$ git clone https://github.com/parallelsio/app-meteor.git`
+
+### start local server, loads up test dataset automatically
+`$ meteor`
+
+Browse site at [http://localhost:3000](http://localhost:3000)
 
 
 
-- evaluate sound lib http://lowlag.alienbill.com/
 
-- make spinner cross browser animation properties, etc
+## Contact
+
+* irc.freenode.net: #parallelsio
+* twitter: [@makeparallels](http://www.twitter.com/makeparallels)
+* Slack for chat/collab
+* PivotalTracker for stories
+
+
+## Contribute
+
+We're a diverse, distributed team of designers, developers and researchers with a goal of changing the way we organize and connect ideas. We'd love you to join us: get in touch if would like to contribute. No contribution is too small.
+
+
+Current challenges:
+
+* A coordinate system for map-based content
+* A zoomable/panning user interface
+* Modeling documents in graph based data structures with Neo4J
+* Decentralized (no-cloud) infrastructure / file storage
+* Browser extensions for clipping web content
+* Matrix heavy, physics-based interaction with Famo.us JS
+* Interactive documentation, think Bret Vector reactive documents
+* iOS / Android apps
+
+
+## Road Map
+
+Coming shortly. 
+
+
+## License
+
+GNU Affero General Public License
 
 
