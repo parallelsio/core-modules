@@ -53,7 +53,7 @@ Template.map.rendered = function() {
     {
       bitSurface = new Surface({
         size: [300, 100],
-        classes: ['bit', 'text'],
+        classes: ['bit', 'text', bit._id],
         properties: {
 
           // TODO: store color in db, assign color on bit:create
@@ -78,7 +78,7 @@ Template.map.rendered = function() {
         // TODO: remove hard coding
         // handle standard sizing when images are dragged/saved to db
         size: [250, bit.nativeHeight / 4],
-        classes: ['bit','image'],
+        classes: ['bit','image', bit._id],
         content: "images/1000/" + bit.filename + ".jpg",
         mongoId: bit._id
       });
