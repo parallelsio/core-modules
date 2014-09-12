@@ -5,6 +5,9 @@ Template.map.helpers({
 });
 
 
+
+
+
 Template.map.rendered = function() {
 
   // Adds the `.famous-container` div to the <body> element, sets the
@@ -16,9 +19,6 @@ Template.map.rendered = function() {
   });
 
   context = context.add(originModifier);
-
-
-
 
   // Surfaces are the basic "divs" of the Famous rendering engine.
   // They take a size array, a content string, a CSS classes array
@@ -42,7 +42,6 @@ Template.map.rendered = function() {
   var counter = 0;
 
   // get the collection of Bits
-  // TODO: for this map
   // create surfaces out of each and wire up with its events
   Bits.find().forEach(function (bit) {
     

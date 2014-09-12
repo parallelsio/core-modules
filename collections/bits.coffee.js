@@ -4,4 +4,6 @@
 
 // https://groups.google.com/forum/#!searchin/meteor-talk/id$20mongo/meteor-talk/f-ljBdZOwPk/UGxzC0QlD3cJ
 // https://groups.google.com/forum/#!topic/meteor-talk/tkH-p_B-wbY
-Bits = new Meteor.Collection("bits");
+
+  // TODO: for this map only
+  Bits = new Meteor.Collection("bits");

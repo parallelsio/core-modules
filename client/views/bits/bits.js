@@ -1,3 +1,7 @@
+Template.bit.helpers({
+ 
+});
+
 Template.bit.rendered = function() {
 
   console.log("Template.bit.rendered: " + this.data._id);

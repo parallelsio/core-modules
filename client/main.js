@@ -31,8 +31,6 @@ Meteor.startup(function(){
     }
   });
 
-
-
   console.log("Meteor.startup done.");
 
   Deps.autorun(function() {
