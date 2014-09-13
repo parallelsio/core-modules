@@ -3,20 +3,15 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-standard-app-packages
-insecure
+meteor-platform
 coffeescript
-jquery
-jquery-ui
-cmather:iron-router@0.8.2
-awatson1978:mousetrap@1.5.2
-mrt:img-area-select@0.2.0
+insecure
+awatson1978:mousetrap
 underscore
-alethes:lodash@0.7.1
-inject-initial
-meteorhacks:kadira
-fourseven:scss
+iron:router
+alethes:lodash
 waitingkuo:normalize
-raix:famono
-gadicohen:famous-components
-
+fourseven:scss
+meteorhacks:kadira
+meteorhacks:inject-initial
+mjnetworks:famous

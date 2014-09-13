@@ -10,11 +10,13 @@ Template.map.helpers({
 
 Template.map.rendered = function() {
 
+  console.log('map rendered.');
+
   // Adds the `.famous-container` div to the <body> element, sets the
   // fpsCap to 60, and starts the render loop.
-  var context = Engine.createContext();
+  var context = famous.core.Engine.createContext();
 
-  var originModifier = new Modifier({
+  var originModifier = new famous.core.Modifier({
       origin: [0.2, 0.35]
   });
 
@@ -27,7 +29,7 @@ Template.map.rendered = function() {
   // That's the job of Modifiers.
   var surfaces = [];
 
-  // var cluster = new Deck({
+  // var cluster = new famous.views.Deck({
   //   itemSpacing: 10,
   //   transition: {
   //     method: 'spring',
@@ -51,7 +53,10 @@ Template.map.rendered = function() {
 
     if (bit.type === "text")
     {
-      bitSurface = new Surface({
+      
+
+
+      bitSurface = new famous.core.Surface({
         size: [300, 100],
         classes: ['bit', 'text', bit._id],
         properties: {
@@ -74,7 +79,7 @@ Template.map.rendered = function() {
     else if (bit.type === "image")
     {
 
-      bitSurface = new ImageSurface({
+      bitSurface = new famous.surfaces.ImageSurface({
         // TODO: remove hard coding
         // handle standard sizing when images are dragged/saved to db
         size: [250, bit.nativeHeight / 4],
@@ -87,14 +92,15 @@ Template.map.rendered = function() {
     else {
       console.log('error: cant bit with no type (image, text, ?)');
     }
-    var transitionableTransform = new TransitionableTransform();
-    var modifierChain = new ModifierChain();
+    var transitionableTransform = new famous.transitions.TransitionableTransform();
+    var modifierChain = new famous.modifiers.ModifierChain();
+    var putInPlace = new famous.core.Transform.translate(bit.position_x, bit.position_y, 0);
 
-    var modifierOne = new Modifier({
-        transform: Transform.translate(bit.position_x, bit.position_y, 0),
+    var modifierOne = new famous.core.Modifier({
+        transform: putInPlace
     });
 
-    var modifierTwo = new Modifier({
+    var modifierTwo = new famous.core.Modifier({
         transform: transitionableTransform
     });
 
@@ -102,7 +108,7 @@ Template.map.rendered = function() {
     modifierChain.addModifier(modifierTwo);
 
     // TODO: why is this not affecting the size of the image container?
-    // var sizeModifier = new Modifier({
+    // var sizeModifier = new famous.core.Modifier({
     //     size: [50, 50]
     // });
 
@@ -116,6 +122,9 @@ Template.map.rendered = function() {
     // wire Events per bit
     bitSurface.on('click', function() {
       console.log('click', bitSurface.mongoId, this.content);
+      
+
+      // for Cluster
       // cluster.toggle();
 
     });
@@ -124,7 +133,6 @@ Template.map.rendered = function() {
     bitSurface.on('mouseover', function() {
       console.log("bit:hover:in " + Session.get('bitHovering'));
       Session.set('bitHovering', bit._id);
-      // transitionableTransform.setScale( [ 3, 3 ,1 ], { duration: 250 } );
 
 
     });
@@ -132,15 +140,17 @@ Template.map.rendered = function() {
     bitSurface.on('mouseout', function() {
       console.log("bit:hover:out " + Session.get('bitHovering'));
       Session.set('bitHovering', '');
-      // transitionableTransform.setScale( [ 1, 1 ,1 ], { duration: 250 } );
     });
 
 
-    // surfaces.push(bitSurface);
+    // for Cluster
+    // surfaces.push(bitSurface); 
 
   });
 
+  // for Cluster
   // context.add(cluster);
+
 
   // Trigger the layout whenever the collection updates in any way.
   // this is a Meteor.observe(), but not working.
