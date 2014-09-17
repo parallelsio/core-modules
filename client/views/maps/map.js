@@ -107,10 +107,10 @@ Template.map.rendered = function() {
         .add(bitSurface);
 
 
-    // wire Events per bit
     bitSurface.on('click', function() {
-      console.log('click', bitSurface.mongoId, this.content);
-      
+      // 
+      // ID : so hacky
+      console.log('click', bit._id, bit.content);
 
       // for Cluster
       // cluster.toggle();
@@ -121,13 +121,14 @@ Template.map.rendered = function() {
     bitSurface.on('mouseover', function() {
       console.log("bit:hover:in " + Session.get('bitHovering'));
       Session.set('bitHovering', bit._id);
-
+      bitSurface.addClass('hover');
 
     });
 
     bitSurface.on('mouseout', function() {
       console.log("bit:hover:out " + Session.get('bitHovering'));
       Session.set('bitHovering', '');
+      bitSurface.removeClass('hover')
     });
 
 
@@ -145,13 +146,17 @@ Template.map.rendered = function() {
   // TODO: when a bit is deleted, why doesn't this update?
   Bits.find().observe({
     
-    changed: function(clickCounter) {
+    changed: function() {
       bitSurface.setContent("CHANGED");
       // cluster.toggle();
-      
+      console.log('bit changed via observe.');
+    },
+
+    added: function() {
+      bitSurface.setContent("ADDED");
+      // cluster.toggle();
+      console.log('bit added via observe.');
     }
-
-
   });
 
 
@@ -164,7 +169,7 @@ Template.map.events({
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("bit:create");
+    console.log("bit:text:create");
 
     if(event.target.classList.contains('map')){
       var id = Bits.insert( { 
@@ -181,12 +186,12 @@ Template.map.events({
       bitSurface = new famous.core.Surface({
         size: [300, 300],
         classes: ['bit', 'text'],
-        content: bit.content,
+        content: '_______',
 
         // assign it the db ID
         // so we can track events and link other 
         // UI actions to this bit
-        mongoId: bit._id
+        mongoId: id
       });
 
 
