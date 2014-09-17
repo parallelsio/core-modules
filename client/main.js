@@ -28,6 +28,9 @@ Meteor.startup(function(){
     {
       Bits.remove(bitHovering);
       console.log("bit:delete: " + bitHovering);
+
+      // https://stackoverflow.com/questions/23623586/how-to-remove-surfaces-from-a-layout/23634031#23634031
+      // surface.render = function(){ return null; }
     }
   });
 

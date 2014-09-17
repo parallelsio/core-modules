@@ -53,20 +53,9 @@ Template.map.rendered = function() {
 
     if (bit.type === "text")
     {
-      
-
-
       bitSurface = new famous.core.Surface({
-        size: [300, 100],
+        size: [300, undefined],
         classes: ['bit', 'text', bit._id],
-        properties: {
-
-          // TODO: store color in db, assign color on bit:create
-          backgroundColor: 'hsla(' + ((counter * 5 + counter) * 10 % 360) + ', 60%, 55%, 0.8)',
-          color: 'white',
-          lineHeight: '100px',
-          textAlign: 'center'
-        },
         content: bit.content,
 
         // assign it the db ID
@@ -78,7 +67,6 @@ Template.map.rendered = function() {
 
     else if (bit.type === "image")
     {
-
       bitSurface = new famous.surfaces.ImageSurface({
         // TODO: remove hard coding
         // handle standard sizing when images are dragged/saved to db
@@ -157,9 +145,13 @@ Template.map.rendered = function() {
   // TODO: when a bit is deleted, why doesn't this update?
   Bits.find().observe({
     
-    changed: function() {
+    changed: function(clickCounter) {
+      bitSurface.setContent("CHANGED");
       // cluster.toggle();
+      
     }
+
+
   });
 
 
@@ -184,7 +176,20 @@ Template.map.events({
 
       Session.set('bitEditing', id);
 
-      document.querySelector("[data-id='" + id + "']").focus();
+      // document.querySelector("[data-id='" + id + "']").focus();
+
+      bitSurface = new famous.core.Surface({
+        size: [300, 300],
+        classes: ['bit', 'text'],
+        content: bit.content,
+
+        // assign it the db ID
+        // so we can track events and link other 
+        // UI actions to this bit
+        mongoId: bit._id
+      });
+
+
     }
   }
   
