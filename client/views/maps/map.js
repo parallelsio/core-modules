@@ -47,42 +47,45 @@ Template.map.rendered = function() {
   // create surfaces out of each and wire up with its events
   Bits.find().forEach(function (bit) {
     
-    console.log(bit._id, ":", "x:", bit.position_x, "y:", bit.position_y, ":", bit.type);
+    console.log(meteorBit._id, ":", "x:", meteorBit.position_x, "y:", meteorBit.position_y, ":", meteorBit.type);
     counter += 1;
     var bitSurface;
 
-    if (bit.type === "text")
+    if (meteorBit.type === "text")
     {
       bitSurface = new famous.core.Surface({
         size: [300, undefined],
-        classes: ['bit', 'text', bit._id],
-        content: bit.content,
+        classes: ['bit', 'text', meteorBit._id],
+        content: meteorBit.content,
 
         // assign it the db ID
         // so we can track events and link other 
         // UI actions to this bit
-        mongoId: bit._id
+        mongoId: meteorBit._id
       });
     }
 
-    else if (bit.type === "image")
+    else if (meteorBit.type === "image")
     {
       bitSurface = new famous.surfaces.ImageSurface({
         // TODO: remove hard coding
         // handle standard sizing when images are dragged/saved to db
-        size: [250, bit.nativeHeight / 4],
-        classes: ['bit','image', bit._id],
-        content: "images/1000/" + bit.filename + ".jpg",
-        mongoId: bit._id
+        size: [250, meteorBit.nativeHeight / 4],
+        classes: ['bit','image', meteorBit._id],
+        content: "images/1000/" + meteorBit.filename + ".jpg",
+        mongoId: meteorBit._id
       });
     }
 
     else {
       console.log('error: cant bit with no type (image, text, ?)');
     }
+
+    // TODO: cant use the same transform 2x, refactor
+    // http://stackoverflow.com/questions/25197689/why-cant-we-reuse-state-modifiers
     var transitionableTransform = new famous.transitions.TransitionableTransform();
     var modifierChain = new famous.modifiers.ModifierChain();
-    var putInPlace = new famous.core.Transform.translate(bit.position_x, bit.position_y, 0);
+    var putInPlace = new famous.core.Transform.translate(meteorBit.position_x, meteorBit.position_y, 0);
 
     var modifierOne = new famous.core.Modifier({
         transform: putInPlace
@@ -100,7 +103,7 @@ Template.map.rendered = function() {
     //     size: [50, 50]
     // });
 
-    // order matters
+    // order matters here
     context
         .add(modifierChain)
         // .add(sizeModifier)
@@ -110,25 +113,23 @@ Template.map.rendered = function() {
     bitSurface.on('click', function() {
       // 
       // ID : so hacky
-      console.log('click', bit._id, bit.content);
-
+      console.log('click', meteorBit._id, meteorBit.content);
+      bitSurface.setContent('clicked.');
       // for Cluster
       // cluster.toggle();
-
     });
 
 
     bitSurface.on('mouseover', function() {
       console.log("bit:hover:in " + Session.get('bitHovering'));
-      Session.set('bitHovering', bit._id);
+      Session.set('bitHovering', meteorBit._id);
       bitSurface.addClass('hover');
-
     });
 
     bitSurface.on('mouseout', function() {
       console.log("bit:hover:out " + Session.get('bitHovering'));
       Session.set('bitHovering', '');
-      bitSurface.removeClass('hover')
+      bitSurface.removeClass('hover');
     });
 
 
