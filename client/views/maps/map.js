@@ -45,7 +45,7 @@ Template.map.rendered = function() {
 
   // get the collection of Bits
   // create surfaces out of each and wire up with its events
-  Bits.find().forEach(function (bit) {
+  Bits.find().forEach(function (meteorBit) {
     
     console.log(meteorBit._id, ":", "x:", meteorBit.position_x, "y:", meteorBit.position_y, ":", meteorBit.type);
     counter += 1;
