@@ -13,11 +13,9 @@ Template.bit.rendered = function() {
 
   var elem = document.querySelector("[data-id='" + this.data._id + "']");
 
-  // hide off canvas for now, while experimenting with famous
-  var offset = 0;
 
-  elem.style.left = this.data.position_x + offset + "px";
-  elem.style.top = this.data.position_y + offset + "px";
+  elem.style.left = this.data.position_x + "px";
+  elem.style.top = this.data.position_y + "px";
   elem.classList.add(this.data.type);
 
   // var drag = new Draggabilly(elem, { 
