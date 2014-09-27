@@ -46,7 +46,7 @@ $ cd your-code-directory
 ```
 
 # once inside, pull down the latest project files:
-$ git clone https://github.com/parallelsio/app-meteor.git`
+$ git clone https://github.com/parallelsio/app-meteor.git
 
 ```
 

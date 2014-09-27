@@ -4,6 +4,31 @@ Template.bit.helpers({
 
 Template.bit.rendered = function() {
 
+  // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
+  Draggable.create(Template.instance().firstNode, {
+    throwProps:true,
+    zIndexBoost:false,
+    onDragEnd:function( event ) {
+      console.log("done dragging.");
+
+      var x = event.pageX;
+      var y = event.pageY;
+
+      var mongoId = this.target.dataset.id;
+      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+      
+      Bits.update( mongoId , {
+        $set: {
+          "position_x": x,
+          "position_y": y
+        }
+      });
+
+      // showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
+      return true;
+    }
+  });
+
   console.log("Template.bit.rendered: " + this.data._id);
 
   // TODO: this should work according to:
@@ -18,31 +43,6 @@ Template.bit.rendered = function() {
   elem.style.top = this.data.position_y + "px";
   elem.classList.add(this.data.type);
 
-  // var drag = new Draggabilly(elem, { 
-  //   handle: 'p'
-  // });
-
-
-  // drag.on('dragEnd', function( instance, event, pointer ) {
-
-  //     var x = instance.position.x;
-  //     var y = instance.position.y;
-
-  //     var mongoId = instance.element.dataset.id;
-  //     console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
-      
-  //     Bits.update( mongoId , {
-  //       $set: {
-  //         "position_x": x,
-  //         "position_y": y
-  //       }
-  //     });
-
-  //     showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
-  //     return true;
-  //   }
-  // );
-
 };
 
 
@@ -55,6 +55,12 @@ Template.bit.events({
     if (event.target.classList.contains('bit')) {
       Session.set('bitHovering', template.data._id);
       console.log("bit:hover:in " + Session.get('bitHovering'));
+
+      // TweenLite.to(Template.instance().firstNode, 0.3, { left:"+=10px", ease:Elastic.easeOut});
+      // var yoyo = myTimeline.yoyo(); //gets current yoyo state
+      // myTimeline.yoyo( true ); //sets yoyo to true
+
+
     }
   },
 
@@ -74,6 +80,7 @@ Template.bit.events({
 
     Session.set('bitEditing',this._id);
     console.log("bit:edit: " + Session.get('bitEditing'));
+
   },
 
   'keyup .bit': function (event, template){

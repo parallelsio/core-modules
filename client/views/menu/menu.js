@@ -17,7 +17,6 @@ Template.menu.rendered = function() {
 
   var menuBar = document.getElementById("menu-bar");
   TweenMax.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
-
-
+  
 };
 
