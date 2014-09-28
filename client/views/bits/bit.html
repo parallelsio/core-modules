@@ -1,32 +1,30 @@
 <template name="bit">
-  <div class="animation-hook">
-    <div data-id="{{ _id }}" class="bit {{ type }}">
-      <div class="container">
-        <div class="face front {{ color }}">
-          <div class="content">
+  <div data-id="{{ _id }}" class="bit {{ type }}">
+    <div class="container">
+      <div class="face front {{ color }}">
+        <div class="content">
 
-            {{#if isEditingThisBit }}
+          {{#if isEditingThisBit }}
 
-              <input class="editbit" type="text" autofocus value={{ content }}>
+            <input class="editbit" type="text" autofocus value={{ content }}>
 
+          {{ else }}
+
+            {{#if filename }}
+              <img src="images/1000/{{ filename }}.jpg">
+                
             {{ else }}
+              {{ content }}
+            {{/if}}
 
-              {{#if filename }}
-                <img src="images/1000/{{ filename }}.jpg">
-                  
-              {{ else }}
-                {{ content }}
-              {{/if}}
+          {{/if }}
 
-            {{/if }}
-
-          </div>
         </div>
-
-
-        <p class="ui-widget-header"></p>
-
       </div>
+
+
+      <p class="ui-widget-header"></p>
+
     </div>
   </div>
 </template>

@@ -2,45 +2,35 @@
 Template.bit.rendered = function() {
 
   var element = document.querySelector("[data-id='" + this.data._id + "']");
-  element.classList.add(this.data.type);
+  // element.classList.add(this.data.type);
 
-  // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
-  // Draggable.create(Template.instance().firstNode, {
-  //   throwProps:true,
-  //   zIndexBoost:false,
-  //   onDragEnd:function( event ) {
-  //     console.log("done dragging.");
-
-  //     var x = event.pageX;
-  //     var y = event.pageY;
-
-  //     var mongoId = this.target.dataset.id;
-  //     console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
-      
-  //     Bits.update( mongoId , {
-  //       $set: {
-  //         "position_x": x,
-  //         "position_y": y
-  //       }
-  //     });
-
-  //     // showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
-  //     return true;
-  //   }
+  // Display bits in coordinate space using transform: translate3d(), with gpu offloading
+  // Technique 1: Via GreenSock
+  // TweenMax.set(element, { 
+  //   x: this.data.position_x,
+  //   y: this.data.position_y,
+  //   force3D:true 
   // });
 
-  console.log("Template.bit.rendered: " + this.data._id);
-  console.log("Template.bit.rendered: " + element.data._id);
+  // Technique 2: Manually. 
+  transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0px)";
+  element.style.webkitTransform = transformString;
+  element.style.MozTransform = transformString;
+  element.style.msTransform = transformString;
+  element.style.OTransform = transformString;
+  element.style.transform = transformString;
+
   
   /*
       exploring 4 ways to position bits from worst to best
       http://www.html5rocks.com/en/tutorials/speed/high-performance-animations
       ******************************************************
 
-        1) layout positioning (worst) : 
+        1) layout positioning (eh) : 
                 
                 http://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/
-                position: absolute; top: 20px; left: 20px;
+                http://blog.tumult.com/2013/02/28/transform-translate-vs-top-left
+                top: 20px; left: 20px;
            
 
         2) 2D transforms: (better) :
@@ -94,46 +84,67 @@ Template.bit.rendered = function() {
                   and could change in the future (which is why we don’t document or encourage it). 
                   jsperf.com/webkitcssmatrix-vs-translate3d 
 
-
+                  Note, how you build the object matters:
+                  https://twitter.com/greensock/status/335879969907539968
 
         4) Tween via Greensock (which uses 2D transforms under the hood).
-           unless the Z is set to 0.1 on the element
-           in which case Greensock will use Matrix3D
+           unless either
+           -- the Z is set to 0.1 on the element
+              or
+           -- force3D: true 
+           in which case Greensock will use Matrix3D instead
   */
 
-  
-
-  transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px)";
-  // element.style.webkitTransform = transformString;
-  // element.style.MozTransform = transformString;
-  // element.style.msTransform = transformString;
-  // element.style.OTransform = transformString;
-  element.style.transform = transformString;
 
 
-  // other techniques
-  // matrix = new WebKitCSSMatrix().translate(0,0,0);
-  // http://css-tricks.com/controlling-css-animations-transitions-javascript/
-  // var translated3D = new WebKitCSSMatrix(window.getComputedStyle(element, null).webkitTransform);
-  // TweenLite.to(element, 2, {rotationX:45, scaleX:0.8, z:-300});
-
-
-
-
-
-  this.find('.animation-hook')._uihooks = {
+  // set hooks for loading shimmers/wipe transitions
+  // NOT WORKING YET, not sure why
+  this.firstNode.parentNode._uihooks = {
 
     insertElement: function(node, next) {
+      console.log('_uihook: moment before bit insert');
+      
       // TODO: add a staggered fadeIn shimmer via Greensock
-      console.log('about to insert bit');
       $(node).insertBefore(next);  
     },
 
     removeElement: function(node) {
+      console.log('_uihook: moment before bit remove');
+
       // TODO: add a staggered fadeOut shimmer via Greensock
       $(node).remove();
     }
   };
+
+
+
+  // Needs to happen after position set, or else positions 
+  // via manual transforms get overwritten by Draggable
+  // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
+  Draggable.create(Template.instance().firstNode, {
+    throwProps:true,
+    zIndexBoost:false,
+    onDragEnd:function( event ) {
+      console.log("done dragging.");
+
+      var x = event.pageX;
+      var y = event.pageY;
+
+      var mongoId = this.target.dataset.id;
+      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+      
+      Bits.update( mongoId , {
+        $set: {
+          "position_x": x,
+          "position_y": y
+        }
+      });
+
+      // showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
+      return true;
+    }
+  });
+
 
 
 };

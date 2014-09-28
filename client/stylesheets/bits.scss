@@ -1,26 +1,10 @@
 .bit {
-  display: inline-block;
-   -webkit-font-smoothing:antialiased;
-
+  position: absolute;
+  
+  -webkit-font-smoothing:antialiased;
   transition: opacity 500ms ease-in;
-  // opacity: 1;
-  
-    /* we apply a 3d transform just to improve rendering
-      adding an imperceivable Z translation 
-      causes Greensock to send this to the GPU as a 3D transform,
-      improving performance on high powered devices
-      http://codepen.io/GreenSock/pen/ywJFi
-     */
-    -webkit-transform:translateZ(0.1px);
-    -moz-transform:translateZ(0.1px);
-    -o-transform:translateZ(0.1px);
-    -ms-transform:translateZ(0.1px);
-    transform:translateZ(0.1px);
-  
-}
+  opacity: 1;
 
-.animation-hook{
-  display: inline-block;
   
 }
 
