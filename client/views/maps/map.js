@@ -5,11 +5,6 @@ Template.map.helpers({
 });
 
 
-Template.map.rendered = function() {
-  console.log('map rendered.');
-};
-
-
 
 Template.map.events({
   'dblclick .map': function (event, template){

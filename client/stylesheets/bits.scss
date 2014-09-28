@@ -1,5 +1,27 @@
 .bit {
-    position: absolute;
+  display: inline-block;
+   -webkit-font-smoothing:antialiased;
+
+  transition: opacity 500ms ease-in;
+  // opacity: 1;
+  
+    /* we apply a 3d transform just to improve rendering
+      adding an imperceivable Z translation 
+      causes Greensock to send this to the GPU as a 3D transform,
+      improving performance on high powered devices
+      http://codepen.io/GreenSock/pen/ywJFi
+     */
+    -webkit-transform:translateZ(0.1px);
+    -moz-transform:translateZ(0.1px);
+    -o-transform:translateZ(0.1px);
+    -ms-transform:translateZ(0.1px);
+    transform:translateZ(0.1px);
+  
+}
+
+.animation-hook{
+  display: inline-block;
+  
 }
 
 
@@ -105,7 +127,7 @@
   background-color: white;
   line-height: 1.3em;
   font-size:1.4em;
-  padding: 0.75em;
+  padding: 0.25em;
 }
 
 .bit.hover {
@@ -113,10 +135,6 @@
   -moz-box-shadow:    3px 4px 11px 0px rgba(50, 50, 50, 0.17);
   box-shadow:         3px 4px 11px 0px rgba(50, 50, 50, 0.17);
 }
-
-
-
-
 
 
 
