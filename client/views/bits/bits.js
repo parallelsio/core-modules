@@ -78,10 +78,10 @@ Template.bit.rendered = function() {
                   http://www.eleqtriq.com/wp-content/static/demos/2010/css3d/matrix3dexplorer.html
                   http://www.senocular.com/flash/tutorials/transformmatrix
 
-                  Any transform that has a 3D operation as one of its functions will trigger 
+                  Transforms that have a 3D operation as one of its functions will trigger 
                   hardware compositing (GPU), even when the actual transform is 2D, or not doing 
-                  anything at all (such as translate3d(0,0,0)). Note this is just current behaviour, 
-                  and could change in the future (which is why we don’t document or encourage it). 
+                  anything at all (such as translate3d(0,0,0)). Hacky, don't depend on it, browsers
+                  may reoptimize. 
                   jsperf.com/webkitcssmatrix-vs-translate3d 
 
                   Note, how you build the object matters:
@@ -127,8 +127,10 @@ Template.bit.rendered = function() {
     onDragEnd:function( event ) {
       console.log("done dragging.");
 
-      var x = event.pageX;
-      var y = event.pageY;
+      var x = this.endX;
+      var y = this.endY;
+
+      console.log(this.maxX, this.minX, this.maxY, this.minY);
 
       var mongoId = this.target.dataset.id;
       console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
