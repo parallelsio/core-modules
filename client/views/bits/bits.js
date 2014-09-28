@@ -124,13 +124,18 @@ Template.bit.rendered = function() {
   Draggable.create(Template.instance().firstNode, {
     throwProps:true,
     zIndexBoost:false,
+    
+    onDragStart:function(event){
+      var sound = new Howl({
+        urls: ['sounds/aim_buddy_logging_in.mp3']
+      }).play();
+    },
+
     onDragEnd:function( event ) {
       console.log("done dragging.");
 
       var x = this.endX;
       var y = this.endY;
-
-      console.log(this.maxX, this.minX, this.maxY, this.minY);
 
       var mongoId = this.target.dataset.id;
       console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
@@ -141,6 +146,10 @@ Template.bit.rendered = function() {
           "position_y": y
         }
       });
+
+      var sound = new Howl({
+        urls: ['sounds/glue.mp3']
+      }).play();
 
       // showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
       return true;
@@ -201,6 +210,10 @@ Template.bit.events({
       Bits.update( this._id , {
         $set: { "content": template.find('.editbit').value }
       });
+
+      var sound = new Howl({
+        urls: ['sounds/ch-chaing-v2.mp3']
+      }).play();
 
       Session.set('bitEditing',null);
     }

@@ -5,6 +5,12 @@ Template.map.helpers({
 });
 
 
+Template.map.rendered = function(){
+
+      var sound = new Howl({
+        urls: ['sounds/welcome-v1.mp3']
+      }).play();
+};
 
 Template.map.events({
   'dblclick .map': function (event, template){
