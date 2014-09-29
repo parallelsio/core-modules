@@ -2,7 +2,6 @@
 Template.bit.rendered = function() {
 
   var element = document.querySelector("[data-id='" + this.data._id + "']");
-  // element.classList.add(this.data.type);
 
   // Display bits in coordinate space using transform: translate3d(), with gpu offloading
   // Technique 1: Via GreenSock
@@ -151,7 +150,6 @@ Template.bit.rendered = function() {
         urls: ['sounds/glue.mp3']
       }).play();
 
-      // showNotification("bit " + mongoId + " position saved: x: " + x + " y: " + y);
       return true;
     }
   });
@@ -176,8 +174,6 @@ Template.bit.events({
       // TweenLite.to(Template.instance().firstNode, 0.3, { left:"+=10px", ease:Elastic.easeOut});
       // var yoyo = myTimeline.yoyo(); //gets current yoyo state
       // myTimeline.yoyo( true ); //sets yoyo to true
-
-
     }
   },
 
@@ -191,13 +187,18 @@ Template.bit.events({
     }
   },
 
+  'click .bit': function (event, template){
+
+    // TODO: Zelda triforce focus here, zoom sound
+    console.log("bit:click: " + this._id);
+  },
+
   'dblclick .bit': function (event, template){
     event.preventDefault();
     event.stopPropagation();
 
     Session.set('bitEditing',this._id);
     console.log("bit:edit: " + Session.get('bitEditing'));
-
   },
 
   'keyup .bit': function (event, template){
