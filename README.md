@@ -84,7 +84,7 @@ Current challenges:
 * Modeling documents in graph based data structures with Neo4J
 * Decentralized (no-cloud) infrastructure / file storage
 * Browser extensions for clipping web content
-* Matrix transformations-heavy, physics-based interactions with Famo.us JS
+* Matrix transformations-heavy, physics-based interactions with GreenSock JS
 * Interactive documentation, think Bret Vector reactive documents
 * iOS / Android apps
 
