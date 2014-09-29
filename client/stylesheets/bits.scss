@@ -1,5 +1,11 @@
 .bit {
-    position: absolute;
+  position: absolute;
+  
+  -webkit-font-smoothing:antialiased;
+  transition: opacity 500ms ease-in;
+  opacity: 1;
+
+  
 }
 
 
@@ -105,7 +111,7 @@
   background-color: white;
   line-height: 1.3em;
   font-size:1.4em;
-  padding: 0.75em;
+  padding: 0.25em;
 }
 
 .bit.hover {
@@ -113,10 +119,6 @@
   -moz-box-shadow:    3px 4px 11px 0px rgba(50, 50, 50, 0.17);
   box-shadow:         3px 4px 11px 0px rgba(50, 50, 50, 0.17);
 }
-
-
-
-
 
 
 
