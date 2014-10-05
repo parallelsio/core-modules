@@ -4,10 +4,6 @@
 // https://github.com/meteor/meteor/issues/1009
 _ = lodash;
 
-settings = {
-  isSoundOn: true
-};
-
 
 
 Meteor.startup(function(){

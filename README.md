@@ -53,8 +53,9 @@ $ git clone https://github.com/parallelsio/app-meteor.git
 
 ```
 
-# start local server, loads up test dataset automatically
-$ meteor  
+# go to /settings.json (root folder), configure your options
+# start local server which loads up test dataset automatically
+$ meteor run --settings settings.json
 
 # Browse site at http://localhost:3000
 

@@ -105,10 +105,11 @@ Template.bit.rendered = function() {
       $(node).fadeIn(1);  
       $(node).insertBefore(next);
 
-      var time = new TimelineLite( { onComplete: completeHandler });
+      // TODO: include timeline lite
+      // var time = new TimelineLite( { onComplete: completeHandler });
 
-      time.To(node, 0.10, { scale: 1.1, ease:Elastic.easeOut } )
-          .To(node, 0.10, { scale: 1.0, ease:Elastic.easeOut } );
+      // time.To(node, 0.10, { scale: 1.1, ease:Elastic.easeOut } )
+      //     .To(node, 0.10, { scale: 1.0, ease:Elastic.easeOut } );
 
       console.log('done inserting bit');
 
@@ -138,9 +139,7 @@ Template.bit.rendered = function() {
     zIndexBoost:false,
     
     onDragStart:function(event){
-      // var sound = new Howl({
-      //   urls: ['sounds/aim_buddy_logging_in.mp3']
-      // }).play();
+      
     },
 
     onDragEnd:function( event ) {
@@ -158,10 +157,8 @@ Template.bit.rendered = function() {
           "position_y": y
         }
       });
-
-      var sound = new Howl({
-        urls: ['sounds/glue.mp3']
-      }).play();
+      
+      sound.play('glue.mp3');
 
       return true;
     }

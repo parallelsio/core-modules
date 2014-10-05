@@ -10,7 +10,7 @@ Template.map.helpers({
 
 Template.map.rendered = function(){
   
-  soundFx.playSound('welcome-v1.mp3');
+  sound.play('welcome-v1.mp3');
 
 };
 
