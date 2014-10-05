@@ -97,38 +97,44 @@ Template.bit.rendered = function() {
 
     insertElement: function(node, next) {
 
+ 
+
       console.log('_uihook: moment before bit insert ...');
 
-      $(node).hide(); // not necessary ?
+      // TODO: ?
+      // jquery fadein is redundant to GSAP capabilities, 
+      // but for some reason, removing it flickers the bit at 0,0 
+      // before drawing at proper x, y location
+      $(node)
+        .hide()      
+        .fadeIn(1)  
+        // .width() // retrigger render?
+        .insertBefore(next);
 
-      // jquery fade in is redundant to opacity via GSAP, 
-      // but removing this flickers the bit at 0,0
-      $(node).fadeIn(1);  
-      $(node).insertBefore(next);
+      var timeline = new TimelineMax({ 
+        onComplete: timelineDone, 
+        onCompleteParams:[ node ]
+      });
+
+      timeline
+        .to($(node), 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
+        .to($(node), 0.15, { scale: 1.15, ease:Bounce.easeOut } )
+        .to($(node), 0.10, { scale: 1 } );
 
 
-      var tl = new TimelineMax({ repeat:3, yoyo:true, repeatDelay:1, onComplete:timelineDone, onCompleteParams:["test1", "test2"]});
-      tl.staggerTo(node, 1, {opacity:0, rotation:360}, 0.2);
-      function timelineDone(p1, p2) {
-          console.log("timeline done. params: " + p1 + " and " + p2);
+     function timelineDone(node){
+        console.log("timeline tween done.");
+         document.querySelector(".editbit").focus();
       }
-
-      console.log('done inserting bit');
-
-      // function completeHandler(){
-      //   console.log('done tweening');
-      //   document.querySelector("[data-id='" + node.data._id + "']").focus();
-      // }
 
       
     },
 
     removeElement: function(node) {
       console.log('_uihook: moment before bit remove');
-
-      // TODO: add a staggered fadeOut shimmer via Greensock
       $(node).remove();
     }
+
   };
 
 
