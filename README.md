@@ -53,7 +53,16 @@ $ git clone https://github.com/parallelsio/app-meteor.git
 
 ```
 
-# go to /settings.json (root folder), configure your options
+# set up your settings: copy the defaults 
+$ cp settings.json.sample settings.json
+
+# edit the settings.json to configure your options
+
+```
+
+
+```
+
 # start local server which loads up test dataset automatically
 $ meteor run --settings settings.json
 
