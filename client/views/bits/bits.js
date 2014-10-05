@@ -105,18 +105,19 @@ Template.bit.rendered = function() {
       $(node).fadeIn(1);  
       $(node).insertBefore(next);
 
-      // TODO: include timeline lite
-      // var time = new TimelineLite( { onComplete: completeHandler });
 
-      // time.To(node, 0.10, { scale: 1.1, ease:Elastic.easeOut } )
-      //     .To(node, 0.10, { scale: 1.0, ease:Elastic.easeOut } );
+      var tl = new TimelineMax({ repeat:3, yoyo:true, repeatDelay:1, onComplete:timelineDone, onCompleteParams:["test1", "test2"]});
+      tl.staggerTo(node, 1, {opacity:0, rotation:360}, 0.2);
+      function timelineDone(p1, p2) {
+          console.log("timeline done. params: " + p1 + " and " + p2);
+      }
 
       console.log('done inserting bit');
 
-      function completeHandler(){
-        console.log('done tweening');
-        document.querySelector("[data-id='" + node.data._id + "']").focus();
-      }
+      // function completeHandler(){
+      //   console.log('done tweening');
+      //   document.querySelector("[data-id='" + node.data._id + "']").focus();
+      // }
 
       
     },
