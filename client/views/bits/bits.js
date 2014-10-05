@@ -13,7 +13,7 @@ Template.bit.rendered = function() {
 
   // Technique 2: Manually. Force Z index for GPU Hardware Acceleration
   transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0.01px)";
-  $(element).css("transform", transformString);
+  $(element).css( { transform: transformString } );
   
   /*
       exploring 4 ways to position bits from worst to best
