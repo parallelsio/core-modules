@@ -135,11 +135,11 @@ Template.bit.rendered = function() {
   // via manual transforms get overwritten by Draggable
   // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   Draggable.create(Template.instance().firstNode, {
-    throwProps:true,
+    throwProps:false,
     zIndexBoost:false,
     
     onDragStart:function(event){
-      
+
     },
 
     onDragEnd:function( event ) {
