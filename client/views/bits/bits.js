@@ -223,9 +223,7 @@ Template.bit.events({
         $set: { "content": template.find('.editbit').value }
       });
 
-      var sound = new Howl({
-        urls: ['sounds/ch-chaing-v2.mp3']
-      }).play();
+      sound.play('ch-chaing-v2.mp3');
 
       Session.set('bitEditing',null);
     }
