@@ -3,15 +3,10 @@ Template.bit.rendered = function() {
 
   var element = document.querySelector("[data-id='" + this.data._id + "']");
 
-  // Display bits in coordinate space using transform: translate3d(), with gpu offloading
-  // Technique 1: Via GreenSock
-  // TweenMax.set(element, { 
-  //   x: this.data.position_x,
-  //   y: this.data.position_y,
-  //   force3D:true 
-  // });
+  // TODO: hide + then stagger + shimmer back in
 
-  // Technique 2: Manually. Force Z index for GPU Hardware Acceleration
+  // Technique 3: Display bits in coordinate space using transform: translate3d()
+  // Manually. Force Z index for GPU Hardware Acceleration
   transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0.01px)";
   $(element).css( { transform: transformString } );
   
@@ -48,7 +43,7 @@ Template.bit.rendered = function() {
               https://dev.opera.com/articles/understanding-3d-transforms
               https://desandro.github.io/3dtransforms/docs/introduction.html
 
-                  transform: perspective( 600px );     # activate 3D
+                  transform: perspective( 600px );     # activates 3D
 
                   transform: rotate3d( tx, ty, tz )    # a single function in short form
                   ---- or -----
@@ -87,7 +82,13 @@ Template.bit.rendered = function() {
               or
            -- force3D: true 
            in which case Greensock will use Matrix3D instead
-  */
+
+                TweenMax.set(element, { 
+                  x: this.data.position_x,
+                  y: this.data.position_y,
+                  force3D:true 
+                });
+*/  
 
 
 
