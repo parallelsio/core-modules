@@ -11,14 +11,10 @@ Template.bit.rendered = function() {
   //   force3D:true 
   // });
 
-  // Technique 2: Manually. 
-  transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0px)";
-  element.style.webkitTransform = transformString;
-  element.style.MozTransform = transformString;
-  element.style.msTransform = transformString;
-  element.style.OTransform = transformString;
+  // Technique 2: Manually. Force Z index for GPU Hardware Acceleration
+  transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0.01px)";
   element.style.transform = transformString;
-
+  element.css({transform: transformString});
   
   /*
       exploring 4 ways to position bits from worst to best
@@ -97,14 +93,31 @@ Template.bit.rendered = function() {
 
 
   // set hooks for loading shimmers/wipe transitions
-  // NOT WORKING YET, not sure why
   this.firstNode.parentNode._uihooks = {
 
     insertElement: function(node, next) {
-      console.log('_uihook: moment before bit insert');
       
-      // TODO: add a staggered fadeIn shimmer via Greensock
-      $(node).insertBefore(next);  
+
+      console.log('_uihook: moment before bit insert ...');
+
+
+      // var tl = new TimelineLite({ onComplete:function (){
+      //   console.log('done shimmer in');
+      // } });
+
+          $(node)
+            .css( "display", "none" )
+            .insertBefore(next)
+            .removeClass('hidden')
+
+            console.log('done inserting bit');
+
+      // TweenLite.to(node, 0.1, {opacity:100});
+
+      // tl.from(node, 0.5, {left:100, opacity:0});
+      // tl.from(node, 0.5, {left:-100, opacity:0});
+      // t1.to(element, 1, {x:100, y:20, z:300});
+ 
     },
 
     removeElement: function(node) {
@@ -125,9 +138,9 @@ Template.bit.rendered = function() {
     zIndexBoost:false,
     
     onDragStart:function(event){
-      var sound = new Howl({
-        urls: ['sounds/aim_buddy_logging_in.mp3']
-      }).play();
+      // var sound = new Howl({
+      //   urls: ['sounds/aim_buddy_logging_in.mp3']
+      // }).play();
     },
 
     onDragEnd:function( event ) {
