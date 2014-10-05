@@ -95,28 +95,29 @@ Template.bit.rendered = function() {
   this.firstNode.parentNode._uihooks = {
 
     insertElement: function(node, next) {
-      
 
       console.log('_uihook: moment before bit insert ...');
 
+      $(node).hide(); // not necessary ?
 
-      // var tl = new TimelineLite({ onComplete:function (){
-      //   console.log('done shimmer in');
-      // } });
+      // jquery fade in is redundant to opacity via GSAP, 
+      // but removing this flickers the bit at 0,0
+      $(node).fadeIn(1);  
+      $(node).insertBefore(next);
 
-          $(node)
-            .css( "display", "none" )
-            .insertBefore(next)
-            .removeClass('hidden')
+      var time = new TimelineLite( { onComplete: completeHandler });
 
-            console.log('done inserting bit');
+      time.To(node, 0.10, { scale: 1.1, ease:Elastic.easeOut } )
+          .To(node, 0.10, { scale: 1.0, ease:Elastic.easeOut } );
 
-      // TweenLite.to(node, 0.1, {opacity:100});
+      console.log('done inserting bit');
 
-      // tl.from(node, 0.5, {left:100, opacity:0});
-      // tl.from(node, 0.5, {left:-100, opacity:0});
-      // t1.to(element, 1, {x:100, y:20, z:300});
- 
+      function completeHandler(){
+        console.log('done tweening');
+        document.querySelector("[data-id='" + node.data._id + "']").focus();
+      }
+
+      
     },
 
     removeElement: function(node) {

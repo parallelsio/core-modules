@@ -1,42 +1,6 @@
 // UIHOOKS examples
 
 
-
-// https://github.com/percolatestudio/transition-helper
-// adding hooks to animate the bits onto the canvas on load
-// bit hooks have to be on their parent, which is the map
-var OFFSCREEN_CLASS = 'off-screen';
-var EVENTS = 'webkitTransitionEnd oTransitionEnd transitionEnd msTransitionEnd transitionend';
-
-
-// var hooks = {
-
-//     insertElement: function(node, next) {
-
-//       console.log('inserting bit');
-//       $(node)
-//         .addClass(OFFSCREEN_CLASS)
-//         .insertBefore(next);
-      
-//       Deps.afterFlush(function() {
-//         // call width to force the browser to draw it
-//         $(node).width();
-//         $(node).removeClass(OFFSCREEN_CLASS);
-//       });
-//     },
-    
-//     removeElement: function(node) {
-//       $(node).addClass(OFFSCREEN_CLASS)
-//         .on(EVENTS, function() {
-//           $(node).remove();
-//         });
-//     }
-//   };
-
-
-
-
-
 // Template.emailOverlay.rendered = function() {
 //   this.find('#email-hook')._uihooks = {
 //     insertElement: function(node, next, done) {

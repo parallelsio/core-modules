@@ -4,6 +4,11 @@
 // https://github.com/meteor/meteor/issues/1009
 _ = lodash;
 
+settings = {
+  isSoundOn: true
+};
+
+
 
 Meteor.startup(function(){
 
@@ -40,8 +45,6 @@ Meteor.startup(function(){
     console.log(Bits.find().count() + ' bits... updated via deps');
   });
 
-
-  
 
 });
 

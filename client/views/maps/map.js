@@ -5,11 +5,13 @@ Template.map.helpers({
 });
 
 
-Template.map.rendered = function(){
 
-      var sound = new Howl({
-        urls: ['sounds/welcome-v1.mp3']
-      }).play();
+
+
+Template.map.rendered = function(){
+  
+  soundFx.playSound('welcome-v1.mp3');
+
 };
 
 Template.map.events({
@@ -29,7 +31,6 @@ Template.map.events({
 
       Session.set('bitEditing', id);
 
-      document.querySelector("[data-id='" + id + "']").focus();
     }
   }
   
