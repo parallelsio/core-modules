@@ -212,7 +212,7 @@ Template.bit.events({
       Session.set('bitHovering', '');
       console.log("bit:hover:out " + Session.get('bitHovering'));
       // $(event.target).removeClass('selected');
-      
+
     }
   },
 
@@ -220,6 +220,20 @@ Template.bit.events({
 
     // TODO: Zelda triforce focus here, zoom sound
     console.log("bit:click: " + this._id);
+
+    // creates canvas 550 × 400 at 10, 50
+    var paper = Raphael(10, 50, 550, 400);
+
+    // creates rectangle at x = 50, y = 40, with a width of 200 and height of 100
+    var rect = paper.rect(50, 40, 200, 100);
+    
+    // sets the fill attribute of the rectangle to red (#f00)
+    rect.attr("fill", "#f00");
+    
+    // tween the fill to blue (#00f) and x to 100, y to 100, 
+    // width to 100 and height to 50 over the course of 3 seconds using an ease of Power1.easeInOut
+    TweenLite.to(rect, 3, { raphael:{ fill:"#00f", x:100, y:100, width:100, height:50 }, ease:Power1.easeInOut});
+
   },
 
   'dblclick .bit': function (event, template){
