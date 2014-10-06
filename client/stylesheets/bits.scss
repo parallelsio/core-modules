@@ -1,17 +1,7 @@
-.hidden {
-  opacity: 0;
-}
-
 .bit {
   position: absolute;
-  
-  -webkit-font-smoothing:antialiased;
-  transition: opacity 500ms ease-in;
-  opacity: 1;
-
-  
+  -webkit-font-smoothing: antialiased;
 }
-
 
 .bit .container {
     color: #666;
@@ -36,11 +26,6 @@
     width: 100%;
 }
 
-.bit .face {
-    display: block;
-}
-
-
 
 .bit.image .container .face.front { 
     padding: 0;
@@ -63,49 +48,6 @@
     font-size:11px; 
 } 
 
-
-
-
-
-
-// .blinking {
-//   -webkit-animation: pulse 0.5s alternate infinite;
-//   -moz-animation: pulse 0.5s alternate infinite;
-// }
-
-// @-webkit-keyframes pulse {
-//   0% {
-//     background: rgba(255,255,255,1);
-//     box-shadow: inset 0px 0px 10px 2px rgba(117,182,255,0.5),
-//                       0px 0px 40px 2px rgba(105,135,255,1);
-//   }
-//   100% {
-//     background: rgba(255,255,255,0);
-//     box-shadow: inset 0px 0px 10px 2px rgba(117,182,255,0.5),
-//                       0px 0px 30px 2px rgba(105,135,255,0.3);
-//   }
-// }
-  
-// @-moz-keyframes pulse {
-//   0% {
-//     background: rgba(255,255,255,1);
-//     box-shadow: inset 0px 0px 10px 2px rgba(117,182,255,0.5),
-//                       0px 0px 40px 2px rgba(105,135,255,1);
-//   }
-//   100% {
-//     background: rgba(255,255,255,0);
-//     box-shadow: inset 0px 0px 10px 2px rgba(117,182,255,0.5),
-//                       0px 0px 30px 2px rgba(105,135,255,0.3);
-//   }
-// }
-
-
-.crop_cursor
-{
-  cursor:crosshair !important;
-}
-
-
 .bit img { 
   width:200px;
 }
@@ -117,18 +59,6 @@
   font-size:1.4em;
   padding: 0.25em;
 }
-
-.bit.hover {
-  -webkit-box-shadow: 3px 4px 11px 0px rgba(50, 50, 50, 0.17);
-  -moz-box-shadow:    3px 4px 11px 0px rgba(50, 50, 50, 0.17);
-  box-shadow:         3px 4px 11px 0px rgba(50, 50, 50, 0.17);
-}
-
-
-
-
-
-
 
 
 

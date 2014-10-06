@@ -106,7 +106,11 @@ Template.bit.rendered = function() {
       // but for some reason, removing it flickers the bit at 0,0 
       // before drawing at proper x, y location
       $(node)
-        .hide()      
+        .hide()  
+    
+        // TODO: will this work instead of hide / fadeIn?
+        // TweenMax.set($('.className'), {alpha: 0});
+
         .fadeIn(1)  
         // .width() // retrigger render?
         .insertBefore(next);

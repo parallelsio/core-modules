@@ -11,9 +11,10 @@ underscore
 iron:router
 alethes:lodash
 waitingkuo:normalize
-fourseven:scss
 meteorhacks:kadira
 meteorhacks:inject-initial
 infinitedg:gsap
 ovcharik:howler
+fourseven:scss
+wolves:bourbon
 
