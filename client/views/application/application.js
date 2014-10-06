@@ -115,16 +115,14 @@ Meteor.startup(function(){
 
       circle.attr({ fill: "blue" });
 
-      // Paper.path();
-
-              
-      r.rect(0, 0, 619, 419, 10).attr({stroke: "#666"});
-      r.text(310, 20, "Drag the points to change the curves").attr({fill: "#fff", "font-size": 16});
       
-      function curve(x, y, ax, ay, bx, by, zx, zy, color) {
+      function drawBezierCurve(x, y, ax, ay, bx, by, zx, zy, color) {
+
         var path = [["M", x, y], ["C", ax, ay, bx, by, zx, zy]],
             path2 = [["M", x, y], ["L", ax, ay], ["M", bx, by], ["L", zx, zy]],
-            curve = r.path(path).attr({stroke: color || Raphael.getColor(), "stroke-width": 4, "stroke-linecap": "round"}),
+           
+            curve = r.path(path).attr({ stroke: color || Raphael.getColor(), "stroke-width": 10, "stroke-linecap": "round"}),
+           
             controls = r.set(
                 r.path(path2).attr({stroke: "#ccc", "stroke-dasharray": ". "}),
                 r.circle(x, y, 5).attr(discattr),
@@ -178,6 +176,7 @@ Meteor.startup(function(){
               path2[3][2] = Y;
               controls[3].update(x, y);
           };
+
           controls.drag(move, up);
       }
 
@@ -191,14 +190,15 @@ Meteor.startup(function(){
           this.dx = this.dy = 0;
       }
 
-      curve(70, 100, 110, 100, 130, 200, 170, 200, "hsb(0, .75, .75)");
-      curve(170, 100, 210, 100, 230, 200, 270, 200, "hsb(.8, .75, .75)");
-      curve(270, 100, 310, 100, 330, 200, 370, 200, "hsb(.3, .75, .75)");
-      curve(370, 100, 410, 100, 430, 200, 470, 200, "hsb(.6, .75, .75)");
-      curve(470, 100, 510, 100, 530, 200, 570, 200, "hsb(.1, .75, .75)");
+      drawBezierCurve(270, 100, 310, 100, 330, 200, 370, 200, "hsb(.3, .75, .75)");
 
 
 
+      $(this).mousemove( function(event) {
+        var mouse = utility.getPosition();
+        console.log("mouse utility: ", mouse.x, mouse.y);
+        console.log("mouse event.page_: ", event.pageX, event.pageY);
+      });
       
       // tween the fill to blue (#00f) and x to 100, y to 100, 
       // width to 100 and height to 50 over the course of 3 seconds using an ease of Power1.easeInOut
