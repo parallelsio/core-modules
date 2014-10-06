@@ -3,22 +3,12 @@ Template.bit.rendered = function() {
 
   var element = document.querySelector("[data-id='" + this.data._id + "']");
 
-  // Display bits in coordinate space using transform: translate3d(), with gpu offloading
-  // Technique 1: Via GreenSock
-  // TweenMax.set(element, { 
-  //   x: this.data.position_x,
-  //   y: this.data.position_y,
-  //   force3D:true 
-  // });
+  // TODO: hide + then stagger + shimmer back in
 
-  // Technique 2: Manually. 
-  transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0px)";
-  element.style.webkitTransform = transformString;
-  element.style.MozTransform = transformString;
-  element.style.msTransform = transformString;
-  element.style.OTransform = transformString;
-  element.style.transform = transformString;
-
+  // Technique 3: Display bits in coordinate space using transform: translate3d()
+  // Manually. Force Z index for GPU Hardware Acceleration
+  transformString =  "translate3d(" + this.data.position_x + "px, " + this.data.position_y + "px, 0.01px)";
+  $(element).css( { transform: transformString } );
   
   /*
       exploring 4 ways to position bits from worst to best
@@ -53,7 +43,7 @@ Template.bit.rendered = function() {
               https://dev.opera.com/articles/understanding-3d-transforms
               https://desandro.github.io/3dtransforms/docs/introduction.html
 
-                  transform: perspective( 600px );     # activate 3D
+                  transform: perspective( 600px );     # activates 3D
 
                   transform: rotate3d( tx, ty, tz )    # a single function in short form
                   ---- or -----
@@ -92,27 +82,63 @@ Template.bit.rendered = function() {
               or
            -- force3D: true 
            in which case Greensock will use Matrix3D instead
-  */
+
+                TweenMax.set(element, { 
+                  x: this.data.position_x,
+                  y: this.data.position_y,
+                  force3D:true 
+                });
+*/  
 
 
 
   // set hooks for loading shimmers/wipe transitions
-  // NOT WORKING YET, not sure why
   this.firstNode.parentNode._uihooks = {
 
     insertElement: function(node, next) {
-      console.log('_uihook: moment before bit insert');
+
+ 
+
+      console.log('_uihook: moment before bit insert ...');
+
+      // TODO: ?
+      // jquery fadein is redundant to GSAP capabilities, 
+      // but for some reason, removing it flickers the bit at 0,0 
+      // before drawing at proper x, y location
+      $(node)
+        .hide()  
+    
+        // TODO: will this work instead of hide / fadeIn?
+        // TweenMax.set($('.className'), {alpha: 0});
+
+        .fadeIn(1)  
+        // .width() // retrigger render?
+        .insertBefore(next);
+
+      var timeline = new TimelineMax({ 
+        onComplete: timelineDone, 
+        onCompleteParams:[ node ]
+      });
+
+      timeline
+        .to($(node), 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
+        .to($(node), 0.15, { scale: 1.15, ease:Bounce.easeOut } )
+        .to($(node), 0.10, { scale: 1 } );
+
+
+     function timelineDone(node){
+        console.log("timeline tween done.");
+         document.querySelector(".editbit").focus();
+      }
+
       
-      // TODO: add a staggered fadeIn shimmer via Greensock
-      $(node).insertBefore(next);  
     },
 
     removeElement: function(node) {
       console.log('_uihook: moment before bit remove');
-
-      // TODO: add a staggered fadeOut shimmer via Greensock
       $(node).remove();
     }
+
   };
 
 
@@ -121,13 +147,11 @@ Template.bit.rendered = function() {
   // via manual transforms get overwritten by Draggable
   // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   Draggable.create(Template.instance().firstNode, {
-    throwProps:true,
+    throwProps:false,
     zIndexBoost:false,
     
     onDragStart:function(event){
-      var sound = new Howl({
-        urls: ['sounds/aim_buddy_logging_in.mp3']
-      }).play();
+
     },
 
     onDragEnd:function( event ) {
@@ -145,10 +169,8 @@ Template.bit.rendered = function() {
           "position_y": y
         }
       });
-
-      var sound = new Howl({
-        urls: ['sounds/glue.mp3']
-      }).play();
+      
+      sound.play('glue.mp3');
 
       return true;
     }
@@ -212,9 +234,7 @@ Template.bit.events({
         $set: { "content": template.find('.editbit').value }
       });
 
-      var sound = new Howl({
-        urls: ['sounds/ch-chaing-v2.mp3']
-      }).play();
+      sound.play('ch-chaing-v2.mp3');
 
       Session.set('bitEditing',null);
     }

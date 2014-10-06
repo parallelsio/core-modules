@@ -1,49 +1,8 @@
+// TODO: better way? refer to bourbon Meteor package docs
+@import ".meteor/local/build/programs/server/assets/packages/wolves_bourbon/_bourbon.scss";
+
 $bg_color: #e7e4e4;
 
-@font-face {
-      font-family: 'ChaparralPro-Light';
-      src: font-url('chaparralprolight.eot');
-      src: font-url('chaparralprolight.eot?#iefix') format('embedded-opentype'),
-           font-url('chaparralprolight.woff') format('woff'),
-           font-url('chaparralprolight.ttf') format('truetype'),
-           font-url('chaparralprolight.svg#chaparralprolight') format('svg');
-      font-weight: normal;
-      font-style: normal;
-  }
-
-@font-face {
-      font-family: 'ChaparralPro-LightIt';
-      src: font-url('chaparralprolightit.eot');
-      src: font-url('chaparralprolightit.eot?#iefix') format('embedded-opentype'),
-           font-url('chaparralprolightit.woff') format('woff'),
-           font-url('chaparralprolightit.ttf') format('truetype'),
-           font-url('chaparralprolightit.svg#chaparralprolightit') format('svg');
-      font-weight: normal;
-      font-style: normal;
-  }
-
-
-  @font-face {
-      font-family: 'ChaparralPro-Regular';
-      src: font-url('chaparralproregular.eot');
-      src: font-url('chaparralproregular.eot?#iefix') format('embedded-opentype'),
-           font-url('chaparralproregular.woff') format('woff'),
-           font-url('chaparralproregular.ttf') format('truetype'),
-           font-url('chaparralproregular.svg#chaparralproregular') format('svg');
-      font-weight: normal;
-      font-style: normal;
-  }
-
-@font-face {
-        font-family: 'ChaparralPro-Semibold';
-        src: font-url('chaparralprosemibold.eot');
-        src: font-url('chaparralprosemibold.eot?#iefix') format('embedded-opentype'),
-             font-url('chaparralprosemibold.woff') format('woff'),
-             font-url('chaparralprosemibold.ttf') format('truetype'),
-             font-url('chaparralprosemibold.svg#chaparralprosemibold') format('svg');
-        font-weight: normal;
-        font-style: normal;
-    }
 
 * { box-sizing: border-box;}
 
@@ -57,46 +16,4 @@ body {
 }
 
 strong { font-family:'ChaparralPro-Semibold', sans-serif;}
-
-
-
-
-// loading spinner
-// modified from : http://codepen.io/markmurray/pen/EfLBG
-
-$size: 10em;
-
-.circle {
-  position: absolute;
-  top: 300px; 
-  left: 50%;
-  width: 0; 
-  height: 0;
-  border-radius: 50%;
-  z-index: 1;
-  // @include transform(translate(-50%, -50%));
-  // @include transition(all 200ms ease);
-  
-  $duration: 1s;
-  
-  &:nth-child(1){
-    z-index: 2;
-    background: #e74c3c;
-     // @include animation(explode $duration ease 0 infinite);
-  }
-  
-  &:nth-child(2){
-    background: #34495e;
-    // @include animation(explode $duration ease 0.5s infinite);
-  }
-}
-
-@-webkit-keyframes explode {
-  0% { width: 0; height: 0; z-index: 1 }
-  50% { width: $size; height: $size; z-index: 1 }
-  100% { display: none; }
-}
-
-
-
 
