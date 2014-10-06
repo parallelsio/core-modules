@@ -9,7 +9,6 @@ _ = lodash;
 Meteor.startup(function(){
 
 
-
   // TODO: move to another file
   var utility = ({
 
@@ -17,34 +16,28 @@ Meteor.startup(function(){
     // var element = document.querySelector("[data-id='" + this.data._id + "']");
     // var getParallelsID = ""
 
-
-
-    // http://www.kirupa.com/html5/get_element_position_using_javascript.htm
-    getClickPosition: function(e) {
-        var parentPosition = getPosition(e.currentTarget);
-        var xPosition = e.clientX - parentPosition.x;
-        var yPosition = e.clientY - parentPosition.y;
-    },
-
-    getPosition: function(element) {
-        var xPosition = 0;
-        var yPosition = 0;
-          
-        while (element) {
-            xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-            yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-            element = element.offsetParent;
+    // TODO: fix to display properly
+    getSessionVars: function(toPrint){
+      var map = [];
+      for (var prop in Session.keys) {
+        map.push({ key: prop, value: Session.get(prop) });
+        if (toPrint) {
+          console.log("session." + prop, ":", Session.get(prop));
         }
-        return { x: xPosition, y: yPosition };
+      }
+      return map;
     }
-
   });
-
-
 
 
   console.log("Meteor.startup start.");
   
+    // reset any leftover session vars from last load
+  Session.set('bitHovering', '');
+  Session.set('isDrawingParallel', false);
+  
+  utility.getSessionVars(true); 
+
   // TODO: why doesnt JS native selector work here
   // but Jquery does?
   // var elem = document.querySelector('.bit');
@@ -89,12 +82,17 @@ Meteor.startup(function(){
     
     console.log("pressed shift");
     var bitHovering = Session.get('bitHovering');
+    var isDrawingParallel = Session.get('isDrawingParallel');
+
     console.log();
 
-    if(bitHovering)
+    if(bitHovering && (!isDrawingParallel))
     {
       // shift, preview
       console.log("bit:ready for drag: " + bitHovering);
+
+      // mark it as in progress
+      Session.set('isDrawingParallel', true);
 
       // TODO: get viewport size
       // merge with zelda animation, as that uses it too
@@ -102,104 +100,27 @@ Meteor.startup(function(){
       var screenHeight = window.screen.availHeight;
       var chromeHeight = screenHeight - (document.documentElement.clientHeight || screenHeight);
 
-      // creates canvas 1000 × 700 at 0, 0
-      var r = Raphael(0, 0, 1000, 700);
-      var discattr = {fill: "#fff", stroke: "none"};
+      // creates transparent canvas 
+      var r = Raphael(0, 0, screenWidth, chromeHeight);
 
       var element = document.querySelector("[data-id='" + bitHovering + "']");
-      var position = utility.getPosition(element);
-      console.log("The image is located at: " + position.x + ", " + position.y);
 
 
-      var circle = r.circle(position.x, position.y, 5);
+      // TODO: only enable if none others are going
 
-      circle.attr({ fill: "blue" });
+      // 
 
-      
-      function drawBezierCurve(x, y, ax, ay, bx, by, zx, zy, color) {
+      // var circle = r.circle(element.position.x, element.position.y, 10);
+      // circle.attr({ fill: "blue" });
 
-        var path = [["M", x, y], ["C", ax, ay, bx, by, zx, zy]],
-            path2 = [["M", x, y], ["L", ax, ay], ["M", bx, by], ["L", zx, zy]],
-           
-            curve = r.path(path).attr({ stroke: color || Raphael.getColor(), "stroke-width": 10, "stroke-linecap": "round"}),
-           
-            controls = r.set(
-                r.path(path2).attr({stroke: "#ccc", "stroke-dasharray": ". "}),
-                r.circle(x, y, 5).attr(discattr),
-                r.circle(ax, ay, 5).attr(discattr),
-                r.circle(bx, by, 5).attr(discattr),
-                r.circle(zx, zy, 5).attr(discattr)
-            );
-
-          controls[1].update = function (x, y) {
-              var X = this.attr("cx") + x,
-                  Y = this.attr("cy") + y;
-              this.attr({cx: X, cy: Y});
-              path[0][1] = X;
-              path[0][2] = Y;
-              path2[0][1] = X;
-              path2[0][2] = Y;
-              controls[2].update(x, y);
-          };
-
-          controls[2].update = function (x, y) {
-              var X = this.attr("cx") + x,
-                  Y = this.attr("cy") + y;
-              this.attr({cx: X, cy: Y});
-              path[1][1] = X;
-              path[1][2] = Y;
-              path2[1][1] = X;
-              path2[1][2] = Y;
-              curve.attr({path: path});
-              controls[0].attr({path: path2});
-          };
-
-          controls[3].update = function (x, y) {
-              var X = this.attr("cx") + x,
-                  Y = this.attr("cy") + y;
-              this.attr({cx: X, cy: Y});
-              path[1][3] = X;
-              path[1][4] = Y;
-              path2[2][1] = X;
-              path2[2][2] = Y;
-              curve.attr({path: path});
-              controls[0].attr({path: path2});
-          };
-
-          controls[4].update = function (x, y) {
-              var X = this.attr("cx") + x,
-                  Y = this.attr("cy") + y;
-              this.attr({cx: X, cy: Y});
-              path[1][5] = X;
-              path[1][6] = Y;
-              path2[3][1] = X;
-              path2[3][2] = Y;
-              controls[3].update(x, y);
-          };
-
-          controls.drag(move, up);
-      }
-
-      function move(dx, dy) {
-          this.update(dx - (this.dx || 0), dy - (this.dy || 0));
-          this.dx = dx;
-          this.dy = dy;
-      }
-
-      function up() {
-          this.dx = this.dy = 0;
-      }
-
-      drawBezierCurve(270, 100, 310, 100, 330, 200, 370, 200, "hsb(.3, .75, .75)");
-
-
+      // TODO: move to map? merge map.js + app.js?
 
       $(this).mousemove( function(event) {
-        var mouse = utility.getPosition();
-        console.log("mouse utility: ", mouse.x, mouse.y);
         console.log("mouse event.page_: ", event.pageX, event.pageY);
       });
       
+      // $(this).unbind();
+
       // tween the fill to blue (#00f) and x to 100, y to 100, 
       // width to 100 and height to 50 over the course of 3 seconds using an ease of Power1.easeInOut
       // TweenLite.to(rect, 3, { raphael:{ fill:"#00f", x:100, y:100, width:100, height:50 }, ease:Power1.easeInOut});

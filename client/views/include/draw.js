@@ -1,3 +1,8 @@
+// http://raphaeljs.com/curver.html
+
+// call it like:
+// drawBezierCurve(270, 100, 310, 100, 330, 200, 370, 200, "hsb(.3, .75, .75)");
+
 function drawBezierCurve(x, y, ax, ay, bx, by, zx, zy, color) {
 
   var path = [["M", x, y], ["C", ax, ay, bx, by, zx, zy]],
