@@ -242,6 +242,9 @@ Template.bit.events({
     else if (event.which === 27) {
       console.log('escape key');
       Session.set('bitEditing', null);
+
+      Bits.remove( this._id );
+
     }
   }
 
