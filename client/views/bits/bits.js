@@ -196,7 +196,12 @@ Template.bit.events({
       // TweenLite.to(Template.instance().firstNode, 0.3, { left:"+=10px", ease:Elastic.easeOut});
       // var yoyo = myTimeline.yoyo(); //gets current yoyo state
       // myTimeline.yoyo( true ); //sets yoyo to true
+
+      $(event.target).addClass('selected');
     }
+
+    
+
   },
 
   'mouseleave .bit': function (event, template){
@@ -206,6 +211,8 @@ Template.bit.events({
     if (event.target.classList.contains('bit')) {
       Session.set('bitHovering', '');
       console.log("bit:hover:out " + Session.get('bitHovering'));
+      // $(event.target).removeClass('selected');
+      
     }
   },
 

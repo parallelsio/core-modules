@@ -36,7 +36,7 @@ Meteor.startup(function(){
   Mousetrap.bind("space", function() {
     event.preventDefault();
     event.stopPropagation();
-    
+
     console.log("pressed spacebar");
     var bitHovering = Session.get('bitHovering');
     console.log();
@@ -45,6 +45,21 @@ Meteor.startup(function(){
     {
       // preview
       console.log("bit:preview: " + bitHovering);
+    }
+  });
+
+  Mousetrap.bind("shift", function() {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    console.log("pressed shift");
+    var bitHovering = Session.get('bitHovering');
+    console.log();
+
+    if(bitHovering)
+    {
+      // shift, preview
+      console.log("bit:ready for drag: " + bitHovering);
     }
   });
 
