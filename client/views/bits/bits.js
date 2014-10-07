@@ -246,13 +246,13 @@ Template.bit.events({
       Session.set('bitEditing',null);
     }
 
-    else if (event.which === 27) {
-      console.log('escape key');
-      Session.set('bitEditing', null);
+    // else if (event.which === 27) {
+    //   console.log('escape key');
+    //   Session.set('bitEditing', null);
 
-      Bits.remove( this._id );
+    //   Bits.remove( this._id );
 
-    }
+    // }
   }
 
 });

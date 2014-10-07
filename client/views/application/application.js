@@ -60,6 +60,20 @@ Meteor.startup(function(){
     }
   });
 
+  // bind globally, so escape is caught even inside forms
+  Mousetrap.bindGlobal('esc', function() {
+      event.preventDefault();
+    event.stopPropagation();
+
+    console.log('escape key');
+    var bitEditing = Session.get('bitEditing');
+
+    if (bitEditing)
+    {
+        Bits.remove( bitEditing );
+        Session.set('bitEditing', null);
+    }
+  });
 
   Mousetrap.bind("space", function() {
     event.preventDefault();
