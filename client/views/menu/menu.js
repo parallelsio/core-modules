@@ -73,22 +73,17 @@ Template.menu.rendered = function() {
       // set height + width to auto so events on the map can be captured
       tl.set($('.loader.second'), {alpha: 0, display: "none" });
 
+      var menuBar = document.getElementById("menu-bar");
+      tl.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
+
       return tl;
   };
 
   // run wipe transition
   start();
 
-  // 
-  // .loader 
-
   // *********************************************************************
 
-
-
-
-  var menuBar = document.getElementById("menu-bar");
-  TweenMax.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
 
 
   

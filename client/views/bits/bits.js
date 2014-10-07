@@ -120,13 +120,16 @@ Template.bit.rendered = function() {
         onCompleteParams:[ node ]
       });
 
+      /***********************/
+      // TODO: make reusable
       timeline
         .to($(node), 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
         .to($(node), 0.15, { scale: 0.8, ease:Quint.easeOut } )
         .to($(node), 0.30, { scale: 1, ease:Elastic.easeOut } );
+      /***********************/
 
 
-     function timelineDone(node){
+      function timelineDone(node){
         console.log("timeline tween done.");
          document.querySelector(".editbit").focus();
       }
@@ -219,6 +222,52 @@ Template.bit.events({
     // TODO: Zelda triforce focus here, zoom sound
     console.log("bit:click: " + this._id);
 
+    // react differently, depending on bit type
+    // for image, scale it up to fill the view port
+
+    if (template.data.type === "image"){
+      
+      (function scaleImageToFitWindow(){
+
+        var timeline = new TimelineMax({ 
+          onComplete: timelineDone, 
+          onCompleteParams:[ event.target, template ]
+        });
+
+        var screenWidth = window.screen.availWidth;
+        var screenHeight = window.screen.availHeight;
+        var chromeHeight = screenHeight - (document.documentElement.clientHeight || screenHeight);
+
+        // template.data.nativeHeight
+        // template.data.nativeWidth
+
+        /***********************/
+        // TODO: make reusable
+        timeline
+          .to(event.target, 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
+          .to(event.target, 0.15, { scale: 0.8, ease:Quint.easeOut } )
+          .to(event.target, 0.30, { scale: 1, height: chromeHeight, ease:Elastic.easeOut } );
+        /***********************/
+
+
+        function timelineDone(node, template){
+          console.log("bit:display tween done.", event.target );
+        }
+
+
+      })();
+
+    }
+
+    // for text, open full view
+    else if (template.data.type === "text")
+    {
+
+    }
+     
+
+
+
 
   },
 
@@ -245,14 +294,6 @@ Template.bit.events({
 
       Session.set('bitEditing',null);
     }
-
-    // else if (event.which === 27) {
-    //   console.log('escape key');
-    //   Session.set('bitEditing', null);
-
-    //   Bits.remove( this._id );
-
-    // }
   }
 
 });

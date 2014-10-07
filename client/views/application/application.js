@@ -62,7 +62,7 @@ Meteor.startup(function(){
 
   // bind globally, so escape is caught even inside forms
   Mousetrap.bindGlobal('esc', function() {
-      event.preventDefault();
+    event.preventDefault();
     event.stopPropagation();
 
     console.log('escape key');
@@ -119,6 +119,10 @@ Meteor.startup(function(){
 
       var element = document.querySelector("[data-id='" + bitHovering + "']");
 
+      // get bit obj
+      // template.data.position_x
+      // template.data.position_y
+      
 
       // TODO: only enable if none others are going
 
