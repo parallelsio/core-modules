@@ -234,26 +234,52 @@ Template.bit.events({
           onCompleteParams:[ event.target, template ]
         });
 
-        var screenWidth = window.screen.availWidth;
-        var screenHeight = window.screen.availHeight;
-        var chromeHeight = screenHeight - (document.documentElement.clientHeight || screenHeight);
+        var availWidth = window.screen.availWidth;
+        var availHeight = window.screen.availHeight;
+        var chromeHeight = availHeight - (document.documentElement.clientHeight || availHeight);
 
-        // template.data.nativeHeight
-        // template.data.nativeWidth
+        
+        // padding for top and bottom
+        var edgePadding = 10; 
 
-        /***********************/
-        // TODO: make reusable
-        timeline
-          .to(event.target, 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
-          .to(event.target, 0.15, { scale: 0.8, ease:Quint.easeOut } )
-          .to(event.target, 0.30, { scale: 1, height: chromeHeight, ease:Elastic.easeOut } );
-        /***********************/
+        //  room to display, after padding from edges is accounted for
+        var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
+        var freeWidth;
+        var options;
 
+        // use computed height of image thumbnail to decide
+        if (event.target.clientHeight <= freeHeight) {
 
-        function timelineDone(node, template){
-          console.log("bit:display tween done.", event.target );
+          // show normal image size
+          // TODO: scale up to 75% maybe?
+          options = { width: template.data.nativeWidth, height: template.data.nativeHeight  };
+
+          // TODO: center viewport around the image
         }
 
+        // shrink height of full size image to fit viewport height
+        else {
+          /*
+              calc for the new width:
+
+               nativeHeight         x
+              -------------  =  ----------
+               nativeWidth      freeHeight    
+          */
+          freeWidth = template.data.nativeHeight * freeHeight / template.data.nativeWidth;
+          options = { width: Math.floor(freeWidth), height: freeHeight }; 
+        }
+
+        options.scale = 1;
+        options.ease = Elastic.easeOut;
+
+        timeline
+          .to(event.target, 0.15, { scale: 0.8, ease:Quint.easeOut } )
+          .to(event.target, 0.30, options );
+
+        function timelineDone( node, template ){
+          console.log("bit:display tween done." );
+        }
 
       })();
 
@@ -265,10 +291,6 @@ Template.bit.events({
 
     }
      
-
-
-
-
   },
 
   'dblclick .bit': function (event, template){
