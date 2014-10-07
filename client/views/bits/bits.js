@@ -122,8 +122,8 @@ Template.bit.rendered = function() {
 
       timeline
         .to($(node), 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
-        .to($(node), 0.15, { scale: 1.15, ease:Bounce.easeOut } )
-        .to($(node), 0.10, { scale: 1 } );
+        .to($(node), 0.15, { scale: 0.8, ease:Quint.easeOut } )
+        .to($(node), 0.30, { scale: 1, ease:Elastic.easeOut } );
 
 
      function timelineDone(node){
@@ -199,8 +199,6 @@ Template.bit.events({
 
       $(event.target).addClass('selected');
     }
-
-    
 
   },
 
