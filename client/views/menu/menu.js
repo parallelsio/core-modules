@@ -56,28 +56,28 @@ Template.menu.rendered = function() {
           maskLeft         = $('.mask.left'),
           maskRight        = $('.mask.right');
 
-      TweenMax.set($('.loader.second'), {alpha: 0});
+      TweenMax.set($('.wipe.second'), {alpha: 0});
 
       var tl = new TimelineMax();
 
       tl.fromTo(first, 0.4, {x: screenWidth}, {x: 0, ease: Circ.easeIn}, 0);
       tl.fromTo(maskTop, 0.4, {y: 0}, {y: -screenHeight/2, ease: Expo.easeOut, delay: 0.1}, 0.4);
       tl.fromTo(maskBottom, 0.4, {y: 0}, {y: screenHeight/2, ease: Expo.easeOut, delay: 0.1}, 0.4);
-      tl.set($('.loader.first'), {alpha: 0, display: "none" });
+      tl.set($('.wipe.first'), {alpha: 0, display: "none" });
 
-      tl.set($('.loader.second'), {alpha: 1});
+      tl.set($('.wipe.second'), {alpha: 1});
       tl.fromTo(second, 0.4, {y: -screenHeight}, {y: 0, ease: Circ.easeIn});
       tl.fromTo(maskRight, 0.4, {x: 0}, {x: screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2); // 2.5
       tl.fromTo(maskLeft, 0.4, {x: 0}, {x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2);
       
       // set height + width to auto so events on the map can be captured
-      tl.set($('.loader.second'), {alpha: 0, display: "none" });
+      tl.set($('.wipe.second'), {alpha: 0, display: "none" });
 
       var menuBar = document.getElementById("menu-bar");
       tl.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
 
       return tl;
-  };
+  }
 
   // run wipe transition
   start();

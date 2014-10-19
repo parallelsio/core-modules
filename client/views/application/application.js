@@ -5,6 +5,63 @@
 _ = lodash;
 
 
+function zeldaWipeIn(){
+
+    console.log('zelda wipe in ');
+
+  var screenWidth;
+  var screenHeight;
+
+  function start () {
+      resize();
+      window.addEventListener('resize', resize);
+
+      var tlLoader     = setTimelineLoader();
+      var tlGlobal     = new TimelineMax();
+
+      tlGlobal.set($('.overlay'), {alpha: 0});
+      tlGlobal.add(tlLoader);
+
+      tlGlobal.set($('.overlay'), {alpha: 1});
+      tlGlobal.play();
+  }
+
+  function resize () {
+      screenWidth  = document.documentElement.clientWidth,
+      screenHeight = document.documentElement.clientHeight;
+  }
+
+  function setTimelineLoader () {
+
+      // var second           = $('.line.second')
+      var maskLeft         = $('.mask.left');
+      var maskRight        = $('.mask.right');
+
+      TweenMax.set($('.wipe.side'), {alpha: 0});
+
+      var tl = new TimelineMax();
+
+      // set height + width to auto so events on the map can be captured
+      tl.set($('.wipe.side'), {alpha: 1, display: "block" });
+      // tl.fromTo(second, 0.4, {y: -screenHeight}, {y: 0, ease: Circ.easeIn});
+      tl.set(maskRight, {alpha: 0.7 });
+      tl.set(maskLeft, {alpha: 0.7 });
+
+      tl.fromTo(maskRight, 0.4, {x: 0}, {x: screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2); // 2.5
+      tl.fromTo(maskLeft, 0.4, {x: 0}, {x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2);
+      
+      // set height + width to auto so events on the map can be captured
+      // tl.set($('.wipe.second'), {alpha: 0, display: "none" });
+
+      return tl;
+  }
+
+  // run wipe transition
+  start();
+
+}
+ 
+
 
 Meteor.startup(function(){
 
@@ -141,6 +198,9 @@ Meteor.startup(function(){
               ease: Elastic.easeOut
             }; 
 
+            // zelda wipe in
+            zeldaWipeIn();
+
             // blow up image from thumbnail size up to fit the viewport height
             // TODO: disable other animations before starting
             // TODO: set bit preview session var
@@ -181,15 +241,9 @@ Meteor.startup(function(){
       // mark it as in progress
       Session.set('isDrawingParallel', true);
 
-      // TODO: get viewport size
-      // merge with zelda animation, as that uses it too
-      // TODO: innerHeight/Width better?
-      var screenWidth = window.screen.availWidth;
-      var screenHeight = window.screen.availHeight;
-      var chromeHeight = screenHeight - (document.documentElement.clientHeight || screenHeight);
-
       // creates transparent canvas 
-      var r = Raphael(0, 0, screenWidth, chromeHeight);
+      // merge with zelda animation, as that uses it too
+      var r = Raphael(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
 
       var element = document.querySelector("[data-id='" + bitHovering + "']");
 
@@ -197,10 +251,7 @@ Meteor.startup(function(){
       // template.data.position_x
       // template.data.position_y
       
-
       // TODO: only enable if none others are going
-
-      // 
 
       // var circle = r.circle(element.position.x, element.position.y, 10);
       // circle.attr({ fill: "blue" });
