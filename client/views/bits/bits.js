@@ -96,9 +96,6 @@ Template.bit.rendered = function() {
   this.firstNode.parentNode._uihooks = {
 
     insertElement: function(node, next) {
-
- 
-
       console.log('_uihook: moment before bit insert ...');
 
       // TODO: ?
@@ -128,20 +125,16 @@ Template.bit.rendered = function() {
         .to($(node), 0.30, { scale: 1, ease:Elastic.easeOut } );
       /***********************/
 
-
       function timelineDone(node){
         console.log("timeline tween done.");
          document.querySelector(".editbit").focus();
       }
-
-      
     },
 
     removeElement: function(node) {
       console.log('_uihook: moment before bit remove');
       $(node).remove();
     }
-
   };
 
 
@@ -220,77 +213,7 @@ Template.bit.events({
   'click .bit': function (event, template){
 
     // TODO: Zelda triforce focus here, zoom sound
-    console.log("bit:click: " + this._id);
-
-    // react differently, depending on bit type
-    // for image, scale it up to fill the view port
-
-    if (template.data.type === "image"){
-      
-      (function scaleImageToFitWindow(){
-
-        var timeline = new TimelineMax({ 
-          onComplete: timelineDone, 
-          onCompleteParams:[ event.target, template ]
-        });
-
-        var availWidth = window.screen.availWidth;
-        var availHeight = window.screen.availHeight;
-        var chromeHeight = availHeight - (document.documentElement.clientHeight || availHeight);
-
-        
-        // padding for top and bottom
-        var edgePadding = 10; 
-
-        //  room to display, after padding from edges is accounted for
-        var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
-        var freeWidth;
-        var options;
-
-        // use computed height of image thumbnail to decide
-        if (event.target.clientHeight <= freeHeight) {
-
-          // show normal image size
-          // TODO: scale up to 75% maybe?
-          options = { width: template.data.nativeWidth, height: template.data.nativeHeight  };
-
-          // TODO: center viewport around the image
-        }
-
-        // shrink height of full size image to fit viewport height
-        else {
-          /*
-              calc for the new width:
-
-               nativeHeight         x
-              -------------  =  ----------
-               nativeWidth      freeHeight    
-          */
-          freeWidth = template.data.nativeHeight * freeHeight / template.data.nativeWidth;
-          options = { width: Math.floor(freeWidth), height: freeHeight }; 
-        }
-
-        options.scale = 1;
-        options.ease = Elastic.easeOut;
-
-        timeline
-          .to(event.target, 0.15, { scale: 0.8, ease:Quint.easeOut } )
-          .to(event.target, 0.30, options );
-
-        function timelineDone( node, template ){
-          console.log("bit:display tween done." );
-        }
-
-      })();
-
-    }
-
-    // for text, open full view
-    else if (template.data.type === "text")
-    {
-
-    }
-     
+    console.log("bit:click: " + this._id);     
   },
 
   'dblclick .bit': function (event, template){

@@ -19,12 +19,15 @@ Meteor.startup(function(){
     // TODO: fix to display properly
     getSessionVars: function(toPrint){
       var map = [];
+      console.log('********* SESSION VARS ***********');
       for (var prop in Session.keys) {
         map.push({ key: prop, value: Session.get(prop) });
         if (toPrint) {
           console.log("session." + prop, ":", Session.get(prop));
         }
       }
+      console.log('************************');
+
       return map;
     }
   });
@@ -80,13 +83,80 @@ Meteor.startup(function(){
     event.stopPropagation();
 
     console.log("pressed spacebar");
-    var bitHovering = Session.get('bitHovering');
-    console.log();
 
-    if(bitHovering)
+    var bitHoveringId = Session.get('bitHovering');
+    var element = document.querySelector("[data-id='" + bitHoveringId + "']");
+    var bitTemplate = Blaze.getView(element);
+    var bitData = Blaze.getData(bitTemplate);
+
+    if(element)
     {
-      // preview
-      console.log("bit:preview: " + bitHovering);
+      console.log("bit:preview: " + bitHoveringId);
+
+      // react differently, depending on bit type
+      // for image, scale it up to fill the view port
+      if (bitData.type === "image"){
+        
+        (function scaleImageToFitWindow(){
+
+          var timeline = new TimelineMax({ 
+            onComplete: timelineDone, 
+            onCompleteParams:[ element, bitData ]
+          });
+
+          var availWidth = window.screen.availWidth;
+          var availHeight = window.screen.availHeight;
+          var chromeHeight = availHeight - (document.documentElement.clientHeight || availHeight);
+
+          // padding for top and bottom
+          var edgePadding = 10; 
+
+          //  room to display, after padding from edges is accounted for
+          var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
+          var freeWidth;
+          var options;
+
+          // use computed height of image thumbnail to decide
+          if (element.clientHeight <= freeHeight) {
+
+            // show normal image size
+            // TODO: scale up to 75% maybe?
+            options = { width: bitData.nativeWidth, height: bitData.nativeHeight  };
+
+            // TODO: center viewport around the image
+          }
+
+          // shrink height of full size image to fit viewport height
+          else {
+            /*
+                calc for the new width:
+
+                 nativeHeight         x
+                -------------  =  ----------
+                 nativeWidth      freeHeight    
+            */
+            freeWidth = (bitData.nativeHeight * freeHeight) / bitData.nativeWidth;
+            options = { width: Math.floor(freeWidth), height: freeHeight }; 
+          }
+
+          options.scale = 1;
+          options.ease = Elastic.easeOut;
+
+          timeline
+            .to(element, 0.15, { scale: 0.8, ease:Quint.easeOut } )
+            .to(element, 0.30, options );
+
+          function timelineDone( node, bitTemplate ){
+            console.log("bit:preview:", bitHoveringId, "tween done." );
+          }
+
+        })();
+      }
+
+      // for text, open full view
+      else if (bitData.type === "text") {
+        console.log("bit:preview:", bitHoveringId, " is type text. Can't preview." );
+      }
     }
   });
 
@@ -102,7 +172,7 @@ Meteor.startup(function(){
 
     if(bitHovering && (!isDrawingParallel))
     {
-      // shift, preview
+      // shift
       console.log("bit:ready for drag: " + bitHovering);
 
       // mark it as in progress
@@ -110,6 +180,7 @@ Meteor.startup(function(){
 
       // TODO: get viewport size
       // merge with zelda animation, as that uses it too
+      // TODO: innerHeight/Width better?
       var screenWidth = window.screen.availWidth;
       var screenHeight = window.screen.availHeight;
       var chromeHeight = screenHeight - (document.documentElement.clientHeight || screenHeight);
