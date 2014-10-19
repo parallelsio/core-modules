@@ -128,13 +128,12 @@ Meteor.startup(function(){
             /*
                 calc for the new width:
 
-                 nativeHeight       x (previewWidth)
+                 nativeHeight       previewHeight
                 -------------  =  ----------------
-                 nativeWidth         previewHeight    
+                 nativeWidth       x (previewWidth) 
             */
-            var previewWidth = Math.floor((bitData.nativeHeight * previewHeight) / bitData.nativeWidth);
+            var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
 
-            // blow up image from thumbnail size up to fit the viewport height
             var options = { 
               width: previewWidth, 
               height: previewHeight,
@@ -142,21 +141,24 @@ Meteor.startup(function(){
               ease: Elastic.easeOut
             }; 
 
+            // blow up image from thumbnail size up to fit the viewport height
+            // TODO: disable other animations before starting
+            // TODO: set bit preview session var
             timeline
               .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
               .to($bitImg, 0.25, options );
 
             function timelineDone( node, bitTemplate ){
               console.log("bit:preview:", bitHoveringId, "tween done." );
+              // TODO wire up escape here to close?
             }
-
           }
         })();
       }
 
-      // for text, open full view
       else if (bitData.type === "text") {
-        console.log("bit:preview:", bitHoveringId, " is type text. Can't preview." );
+        // TODO: preview text
+        console.log("bit:preview:", bitHoveringId, " is type text. Can't preview for now." );
       }
     }
   });
