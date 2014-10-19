@@ -30,7 +30,6 @@ Template.menu.rendered = function() {
 
   function start () {
       resize();
-      window.addEventListener('resize', resize);
 
       var tlLoader     = setTimelineLoader();
       var tlGlobal     = new TimelineMax();
@@ -43,7 +42,7 @@ Template.menu.rendered = function() {
   };
 
   function resize () {
-      screenWidth  = document.documentElement.clientWidth,
+      screenWidth  = document.documentElement.clientWidth;
       screenHeight = document.documentElement.clientHeight;
   };
 

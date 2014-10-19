@@ -7,14 +7,12 @@ _ = lodash;
 
 function zeldaWipeIn(){
 
-    console.log('zelda wipe in ');
+  console.log('zelda wipe in ');
 
-  var screenWidth;
-  var screenHeight;
+  var screenWidth  = document.documentElement.clientWidth;
+  var screenHeight = document.documentElement.clientHeight;
 
   function start () {
-      resize();
-      window.addEventListener('resize', resize);
 
       var tlLoader     = setTimelineLoader();
       var tlGlobal     = new TimelineMax();
@@ -26,14 +24,9 @@ function zeldaWipeIn(){
       tlGlobal.play();
   }
 
-  function resize () {
-      screenWidth  = document.documentElement.clientWidth,
-      screenHeight = document.documentElement.clientHeight;
-  }
 
   function setTimelineLoader () {
 
-      // var second           = $('.line.second')
       var maskLeft         = $('.mask.left');
       var maskRight        = $('.mask.right');
 
@@ -41,22 +34,16 @@ function zeldaWipeIn(){
 
       var tl = new TimelineMax();
 
-      // set height + width to auto so events on the map can be captured
-      tl.set($('.wipe.side'), {alpha: 1, display: "block" });
-      // tl.fromTo(second, 0.4, {y: -screenHeight}, {y: 0, ease: Circ.easeIn});
-      tl.set(maskRight, {alpha: 0.7 });
-      tl.set(maskLeft, {alpha: 0.7 });
+      tl.set($('.wipe.side'), { alpha: 1, display: "block" });
+      tl.set(maskRight, { alpha: 0.7 });
+      tl.set(maskLeft,  { alpha: 0.7 });
 
-      tl.fromTo(maskRight, 0.4, {x: 0}, {x: screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2); // 2.5
-      tl.fromTo(maskLeft, 0.4, {x: 0}, {x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2);
+      tl.fromTo(maskRight, 0.4, { x: 0 }, { x:  screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2); 
+      tl.fromTo(maskLeft, 0.4, { x: 0 },  { x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2);
       
-      // set height + width to auto so events on the map can be captured
-      // tl.set($('.wipe.second'), {alpha: 0, display: "none" });
-
       return tl;
   }
 
-  // run wipe transition
   start();
 
 }
