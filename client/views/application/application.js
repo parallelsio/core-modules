@@ -126,7 +126,7 @@ Meteor.startup(function(){
             // TODO: center viewport around the image
           }
 
-          // shrink height of full size image to fit viewport height
+          // blow up image from thumbnail size up to fit the viewport height
           else {
             /*
                 calc for the new width:
@@ -143,8 +143,8 @@ Meteor.startup(function(){
           options.ease = Elastic.easeOut;
 
           timeline
-            .to(element, 0.15, { scale: 0.8, ease:Quint.easeOut } )
-            .to(element, 0.30, options );
+            .to(element, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+            .to(element, 0.25, options );
 
           function timelineDone( node, bitTemplate ){
             console.log("bit:preview:", bitHoveringId, "tween done." );
