@@ -81,15 +81,14 @@ Meteor.startup(function(){
   Mousetrap.bind("space", function() {
     event.preventDefault();
     event.stopPropagation();
-
     console.log("pressed spacebar");
 
     var bitHoveringId = Session.get('bitHovering');
-    var element = document.querySelector("[data-id='" + bitHoveringId + "']");
-    var bitTemplate = Blaze.getView(element);
+    var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
+    var bitTemplate = Blaze.getView($bit);
     var bitData = Blaze.getData(bitTemplate);
 
-    if(element)
+    if(bitHoveringId)
     {
       console.log("bit:preview: " + bitHoveringId);
 
@@ -97,59 +96,61 @@ Meteor.startup(function(){
       // for image, scale it up to fill the view port
       if (bitData.type === "image"){
         
+        $bitImg = $(bitTemplate.templateInstance().$('img'));
+        var bitThumbnailHeight = $bitImg.height();
+        var bitThumbnailWidth = $bitImg.width();
+
         (function scaleImageToFitWindow(){
 
           var timeline = new TimelineMax({ 
             onComplete: timelineDone, 
-            onCompleteParams:[ element, bitData ]
+            onCompleteParams:[ $bitImg, bitData ]
           });
 
-          var availWidth = window.screen.availWidth;
-          var availHeight = window.screen.availHeight;
-          var chromeHeight = availHeight - (document.documentElement.clientHeight || availHeight);
-
-          // padding for top and bottom
+          // padding for top and bottom, in pixels
           var edgePadding = 10; 
 
-          //  room to display, after padding from edges is accounted for
+          // using d.d.c faster than jQuery(window).width()
+          // http://ryanve.com/lab/dimensions
+          // TODO: refactor to use Verge lib. available as Meteor package?
+
+          // calc the height available, accounting for space for image to breathe from edges
           var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
-          var freeWidth;
-          var options;
+         
+          // use freeHeight to determine how to preview
+          // TODO: use height + width, for cases where height fits nicely 
+          // in the viewport, but image is very wide, wider than viewport 
+          if ((bitData.nativeHeight > bitThumbnailHeight) && 
+              (bitThumbnailHeight <= freeHeight)) {
 
-          // use computed height of image thumbnail to decide
-          if (element.clientHeight <= freeHeight) {
-
-            // show normal image size
-            // TODO: scale up to 75% maybe?
-            options = { width: bitData.nativeWidth, height: bitData.nativeHeight  };
-
-            // TODO: center viewport around the image
-          }
-
-          // blow up image from thumbnail size up to fit the viewport height
-          else {
+            var previewHeight = freeHeight;
+  
             /*
                 calc for the new width:
 
-                 nativeHeight         x
-                -------------  =  ----------
-                 nativeWidth      freeHeight    
+                 nativeHeight       x (previewWidth)
+                -------------  =  ----------------
+                 nativeWidth         previewHeight    
             */
-            freeWidth = (bitData.nativeHeight * freeHeight) / bitData.nativeWidth;
-            options = { width: Math.floor(freeWidth), height: freeHeight }; 
+            var previewWidth = Math.floor((bitData.nativeHeight * previewHeight) / bitData.nativeWidth);
+
+            // blow up image from thumbnail size up to fit the viewport height
+            var options = { 
+              width: previewWidth, 
+              height: previewHeight,
+              scale: 1,
+              ease: Elastic.easeOut
+            }; 
+
+            timeline
+              .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+              .to($bitImg, 0.25, options );
+
+            function timelineDone( node, bitTemplate ){
+              console.log("bit:preview:", bitHoveringId, "tween done." );
+            }
+
           }
-
-          options.scale = 1;
-          options.ease = Elastic.easeOut;
-
-          timeline
-            .to(element, 0.10, { scale: 0.9, ease:Quint.easeOut } )
-            .to(element, 0.25, options );
-
-          function timelineDone( node, bitTemplate ){
-            console.log("bit:preview:", bitHoveringId, "tween done." );
-          }
-
         })();
       }
 
