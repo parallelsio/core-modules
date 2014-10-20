@@ -35,8 +35,10 @@ Meteor.startup(function(){
   console.log("Meteor.startup start.");
   
     // reset any leftover session vars from last load
-  Session.set('bitHoveringId', '');
+  Session.set('bitPreviewingId', null);
+  Session.set('bitEditingId', null);
   Session.set('isDrawingParallel', false);
+
   
   utility.getSessionVars(true); 
 
@@ -68,12 +70,12 @@ Meteor.startup(function(){
     event.stopPropagation();
 
     console.log('escape key');
-    var bitEditing = Session.get('bitEditing');
+    var bitEditingId = Session.get('bitEditingId');
 
-    if (bitEditing)
+    if (bitEditingId)
     {
-        Bits.remove( bitEditing );
-        Session.set('bitEditing', null);
+        Bits.remove( bitEditingId );
+        Session.set('bitEditingId', null);
     }
   });
 
@@ -151,7 +153,11 @@ Meteor.startup(function(){
                 console.log('bit:preview timeline starting ...');
 
                 // TODO: kill all running animations
+
+                // disable scrolling
                 $("body").css( "overflow", "hidden");
+
+                // disable bit actions (drag)
             };
 
             var timeline = new TimelineMax({ 
@@ -163,6 +169,7 @@ Meteor.startup(function(){
             timeline
 
               // zelda wipe in of overlay bg
+              // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
               .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
               .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
               .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
@@ -171,8 +178,10 @@ Meteor.startup(function(){
               // z-index stack
               .set($($bit), { zIndex: 10 })
 
+              // TODO: move/center viewport around the image
+
               // blow up image from thumbnail size up to fit the viewport height
-              // overlap with previous animation
+              // TODO: overlap with zelda swipe in
               .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
               .to($bitImg, 0.25, options );
 
@@ -180,17 +189,17 @@ Meteor.startup(function(){
               console.log("bit:preview:", bitHoveringId, "tween done." );
               
               // TODO:  wire up escape here to close?
-
-              // TODO: re-enable scroll
-
+              // inside of close function, make sure to set Session.set('bitPreviewingId', null);
             };
+
+
           }
         })();
       }
 
       else if (bitData.type === "text") {
         // TODO: how to preview text?
-        console.log("bit:preview:", bitHoveringId, " is type text. Can't preview for now." );
+        console.log("bit:preview:", bitHoveringId, " is type text. Feature not built yet." );
       }
     }
   });

@@ -1,7 +1,7 @@
 Template.menu.helpers({
 
-  bitEditing: function() { 
-    return Session.get('bitEditing'); 
+  bitEditingId: function() { 
+    return Session.get('bitEditingId'); 
   },
   
   bitsCount: function() { 
@@ -20,9 +20,6 @@ Template.menu.rendered = function() {
 
   // *********************************************************************
 
-  // Zelda transitions
-
-  // inspired by          : https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
   // adapated code from   : http://codepen.io/vdaguenet/pen/Ebycz
 
   var screenWidth;

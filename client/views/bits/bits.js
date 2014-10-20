@@ -220,8 +220,8 @@ Template.bit.events({
     event.preventDefault();
     event.stopPropagation();
 
-    Session.set('bitEditing',this._id);
-    console.log("bit:edit: " + Session.get('bitEditing'));
+    Session.set('bitEditingId',this._id);
+    console.log("bit:edit: " + Session.get('bitEditingId'));
   },
 
   'keyup .bit': function (event, template){
@@ -237,7 +237,7 @@ Template.bit.events({
 
       sound.play('ch-chaing-v2.mp3');
 
-      Session.set('bitEditing',null);
+      Session.set('bitEditingId',null);
     }
   }
 
@@ -246,7 +246,7 @@ Template.bit.events({
 
 
 Template.bit.isEditingThisBit = function() {
-  return Session.equals('bitEditing', this._id);
+  return Session.equals('bitEditingId', this._id);
 };
 
 
