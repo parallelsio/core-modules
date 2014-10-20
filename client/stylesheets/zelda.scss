@@ -1,0 +1,72 @@
+// inspired by          : https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
+// adapated code from   : http://codepen.io/vdaguenet/pen/Ebycz
+
+$line-size: 1px;
+
+$color-init: #F9D423;
+$color-first: #FE4365;
+$color-second: #C7F464;
+
+html { height: 100%; }
+
+body {
+	height: 100%;
+}
+
+.wipe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	.line {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		transform-origin: left top;
+	 }
+
+	.mask {
+		position: absolute;
+		z-index: 2;
+	}
+}
+
+.wipe.top-to-bottom .line	{ background: $color-first; }
+.wipe.side-to-side .line 	{ background: $color-second; }
+
+
+.wipe.load.top-to-bottom .mask {
+	width: 100%;
+	height: calc(50% - #{ $line-size });
+	background: $color-init;
+	
+	&.top 		{ top: 0; }
+	&.bottom 	{ bottom: 0; }
+}
+
+
+.wipe.side-to-side .mask {
+	height: 100%;
+	
+	&.right { right: 0; }
+	&.left 	{ left: 0; }
+}
+
+.wipe.load.side-to-side .mask {
+	width: calc(50% - #{ $line-size });
+	background: $color-first;
+}
+
+.wipe.bit-preview.side-to-side {
+	display:none;
+	opacity:0;
+}
+
+.wipe.bit-preview.side-to-side .mask {
+	width: calc(50%) !important; // overwrite the line in the middle, not needed here
+	background: #222;
+}
+

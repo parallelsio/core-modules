@@ -29,7 +29,7 @@ Template.map.events({
                   position_x: event.pageX, 
                   position_y: event.pageY });
 
-      Session.set('bitEditing', id);
+      Session.set('bitEditingId', id);
 
     }
   }

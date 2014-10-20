@@ -96,9 +96,6 @@ Template.bit.rendered = function() {
   this.firstNode.parentNode._uihooks = {
 
     insertElement: function(node, next) {
-
- 
-
       console.log('_uihook: moment before bit insert ...');
 
       // TODO: ?
@@ -120,25 +117,24 @@ Template.bit.rendered = function() {
         onCompleteParams:[ node ]
       });
 
+      /***********************/
+      // TODO: make reusable
       timeline
         .to($(node), 0.15, { opacity: 100, autoAlpha: 1, ease:Bounce.easeOut  })
-        .to($(node), 0.15, { scale: 1.15, ease:Bounce.easeOut } )
-        .to($(node), 0.10, { scale: 1 } );
+        .to($(node), 0.15, { scale: 0.8, ease:Quint.easeOut } )
+        .to($(node), 0.30, { scale: 1, ease:Elastic.easeOut } );
+      /***********************/
 
-
-     function timelineDone(node){
+      function timelineDone(node){
         console.log("timeline tween done.");
          document.querySelector(".editbit").focus();
       }
-
-      
     },
 
     removeElement: function(node) {
       console.log('_uihook: moment before bit remove');
       $(node).remove();
     }
-
   };
 
 
@@ -188,15 +184,18 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('bitHovering', template.data._id);
-      console.log("bit:hover:in " + Session.get('bitHovering'));
+      Session.set('bitHoveringId', template.data._id);
+      console.log("bit:hover:in " + Session.get('bitHoveringId'));
 
       // TODO: shimmer on hover
       // TODO: scale
       // TweenLite.to(Template.instance().firstNode, 0.3, { left:"+=10px", ease:Elastic.easeOut});
       // var yoyo = myTimeline.yoyo(); //gets current yoyo state
       // myTimeline.yoyo( true ); //sets yoyo to true
+
+      $(event.target).addClass('selected');
     }
+
   },
 
   'mouseleave .bit': function (event, template){
@@ -204,23 +203,25 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('bitHovering', '');
-      console.log("bit:hover:out " + Session.get('bitHovering'));
+      Session.set('bitHoveringId', '');
+      console.log("bit:hover:out " + Session.get('bitHoveringId'));
+      // $(event.target).removeClass('selected');
+
     }
   },
 
   'click .bit': function (event, template){
 
     // TODO: Zelda triforce focus here, zoom sound
-    console.log("bit:click: " + this._id);
+    console.log("bit:click: " + this._id);     
   },
 
   'dblclick .bit': function (event, template){
     event.preventDefault();
     event.stopPropagation();
 
-    Session.set('bitEditing',this._id);
-    console.log("bit:edit: " + Session.get('bitEditing'));
+    Session.set('bitEditingId',this._id);
+    console.log("bit:edit: " + Session.get('bitEditingId'));
   },
 
   'keyup .bit': function (event, template){
@@ -236,12 +237,7 @@ Template.bit.events({
 
       sound.play('ch-chaing-v2.mp3');
 
-      Session.set('bitEditing',null);
-    }
-
-    else if (event.which === 27) {
-      console.log('escape key');
-      Session.set('bitEditing', null);
+      Session.set('bitEditingId',null);
     }
   }
 
@@ -250,7 +246,7 @@ Template.bit.events({
 
 
 Template.bit.isEditingThisBit = function() {
-  return Session.equals('bitEditing', this._id);
+  return Session.equals('bitEditingId', this._id);
 };
 
 

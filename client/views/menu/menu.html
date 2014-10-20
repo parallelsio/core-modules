@@ -1,22 +1,27 @@
 <template name="menu">
 
-    <div class="loader first">
-        <div class="line first"></div>
-        <div class="mask horizontal top"></div>
-        <div class="mask horizontal bottom"></div>
-    </div>
+		<div class="wipe load top-to-bottom">
+				<div class="line"></div>
+				<div class="mask top"></div>
+				<div class="mask bottom"></div>
+		</div>
 
-    <div class="loader second">
-        <div class="line second"></div>
-        <div class="mask vertical left"></div>
-        <div class="mask vertical right"></div>
-    </div>
+		<div class="wipe load side-to-side">
+				<div class="line"></div>
+				<div class="mask left"></div>
+				<div class="mask right"></div>
+		</div>
+
+		<div class="wipe bit-preview side-to-side">
+				<div class="mask left"></div>
+				<div class="mask right"></div>
+		</div>
 
 
 	<div id="menu-bar" class="menu" >
 		<span>{{ bitsCount }} bits</span>
-    <span class="sep"> : </span>
-    <span>Editing Bit ID: {{ bitEditing }}</span>
+		<span class="sep"> : </span>
+		<span>Editing Bit ID: {{ bitEditingId }}</span>
 	</div>
 
 </template>
