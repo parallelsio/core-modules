@@ -184,8 +184,8 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('bitHovering', template.data._id);
-      console.log("bit:hover:in " + Session.get('bitHovering'));
+      Session.set('bitHoveringId', template.data._id);
+      console.log("bit:hover:in " + Session.get('bitHoveringId'));
 
       // TODO: shimmer on hover
       // TODO: scale
@@ -203,8 +203,8 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('bitHovering', '');
-      console.log("bit:hover:out " + Session.get('bitHovering'));
+      Session.set('bitHoveringId', '');
+      console.log("bit:hover:out " + Session.get('bitHoveringId'));
       // $(event.target).removeClass('selected');
 
     }

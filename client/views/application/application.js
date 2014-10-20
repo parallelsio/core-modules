@@ -35,7 +35,7 @@ Meteor.startup(function(){
   console.log("Meteor.startup start.");
   
     // reset any leftover session vars from last load
-  Session.set('bitHovering', '');
+  Session.set('bitHoveringId', '');
   Session.set('isDrawingParallel', false);
   
   utility.getSessionVars(true); 
@@ -52,13 +52,13 @@ Meteor.startup(function(){
 
     console.log("pressed d");
 
-    var bitHovering = Session.get('bitHovering');
+    var bitHoveringId = Session.get('bitHoveringId');
     console.log();
 
-    if(bitHovering)
+    if(bitHoveringId)
     {
-      Bits.remove(bitHovering);
-      console.log("bit:delete: " + bitHovering);
+      Bits.remove(bitHoveringId);
+      console.log("bit:delete: " + bitHoveringId);
     }
   });
 
@@ -82,16 +82,24 @@ Meteor.startup(function(){
     event.stopPropagation();
     console.log("pressed spacebar");
 
-    var bitHoveringId = Session.get('bitHovering');
-    var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
-    var bitTemplate = Blaze.getView($bit);
-    var bitData = Blaze.getData(bitTemplate);
+    var bitHoveringId = Session.get('bitHoveringId');
+    var bitPreviewingId = Session.get('bitPreviewingId');
 
-    if(bitHoveringId)
+    if (bitPreviewingId)
     {
-      console.log("bit:preview: " + bitHoveringId);
+      console.log('already previewing bit:', bitPreviewingId);
+    }
+
+    else if(bitHoveringId)
+    {
+      Session.set('bitPreviewingId', bitHoveringId);
+
+      var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
+      var bitTemplate = Blaze.getView($bit);
+      var bitData = Blaze.getData(bitTemplate);
 
       if (bitData.type === "image"){
+        console.log("bit:image:preview: " + bitHoveringId);
         
         $bitImg = $(bitTemplate.templateInstance().$('img'));
         var bitThumbnailHeight = $bitImg.height();
@@ -140,11 +148,9 @@ Meteor.startup(function(){
             var documentHeight = $(document).height();
 
             var timelineStart = function () {
-                // TODO: kill all running animations
-
-                // TODO: set bit:preview session var
-
                 console.log('bit:preview timeline starting ...');
+
+                // TODO: kill all running animations
                 $("body").css( "overflow", "hidden");
             };
 
@@ -166,6 +172,7 @@ Meteor.startup(function(){
               .set($($bit), { zIndex: 10 })
 
               // blow up image from thumbnail size up to fit the viewport height
+              // overlap with previous animation
               .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
               .to($bitImg, 0.25, options );
 
@@ -193,15 +200,15 @@ Meteor.startup(function(){
     event.stopPropagation();
     
     console.log("pressed shift");
-    var bitHovering = Session.get('bitHovering');
+    var bitHoveringId = Session.get('bitHoveringId');
     var isDrawingParallel = Session.get('isDrawingParallel');
 
     console.log();
 
-    if(bitHovering && (!isDrawingParallel))
+    if(bitHoveringId && (!isDrawingParallel))
     {
       // shift
-      console.log("bit:ready for drag: " + bitHovering);
+      console.log("bit:ready for drag: " + bitHoveringId);
 
       // mark it as in progress
       Session.set('isDrawingParallel', true);
@@ -210,7 +217,7 @@ Meteor.startup(function(){
       // merge with zelda animation, as that uses it too
       var r = Raphael(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
 
-      var element = document.querySelector("[data-id='" + bitHovering + "']");
+      var element = document.querySelector("[data-id='" + bitHoveringId + "']");
 
       // get bit obj
       // template.data.position_x
