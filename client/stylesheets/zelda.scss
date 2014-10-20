@@ -10,62 +10,60 @@ $color-second: #C7F464;
 html { height: 100%; }
 
 body {
-    height: 100%;
-    // overflow: hidden;
+	height: 100%;
 }
 
 .wipe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 
-    .line {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        transform-origin: left top;
+	.line {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		transform-origin: left top;
+	 }
 
-        &.first { background: $color-first; }
-        &.second { background: $color-second; }
-
-    }
-
-    .mask {
-        position: absolute;
-        z-index: 2;
-
-        &.toptobottom {
-            width: 100%;
-            height: calc(50% - #{ $line-size });
-
-            &.top { top: 0; }
-            &.bottom { bottom: 0; }
-        }
-
-        &.sidetoside {
-            height: 100%;
-            width: calc(50% - #{ $line-size });
-
-            &.right { right: 0; }
-            &.left { left: 0; }
-        }
-    }
-
-    &.first {
-        background: $color-init;
-        .mask {  background: $color-init; }
-    }
-
-    &.second {
-        background: $color-first;
-        .mask { background: $color-first; }
-    }
-
-    &.side {
-        
-    }
-
+	.mask {
+		position: absolute;
+		z-index: 2;
+	}
 }
+
+.wipe.top-to-bottom .line	{ background: $color-first; }
+.wipe.side-to-side .line 	{ background: $color-second; }
+
+
+.wipe.load.top-to-bottom .mask {
+	width: 100%;
+	height: calc(50% - #{ $line-size });
+	background: $color-init;
+	
+	.mask {  background: $color-init; }
+
+	&.top 		{ top: 0; }
+	&.bottom 	{ bottom: 0; }
+}
+
+
+.wipe.load.side-to-side .mask {
+	height: 100%;
+	width: calc(50% - #{ $line-size });
+	background: $color-first;
+
+	.mask { background: $color-first; }
+
+	&.right { right: 0; }
+	&.left 	{ left: 0; }
+}
+
+.wipe.bit-preview.side-to-side .mask {
+	background: #222;
+	opacity: 0.8;
+	width: calc(50%) !important; // overwrite the line in the middle, not needed here
+}
+

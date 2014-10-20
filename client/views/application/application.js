@@ -9,6 +9,7 @@ function zeldaWipeIn(){
 
   console.log('zelda wipe in ');
 
+  // TODO: use document height, so if person scrolls, still covers whole area
   var screenWidth  = document.documentElement.clientWidth;
   var screenHeight = document.documentElement.clientHeight;
 
@@ -17,29 +18,23 @@ function zeldaWipeIn(){
       var tlLoader     = setTimelineLoader();
       var tlGlobal     = new TimelineMax();
 
-      tlGlobal.set($('.overlay'), {alpha: 0});
       tlGlobal.add(tlLoader);
-
-      tlGlobal.set($('.overlay'), {alpha: 1});
       tlGlobal.play();
   }
 
-
   function setTimelineLoader () {
 
-      var maskLeft         = $('.mask.left');
-      var maskRight        = $('.mask.right');
-
-      TweenMax.set($('.wipe.side'), {alpha: 0});
+      var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
+      var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
 
       var tl = new TimelineMax();
 
-      tl.set($('.wipe.side'), { alpha: 1, display: "block" });
-      tl.set(maskRight, { alpha: 0.7 });
-      tl.set(maskLeft,  { alpha: 0.7 });
+      tl.set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" });
+      tl.set(maskRight, { alpha: 0.8 });
+      tl.set(maskLeft,  { alpha: 0.8 });
 
-      tl.fromTo(maskRight, 0.4, { x: 0 }, { x:  screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2); 
-      tl.fromTo(maskLeft, 0.4, { x: 0 },  { x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1}, 1.2);
+      tl.fromTo(maskRight, 0.5, { x:  screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, 1.2); 
+      tl.fromTo(maskLeft, 0.5,  { x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, 1.2);
       
       return tl;
   }
