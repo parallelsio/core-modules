@@ -91,21 +91,13 @@ Meteor.startup(function(){
     {
       console.log("bit:preview: " + bitHoveringId);
 
-      // react differently, depending on bit type
-      // for image, scale it up to fill the view port
       if (bitData.type === "image"){
         
-
         $bitImg = $(bitTemplate.templateInstance().$('img'));
         var bitThumbnailHeight = $bitImg.height();
-        var bitThumbnailWidth = $bitImg.width();
+        var bitThumbnailWidth  = $bitImg.width();
 
         (function scaleImageToFitWindow(){
-
-          var timeline = new TimelineMax({ 
-            onComplete: timelineDone, 
-            onCompleteParams:[ $bitImg, bitData ]
-          });
 
           // padding for top and bottom, in pixels
           var edgePadding = 10; 
@@ -144,24 +136,30 @@ Meteor.startup(function(){
             var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
             var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
           
-            var screenWidth  = $(document).width();
-            var screenHeight = $(document).height();
+            var documentWidth  = $(document).width();
+            var documentHeight = $(document).height();
 
             var timelineStart = function () {
                 // TODO: kill all running animations
 
                 // TODO: set bit:preview session var
 
-                // TODO: disable scroll
+                console.log('bit:preview timeline starting ...');
+                $("body").css( "overflow", "hidden");
             };
 
-            
+            var timeline = new TimelineMax({ 
+              onStart: timelineStart,
+              onComplete: timelineDone, 
+              onCompleteParams:[ bitHoveringId ]
+            });
+
             timeline
 
-              // zelda wipe in of background
+              // zelda wipe in of overlay bg
               .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
-              .fromTo(maskRight,  0.25, { x:  screenWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-              .fromTo(maskLeft,   0.25, { x: -screenWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+              .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+              .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
 
               // TODO: this wont be needed after on hover, bit swaps to top of 
               // z-index stack
@@ -171,7 +169,7 @@ Meteor.startup(function(){
               .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
               .to($bitImg, 0.25, options );
 
-            var timelineDone = function( node, bitTemplate ){
+            var timelineDone = function( bitHoveringId ){
               console.log("bit:preview:", bitHoveringId, "tween done." );
               
               // TODO:  wire up escape here to close?
@@ -184,7 +182,7 @@ Meteor.startup(function(){
       }
 
       else if (bitData.type === "text") {
-        // TODO: preview text
+        // TODO: how to preview text?
         console.log("bit:preview:", bitHoveringId, " is type text. Can't preview for now." );
       }
     }
