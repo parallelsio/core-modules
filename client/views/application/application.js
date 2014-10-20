@@ -33,8 +33,8 @@ function zeldaWipeIn(){
       tl.set(maskRight, { alpha: 0.8 });
       tl.set(maskLeft,  { alpha: 0.8 });
 
-      tl.fromTo(maskRight, 0.5, { x:  screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, 1.2); 
-      tl.fromTo(maskLeft, 0.5,  { x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, 1.2);
+      tl.fromTo(maskRight, 0.5, { x:  screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, .2); 
+      tl.fromTo(maskLeft, 0.5,  { x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, .2);
       
       return tl;
   }

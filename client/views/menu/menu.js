@@ -47,11 +47,11 @@ Template.menu.rendered = function() {
   };
 
   function setTimelineLoader () {
-      var topToBottom      = $('.wipe.top-to-bottom .line');
+      var topToBottomLine  = $('.wipe.top-to-bottom .line');
       var maskTop          = $('.wipe.top-to-bottom .mask.top');
       var maskBottom       = $('.wipe.top-to-bottom .mask.bottom');
 
-      var sideToSide       = $('.wipe.side-to-side .line');
+      var sideToSideLine   = $('.wipe.side-to-side .line');
       var maskLeft         = $('.wipe.load.side-to-side .mask.left');
       var maskRight        = $('.wipe.load.side-to-side .mask.right');
 
@@ -59,13 +59,13 @@ Template.menu.rendered = function() {
 
       var tl = new TimelineMax();
 
-      tl.fromTo(topToBottom, 0.4, { x: screenWidth }, { x: 0, ease: Circ.easeIn }, 0);
+      tl.fromTo(topToBottomLine, 0.4, { x: screenWidth }, { x: 0, ease: Circ.easeIn }, 0);
       tl.fromTo(maskTop, 0.4, { y: 0 }, { y: -screenHeight/2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
       tl.fromTo(maskBottom, 0.4, { y: 0 }, { y: screenHeight/2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
       tl.set($('.wipe.load.top-to-bottom'), { alpha: 0, display: "none" });
 
-      tl.set($('.wipe.load.side-to-side'), { alpha: 1 });
-      tl.fromTo(sideToSide, 0.4, { y: -screenHeight}, {y: 0, ease: Circ.easeIn});
+      tl.set($('.wipe.load.side-to-side'), { alpha: 1, display: "block"});
+      tl.fromTo(sideToSideLine, 0.4, { y: -screenHeight}, {y: 0, ease: Circ.easeIn});
       tl.fromTo(maskRight, 0.4, { x: 0 }, {x: screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
       tl.fromTo(maskLeft, 0.4, { x: 0 }, {x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
       

@@ -43,27 +43,31 @@ body {
 	height: calc(50% - #{ $line-size });
 	background: $color-init;
 	
-	.mask {  background: $color-init; }
-
 	&.top 		{ top: 0; }
 	&.bottom 	{ bottom: 0; }
 }
 
 
-.wipe.load.side-to-side .mask {
+.wipe.side-to-side .mask {
 	height: 100%;
-	width: calc(50% - #{ $line-size });
-	background: $color-first;
-
-	.mask { background: $color-first; }
-
+	
 	&.right { right: 0; }
 	&.left 	{ left: 0; }
 }
 
+.wipe.load.side-to-side .mask {
+	width: calc(50% - #{ $line-size });
+	background: $color-first;
+}
+
+.wipe.bit-preview.side-to-side {
+	display:none;
+	opacity:0;
+}
+
 .wipe.bit-preview.side-to-side .mask {
+	width: calc(50%) !important; // overwrite the line in the middle, not needed here
 	background: #222;
 	opacity: 0.8;
-	width: calc(50%) !important; // overwrite the line in the middle, not needed here
 }
 
