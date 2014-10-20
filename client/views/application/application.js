@@ -5,46 +5,6 @@
 _ = lodash;
 
 
-function zeldaWipeIn(){
-
-  console.log('zelda wipe in ');
-
-  // TODO: use document height, so if person scrolls, still covers whole area
-  var screenWidth  = document.documentElement.clientWidth;
-  var screenHeight = document.documentElement.clientHeight;
-
-  function start () {
-
-      var tlLoader     = setTimelineLoader();
-      var tlGlobal     = new TimelineMax();
-
-      tlGlobal.add(tlLoader);
-      tlGlobal.play();
-  }
-
-  function setTimelineLoader () {
-
-      var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
-      var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
-
-      var tl = new TimelineMax();
-
-      tl.set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" });
-      tl.set(maskRight, { alpha: 0.8 });
-      tl.set(maskLeft,  { alpha: 0.8 });
-
-      tl.fromTo(maskRight, 0.5, { x:  screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, .2); 
-      tl.fromTo(maskLeft, 0.5,  { x: -screenWidth/2, ease: Expo.easeOut, delay: 0.1 }, { x: 0 }, .2);
-      
-      return tl;
-  }
-
-  start();
-
-}
- 
-
-
 Meteor.startup(function(){
 
 
@@ -135,6 +95,7 @@ Meteor.startup(function(){
       // for image, scale it up to fill the view port
       if (bitData.type === "image"){
         
+
         $bitImg = $(bitTemplate.templateInstance().$('img'));
         var bitThumbnailHeight = $bitImg.height();
         var bitThumbnailWidth = $bitImg.width();
@@ -177,23 +138,47 @@ Meteor.startup(function(){
               width: previewWidth, 
               height: previewHeight,
               scale: 1,
-              ease: Elastic.easeOut
+              ease: Expo.easeOut
             }; 
 
-            // zelda wipe in
-            zeldaWipeIn();
+            var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
+            var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
+          
+            var screenWidth  = $(document).width();
+            var screenHeight = $(document).height();
 
-            // blow up image from thumbnail size up to fit the viewport height
-            // TODO: disable other animations before starting
-            // TODO: set bit preview session var
+            var timelineStart = function () {
+                // TODO: kill all running animations
+
+                // TODO: set bit:preview session var
+
+                // TODO: disable scroll
+            };
+
+            
             timeline
+
+              // zelda wipe in of background
+              .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
+              .fromTo(maskRight,  0.25, { x:  screenWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+              .fromTo(maskLeft,   0.25, { x: -screenWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+
+              // TODO: this wont be needed after on hover, bit swaps to top of 
+              // z-index stack
+              .set($($bit), { zIndex: 10 })
+
+              // blow up image from thumbnail size up to fit the viewport height
               .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
               .to($bitImg, 0.25, options );
 
-            function timelineDone( node, bitTemplate ){
+            var timelineDone = function( node, bitTemplate ){
               console.log("bit:preview:", bitHoveringId, "tween done." );
-              // TODO wire up escape here to close?
-            }
+              
+              // TODO:  wire up escape here to close?
+
+              // TODO: re-enable scroll
+
+            };
           }
         })();
       }
