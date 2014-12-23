@@ -14,7 +14,13 @@
               <img src="images/1000/{{ filename }}.jpg">
                 
             {{ else }}
-              {{ content }}
+
+              {{#if imageDataUrl }}
+                <img src="{{ imageDataUrl }}">
+              {{ else }}
+                {{ content }}
+              {{/if}}
+
             {{/if}}
 
           {{/if }}
