@@ -77,10 +77,9 @@ $ meteor run --settings settings.json
 
 ## Contact + tools we use
 
-* irc.freenode.net: #parallelsio
 * twitter: [@makeparallels](http://www.twitter.com/makeparallels)
-* Slack for chat/collab
-* PivotalTracker for stories
+* [Slack](http://parallelsio.slack.com) for chat/collab
+* [PivotalTracker](http://www.pivotaltracker.com) for keeping track of stories, units of development work
 
 
 ## Contribute
