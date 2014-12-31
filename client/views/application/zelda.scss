@@ -39,7 +39,7 @@ body {
 
         &.horizontal {
             width: 100%;
-            height: calc(50% - #{ $line-size });
+            height: calc(50% - #{$line-size});
 
             &.top { top: 0; }
             &.bottom { bottom: 0; }
@@ -47,7 +47,7 @@ body {
 
         &.vertical {
             height: 100%;
-            width: calc(50% - #{ $line-size });
+            width: calc(50% - #{$line-size});
 
             &.right { right: 0; }
             &.left { left: 0; }
