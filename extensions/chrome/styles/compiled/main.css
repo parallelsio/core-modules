@@ -1,0 +1,212 @@
+/* line 3, ../main.scss */
+#parallels-container {
+  position: fixed;
+  z-index: 2147483647;
+  top: -300px;
+  right: 0;
+  width: 100%;
+  margin: 0;
+  background: #5B5B5B;
+}
+
+/* line 13, ../main.scss */
+#parallels-iframe {
+  border: none !important;
+  width: 100%;
+  height: 290px;
+}
+
+/* line 19, ../main.scss */
+.parallels-web-clipper {
+  /* use pixels here to define the base size for type in this document.
+    everywhere else, we'll use ems, which is relative sizing based on this */
+  font-size: 14px !important;
+  color: #555;
+  /* this makes all margin + padding inside the box, which makes design much easier */
+}
+/* line 27, ../main.scss */
+.parallels-web-clipper * {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+/* line 29, ../main.scss */
+.parallels-web-clipper .bit-title {
+  /*
+      from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
+  */
+  padding: 8px 8px 6px 8px;
+  margin: 0;
+  outline: none;
+  border: none;
+  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+  font-family: 'ChaparralPro-Regular' !important;
+  font-size: 1.3em !important;
+  color: #FFF;
+  display: inline-block;
+  max-width: 50%;
+  margin: 0;
+  padding: 0.5em 0.5em 0.25em 0.5em;
+}
+/* line 25, ../_globals.scss */
+.parallels-web-clipper .bit-title:hover, .parallels-web-clipper .bit-title:focus {
+  background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+}
+/* line 38, ../main.scss */
+.parallels-web-clipper .bit-panel {
+  margin: 0 1em 1em 1em;
+}
+/* line 39, ../main.scss */
+.parallels-web-clipper .bit-screenshot {
+  height: 10em;
+}
+/* line 40, ../main.scss */
+.parallels-web-clipper .bit-context {
+  /*
+      from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
+  */
+  padding: 8px 8px 6px 8px;
+  margin: 0;
+  outline: none;
+  border: none;
+  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+  font-family: 'ChaparralPro-Regular' !important;
+  font-size: 1.3em !important;
+  color: #FFF;
+}
+/* line 25, ../_globals.scss */
+.parallels-web-clipper .bit-context:hover, .parallels-web-clipper .bit-context:focus {
+  background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+}
+/* line 45, ../main.scss */
+.parallels-web-clipper .bit-actions {
+  margin-top: 2em;
+}
+/* line 47, ../main.scss */
+.parallels-web-clipper .tag-editor {
+  /*
+      from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
+  */
+  padding: 8px 8px 6px 8px;
+  margin: 0;
+  outline: none;
+  border: none;
+  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+  display: inline-block;
+  float: none;
+  cursor: text;
+  min-width: 15em;
+  min-height: 3.3em;
+  max-width: 50%;
+}
+/* line 25, ../_globals.scss */
+.parallels-web-clipper .tag-editor:hover, .parallels-web-clipper .tag-editor:focus {
+  background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+}
+/* line 57, ../main.scss */
+.parallels-web-clipper .tag-editor div {
+  float: none;
+  padding: 0;
+}
+/* line 62, ../main.scss */
+.parallels-web-clipper .tag-editor .placeholder {
+  padding: 0;
+  color: gray;
+}
+/* line 67, ../main.scss */
+.parallels-web-clipper .tag-editor input {
+  color: white;
+}
+/* line 69, ../main.scss */
+.parallels-web-clipper .tag-editor li:first-child {
+  display: none;
+}
+/* line 70, ../main.scss */
+.parallels-web-clipper .tag-editor li {
+  position: relative;
+  display: inline-block;
+  float: none;
+  padding: 0.25em 0.75em;
+  padding-right: 1.5em;
+  margin: 0 0.5em 0 0.35em;
+  border-radius: 2em;
+  background-color: gray;
+}
+/* line 80, ../main.scss */
+.parallels-web-clipper .tag-editor li .tag-editor-spacer {
+  display: none;
+}
+/* line 82, ../main.scss */
+.parallels-web-clipper .tag-editor li .tag-editor-tag {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  /* No support for these yet, future proofing */
+  -o-user-select: none;
+  user-select: none;
+  font-family: 'ChaparralPro-Regular' !important;
+  font-size: 1.3em !important;
+  color: #FFF;
+  display: inline-block;
+  overflow: visible;
+  background: transparent;
+  border-radius: 0;
+  line-height: initial;
+}
+/* line 93, ../main.scss */
+.parallels-web-clipper .tag-editor li .tag-editor-delete {
+  position: absolute;
+  display: inline-block;
+  width: 1em;
+  height: 2em;
+  top: -15px;
+  padding: 0;
+  margin: 0 0.5em;
+  background: transparent;
+  color: white;
+  border-radius: 0;
+  background: #FF0;
+}
+/* line 106, ../main.scss */
+.parallels-web-clipper .tag-editor li .tag-editor-delete i {
+  display: none;
+}
+/* line 111, ../main.scss */
+.parallels-web-clipper button {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  padding: 1em;
+  text-transform: uppercase;
+  border: 0;
+}
+/* line 122, ../main.scss */
+.parallels-web-clipper .blue {
+  color: #fff;
+  background-color: #357ae8;
+  background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
+  background-image: -moz-linear-gradient(top, #4d90fe, #357ae8);
+  background-image: -ms-linear-gradient(top, #4d90fe, #357ae8);
+  background-image: -o-linear-gradient(top, #4d90fe, #357ae8);
+  background-image: linear-gradient(top, #4d90fe, #357ae8);
+}
+/* line 133, ../main.scss */
+.parallels-web-clipper .gray {
+  color: #444;
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
+}

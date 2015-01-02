@@ -1,0 +1,38 @@
+$extension_root: "chrome-extension://__MSG_@@extension_id__" !global;
+
+@mixin user-select-none {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  /* No support for these yet, future proofing */
+  -o-user-select: none;
+  user-select: none;
+}
+
+
+@mixin element-tray {
+  /*
+      from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
+  */
+  padding: 8px 8px 6px 8px;
+  margin: 0;
+  outline: none;
+  border: none;
+  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+  background-size: 1px 6px, 1px 1px, 1px 6px;
+
+  &:hover,
+  &:focus {
+    background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat,
+    bottom center linear-gradient(#0099cc, #0099cc) repeat-x,
+    bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+    background-size: 1px 6px, 1px 1px, 1px 6px;
+  }
+}
+
+@mixin base-type {
+  font-family: 'ChaparralPro-Regular' !important;
+  font-size: 1.3em !important;
+  color: #FFF;
+}

@@ -1,0 +1,45 @@
+@import "globals";
+
+@font-face {
+  font-family: 'ChaparralPro-Light';
+  src: url('#{ $extension_root }/typefaces/chaparralprolight.eot'); /* IE9 Compat Modes */
+  src: url('#{ $extension_root }/typefaces/chaparralprolight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('#{ $extension_root }/typefaces/chaparralprolight.woff') format('woff'), /* Modern Browsers */
+  url('#{ $extension_root }/typefaces/chaparralprolight.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('#{ $extension_root }/typefaces/chaparralprolight.svg#chaparralprolight') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChaparralPro-LightIt';
+  src: url('#{ $extension_root }/typefaces/chaparralprolightit.eot'); /* IE9 Compat Modes */
+  src: url('#{ $extension_root }/typefaces/chaparralprolightit.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('#{ $extension_root }/typefaces/chaparralprolightit.woff') format('woff'), /* Modern Browsers */
+  url('#{ $extension_root }/typefaces/chaparralprolightit.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('#{ $extension_root }/typefaces/chaparralprolightit.svg#chaparralprolightit') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChaparralPro-Regular';
+  src: url('#{ $extension_root }/typefaces/chaparralproregular.eot'); /* IE9 Compat Modes */
+  src: url('#{ $extension_root }/typefaces/chaparralproregular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('#{ $extension_root }/typefaces/chaparralproregular.woff') format('woff'), /* Modern Browsers */
+  url('#{ $extension_root }/typefaces/chaparralproregular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('#{ $extension_root }/typefaces/chaparralproregular.svg#chaparralproregular') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChaparralPro-Semibold';
+  src: url('#{ $extension_root }/typefaces/chaparralprosemibold.eot'); /* IE9 Compat Modes */
+  src: url('#{ $extension_root }/typefaces/chaparralprosemibold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('#{ $extension_root }/typefaces/chaparralprosemibold.woff') format('woff'), /* Modern Browsers */
+  url('#{ $extension_root }/typefaces/chaparralprosemibold.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('#{ $extension_root }/typefaces/chaparralprosemibold.svg#chaparralprosemibold') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}

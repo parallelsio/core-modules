@@ -1,3 +1,11 @@
 .DS_Store
-/meteor-core/settings.json
 .idea
+node_modules
+*.log
+build/
+config.json
+/meteor-core/settings.json
+.npm/
+tmp
+.sass-cache/
+extensions/chrome/bower_components

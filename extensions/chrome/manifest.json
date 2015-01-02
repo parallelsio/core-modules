@@ -1,0 +1,53 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.5",
+  "default_locale": "en",
+  "background": {
+    "page": "html/background.html"
+  },
+
+  "browser_action": {
+    "default_icon": "images/cube.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "styles/vendor/jquery.tag-editor.css",
+        "styles/compiled/jquery.tag.override.css",
+        "styles/compiled/main.css",
+        "styles/compiled/typefaces.css"
+      ],
+      "js": [
+        "bower_components/jquery/dist/jquery.min.js",
+        "bower_components/gsap/src/minified/TweenMax.min.js",
+        "bower_components/requirejs/require.js",
+        "scripts/requireContent.js",
+        "scripts/requireConfig.js",
+        "scripts/inject.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+
+  "web_accessible_resources": [
+    "bower_components/jquery/dist/jquery.min.map",
+    "typefaces/*",
+    "html/*",
+    "scripts/*"
+  ],
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Parallels Web Clipper",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Tag + save any tab's content to your parallels.io server",
+    "description": "The description of the application"
+  }
+}
