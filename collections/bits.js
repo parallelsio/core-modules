@@ -7,13 +7,3 @@
 
 // TODO: for this map only
 Bits = new Meteor.Collection("bits");
-
-// set controls
-Bits.allow({
-    update: function (objectId, bit) {
-        return objectId;
-    },
-    insert: function (objectId, bit) {
-        return objectId;
-    }
-});

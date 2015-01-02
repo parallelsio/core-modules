@@ -5,6 +5,7 @@
 
 meteor-platform
 coffeescript
+insecure
 awatson1978:mousetrap
 underscore
 iron:router
@@ -18,5 +19,3 @@ fourseven:scss
 wolves:bourbon
 clubfest:raphael
 
-accounts-password
-accounts-ui

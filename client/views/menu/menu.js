@@ -6,11 +6,7 @@ Template.menu.helpers({
   
   bitsCount: function() { 
     return Bits.find().count();
-  },
-
-  bitProject: function() {
-      return Session.get('bitProject');
-  }
+  } 
   
 });
 

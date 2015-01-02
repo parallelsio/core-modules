@@ -9,8 +9,8 @@ Template.map.helpers({
 
 
 Template.map.rendered = function(){
-// plays sound on startup
-//  sound.play('welcome-v1.mp3');
+  
+  sound.play('welcome-v1.mp3');
 
 };
 
@@ -29,10 +29,7 @@ Template.map.events({
                   position_x: event.pageX, 
                   position_y: event.pageY });
 
-
-
       Session.set('bitEditingId', id);
-
 
     }
   }
