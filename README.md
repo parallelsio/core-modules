@@ -1,4 +1,4 @@
-# [Parallels](http://parallels.io) alpha app, based on [Meteor JS](http://www.meteor.com )
+# [Parallels](http://parallels.io) alpha app, based on [Meteor JS](http://www.meteor.com)
 ---  
 
 ### Dependencies + Requirements
