@@ -1,21 +1,24 @@
-# [Parallels](http://parallels.io) alpha app, based on [Meteor JS](http://www.meteor.com)
+# parallels.io alpha app, based on [Meteor JS](http://www.meteor.com)
 ---  
 
-### Dependencies + Requirements
+### Requirements for dev setup
 
 * OSX / Linux
 * Node (tested with v0.10.29)
 * NPM (tested with v1.4.14) 
-* Meteor 1.0+
+* Meteor 0.9.1.2
 * git, prefer 2.0+
-* [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating) browsers: Chrome, IE10+, Safari, FireFox
+* Modern desktop browsers, with CSS3/HTML5 support:
+   * No legacy browsers
+   * Mobile and touch devices not current focus
+   * Special message for Internet Explorer: go home, you're tired.  
 
-
+  
 ---  
-### Quick Start: Building + Developing
+### Quick Start  
 
 
-#### Install node.js + NPM ( [OSX, via Homebrew](http://thechangelog.com/install-node-js-with-homebrew-on-os-x ) ) ( [Linux via Apt ](https://www.digitalocean.com/community/tutorials/how-to-use-npm-to-manage-node-js-packages-on-a-linux-server) )
+#### Install node.js + NPM ( [OSX, via Homebrew](http://thechangelog.com/install-node-js-with-homebrew-on-os-x ) ) ( [Linux via Apt ] (https://www.digitalocean.com/community/tutorials/how-to-use-npm-to-manage-node-js-packages-on-a-linux-server) )
 
 
 
