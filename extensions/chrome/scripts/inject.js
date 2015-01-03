@@ -32,6 +32,14 @@ requirejs(['config', 'messenger'],
         .play();
     };
 
+    var saveBit = function (deregister, data) {
+      console.log('inject:saveBit');
+      console.log(data);
+      var message = {event: 'persist-bit', bit: data.bit};
+      chrome.extension.sendMessage({ data	: message });
+      closeClipper();
+    };
+
     var closeClipper = function () {
       var tl = new window.TimelineLite();
       tl.pause()
@@ -49,6 +57,7 @@ requirejs(['config', 'messenger'],
 
     messenger.registerEvent('iframe-loaded', onIframeLoaded);
     messenger.registerEvent('show-clipper', showClipper);
+    messenger.registerEvent('save-bit', saveBit);
     messenger.registerEvent('close-clipper', closeClipper);
 
     loadClipper();

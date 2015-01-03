@@ -1,17 +1,20 @@
 'use strict';
 
-/* global MeteorDdp */
+/* global Asteroid */
 
 define(['config'], function (config) {
-  var ddp = new MeteorDdp(config.webSocketUri);
+  var ddp = new Asteroid(config.appRootUrl);
 
   return {
     /**
      * Connect to the parallels server
      * @param {Function} onConnected
      */
-    connect: function () {
-      console.log('attempting connection to meteor');
+    saveBit: function (e, data) {
+      console.log('saving to meteor');
+      console.log(data);
+      var bits = ddp.getCollection('bits');
+      bits.insert(data.bit);
     },
     ddp: ddp
   };

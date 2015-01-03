@@ -7,8 +7,6 @@ requirejs.config(requirejsConfig);
 
 requirejs(['config', 'server', 'messenger'],
   function (config, server, messenger) {
-    var onConnected = function () {
-    };
 
     var onClipperReady = function () {
       console.log('background:onClipperReady');
@@ -19,12 +17,18 @@ requirejs(['config', 'server', 'messenger'],
     var onClipperActivated = function (tab) {
       chrome.tabs.captureVisibleTab(null, {}, function (dataUrl) {
         chrome.tabs.sendMessage(tab.id, {
-          data: {event: 'clipper-activated', url: tab.url, title: tab.title, imgDataUrl: dataUrl}
+          data: {
+            event: 'clipper-activated',
+            url: tab.url,
+            title: tab.title,
+            imgDataUrl: dataUrl,
+            nativeWidth: tab.width,
+            nativeHeight: tab.height
+          }
         });
       });
     };
 
-    server.connect(onConnected);
-
     messenger.registerEvent('clipper-ready', onClipperReady);
+    messenger.registerEvent('persist-bit', server.saveBit);
   });

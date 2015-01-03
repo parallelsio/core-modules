@@ -1,4 +1,4 @@
 define({
-  appRootUrl: 'http://localhost:3000',
+  appRootUrl: 'localhost:3000',
   webSocketUri: 'ws://localhost:3000/websocket'
 });
