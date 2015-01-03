@@ -69,6 +69,7 @@
     li:first-child { display: none; }
     li {
       position: relative;
+      overflow: hidden;
       display: inline-block;
       float: none;
       padding: 0.25em 0.75em;

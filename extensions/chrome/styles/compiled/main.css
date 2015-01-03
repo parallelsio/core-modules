@@ -129,6 +129,7 @@
 /* line 70, ../main.scss */
 .parallels-web-clipper .tag-editor li {
   position: relative;
+  overflow: hidden;
   display: inline-block;
   float: none;
   padding: 0.25em 0.75em;
@@ -137,11 +138,11 @@
   border-radius: 2em;
   background-color: gray;
 }
-/* line 80, ../main.scss */
+/* line 81, ../main.scss */
 .parallels-web-clipper .tag-editor li .tag-editor-spacer {
   display: none;
 }
-/* line 82, ../main.scss */
+/* line 83, ../main.scss */
 .parallels-web-clipper .tag-editor li .tag-editor-tag {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
@@ -161,7 +162,7 @@
   border-radius: 0;
   line-height: initial;
 }
-/* line 93, ../main.scss */
+/* line 94, ../main.scss */
 .parallels-web-clipper .tag-editor li .tag-editor-delete {
   position: absolute;
   display: inline-block;
@@ -175,11 +176,11 @@
   border-radius: 0;
   background: #FF0;
 }
-/* line 106, ../main.scss */
+/* line 107, ../main.scss */
 .parallels-web-clipper .tag-editor li .tag-editor-delete i {
   display: none;
 }
-/* line 111, ../main.scss */
+/* line 112, ../main.scss */
 .parallels-web-clipper button {
   display: inline-block;
   text-align: center;
@@ -190,7 +191,7 @@
   text-transform: uppercase;
   border: 0;
 }
-/* line 122, ../main.scss */
+/* line 123, ../main.scss */
 .parallels-web-clipper .blue {
   color: #fff;
   background-color: #357ae8;
@@ -200,7 +201,7 @@
   background-image: -o-linear-gradient(top, #4d90fe, #357ae8);
   background-image: linear-gradient(top, #4d90fe, #357ae8);
 }
-/* line 133, ../main.scss */
+/* line 134, ../main.scss */
 .parallels-web-clipper .gray {
   color: #444;
   background-color: #f5f5f5;
