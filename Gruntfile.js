@@ -70,7 +70,7 @@ module.exports = function (grunt) {
     bgShell: {
       meteor: {
         cmd: [
-          'cd meteor-core',
+          'cd meteor-app',
           'meteor run --settings settings.json'
         ].join('&&'),
         bg: false,
@@ -79,7 +79,7 @@ module.exports = function (grunt) {
       },
       meteordebug: {
         cmd: [
-          'cd meteor-core',
+          'cd meteor-app',
           'NODE_OPTIONS=\'--debug-brk\' meteor run --settings settings.json'
         ].join('&&'),
         bg: false,

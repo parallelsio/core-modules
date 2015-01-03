@@ -1,7 +1,6 @@
 'use strict';
 
 define('messenger', function () {
-  //where the event callbacks are stored
   var registry = [];
 
   /**
@@ -10,23 +9,21 @@ define('messenger', function () {
    * @param message
    */
   function eventReceived(name, message) {
-    //get the event callback
     var callback = registry[name];
     if (!callback)
       return;
 
-    //pass a function (handle) to stop the listener and the message
     callback(function () {
       delete registry[name];
     }, message);
   }
 
   window.addEventListener('message', function (evt) {
+    //TODO: What should we be doing here to remain secure?
     //if (evt.origin !== config.appRootUrl)
     //  return;
     console.log('window message received');
 
-    //if the message has an event, trigger eventReceived
     var message = evt.data;
     if (message.event)
       eventReceived(message.event, message);
@@ -37,18 +34,14 @@ define('messenger', function () {
       console.log('chrome extension message received');
       var message = request.data;
 
-      //if the message has an event, trigger eventReceived
       if (message.event)
         eventReceived(message.event, message);
     });
   }
 
-
-  //callbacks listed by their message id
-
   return {
     /**
-     * Register a codebounty app event and check the mailbox
+     * Register an app event and check the mailbox
      * for that event to see if there are already any messages
      * @param name the event to register ex. 'close'
      * @param {Function} callback (message)
@@ -64,9 +57,8 @@ define('messenger', function () {
      */
     sendEvent: function (name, message) {
       var data = message || {};
-
       data.event = name;
-
+      //TODO: Is there a better way to send messages over the DOM? What should the source URL be?
       window.parent.postMessage(data, '*');
     }
   };
