@@ -7,3 +7,16 @@
 
 // TODO: for this map only
 Bits = new Meteor.Collection("bits");
+
+// set controls, requires user to be logged in
+//Bits.allow({
+//    update: function (objectId, bit) {
+//        return objectId;
+//    },
+//    insert: function (objectId, bit) {
+//        return objectId;
+//    },
+//    remove: function (objectId, bit) {
+//        return objectId
+//    }
+//});

@@ -6,8 +6,11 @@ Template.menu.helpers({
   
   bitsCount: function() { 
     return Bits.find().count();
-  } 
-  
+  },
+
+  sessionId: function() {
+    return Meteor.default_connection._lastSessionId;
+  }
 });
 
 

@@ -220,6 +220,7 @@ Template.bit.events({
     event.preventDefault();
     event.stopPropagation();
 
+    // set existing bit id
     Session.set('bitEditingId',this._id);
     console.log("bit:edit: " + Session.get('bitEditingId'));
   },

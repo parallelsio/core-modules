@@ -6,6 +6,7 @@ if Bits.find().count() is 0
     position_y: 400
     content: "Hello world!"
     color: "white"
+    creator: 'anonymous'
     
   Bits.insert
     type: "text"
@@ -13,6 +14,7 @@ if Bits.find().count() is 0
     position_y: 300
     content: "This is parallels!"
     color: "white"
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -21,6 +23,7 @@ if Bits.find().count() is 0
     filename: "mine_collage_mai__img_8939"
     nativeWidth: 1000
     nativeHeight: 747
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -29,6 +32,7 @@ if Bits.find().count() is 0
     filename: "mine_flow_times_square_orange_curves_2_0749"
     nativeWidth: 1000
     nativeHeight: 750
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -37,6 +41,7 @@ if Bits.find().count() is 0
     filename: "mine__0051"
     nativeWidth: 1000
     nativeHeight: 750
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -45,6 +50,7 @@ if Bits.find().count() is 0
     filename: "mine___20140203_081713"
     nativeWidth: 1000
     nativeHeight: 1351
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -53,6 +59,7 @@ if Bits.find().count() is 0
     filename: "mine_instagram_2014-01-04_1388835381"
     nativeWidth: 1000
     nativeHeight: 1000
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -61,6 +68,7 @@ if Bits.find().count() is 0
     filename: "mine_roof_anke_water_towe_blue_sky_gradient_img_5411"    
     nativeWidth: 1000
     nativeHeight: 977
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -69,6 +77,7 @@ if Bits.find().count() is 0
     filename: "mine_tiles_pixels_7708-3"    
     nativeWidth: 1000
     nativeHeight: 519
+    creator: 'anonymous'
 
   Bits.insert
     type: "image"
@@ -80,6 +89,4 @@ if Bits.find().count() is 0
     url: "http://akdubya.github.io/dustjs/"
     title: "dust"
     createdAt: "2014-12-24T21:39:11.046Z"
-
-
-
+    creator: 'alex'

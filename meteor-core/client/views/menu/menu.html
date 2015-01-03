@@ -19,6 +19,9 @@
 
 
 	<div id="menu-bar" class="menu" >
+		<div>{{> loginButtons}}</div>
+		<div>Session: <span>{{ sessionId }}</span></div>
+
 		<span>{{ bitsCount }} bits</span>
 		<span class="sep"> : </span>
 		<span>Editing Bit ID: {{ bitEditingId }}</span>
