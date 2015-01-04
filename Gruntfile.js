@@ -9,12 +9,11 @@ module.exports = function (grunt) {
     return {
       options: {
         context: {
-          APPROOTURL: config.appRootUrl[environment],
-          WEBSOCKETURI: config.webSocketUri[environment]
+          APPROOTURL: config.appRootUrl[environment]
         }
       },
-      src: '<%= config.dist %>/chrome/scripts/modules/config.js',
-      dest: '<%= config.dist %>/chrome/scripts/modules/config.js'
+      src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
+      dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
     };
   }
 
@@ -25,7 +24,23 @@ module.exports = function (grunt) {
       dist: {
         expand: true,
         cwd: 'extensions/chrome',
-        src: '**',
+        src: [
+          '_locales/**',
+          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/gsap/src/minified/TweenMax.min.js',
+          'bower_components/ddp.js/src/ddp.js',
+          'bower_components/q/q.js',
+          'bower_components/asteroid/dist/asteroid.chrome.js',
+          'bower_components/requirejs/require.js',
+          'html/*',
+          'images/*',
+          'scripts/**',
+          '!scripts/modules/config.template.js',
+          'styles/compiled/*',
+          'styles/vendor/*',
+          'typefaces/*',
+          'manifest.json'
+        ],
         dest: '<%= config.dist %>/chrome/'
       }
     },
@@ -56,8 +71,16 @@ module.exports = function (grunt) {
     },
     preprocess: {
       dist: preprocessChromeExtensionConfig('dist'),
-      qa: preprocessChromeExtensionConfig('qa'),
-      local: preprocessChromeExtensionConfig('local')
+      ci: preprocessChromeExtensionConfig('ci'),
+      local: {
+        options: {
+          context: {
+            APPROOTURL: config.appRootUrl.local
+          }
+        },
+        src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
+        dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
+      }
     },
     crx: {
       dist: {
@@ -67,7 +90,20 @@ module.exports = function (grunt) {
         privateKey: 'extensions/chrome.pem'
       }
     },
+    encode: {
+      client: {
+        src: ['<%= config.dist %>/parallels.crx'],
+        dest: '<%= config.dist %>'
+      }
+    },
     bgShell: {
+      e2e: {
+        cmd: './bin/run_tests.sh',
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: true
+      },
       meteor: {
         cmd: [
           'cd meteor-app',
@@ -76,6 +112,13 @@ module.exports = function (grunt) {
         bg: false,
         stdout: true,
         stderr: true
+      },
+      resetTestDb: {
+        cmd: 'mongo parallels_test --eval "printjson(db.dropDatabase())"',
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: true
       },
       meteordebug: {
         cmd: [
@@ -91,6 +134,12 @@ module.exports = function (grunt) {
           'cd <%= config.chrome_ext %>',
           'bower install'
         ].join('&&'),
+        bg: false,
+        stdout: true,
+        stderr: true
+      },
+      tests: {
+        cmd: 'echo "NOTHING HERE YET"',
         bg: false,
         stdout: true,
         stderr: true
@@ -188,6 +237,14 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    env : {
+      ci : {
+        PARALLELS_DOMAIN : 'parallels-ci.meteor.com'
+      },
+      local : {
+        PARALLELS_DOMAIN : '127.0.0.1:3000'
+      }
     }
   });
 
@@ -223,16 +280,19 @@ module.exports = function (grunt) {
   // builds the chrome extension
   grunt.registerTask('build', 'Build chrome extension', function (target) {
     var tasks = [
-      'clean:dist',
-      'copy:dist'
+      'bgShell:bowerChromeExt',
+      'compass:chrome',
+      'jade'
     ];
 
-    if (target === 'local')
-      tasks.push('preprocess:local');
-    else
-      tasks.push('preprocess:dist');
+    if (target === 'local') {
+      tasks = tasks.concat(['preprocess:local', 'clean:dist', 'copy:dist', 'crx:dist', 'encode']);
+    } else if (target === 'ci') {
+      tasks = tasks.concat(['preprocess:ci', 'clean:dist', 'copy:dist', 'crx:dist', 'encode']);
+    } else {
+      tasks = tasks.concat(['preprocess:dist', 'clean:dist', 'copy:dist', 'crx:dist', 'encode']);
+    }
 
-    tasks = tasks.concat(['crx:dist', 'encode']);
     grunt.task.run(tasks);
   });
 
@@ -242,9 +302,7 @@ module.exports = function (grunt) {
 
     var tasks = [
       'jshint',
-      'bower',
-      'compass:chrome',
-      'jade',
+      'build:local',
       'connect:chrome',
       'concurrent:server' + target
     ];
@@ -252,9 +310,27 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask('bower', [
-    'bgShell:bowerChromeExt'
-  ]);
+  grunt.registerTask('test', 'Run the testing tasks', function (target) {
+    if (target !== 'debug')
+      target = '';
+
+    grunt.task.run('bgShell:tests' + target);
+  });
+
+  grunt.registerTask('e2e-tests', 'Run integration tests', function (target) {
+    var tasks;
+
+    if (target === 'ci') {
+      tasks = ['env:ci', 'build:ci'];
+    } else {
+      tasks = ['env:local', 'build:local'];
+    }
+
+    tasks = tasks.concat(['bgShell:resetTestDb', 'bgShell:e2e']);
+
+    grunt.task.run(tasks);
+  });
+
 
   grunt.registerTask('default', 'server');
 };
