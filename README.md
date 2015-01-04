@@ -3,7 +3,7 @@
 The project consists of 2 main components which need to run side by side, included in this repository:
    
 
-/core-meteor-app 
+/core-modules 
 ---
 The web application: a digital canvas where documents are created + remixed. Based on the [Meteor JS](http://www.meteor.com) platform
 
