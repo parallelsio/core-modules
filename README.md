@@ -46,6 +46,10 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 
 * [Screenhero](https://screenhero.com/) and Google Hangouts for remote screenshare / pairing
 
+* [TravisCI](http://travis-ci.com) Continous Integration system, which runs our tests and deploys our app.
+
+* [Saucelabs](http://saucelabs.com) Automated cross-browser esting on various platforms
+
 ---
 
 ### Contribute
