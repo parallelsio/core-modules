@@ -33,14 +33,14 @@ Meteor.startup(function(){
 
 
   console.log("Meteor.startup start.");
-  
+
     // reset any leftover session vars from last load
   Session.set('bitPreviewingId', null);
   Session.set('bitEditingId', null);
   Session.set('isDrawingParallel', false);
 
-  
-  utility.getSessionVars(true); 
+
+  utility.getSessionVars(true);
 
   // TODO: why doesnt JS native selector work here
   // but Jquery does?
@@ -60,7 +60,7 @@ Meteor.startup(function(){
     if(bitHoveringId)
     {
       Bits.remove(bitHoveringId);
-      console.log("bit:delete: " + bitHoveringId);
+      window.PARALLELS.Events.publish('ux', {message: "bit:delete: " + bitHoveringId});
     }
   });
 
@@ -102,7 +102,7 @@ Meteor.startup(function(){
 
       if (bitData.type === "image"){
         console.log("bit:image:preview: " + bitHoveringId);
-        
+
         $bitImg = $(bitTemplate.templateInstance().$('img'));
         var bitThumbnailHeight = $bitImg.height();
         var bitThumbnailWidth  = $bitImg.width();
@@ -110,7 +110,7 @@ Meteor.startup(function(){
         (function scaleImageToFitWindow(){
 
           // padding for top and bottom, in pixels
-          var edgePadding = 10; 
+          var edgePadding = 10;
 
           // using d.d.c faster than jQuery(window).width()
           // http://ryanve.com/lab/dimensions
@@ -118,34 +118,34 @@ Meteor.startup(function(){
 
           // calc the height available, accounting for space for image to breathe from edges
           var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
-         
+
           // use freeHeight to determine how to preview
-          // TODO: use height + width, for cases where height fits nicely 
-          // in the viewport, but image is very wide, wider than viewport 
-          if ((bitData.nativeHeight > bitThumbnailHeight) && 
+          // TODO: use height + width, for cases where height fits nicely
+          // in the viewport, but image is very wide, wider than viewport
+          if ((bitData.nativeHeight > bitThumbnailHeight) &&
               (bitThumbnailHeight <= freeHeight)) {
 
             var previewHeight = freeHeight;
-  
+
             /*
                 calc for the new width:
 
                  nativeHeight       previewHeight
                 -------------  =  ----------------
-                 nativeWidth       x (previewWidth) 
+                 nativeWidth       x (previewWidth)
             */
             var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
 
-            var options = { 
-              width: previewWidth, 
+            var options = {
+              width: previewWidth,
               height: previewHeight,
               scale: 1,
               ease: Expo.easeOut
-            }; 
+            };
 
             var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
             var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
-          
+
             var documentWidth  = $(document).width();
             var documentHeight = $(document).height();
 
@@ -160,9 +160,9 @@ Meteor.startup(function(){
                 // disable bit actions (drag)
             };
 
-            var timeline = new TimelineMax({ 
+            var timeline = new TimelineMax({
               onStart: timelineStart,
-              onComplete: timelineDone, 
+              onComplete: timelineDone,
               onCompleteParams:[ bitHoveringId ]
             });
 
@@ -174,7 +174,7 @@ Meteor.startup(function(){
               .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
               .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
 
-              // TODO: this wont be needed after on hover, bit swaps to top of 
+              // TODO: this wont be needed after on hover, bit swaps to top of
               // z-index stack
               .set($($bit), { zIndex: 10 })
 
@@ -187,7 +187,7 @@ Meteor.startup(function(){
 
             var timelineDone = function( bitHoveringId ){
               console.log("bit:preview:", bitHoveringId, "tween done." );
-              
+
               // TODO:  wire up escape here to close?
               // inside of close function, make sure to set Session.set('bitPreviewingId', null);
             };
@@ -207,7 +207,7 @@ Meteor.startup(function(){
   Mousetrap.bind("shift", function() {
     event.preventDefault();
     event.stopPropagation();
-    
+
     console.log("pressed shift");
     var bitHoveringId = Session.get('bitHoveringId');
     var isDrawingParallel = Session.get('isDrawingParallel');
@@ -222,7 +222,7 @@ Meteor.startup(function(){
       // mark it as in progress
       Session.set('isDrawingParallel', true);
 
-      // creates transparent canvas 
+      // creates transparent canvas
       // merge with zelda animation, as that uses it too
       var r = Raphael(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
 
@@ -231,7 +231,7 @@ Meteor.startup(function(){
       // get bit obj
       // template.data.position_x
       // template.data.position_y
-      
+
       // TODO: only enable if none others are going
 
       // var circle = r.circle(element.position.x, element.position.y, 10);
@@ -242,10 +242,10 @@ Meteor.startup(function(){
       $(this).mousemove( function(event) {
         console.log("mouse event.page_: ", event.pageX, event.pageY);
       });
-      
+
       // $(this).unbind();
 
-      // tween the fill to blue (#00f) and x to 100, y to 100, 
+      // tween the fill to blue (#00f) and x to 100, y to 100,
       // width to 100 and height to 50 over the course of 3 seconds using an ease of Power1.easeInOut
       // TweenLite.to(rect, 3, { raphael:{ fill:"#00f", x:100, y:100, width:100, height:50 }, ease:Power1.easeInOut});
 
@@ -281,8 +281,7 @@ showNotification = function(message, type) {
   }
 
   console.log(message);
-  
+
 };
 
 
-  

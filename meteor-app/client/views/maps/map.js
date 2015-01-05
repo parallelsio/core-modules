@@ -9,7 +9,7 @@ Template.map.helpers({
 
 
 Template.map.rendered = function(){
-  
+
   sound.play('welcome-v1.mp3');
 
 };
@@ -19,20 +19,20 @@ Template.map.events({
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("bit:text:create");
+    window.PARALLELS.Events.publish('ux', {message: "bit:text:create"});
 
     if(event.target.classList.contains('map')){
-      var id = Bits.insert( { 
+      var id = Bits.insert( {
                   content: '',
-                  type: 'text', 
+                  type: 'text',
                   color: 'white',
-                  position_x: event.pageX, 
+                  position_x: event.pageX,
                   position_y: event.pageY });
 
       Session.set('bitEditingId', id);
 
     }
   }
-  
+
 
 });

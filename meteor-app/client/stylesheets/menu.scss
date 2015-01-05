@@ -12,3 +12,10 @@
   top:-100px;
 }
 
+.event-trail {
+  display: table;
+  table-layout: fixed;
+  height:1em;
+  width:100%;
+  box-sizing: border-box;
+}
