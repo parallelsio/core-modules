@@ -2,11 +2,12 @@
 .idea
 node_modules
 *.log
-build/
-config.json
-/meteor-core/settings.json
+build/chrome
 .npm/
 tmp
 .sass-cache/
 extensions/chrome/bower_components
-settings.json
+chromeprofile/
+*.crx
+build/
+extensions/chrome/scripts/modules/config.js

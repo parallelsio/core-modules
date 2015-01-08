@@ -1,0 +1,39 @@
+language: node_js
+
+node_js:
+  - "0.10"
+
+services:
+  - mongodb
+
+before_install:
+  - sudo apt-get install expect
+  - gem update --system
+  - gem install compass
+  - npm install -g grunt-cli bower
+  - "curl https://install.meteor.com | /bin/sh"
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
+addons:
+  sauce_connect:
+    username: "angelcabo3"
+    access_key:
+      secure: "vaizOF9erSgg89fvebuLt/EjXzqKMOeBjBXrjXYLdv7ayrtv17daDIz2EnU15hPCeqL2w8jKYpptvZTMnk925rMDQz554pD7F7PYMbF8HV4C/xOiqa4+odd660dy6ho/L85CmdoKjZq7eVp2NgUTa/j5AiZ5kzoltsFmZdDy1g4="
+
+notifications:
+  slack:
+    secure: S6vA1tXv8LA4JuXnbJ/RkrKXYOeD5JUR/MwCA9rH4/6l/9IFDRKVs2TMJ7GJEwj92ql7+hx/e7xnkqMzghRF3crsk4Wsv1i1wmAYr+jvhdtDRcdeHcA/P1wVbQHoSAWBRDPC6BN4+0ICWmiJ6DLa8a8e7C6bRVQpQMjS77RhWBI=
+
+env:
+  global:
+    - METEOR_DEPLOY_URL=http://parallels-ci.meteor.com
+    - METEOR_EMAIL=angelcabo
+    - secure: "pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc="
+
+script:
+  - "expect deploy.exp"
+  - "sleep 5"
+  - grunt e2e-tests:ci
