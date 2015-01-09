@@ -5,7 +5,7 @@
 
 requirejs.config(requirejsConfig);
 
-requirejs(['config', 'server', 'messenger'],
+requirejs(['lib/modules/config', 'lib/modules/server', 'lib/modules/messenger'],
   function (config, server, messenger) {
 
     var onClipperReady = function () {

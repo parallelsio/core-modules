@@ -1,9 +1,9 @@
 'use strict';
 
-/* jshint jquery: true */
+requirejs.config(requirejsConfig);
 
-requirejs(['messenger'],
-  function(messenger) {
+requirejs(['jquery', 'lib/modules/messenger', 'jquery.tag-editor'],
+  function($, messenger) {
 
     var bit;
 

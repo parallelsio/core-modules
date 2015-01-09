@@ -10,4 +10,4 @@ extensions/chrome/bower_components
 chromeprofile/
 *.crx
 build/
-extensions/chrome/scripts/modules/config.js
+extensions/chrome/scripts/lib/modules/config.js

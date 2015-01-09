@@ -1,10 +1,8 @@
 'use strict';
 
-/* jshint jquery: true */
-
 requirejs.config(requirejsConfig);
 
-requirejs([], function () {
+requirejs(['jquery'], function ($) {
     console.log('init:testHelper');
 
     // a tags seem to get blocked on a lot of sites, including our own
