@@ -44,9 +44,9 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 
 * [Trello](https://trello.com/b/XtenDuNO/parallels-design-dev) for keeping track of stories (units of development work)
 
-* [Screenhero](https://screenhero.com/) and Google Hangouts for remote screenshare / pairing
+* [Screenhero](https://screenhero.com/) for remote screenshare / pairing
 
-* [TravisCI](http://travis-ci.com) Continous Integration system, which runs our tests and deploys our app.
+* [TravisCI](http://travis-ci.com) Continous Integration system, which runs our tests and deploys the app.
 
 * [Saucelabs](http://saucelabs.com) Automated cross-browser esting on various platforms
 
@@ -66,6 +66,22 @@ We're a diverse, distributed team of designers, developers and researchers with 
 * Physics-based UI animations + transitions, via WebGL, CSS3, Canvas + JS 
 * Interactive documentation, think Bret Vector reactive documents
 * iOS / Android apps
+
+For code contributions: fixes + features:
+
+```
+# Fork the project
+# https://help.github.com/articles/fork-a-repo
+
+# Modify the code
+
+# Run the end-to-end test suite when finished with a unit of work.
+# This runs all the tests which ensure the components still work (clipper, web canvas)  
+$ grunt e2e-tests 
+
+# If tests pass, submit a Github Pull Request
+$ https://help.github.com/articles/using-pull-requests
+```
 
 ---
 
@@ -113,6 +129,12 @@ $ gem install compass
 ```
 
 ```
+# install Mongo DB
+# a Mongo instance is used for the end to end tests, to avoid conflicting with local Mongo install used together with the Meteor app
+# directions: http://docs.mongodb.org/manual/installation
+```
+
+```
 # download + install all the JS libraries this project requires, 
 # using Npm, the node packaging system
 $ npm install
@@ -123,9 +145,49 @@ $ npm install
 $ npm install grunt-cli -g
 ```
 
+
+``` 
+# CONFIGURE THE EXTENSION
+# Before you install the Chrome extension, you'll need to set 
+# the destination for bits that you clip / save
+
+# To do so, build the extension in one of three ways:
+
+    # 1: When clipper is used, pushes bits to http://localhost:3000
+    # (local development). No one will see your data with this option.
+    # Your data is persistent, in that it will survive reloading Meteor
+    # and when you run your local end-to-end tests
+    $ grunt build:local
+
+    # ---------- OR ------------
+
+    # 2: When clipper is used, pushes bits to the CI (Continous Integration)
+    # server at http://parallels-ci.meteor.com
+    # This data is public, but not persistent: it gets cleared whenever 
+    # someone pushes new code to master
+    $ grunt build:ci 
+  
+    # ---------- OR ------------
+
+    # 3: When clipper is used, pushes bits to our sandbox environment
+    # at http://parallels.meteor.com. This link is public and persists,
+    # being shared all over the Interwebs + beyond.
+    # Please take care what you clip here.
+    $ grunt build:dist
+
 ```
-# when ready to run the extension locally, run the Grunt task to prep the files, 
-# run the local web server, and load the extension
+
+```
+# INSTALL EXTENSION
+# Point the Chrome browser to the extension source code folder. 
+# You only need to do this once, the first time. Details here: 
+# https://developer.chrome.com/extensions/getstarted#unpacked
+
+```
+
+```
+# PREP + COMPILE FILES
+# Runs the local web server and loads the extension
 $ grunt
 
 # This does several things, including:
@@ -142,6 +204,7 @@ $ grunt
 #      which lives in /extensions/chrome
 ```
 
+
 ```
 # When grunt is complete, your terminal output should look something like this:
 ```
@@ -155,14 +218,13 @@ $ grunt
 ```
 
 ```
-# Now, set up the Chrome extension into the Chrome browser. 
-# You only need to do this once, the first time. Details here: 
-# https://developer.chrome.com/extensions/getstarted#unpacked
-
 # When Chrome prompts you for the project directory, point it to the 
 # /extensions/chrome folder of this repository
-```
-```
+
+# --------------------
+# EDIT SOURCE CODE now
+# --------------------
+
 # you should now be able to click the Extension icon in Chrome on a web page to
 # bring up the web clipper dialog box
 
@@ -170,7 +232,11 @@ $ grunt
 # This is only locally during dev, as Chrome places restrictions on SSL (https) content
 
 # Save a web page using the web clipper. You should see that 'bit' instantly on 
-# your Parallels canvas at http://localhost:3000
+# your Parallels canvas. This defaults to http://localhost:3000, unless you 
+# congfigured the destination manually, 
+# as described in the CONFIGURE THE EXTENSION section 
+
+
 ```
 <img src="http://i.imgur.com/yMwBRaY.png" />
 
@@ -184,6 +250,7 @@ $ grunt
 ```
 
 ```
+# RUNNING PARTS MANUALLY
 # sometimes Chrome gets funky when trying to reload changes
 # recompiling manually sometimes does the trick
 
@@ -205,7 +272,7 @@ $ grunt jade
 Q: I'm getting an error: `bash: bundle: command not found`
 
 A: Bundler, the required Ruby packager, is not installed. Do:
-`gem install bundler'
+`gem install bundler`
 
 ------
 
@@ -223,9 +290,16 @@ By combining everything under one umbrella, testing is now signficantly easier. 
 
 ----------
 
+Q: How do I run the end to end tests manually?
+
+A: `grunt e2e-tests`
+
+----------
+
 #### Still having trouble? 
 
 Tweet to us [@makeparallels](http://www.twitter.com/makeparallels), [email](mailto:steven@parallels.io), or [post a Github Issue](https://github.com/parallelsio/core-modules/issues/new). 
 
 We'll get back to you pronto, and if necessary, arrange for a remote pairing session to set you up!
 
+-----------
