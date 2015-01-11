@@ -25,14 +25,13 @@
         "styles/compiled/typefaces.css"
       ],
       "js": [
-        "bower_components/jquery/dist/jquery.min.js",
-        "bower_components/gsap/src/minified/TweenMax.min.js",
+
         "bower_components/requirejs/require.js",
-        "scripts/requireContent.js",
-        "scripts/requireConfig.js",
+        "scripts/lib/requireContent.js",
+        "scripts/lib/requireConfig.js",
         "scripts/inject.js",
 
-        "scripts/inject.testHelper.js"
+        "scripts/testHelpers/inject.testHelper.js"
       ],
       "run_at": "document_end",
       "all_frames": false
@@ -40,10 +39,10 @@
   ],
 
   "web_accessible_resources": [
-    "bower_components/jquery/dist/jquery.min.map",
     "typefaces/*",
     "html/*",
-    "scripts/*"
+    "scripts/*",
+    "bower_components/*"
   ],
 
   "permissions": [

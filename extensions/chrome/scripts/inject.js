@@ -1,11 +1,9 @@
 'use strict';
 
-/* jshint jquery: true */
-
 requirejs.config(requirejsConfig);
 
-requirejs(['config', 'messenger'],
-  function (config, messenger) {
+requirejs(['jquery', 'lib/modules/config', 'lib/modules/messenger', 'Quint', 'TimelineLite'],
+  function ($, config, messenger, Quint, TimelineLite) {
 
     var _container = null;
     var ID = {
@@ -23,9 +21,9 @@ requirejs(['config', 'messenger'],
     };
 
     var showClipper = function () {
-      var tl = new window.TimelineLite();
+      var tl = new TimelineLite();
       tl.pause()
-        .to(_container, 0.25, { top:'0', ease: window.Quint.easeOut })
+        .to(_container, 0.25, { top:'0', ease: Quint.easeOut })
         .call(function(){
           console.log('Parallels clipper: done animating dialog into DOM.');
         })
@@ -41,9 +39,9 @@ requirejs(['config', 'messenger'],
     };
 
     var closeClipper = function () {
-      var tl = new window.TimelineLite();
+      var tl = new TimelineLite();
       tl.pause()
-        .to(_container, 0.325, { top:'-300px', ease: window.Quint.easeIn })
+        .to(_container, 0.325, { top:'-300px', ease: Quint.easeIn })
         .call(function(){
           console.log('Parallels clipper: done animating dialog out of DOM.');
         })

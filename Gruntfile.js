@@ -12,8 +12,8 @@ module.exports = function (grunt) {
           APPROOTURL: config.appRootUrl[environment]
         }
       },
-      src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
-      dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
+      src: '<%= config.chrome_ext %>/scripts/lib/modules/config.template.js',
+      dest: '<%= config.chrome_ext %>/scripts/lib/modules/config.js'
     };
   }
 
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         cwd: 'extensions/chrome',
         src: [
           '_locales/**',
-          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/jquery/dist/jquery.js',
           'bower_components/gsap/src/minified/TweenMax.min.js',
           'bower_components/ddp.js/src/ddp.js',
           'bower_components/q/q.js',
@@ -64,8 +64,8 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= config.chrome_ext %>/scripts/{,*/}*.js',
-        '!<%= config.chrome_ext %>/scripts/vendor/*',
+        '<%= config.chrome_ext %>/scripts/**/*.js',
+        '!<%= config.chrome_ext %>/scripts/lib/vendor/*',
         'test/spec/{,*/}*.js'
       ]
     },
@@ -78,8 +78,8 @@ module.exports = function (grunt) {
             APPROOTURL: config.appRootUrl.local
           }
         },
-        src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
-        dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
+        src: '<%= config.chrome_ext %>/scripts/lib/modules/config.template.js',
+        dest: '<%= config.chrome_ext %>/scripts/lib/modules/config.js'
       }
     },
     crx: {
@@ -183,7 +183,7 @@ module.exports = function (grunt) {
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       js: {
-        files: ['<%= config.chrome_ext %>/scripts/{,*/}*.js', '<%= config.chrome_ext %>/scripts/modules/{,*/}*.js'],
+        files: ['<%= config.chrome_ext %>/scripts/{,*/}*.js', '<%= config.chrome_ext %>/scripts/lib/{,*/}*.js', '<%= config.chrome_ext %>/scripts/lib/modules/{,*/}*.js'],
         tasks: ['jshint'],
         options: {
           livereload: true

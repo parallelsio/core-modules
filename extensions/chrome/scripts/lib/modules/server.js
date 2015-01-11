@@ -1,8 +1,8 @@
 'use strict';
 
-/* global Asteroid */
-
-define(['config'], function (config) {
+define(['lib/modules/config', 'DDP', 'Q', 'Asteroid'], function (config, DDP, Q, Asteroid) {
+  window.DDP = DDP;
+  window.Q = Q;
   var ddp = new Asteroid(config.appRootUrl);
 
   return {

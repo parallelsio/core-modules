@@ -1,6 +1,6 @@
 'use strict';
 
-define('messenger', function () {
+define(function () {
   var registry = [];
 
   /**

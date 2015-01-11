@@ -5,7 +5,7 @@
 
 requirejs.config(requirejsConfig);
 
-requirejs(['messenger'],
+requirejs(['lib/modules/messenger'],
   function (messenger) {
 
     var testSaveActivated = function () {
