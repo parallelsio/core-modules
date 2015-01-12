@@ -25,7 +25,6 @@
         "styles/compiled/typefaces.css"
       ],
       "js": [
-
         "bower_components/requirejs/require.js",
         "scripts/lib/requireContent.js",
         "scripts/lib/requireConfig.js",
@@ -35,10 +34,17 @@
       ],
       "run_at": "document_end",
       "all_frames": false
+    },
+    {
+      "matches": [ "http://*/*", "https://*/*", "ftp://*/*" ],
+      "js": [ "scripts/lib/htmlParser/content/wininfo.js" ],
+      "run_at" : "document_start",
+      "all_frames" : true
     }
   ],
 
   "web_accessible_resources": [
+    "images/*",
     "typefaces/*",
     "html/*",
     "scripts/*",
@@ -46,6 +52,9 @@
   ],
 
   "permissions": [
+    "notifications",
+    "storage",
+    "unlimitedStorage",
     "tabs",
     "activeTab",
     "http://*/*",

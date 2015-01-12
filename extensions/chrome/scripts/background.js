@@ -3,32 +3,21 @@
 
 'use strict';
 
-requirejs.config(requirejsConfig);
+/**
+ * Main background script. Acts as a controller for actions initiated from the backend.
+ * Responsibilities include:
+ *  - wiring up messages to actions using the messenger layer
+ */
 
-requirejs(['lib/modules/config', 'lib/modules/server', 'lib/modules/messenger'],
-  function (config, server, messenger) {
+//TODO: separate all chrome specific calls to a dependency
+requirejs(['browser', 'lib/app', 'lib/modules/messenger'],
+  function (browser, app, messenger) {
 
     var onClipperReady = function () {
       console.log('background:onClipperReady');
-      chrome.browserAction.onClicked.addListener(onClipperActivated);
     };
-
-
-    var onClipperActivated = function (tab) {
-      chrome.tabs.captureVisibleTab(null, {}, function (dataUrl) {
-        chrome.tabs.sendMessage(tab.id, {
-          data: {
-            event: 'clipper-activated',
-            url: tab.url,
-            title: tab.title,
-            imgDataUrl: dataUrl,
-            nativeWidth: tab.width,
-            nativeHeight: tab.height
-          }
-        });
-      });
-    };
+    browser.onExtensionTriggered(app.startClipping);
 
     messenger.registerEvent('clipper-ready', onClipperReady);
-    messenger.registerEvent('persist-bit', server.saveBit);
+    messenger.registerEvent('save-bit', app.saveBit);
   });

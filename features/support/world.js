@@ -5,7 +5,7 @@ var World = function (callback) {
   var appSettings;
 
   try {
-    appSettings = require("../../../meteor-app/settings.json");
+    appSettings = require("../../meteor-app/settings.json");
   }
     //error handled next
   catch (error) {
@@ -16,7 +16,7 @@ var World = function (callback) {
     + "See features/support/world.js for details.");
 
   var webdriver = require("selenium-webdriver");
-  var extension = require("../../../build/parallels.crx.json");
+  var extension = require("../../build/parallels.crx.json");
   var browser;
 
   if (process.env.CI) {
