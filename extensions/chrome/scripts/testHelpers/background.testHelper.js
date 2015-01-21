@@ -3,8 +3,6 @@
 
 'use strict';
 
-requirejs.config(requirejsConfig);
-
 requirejs(['lib/modules/messenger'],
   function (messenger) {
 

@@ -6,11 +6,12 @@ Router.configure({
   }
 });
 
-Router.map(function() {
-  return this.route('map', {
-    template: 'map',
-    path: '/'
-  });
+Router.route('/', function () {
+  this.render('map');
+});
+
+Router.route('/debug', function () {
+  this.render('debug');
 });
 
 Router.onBeforeAction('loading');

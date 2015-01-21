@@ -9,5 +9,8 @@
     "mousetrap": "~1.4.6",
     "requirejs": "~2.1.15"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "squire": "~0.2.0",
+    "jasmine-jquery": "~2.0.5"
+  }
 }

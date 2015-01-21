@@ -1,62 +1,31 @@
 'use strict';
 
-requirejs.config(requirejsConfig);
+/**
+ * Main content script. Acts as a controller for actions initiated on the DOM of the current page.
+ * Responsibilities include:
+ *  - wiring up messages to actions using the messenger layer
+ *  - relaying messages between the clipper iframe in the DOM and the background scripts
+ */
+requirejs(['browser', 'lib/app', 'lib/modules/messenger'],
+  function (browser, app, messenger) {
 
-requirejs(['jquery', 'lib/modules/config', 'lib/modules/messenger', 'Quint', 'TimelineLite'],
-  function ($, config, messenger, Quint, TimelineLite) {
-
-    var _container = null;
-    var ID = {
-      CONTAINER		: 'parallels-container',
-      IFRAME_PREFIX	: 'parallels-iframe'
-    };
-
-    var loadClipper = function () {
-      _container = $('<div />', {id:ID.CONTAINER});
-      _container.appendTo(document.body);
-
-      var src		= chrome.extension.getURL('html/web_clipper.html?_'+(new Date().getTime()));
-      var iframe	= $('<iframe />', {id: ID.IFRAME_PREFIX, src: src, scrolling: false});
-      _container.append(iframe);
-    };
-
-    var showClipper = function () {
-      var tl = new TimelineLite();
-      tl.pause()
-        .to(_container, 0.25, { top:'0', ease: Quint.easeOut })
-        .call(function(){
-          console.log('Parallels clipper: done animating dialog into DOM.');
-        })
-        .play();
-    };
-
-    var saveBit = function (deregister, data) {
+    var saveBit = function (data) {
       console.log('inject:saveBit');
       console.log(data);
-      var message = {event: 'persist-bit', bit: data.bit};
-      chrome.extension.sendMessage({ data	: message });
-      closeClipper();
-    };
-
-    var closeClipper = function () {
-      var tl = new TimelineLite();
-      tl.pause()
-        .to(_container, 0.325, { top:'-300px', ease: Quint.easeIn })
-        .call(function(){
-          console.log('Parallels clipper: done animating dialog out of DOM.');
-        })
-        .play();
+      var message = {event: 'save-bit', bit: data.bit};
+      browser.sendMessageToBackground({data: message});
+      app.closeClipper();
     };
 
     var onIframeLoaded = function () {
       var data = {event: 'clipper-ready'};
-      chrome.extension.sendMessage({ data	: data });
+      browser.sendMessageToBackground({data: data});
     };
 
     messenger.registerEvent('iframe-loaded', onIframeLoaded);
-    messenger.registerEvent('show-clipper', showClipper);
-    messenger.registerEvent('save-bit', saveBit);
-    messenger.registerEvent('close-clipper', closeClipper);
+    messenger.registerEvent('show-clipper', app.showClipper);
+    messenger.registerEvent('submit-bit', saveBit);
+    messenger.registerEvent('close-clipper', app.closeClipper);
 
-    loadClipper();
+    app.loadClipperIframe(document.body);
   });

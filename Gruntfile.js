@@ -66,6 +66,7 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         '<%= config.chrome_ext %>/scripts/**/*.js',
         '!<%= config.chrome_ext %>/scripts/lib/vendor/*',
+        '!<%= config.chrome_ext %>/scripts/lib/htmlParser/**/*',
         'test/spec/{,*/}*.js'
       ]
     },
@@ -183,7 +184,7 @@ module.exports = function (grunt) {
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       js: {
-        files: ['<%= config.chrome_ext %>/scripts/{,*/}*.js', '<%= config.chrome_ext %>/scripts/lib/{,*/}*.js', '<%= config.chrome_ext %>/scripts/lib/modules/{,*/}*.js'],
+        files: '<%= config.chrome_ext %>/scripts/**/*.js',
         tasks: ['jshint'],
         options: {
           livereload: true
@@ -224,18 +225,27 @@ module.exports = function (grunt) {
     },
     connect: {
       options: {
-        port: 9000,
-        livereload: 35729,
-        // change this to '0.0.0.0' to access the server from outside
-        hostname: 'localhost'
+
       },
       chrome: {
         options: {
+          port: 9000,
+          livereload: 35729,
+          // change this to '0.0.0.0' to access the server from outside
+          hostname: 'localhost',
           open: false,
           base: [
             '<%= config.chrome_ext %>'
           ]
         }
+      },
+      test : {
+        port: 8000,
+        hostname: 'localhost',
+        base: [
+          '<%= config.chrome_ext %>'
+        ],
+        open: false
       }
     },
     env : {
@@ -245,11 +255,31 @@ module.exports = function (grunt) {
       local : {
         PARALLELS_DOMAIN : '127.0.0.1:3000'
       }
+    },
+    jasmine: {
+      all: {
+        options: {
+          keepRunner: true,
+          specs: '<%= config.chrome_ext %>/tests/*spec.js',
+          helpers: '<%= config.chrome_ext %>/tests/*helper.js',
+          host: 'http://127.0.0.1:8000/',
+          template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfigFile: '<%= config.chrome_ext %>/scripts/lib/requireConfig.js',
+            requireConfig: {
+              baseUrl: './<%= config.chrome_ext %>/scripts/',
+              paths: {
+                'Squire': '../bower_components/squire/src/Squire'
+              }
+            }
+          }
+        }
+      }
     }
   });
 
   // Load all grunt tasks
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev(['grunt-*', '!grunt-template-jasmine-requirejs']).forEach(grunt.loadNpmTasks);
 
   //chromeOptions needs the extension to be a Base64 encoded string
   //so encode it, then build a requirejs module for it
@@ -310,12 +340,13 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask('test', 'Run the testing tasks', function (target) {
-    if (target !== 'debug')
-      target = '';
-
-    grunt.task.run('bgShell:tests' + target);
-  });
+  //grunt.registerTask('test', 'Run the testing tasks', function (target) {
+  //  if (target !== 'debug')
+  //    target = '';
+  //
+  //  grunt.task.run('bgShell:tests' + target);
+  //});
+  grunt.registerTask('test', ['connect:test', 'jasmine']);
 
   grunt.registerTask('e2e-tests', 'Run integration tests', function (target) {
     var tasks;

@@ -19,7 +19,7 @@ if [ -z "$CI" ]; then
 fi
 
 # Run integration tests
-node node_modules/cucumber/bin/cucumber.js tests/features
+node node_modules/cucumber/bin/cucumber.js features
 
 # Do some cleanup
 kill $(jobs -p)

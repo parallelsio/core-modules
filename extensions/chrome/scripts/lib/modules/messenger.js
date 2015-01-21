@@ -13,28 +13,30 @@ define(function () {
     if (!callback)
       return;
 
-    callback(function () {
+    callback(message, function () {
       delete registry[name];
-    }, message);
+    });
   }
 
   window.addEventListener('message', function (evt) {
     //TODO: What should we be doing here to remain secure?
     //if (evt.origin !== config.appRootUrl)
     //  return;
-    console.log('window message received');
+    //console.log('window message received');
 
     var message = evt.data;
     if (message.event)
       eventReceived(message.event, message);
   }, false);
 
+  //TODO: should move to browser specific module and encapsulate sending extension message
+  // i.e. browser.initListeners(function (request) {} );
   if (chrome) {
     chrome.extension.onMessage.addListener(function (request) {
-      console.log('chrome extension message received');
+      //console.log('chrome extension message received');
       var message = request.data;
 
-      if (message.event)
+      if (message && message.event)
         eventReceived(message.event, message);
     });
   }

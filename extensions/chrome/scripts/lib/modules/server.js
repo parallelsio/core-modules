@@ -4,18 +4,34 @@ define(['lib/modules/config', 'DDP', 'Q', 'Asteroid'], function (config, DDP, Q,
   window.DDP = DDP;
   window.Q = Q;
   var ddp = new Asteroid(config.appRootUrl);
+  var bits = ddp.getCollection('bits');
 
   return {
     /**
-     * Connect to the parallels server
-     * @param {Function} onConnected
+     * Save a bit to the parallels server
+     * @param bit
      */
-    saveBit: function (e, data) {
+    saveBit: function (bit) {
       console.log('saving to meteor');
-      console.log(data);
-      var bits = ddp.getCollection('bits');
-      bits.insert(data.bit);
+      console.log(bit);
+      bits.insert(bit);
     },
+
+    /**
+     * Update a bit on the parallels server
+     * @param id
+     * @param bit
+     */
+    updateBit: function (id, bit) {
+      console.log('updating bit');
+      console.log(bit);
+      return bits.update(id, bit);
+    },
+
+    findByPageIdentifier: function (pageIdentifier) {
+      return bits.reactiveQuery({ pageIdentifier: pageIdentifier }).result;
+    },
+
     ddp: ddp
   };
 });
