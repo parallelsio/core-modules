@@ -171,7 +171,7 @@
 
       if (href.indexOf("data:") != 0)
         requestManager.send(url, function (data) {
-          if (data.status >= 400)
+          if (!data || data.status >= 400)
             node.parentElement.removeChild(node);
           else
             createStyleNode(data.content || "");

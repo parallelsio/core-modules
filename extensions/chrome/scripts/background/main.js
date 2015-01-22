@@ -6,6 +6,12 @@ define(['browser', 'modules/server', 'htmlParser/background'],
     // TODO: How should we add new bits locally and at the same time have the list refresh while in development?
     var localBits = {};
 
+    HTMLParser.subscribe('bg-init', function() {
+      browser.notify({title: 'Bit Lift Received', message: 'Page Saved'}, function () {
+        console.log('ok to close the browser');
+      });
+    });
+
     HTMLParser.subscribe('process-start', function(message) {
       //chrome.tabs.sendMessage(pageData.tabId, message);
       console.log('received process-start');
@@ -63,15 +69,12 @@ define(['browser', 'modules/server', 'htmlParser/background'],
           HTMLParser.start({id: tabId, config: null, tabIds: null, processSelection: false, processFrame: false});
         });
 
-        browser.notify({title: 'Bit Lift Received', message: 'Page saved'}, function () {
-
-          browser.screenshot(function (dataUrl) {
-            localBits[pageIdentifier].imgDataUrl = dataUrl;
-            saveBit({bit: localBits[pageIdentifier]});
-            var message = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
-            message.event = 'clipper-activated';
-            browser.sendMessageToDom({data: message});
-          });
+        browser.screenshot(function (dataUrl) {
+          localBits[pageIdentifier].imgDataUrl = dataUrl;
+          saveBit({bit: localBits[pageIdentifier]});
+          var message = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
+          message.event = 'clipper-activated';
+          browser.sendMessageToDom({data: message});
         });
       });
     };

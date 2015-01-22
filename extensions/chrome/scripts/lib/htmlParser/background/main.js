@@ -54,6 +54,9 @@
 
   function processInit(tabId, port, message) {
     console.log('background:processInit:');
+    parallels.observer.publish('bg-init', {data: {
+      event: 'bg-init'
+    }});
     console.log(message);
     var pageData = tabs[tabId][message.pageId];
     pageData.portsId.push(port.portId_);
@@ -211,17 +214,18 @@
     var tabId = port.sender.tab.id, portPageId = [];
 
     function onDisconnect() {
-      var pageData = tabs[tabId][portPageId[port.portId_]];
-      if (!pageData)
-        return;
-      pageData.portsId = pageData.portsId.filter(function(id) {
-        return id != port.portId_;
-      });
-      if (!pageData.portsId.length)
-        if (pageData.processing)
-          pageData.pendingDelete = true;
-        else
-          deletePageData(pageData);
+      //var pageData = tabs[tabId][portPageId[port.portId_]];
+      //if (!pageData)
+      //  return;
+      //pageData.portsId = pageData.portsId.filter(function(id) {
+      //  return id != port.portId_;
+      //});
+      //if (!pageData.portsId.length)
+      //  if (pageData.processing)
+      //    pageData.pendingDelete = true;
+      //  else
+      //    deletePageData(pageData);
+      console.log('disconnecting');
     }
 
     function onMessage(message) {
