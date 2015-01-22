@@ -6,15 +6,15 @@
  *  - wiring up messages to actions using the messenger layer
  *  - relaying messages between the clipper iframe in the DOM and the background scripts
  */
-requirejs(['browser', 'lib/app', 'lib/modules/messenger'],
-  function (browser, app, messenger) {
+requirejs(['browser', 'content/main', 'modules/messenger'],
+  function (browser, content, messenger) {
 
     var saveBit = function (data) {
       console.log('inject:saveBit');
       console.log(data);
       var message = {event: 'save-bit', bit: data.bit};
       browser.sendMessageToBackground({data: message});
-      app.closeClipper();
+      content.closeClipper();
     };
 
     var onIframeLoaded = function () {
@@ -23,9 +23,9 @@ requirejs(['browser', 'lib/app', 'lib/modules/messenger'],
     };
 
     messenger.registerEvent('iframe-loaded', onIframeLoaded);
-    messenger.registerEvent('show-clipper', app.showClipper);
+    messenger.registerEvent('show-clipper', content.showClipper);
     messenger.registerEvent('submit-bit', saveBit);
-    messenger.registerEvent('close-clipper', app.closeClipper);
+    messenger.registerEvent('close-clipper', content.closeClipper);
 
-    app.loadClipperIframe(document.body);
+    content.loadClipperIframe(document.body);
   });

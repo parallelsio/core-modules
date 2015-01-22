@@ -10,14 +10,14 @@
  */
 
 //TODO: separate all chrome specific calls to a dependency
-requirejs(['browser', 'lib/app', 'lib/modules/messenger'],
-  function (browser, app, messenger) {
+requirejs(['browser', 'background/main', 'modules/messenger'],
+  function (browser, background, messenger) {
 
     var onClipperReady = function () {
       console.log('background:onClipperReady');
     };
-    browser.onExtensionTriggered(app.startClipping);
+    browser.onExtensionTriggered(background.startClipping);
 
     messenger.registerEvent('clipper-ready', onClipperReady);
-    messenger.registerEvent('save-bit', app.saveBit);
+    messenger.registerEvent('save-bit', background.saveBit);
   });

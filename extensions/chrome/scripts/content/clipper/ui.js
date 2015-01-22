@@ -1,6 +1,6 @@
 'use strict';
 
-define(['jquery', 'lib/modules/messenger', 'jquery.tag-editor'], function ($, messenger) {
+define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messenger) {
 
   var bit;
 

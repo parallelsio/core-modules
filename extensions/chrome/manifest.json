@@ -28,7 +28,7 @@
         "bower_components/requirejs/require.js",
         "scripts/lib/requireContent.js",
         "scripts/lib/requireConfig.js",
-        "scripts/inject.js",
+        "scripts/content.js",
 
         "scripts/testHelpers/inject.testHelper.js"
       ],

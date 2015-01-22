@@ -8,10 +8,10 @@
  * Responsibilities include:
  *  - wiring up messages to actions using the messenger layer
  */
-requirejs(['lib/modules/messenger', 'lib/clipper/ui'],
-  function (messenger, ui) {
+requirejs(['modules/messenger', 'content/clipper/ui'],
+  function (messenger, clipper) {
 
-    messenger.registerEvent('clipper-activated', ui.onClipperActivated);
+    messenger.registerEvent('clipper-activated', clipper.onClipperActivated);
 
-    ui.initialize();
+    clipper.initialize();
   });

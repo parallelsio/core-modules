@@ -3,7 +3,7 @@
 
 'use strict';
 
-requirejs(['lib/modules/messenger'],
+requirejs(['modules/messenger'],
   function (messenger) {
 
     var testSaveActivated = function () {

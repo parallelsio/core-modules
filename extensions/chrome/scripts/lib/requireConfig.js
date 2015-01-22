@@ -7,13 +7,13 @@ requirejs.config({
     'Q': '../bower_components/q/q',
     'Asteroid': '../bower_components/asteroid/dist/asteroid.chrome',
     'jquery': '../bower_components/jquery/dist/jquery',
-    'jquery.caret': 'lib/vendor/jquery.caret.min',
-    'jquery.tag-editor': 'lib/vendor/jquery.tag-editor',
+    'jquery.caret': 'lib/jquery.caret.min',
+    'jquery.tag-editor': 'lib/jquery.tag-editor',
     'mousetrap': '../bower_components/mousetrap/mousetrap',
     'TimelineLite': '../bower_components/gsap/src/minified/TweenMax.min',
     'Quint': '../bower_components/gsap/src/minified/TweenMax.min',
-    'browser': 'lib/modules/chrome',
-    'htmlParser': 'lib/htmlParser/background/main'
+    'browser': 'modules/chrome',
+    'htmlParser/background': 'lib/htmlParser/background/main'
   },
   shim: {
     'jquery.caret': ['jquery'],
@@ -25,7 +25,7 @@ requirejs.config({
     'lib/htmlParser/common/util': ['lib/htmlParser/background/index'],
     'lib/htmlParser/common/docprocessor': ['lib/htmlParser/background/index'],
     'lib/htmlParser/background/bgcore': ['lib/htmlParser/background/index'],
-    'htmlParser': {
+    'htmlParser/background': {
       deps: [
         'lib/htmlParser/background/index',
         'lib/htmlParser/background/observer',

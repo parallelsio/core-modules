@@ -12,8 +12,8 @@ module.exports = function (grunt) {
           APPROOTURL: config.appRootUrl[environment]
         }
       },
-      src: '<%= config.chrome_ext %>/scripts/lib/modules/config.template.js',
-      dest: '<%= config.chrome_ext %>/scripts/lib/modules/config.js'
+      src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
+      dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
     };
   }
 
@@ -65,8 +65,7 @@ module.exports = function (grunt) {
       all: [
         'Gruntfile.js',
         '<%= config.chrome_ext %>/scripts/**/*.js',
-        '!<%= config.chrome_ext %>/scripts/lib/vendor/*',
-        '!<%= config.chrome_ext %>/scripts/lib/htmlParser/**/*',
+        '!<%= config.chrome_ext %>/scripts/lib/**/*',
         'test/spec/{,*/}*.js'
       ]
     },
@@ -79,8 +78,8 @@ module.exports = function (grunt) {
             APPROOTURL: config.appRootUrl.local
           }
         },
-        src: '<%= config.chrome_ext %>/scripts/lib/modules/config.template.js',
-        dest: '<%= config.chrome_ext %>/scripts/lib/modules/config.js'
+        src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
+        dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
       }
     },
     crx: {

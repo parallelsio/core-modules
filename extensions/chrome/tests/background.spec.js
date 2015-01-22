@@ -2,7 +2,7 @@ define(['Squire'], function(Squire) {
 
   var injector = new Squire(), localStorage, scriptMsgs, userMsgs;
 
-  injector.mock('lib/modules/server', {
+  injector.mock('modules/server', {
     saveBit: function() {}
   });
 
@@ -14,26 +14,26 @@ define(['Squire'], function(Squire) {
     sendMessageToDom: function(msg) { scriptMsgs.push(msg); }
   });
 
-  injector.mock('htmlParser', {
+  injector.mock('htmlParser/background', {
     start: function() {},
     subscribe: function() {}
   });
 
-  var App;
+  var Background;
 
-  beforeEach(injector.run(['lib/app'], function(app) {
-    App = app;
+  beforeEach(injector.run(['background/main'], function(background) {
+    Background = background;
     localStorage = null;
     scriptMsgs = [];
     userMsgs = [];
   }));
 
-  describe('App Spec', function() {
+  describe('Background', function() {
 
     describe('startClipping:', function() {
 
       beforeEach(function() {
-        App.startClipping({
+        Background.startClipping({
           url: 'testurl.com',
           title: 'Test Url',
           nativeWidth: '600',
@@ -42,7 +42,8 @@ define(['Squire'], function(Squire) {
       });
 
       it('should save the bit to local storage', function() {
-        expect(localStorage['parallels:bits'].length).toEqual(1);
+        expect(localStorage['parallels:bits'][btoa('testurl.com')]).not.toBeNull();
+        expect(localStorage['parallels:bits'][btoa('testurl.com')].title).toEqual('Test Url');
       });
 
       it('should immediately notify the user the save request was received', function() {
