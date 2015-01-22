@@ -331,7 +331,9 @@ module.exports = function (grunt) {
 
     var tasks = [
       'jshint',
-      'build:local',
+      'bgShell:bowerChromeExt',
+      'compass:chrome',
+      'jade',
       'connect:chrome',
       'concurrent:server' + target
     ];
