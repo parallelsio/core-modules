@@ -183,6 +183,7 @@
       return;
     tabs[tabId] = tabs[tabId] || [];
     tabs[tabId].processing = true;
+    console.log(tabs);
     pageData = new parallels.PageData(tabId, pageId, config, processSelection, processFrame, function() {
       console.log('background:process:executeScripts');
       executeScripts(tabId, [ {
@@ -214,17 +215,17 @@
     var tabId = port.sender.tab.id, portPageId = [];
 
     function onDisconnect() {
-      //var pageData = tabs[tabId][portPageId[port.portId_]];
-      //if (!pageData)
-      //  return;
-      //pageData.portsId = pageData.portsId.filter(function(id) {
-      //  return id != port.portId_;
-      //});
-      //if (!pageData.portsId.length)
-      //  if (pageData.processing)
-      //    pageData.pendingDelete = true;
-      //  else
-      //    deletePageData(pageData);
+      var pageData = tabs[tabId][portPageId[port.portId_]];
+      if (!pageData)
+        return;
+      pageData.portsId = pageData.portsId.filter(function(id) {
+        return id != port.portId_;
+      });
+      if (!pageData.portsId.length)
+        if (pageData.pendingDelete)
+          deletePageData(pageData);
+        else
+          pageData.pendingDelete = true;
       console.log('disconnecting');
     }
 

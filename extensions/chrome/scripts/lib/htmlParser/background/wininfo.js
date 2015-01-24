@@ -18,19 +18,25 @@
  *   along with SingleFile Core.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+var callback;
+
 var wininfo = {
-  init : function(tabId, callback) {
-    chrome.extension.onMessage.addListener(function(message) {
-      if (message.initResponse) {
-        console.log('background:wininfo:init: message.initResponse');
-        callback(message.processableDocs);
-      }
-    });
+  init : function(tabId, cb) {
+    callback = cb;
     console.log('background:wininfo:init: send initRequest');
     chrome.tabs.sendMessage(tabId, {
       initRequest : true,
       winId : "0",
       index : 0
     });
+  },
+
+  onInitResponse : function(message) {
+    if (message.initResponse) {
+      console.log('background:wininfo:init: message.initResponse');
+      callback(message.processableDocs);
+    }
   }
 };
+
+chrome.extension.onMessage.addListener(wininfo.onInitResponse);
