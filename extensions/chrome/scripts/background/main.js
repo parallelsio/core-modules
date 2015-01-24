@@ -70,7 +70,7 @@ define(['browser', 'modules/server', 'htmlParser/background'],
         });
 
         browser.screenshot(function (dataUrl) {
-          localBits[pageIdentifier].imgDataUrl = dataUrl;
+          localBits[pageIdentifier].imageDataUrl = dataUrl;
           saveBit({bit: localBits[pageIdentifier]});
           var message = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
           message.event = 'clipper-activated';

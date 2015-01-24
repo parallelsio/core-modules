@@ -101,7 +101,7 @@
   }
 
   function getDataURI(data, defaultURL, woURL) {
-    if (data.content)
+    if (data && data.content)
       return (woURL ? "" : "url(") + "data:" + data.mediaType + ";" + data.mediaTypeParam + "," + data.content + (woURL ? "" : ")");
     else
       return woURL ? defaultURL : "url(" + defaultURL + ")";
