@@ -20,7 +20,7 @@
 
 (function () {
 
-  var bgPort, docs = {}, pageId = parallels.pageId, doc = document, docElement, canvasData = [], config = parallels.config;
+  var bgPort, docs = {}, pageId, doc = document, docElement, canvasData = [], config;
 
   function RequestManager(pageId, winId) {
     var requestId = 0, callbacks = [];
@@ -456,25 +456,42 @@
       docs[message.winId].processDoc();
   }
 
-  bgPort = chrome.extension.connect({
-    name: "parallels"
-  });
+  function initPage(data) {
+    console.log('content:initPage: opts ');
+    var opts = JSON.parse(data.opts);
+    console.log(opts);
+    if (doc.documentElement instanceof HTMLHtmlElement) {
+      pageId = opts.pageId;
+      config = opts.config;
+      parallels.processSelection = opts.processSelection;
+      if (!bgPort) {
+        bgPort = chrome.extension.connect({ name: "parallels" });
 
-  bgPort.onMessage.addListener(function (message) {
-    // if (!message.getResourceContentResponse)
-    //	console.log(message);
-    if (message.getResourceContentResponse)
-      getResourceContentResponse(message);
-    if (message.setFrameContentRequest)
-      setFrameContentRequest(message);
-    if (message.getContentRequest)
-      getContentRequest(message);
-    if (message.setContentRequest)
-      setContentRequest(message);
-    if (message.processDoc)
-      processDoc(message);
+        bgPort.onMessage.addListener(function (message) {
+          if (message.getResourceContentResponse)
+            getResourceContentResponse(message);
+          if (message.setFrameContentRequest)
+            setFrameContentRequest(message);
+          if (message.getContentRequest)
+            getContentRequest(message);
+          if (message.setContentRequest)
+            setContentRequest(message);
+          if (message.processDoc)
+            processDoc(message);
+        });
+      }
+
+      init();
+    }
+  }
+
+  chrome.extension.onMessage.addListener(function (request) {
+    var message = request.data;
+
+    if (message && message.event === 'pageRequest') {
+      console.log('responding to page request');
+      initPage(message);
+    }
   });
-  if (doc.documentElement instanceof HTMLHtmlElement)
-    init();
 
 })();

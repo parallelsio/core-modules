@@ -37,21 +37,6 @@
 
   var tabs = parallels.tabs = [], processingPagesCount = 0, pageId = 0;
 
-  function executeScripts(tabId, scripts, callback, index) {
-    if (!index)
-      index = 0;
-    if (index < scripts.length)
-      chrome.tabs.executeScript(tabId, {
-        file : scripts[index].file,
-        code : scripts[index].code,
-        allFrames : true
-      }, function() {
-        executeScripts(tabId, scripts, callback, index + 1);
-      });
-    else if (callback)
-      callback();
-  }
-
   function processInit(tabId, port, message) {
     console.log('background:processInit:');
     parallels.observer.publish('bg-init', {data: {
@@ -177,8 +162,14 @@
       config.processInBackground = true;
       config.removeFrames = false;
     }
-    configScript = "parallels.config = " + JSON.stringify(config) + "; parallels.pageId = " + pageId + ";"
-    + (processSelection ? "parallels.processSelection = " + processSelection : "");
+    configScript = {
+      event: 'pageRequest',
+      opts : JSON.stringify({
+        config: config,
+        pageId: pageId,
+        processSelection: processSelection
+      })
+    };
     if (tabs[tabId] && tabs[tabId].processing)
       return;
     tabs[tabId] = tabs[tabId] || [];
@@ -186,17 +177,7 @@
     console.log(tabs);
     pageData = new parallels.PageData(tabId, pageId, config, processSelection, processFrame, function() {
       console.log('background:process:executeScripts');
-      executeScripts(tabId, [ {
-        code : "var parallels = {};"
-      }, {
-        file : "scripts/lib/htmlParser/common/util.js"
-      }, {
-        file : "scripts/lib/htmlParser/common/docprocessor.js"
-      }, {
-        code : configScript
-      }, {
-        file : "scripts/lib/htmlParser/content/content.js"
-      } ]);
+      chrome.tabs.sendMessage(tabId, {data: configScript});
     });
     tabs[tabId][pageId] = pageData;
     pageId++;
