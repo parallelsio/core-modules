@@ -13,7 +13,8 @@ requirejs.config({
     'TimelineLite': '../bower_components/gsap/src/minified/TweenMax.min',
     'Quint': '../bower_components/gsap/src/minified/TweenMax.min',
     'browser': 'modules/chrome',
-    'htmlParser/background': 'lib/htmlParser/background/main'
+    'htmlParser/background': 'lib/htmlParser/background/main',
+    'htmlParser/content': 'lib/htmlParser/content/content'
   },
   shim: {
     'jquery.caret': ['jquery'],

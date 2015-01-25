@@ -19,11 +19,7 @@
         "bower_components/requirejs/require.js",
         "scripts/lib/requireContent.js",
         "scripts/lib/requireConfig.js",
-        "scripts/lib/htmlParser/background/index.js",
-        "scripts/lib/htmlParser/content/wininfo.js",
-        "scripts/lib/htmlParser/common/util.js",
-        "scripts/lib/htmlParser/common/docprocessor.js",
-        "scripts/lib/htmlParser/content/content.js"
+        "scripts/lib/htmlParser/content/main.js"
       ],
       "run_at" : "document_start",
       "all_frames" : true

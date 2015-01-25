@@ -211,6 +211,8 @@
     }
 
     function onMessage(message) {
+      console.log('background:onMessage');
+      console.log(message);
       var pageData, docData;
       if (message.winId) {
         portPageId[port.portId_] = message.pageId;

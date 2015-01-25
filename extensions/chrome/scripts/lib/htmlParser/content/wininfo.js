@@ -1,30 +1,14 @@
-/*
- * Copyright 2011 Gildas Lormeau
- * contact : gildas.lormeau <at> gmail.com
- *
- * This file is part of SingleFile Core.
- *
- *   SingleFile Core is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   SingleFile Core is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License
- *   along with SingleFile Core.  If not, see <http://www.gnu.org/licenses/>.
- */
+define(function () {
 
-var wininfo = {};
-
-(function() {
-
-  var EXT_ID = "wininfo";
-
-  var contentRequestCallbacks, executeSetFramesWinIdString = executeSetFramesWinId.toString(), processLength, processIndex, timeoutProcess, timeoutInit;
+  var
+    wininfo = {},
+    EXT_ID = "wininfo",
+    contentRequestCallbacks,
+    executeSetFramesWinIdString = executeSetFramesWinId.toString(),
+    processLength,
+    processIndex,
+    timeoutProcess,
+    timeoutInit;
 
   function addListener(onMessage) {
     function windowMessageListener(event) {
@@ -32,7 +16,8 @@ var wininfo = {};
       if (typeof data === "string" && data.indexOf(EXT_ID + "::") == 0)
         onMessage(JSON.parse(data.substr(EXT_ID.length + 2)));
     }
-    this.addEventListener("message", windowMessageListener, false);
+
+    window.addEventListener("message", windowMessageListener, false);
   }
 
   function executeSetFramesWinId(extensionId, index, winId) {
@@ -72,36 +57,37 @@ var wininfo = {};
           if (typeof data === "string" && data.indexOf(extensionId + "::") == 0)
             onMessage(parse(data.substr(extensionId.length + 2)));
         }
+
         top.addEventListener("message", windowMessageListener, false);
       }
 
       for (i = 0; i < elements.length; i++) {
         framesInfo.push({
-          sameDomain : getContentFrame(elements[i]) != null,
-          src : elements[i].src,
-          winId : winId + "." + i,
-          index : i
+          sameDomain: getContentFrame(elements[i]) != null,
+          src: elements[i].src,
+          winId: winId + "." + i,
+          index: i
         });
       }
       if (win != top) {
         console.log('wininfo:executeSetFramesWinId:execute: win != top send initResponse');
         console.log(top);
         win.postMessage(extensionId + "::" + stringify({
-          initResponse : true,
-          winId : winId,
-          index : index
+          initResponse: true,
+          winId: winId,
+          index: index
         }), "*");
       }
 
       console.log('wininfo:executeSetFramesWinId:execute: send initResponse');
       top.postMessage(extensionId + "::" + stringify({
-        initResponse : true,
-        frames : framesInfo,
-        winId : winId,
-        index : index
+        initResponse: true,
+        frames: framesInfo,
+        winId: winId,
+        index: index
       }), "*");
       for (i = 0; i < elements.length; i++)
-        (function(index) {
+        (function (index) {
           var frameElement = elements[i], frameWinId = winId + "." + index, frameDoc = getContentFrame(frameElement);
 
           function onMessage(message) {
@@ -110,14 +96,14 @@ var wininfo = {};
               if (message.winId == frameWinId) {
                 doctype = getDoctype(frameDoc);
                 top.postMessage(extensionId + "::" + stringify({
-                  getContentResponse : true,
-                  contentRequestId : message.contentRequestId,
-                  winId : frameWinId,
-                  content : doctype + frameDoc.documentElement.outerHTML,
-                  title : frameDoc.title,
-                  baseURI : frameDoc.baseURI,
-                  url : frameDoc.location.href,
-                  characterSet : "UTF-8"
+                  getContentResponse: true,
+                  contentRequestId: message.contentRequestId,
+                  winId: frameWinId,
+                  content: doctype + frameDoc.documentElement.outerHTML,
+                  title: frameDoc.title,
+                  baseURI: frameDoc.baseURI,
+                  url: frameDoc.location.href,
+                  characterSet: "UTF-8"
                 }), "*");
               }
             }
@@ -133,27 +119,16 @@ var wininfo = {};
             if (frameContent) {
               console.log('wininfo:executeSetFramesWinId:execute: frameContent');
               frameContent.postMessage(extensionId + "::" + stringify({
-                initRequest : true,
-                winId : frameWinId,
-                index : index
+                initRequest: true,
+                winId: frameWinId,
+                index: index
               }), "*");
             }
           }
         })(i);
     }
-    execute(extensionId, document.querySelectorAll("iframe, frame"), index, winId, window);
-  }
 
-  function getContent(frame, callback) {
-    if (frame.sameDomain) {
-      contentRequestCallbacks.push(callback);
-      top.postMessage(EXT_ID + "::" + JSON.stringify({
-        getContentRequest : true,
-        winId : frame.winId,
-        contentRequestId : contentRequestCallbacks.length - 1
-      }), "*");
-    } else
-      callback({});
+    execute(extensionId, document.querySelectorAll("iframe, frame"), index, winId, window);
   }
 
   function getContentResponse(message) {
@@ -166,12 +141,12 @@ var wininfo = {};
   function initRequest(message) {
     wininfo.winId = message.winId;
     wininfo.index = message.index;
-    timeoutInit = setTimeout(function() {
+    timeoutInit = setTimeout(function () {
       initResponse({
-        initResponse : true,
-        frames : [],
-        winId : message.winId,
-        index : message.index
+        initResponse: true,
+        frames: [],
+        winId: message.winId,
+        index: message.index
       });
     }, 3000);
     location.href = "javascript:(" + executeSetFramesWinIdString + ")('" + EXT_ID + "'," + wininfo.index + ",'" + wininfo.winId + "'); void 0;";
@@ -181,12 +156,12 @@ var wininfo = {};
     console.log('wininfo:initResponse:');
     console.log(message);
     function process() {
-      wininfo.frames = wininfo.frames.filter(function(frame) {
+      wininfo.frames = wininfo.frames.filter(function (frame) {
         return frame.winId;
       });
       chrome.extension.sendMessage({
-        initResponse : true,
-        processableDocs : wininfo.frames.length + 1
+        initResponse: true,
+        processableDocs: wininfo.frames.length + 1
       });
     }
 
@@ -213,7 +188,7 @@ var wininfo = {};
           process();
         }
         else
-          timeoutProcess = setTimeout(function() {
+          timeoutProcess = setTimeout(function () {
             console.log('wininfo:initResponse: in timeout calling process');
             process();
           }, 200);
@@ -252,13 +227,28 @@ var wininfo = {};
     }
   }
 
-  if (window == top) {
-    wininfo.getContent = getContent;
-    chrome.extension.onMessage.addListener(onExtensionMessage);
-  }
-  addEventListener("contextmenu", function() {
-    window.contextmenuTime = (new Date()).getTime();
-  }, false);
-  addListener(onWindowMessage);
+  wininfo.getContent = function (frame, callback) {
+    if (frame.sameDomain) {
+      contentRequestCallbacks.push(callback);
+      top.postMessage(EXT_ID + "::" + JSON.stringify({
+        getContentRequest: true,
+        winId: frame.winId,
+        contentRequestId: contentRequestCallbacks.length - 1
+      }), "*");
+    } else
+      callback({});
+  };
 
-})();
+  wininfo.init = function () {
+    if (window == top) {
+      chrome.extension.onMessage.addListener(onExtensionMessage);
+    }
+    addEventListener("contextmenu", function () {
+      window.contextmenuTime = (new Date()).getTime();
+    }, false);
+    addListener(onWindowMessage);
+  };
+
+  return wininfo;
+
+});
