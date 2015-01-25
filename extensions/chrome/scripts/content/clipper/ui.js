@@ -38,7 +38,7 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
       type: 'image',
       url: data.url,
       title: data.title,
-      imageDataUrl: data.imgDataUrl,
+      imageDataUrl: data.imageDataUrl,
       nativeWidth: data.nativeWidth,
       nativeHeight: data.nativeHeight,
       tags: [],
@@ -47,7 +47,7 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
     };
 
     $('.bit-title').val(data.title);
-    $('.bit-screenshot').attr('src', data.imgDataUrl);
+    $('.bit-screenshot').attr('src', data.imageDataUrl);
     messenger.sendEvent('show-clipper', {});
   };
 
