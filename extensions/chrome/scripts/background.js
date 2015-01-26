@@ -18,6 +18,18 @@ requirejs(['browser', 'background/main', 'modules/messenger'],
     };
     browser.onExtensionTriggered(background.startClipping);
 
+    messenger.registerEvent('open-dialog-via-key-command', function() {
+      browser.currentTab(function(tab) {
+        background.startClipping({
+          url: tab.url,
+          title: tab.title,
+          nativeWidth: tab.width,
+          nativeHeight: tab.height
+        });
+      });
+
+    });
+
     messenger.registerEvent('clipper-ready', onClipperReady);
     messenger.registerEvent('save-bit', background.saveBit);
   });

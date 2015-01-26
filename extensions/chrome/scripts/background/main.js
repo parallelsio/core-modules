@@ -65,8 +65,8 @@ define(['browser', 'modules/server', 'htmlParser/background'],
 
       browser.saveLocal({'parallels:bits': localBits}, function () {
 
-        browser.currentTab(function (tabId) {
-          HTMLParser.start({id: tabId, config: null, tabIds: null, processSelection: false, processFrame: false});
+        browser.currentTab(function (tab) {
+          HTMLParser.start({id: tab.id, config: null, tabIds: null, processSelection: false, processFrame: false});
         });
 
         browser.screenshot(function (dataUrl) {

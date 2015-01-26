@@ -2,33 +2,33 @@
 #parallels-dialog-iframe-wrapper {
   position: fixed;
   z-index: 2147483647;
-  bottom: -300px;
-  right: 0;
+  bottom: -100px;
+  right: auto;
+  left: auto;
   width: 100%;
-  margin: 0;
+  margin: 0 2em;
   background: #5B5B5B;
+}
+/* line 13, ../main.scss */
+#parallels-dialog-iframe-wrapper iframe {
   border: none !important;
   width: 100%;
-  height: 290px;
+  height: 67px;
 }
 
-/* line 18, ../main.scss */
+/* line 20, ../main.scss */
 .parallels-dialog-wrapper {
   /* use pixels here to define the base size for type in this document.
     everywhere else, we'll use ems, which is relative sizing based on this */
   font-size: 14px !important;
   /* this makes all margin + padding inside the box, which makes design much easier */
 }
-/* line 25, ../main.scss */
+/* line 27, ../main.scss */
 .parallels-dialog-wrapper * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
-/* line 28, ../main.scss */
-.parallels-dialog-wrapper .bit-panel {
-  margin: 0 1em 1em 1em;
-}
-/* line 30, ../main.scss */
+/* line 29, ../main.scss */
 .parallels-dialog-wrapper .bit-title {
   /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
@@ -51,6 +51,10 @@
 .parallels-dialog-wrapper .bit-title:hover, .parallels-dialog-wrapper .bit-title:focus {
   background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
   background-size: 1px 6px, 1px 1px, 1px 6px;
+}
+/* line 38, ../main.scss */
+.parallels-dialog-wrapper .bit-panel {
+  margin: 0 1em 1em 1em;
 }
 /* line 39, ../main.scss */
 .parallels-dialog-wrapper .bit-screenshot {

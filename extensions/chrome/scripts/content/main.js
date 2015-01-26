@@ -6,6 +6,7 @@ define(['browser', 'jquery', 'Quint', 'TimelineLite'],
     // TODO: How should we add new bits locally and at the same time have the list refresh while in development?
     var clipperContainer = null,
       ID = { CONTAINER: 'parallels-dialog-iframe-wrapper'};
+
     /**
      * Load the clipper iframe into the given container
      * @param container
