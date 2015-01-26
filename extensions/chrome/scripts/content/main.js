@@ -5,8 +5,7 @@ define(['browser', 'jquery', 'Quint', 'TimelineLite'],
 
     // TODO: How should we add new bits locally and at the same time have the list refresh while in development?
     var clipperContainer = null,
-      ID = {CONTAINER: 'parallels-container', IFRAME_PREFIX: 'parallels-iframe'};
-
+      ID = { CONTAINER: 'parallels-dialog-iframe-wrapper'};
     /**
      * Load the clipper iframe into the given container
      * @param container
@@ -16,7 +15,7 @@ define(['browser', 'jquery', 'Quint', 'TimelineLite'],
       clipperContainer.appendTo(container);
 
       var src = browser.getURL('html/web_clipper.html?_' + (new Date().getTime()));
-      var iframe = $('<iframe />', {id: ID.IFRAME_PREFIX, src: src, scrolling: false});
+      var iframe = $('<iframe />', {src: src, scrolling: false});
       clipperContainer.append(iframe);
     };
 
@@ -26,9 +25,9 @@ define(['browser', 'jquery', 'Quint', 'TimelineLite'],
     var showClipper = function () {
       var tl = new TimelineLite();
       tl.pause()
-        .to(clipperContainer, 0.25, {top: '0', ease: Quint.easeOut})
+        .to(clipperContainer, 0.25, {bottom: '0', ease: Quint.easeOut})
         .call(function () {
-          console.log('Parallels clipper: done animating dialog into DOM.');
+          console.log('Parallels clipper: done animating dialog into host-content DOM.');
         })
         .play();
     };
@@ -39,9 +38,9 @@ define(['browser', 'jquery', 'Quint', 'TimelineLite'],
     var closeClipper = function () {
       var tl = new TimelineLite();
       tl.pause()
-        .to(clipperContainer, 0.325, {top: '-300px', ease: Quint.easeIn})
+        .to(clipperContainer, 0.325, {bottom: '-300px', ease: Quint.easeIn})
         .call(function () {
-          console.log('Parallels clipper: done animating dialog out of DOM.');
+          console.log('Parallels clipper: done animating dialog out of host-content DOM.');
         })
         .play();
     };

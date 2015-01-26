@@ -1,36 +1,35 @@
 /* line 3, ../main.scss */
-#parallels-container {
+#parallels-dialog-iframe-wrapper {
   position: fixed;
   z-index: 2147483647;
-  top: -300px;
+  bottom: -300px;
   right: 0;
   width: 100%;
   margin: 0;
   background: #5B5B5B;
-}
-
-/* line 13, ../main.scss */
-#parallels-iframe {
   border: none !important;
   width: 100%;
   height: 290px;
 }
 
-/* line 19, ../main.scss */
-.parallels-web-clipper {
+/* line 18, ../main.scss */
+.parallels-dialog-wrapper {
   /* use pixels here to define the base size for type in this document.
     everywhere else, we'll use ems, which is relative sizing based on this */
   font-size: 14px !important;
-  color: #555;
   /* this makes all margin + padding inside the box, which makes design much easier */
 }
-/* line 27, ../main.scss */
-.parallels-web-clipper * {
+/* line 25, ../main.scss */
+.parallels-dialog-wrapper * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
-/* line 29, ../main.scss */
-.parallels-web-clipper .bit-title {
+/* line 28, ../main.scss */
+.parallels-dialog-wrapper .bit-panel {
+  margin: 0 1em 1em 1em;
+}
+/* line 30, ../main.scss */
+.parallels-dialog-wrapper .bit-title {
   /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
   */
@@ -49,20 +48,17 @@
   padding: 0.5em 0.5em 0.25em 0.5em;
 }
 /* line 25, ../_globals.scss */
-.parallels-web-clipper .bit-title:hover, .parallels-web-clipper .bit-title:focus {
+.parallels-dialog-wrapper .bit-title:hover, .parallels-dialog-wrapper .bit-title:focus {
   background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
   background-size: 1px 6px, 1px 1px, 1px 6px;
 }
-/* line 38, ../main.scss */
-.parallels-web-clipper .bit-panel {
-  margin: 0 1em 1em 1em;
-}
 /* line 39, ../main.scss */
-.parallels-web-clipper .bit-screenshot {
+.parallels-dialog-wrapper .bit-screenshot {
   height: 10em;
+  display: none;
 }
 /* line 40, ../main.scss */
-.parallels-web-clipper .bit-context {
+.parallels-dialog-wrapper .bit-context {
   /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
   */
@@ -77,16 +73,16 @@
   color: #FFF;
 }
 /* line 25, ../_globals.scss */
-.parallels-web-clipper .bit-context:hover, .parallels-web-clipper .bit-context:focus {
+.parallels-dialog-wrapper .bit-context:hover, .parallels-dialog-wrapper .bit-context:focus {
   background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
   background-size: 1px 6px, 1px 1px, 1px 6px;
 }
 /* line 45, ../main.scss */
-.parallels-web-clipper .bit-actions {
+.parallels-dialog-wrapper .bit-actions {
   margin-top: 2em;
 }
 /* line 47, ../main.scss */
-.parallels-web-clipper .tag-editor {
+.parallels-dialog-wrapper .tag-editor {
   /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
   */
@@ -104,30 +100,31 @@
   max-width: 50%;
 }
 /* line 25, ../_globals.scss */
-.parallels-web-clipper .tag-editor:hover, .parallels-web-clipper .tag-editor:focus {
+.parallels-dialog-wrapper .tag-editor:hover, .parallels-dialog-wrapper .tag-editor:focus {
   background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
   background-size: 1px 6px, 1px 1px, 1px 6px;
 }
 /* line 57, ../main.scss */
-.parallels-web-clipper .tag-editor div {
+.parallels-dialog-wrapper .tag-editor div {
   float: none;
   padding: 0;
 }
 /* line 62, ../main.scss */
-.parallels-web-clipper .tag-editor .placeholder {
+.parallels-dialog-wrapper .tag-editor .placeholder {
   padding: 0;
   color: gray;
 }
 /* line 67, ../main.scss */
-.parallels-web-clipper .tag-editor input {
+.parallels-dialog-wrapper .tag-editor input {
   color: white;
+  background: transparent;
 }
 /* line 69, ../main.scss */
-.parallels-web-clipper .tag-editor li:first-child {
+.parallels-dialog-wrapper .tag-editor li:first-child {
   display: none;
 }
 /* line 70, ../main.scss */
-.parallels-web-clipper .tag-editor li {
+.parallels-dialog-wrapper .tag-editor li {
   position: relative;
   overflow: hidden;
   display: inline-block;
@@ -139,11 +136,11 @@
   background-color: gray;
 }
 /* line 81, ../main.scss */
-.parallels-web-clipper .tag-editor li .tag-editor-spacer {
+.parallels-dialog-wrapper .tag-editor li .tag-editor-spacer {
   display: none;
 }
 /* line 83, ../main.scss */
-.parallels-web-clipper .tag-editor li .tag-editor-tag {
+.parallels-dialog-wrapper .tag-editor li .tag-editor-tag {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
   -moz-user-select: none;
@@ -163,7 +160,7 @@
   line-height: initial;
 }
 /* line 94, ../main.scss */
-.parallels-web-clipper .tag-editor li .tag-editor-delete {
+.parallels-dialog-wrapper .tag-editor li .tag-editor-delete {
   position: absolute;
   display: inline-block;
   width: 1em;
@@ -177,11 +174,11 @@
   background: #FF0;
 }
 /* line 107, ../main.scss */
-.parallels-web-clipper .tag-editor li .tag-editor-delete i {
+.parallels-dialog-wrapper .tag-editor li .tag-editor-delete i {
   display: none;
 }
 /* line 112, ../main.scss */
-.parallels-web-clipper button {
+.parallels-dialog-wrapper button {
   display: inline-block;
   text-align: center;
   cursor: pointer;
@@ -192,7 +189,7 @@
   border: 0;
 }
 /* line 123, ../main.scss */
-.parallels-web-clipper .blue {
+.parallels-dialog-wrapper .blue {
   color: #fff;
   background-color: #357ae8;
   background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
@@ -202,7 +199,7 @@
   background-image: linear-gradient(top, #4d90fe, #357ae8);
 }
 /* line 134, ../main.scss */
-.parallels-web-clipper .gray {
+.parallels-dialog-wrapper .gray {
   color: #444;
   background-color: #f5f5f5;
   background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);

@@ -6,7 +6,7 @@
  *  - wiring up messages to actions using the messenger layer
  *  - relaying messages between the clipper iframe in the DOM and the background scripts
  */
-requirejs(['browser', 'content/main', 'modules/messenger'],
+requirejs(['browser', 'content/main', 'modules/messenger' ],
   function (browser, content, messenger) {
 
     var saveBit = function (data) {

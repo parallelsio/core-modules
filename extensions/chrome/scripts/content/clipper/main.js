@@ -6,12 +6,12 @@
 /**
  * Clipper Iframe Controller. Acts as a controller for actions sent to the clipper iframe.
  * Responsibilities include:
- *  - wiring up messages to actions using the messenger layer
+ *  Wiring up messages to actions using the messenger layer
  */
 requirejs(['modules/messenger', 'content/clipper/ui'],
-  function (messenger, clipper) {
+  function (messenger, ui) {
 
-    messenger.registerEvent('clipper-activated', clipper.onClipperActivated);
+    messenger.registerEvent('clipper-activated', ui.onClipperActivated);
 
-    clipper.initialize();
+    ui.initialize();
   });
