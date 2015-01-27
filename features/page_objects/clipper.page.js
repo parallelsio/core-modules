@@ -3,7 +3,7 @@ function ClipperPage(world) {
 }
 
 ClipperPage.prototype.focus = function () {
-  this.browser.switchTo().frame(this.browser.findElement({id: "parallels-dialog-iframe-wrapper"}));
+  this.browser.switchTo().frame(this.browser.findElement({id: "parallels-iframe"}));
 };
 
 ClipperPage.prototype.savePage = function () {

@@ -32,6 +32,7 @@ module.exports = function (grunt) {
           'bower_components/q/q.js',
           'bower_components/asteroid/dist/asteroid.chrome.js',
           'bower_components/requirejs/require.js',
+          'bower_components/mousetrap/mousetrap.js',
           'html/*',
           'images/*',
           'scripts/**',
