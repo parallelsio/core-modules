@@ -1,6 +1,6 @@
 'use strict';
 
-define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'], function(observer, core) {
+define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore', 'browser'], function(observer, core, browser) {
 
   var htmlParser = {};
 
@@ -26,7 +26,7 @@ define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'
     }});
     console.log(message);
     var pageData = tabs[tabId][message.pageId];
-    pageData.portsId.push(port.portId_);
+    pageData.portsId.push(port.id);
     if (!pageData.getDocData(message.winId))
       pageData.processDoc(port, message.topWindow, message.winId, message.index, message.content, message.title, message.url, message.baseURI,
         message.characterSet, message.canvasData, message.contextmenuTime, {
@@ -159,7 +159,9 @@ define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'
     console.log(tabs);
     pageData = new core.PageData(tabId, pageId, config, processSelection, processFrame, function() {
       console.log('background:process:executeScripts');
-      chrome.tabs.sendMessage(tabId, {data: configScript});
+      browser.sendMessageToDom({
+        data: configScript
+      }, tabId);
     });
     tabs[tabId][pageId] = pageData;
     pageId++;
@@ -175,14 +177,14 @@ define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'
   }
 
   function onConnect(port) {
-    var tabId = port.sender.tab.id, portPageId = [];
+    var tabId = port.senderId, portPageId = [];
 
     function onDisconnect() {
-      var pageData = tabs[tabId][portPageId[port.portId_]];
+      var pageData = tabs[tabId][portPageId[port.id]];
       if (!pageData)
         return;
       pageData.portsId = pageData.portsId.filter(function(id) {
-        return id != port.portId_;
+        return id != port.id;
       });
       if (!pageData.portsId.length)
         if (pageData.pendingDelete)
@@ -197,7 +199,7 @@ define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'
       console.log(message);
       var pageData, docData;
       if (message.winId) {
-        portPageId[port.portId_] = message.pageId;
+        portPageId[port.id] = message.pageId;
         if (message.processInit)
           processInit(tabId, port, message);
         else {
@@ -225,11 +227,8 @@ define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'
         }
       }
     }
-
-    if (port.name == "parallels") {
-      port.onMessage.addListener(onMessage);
-      port.onDisconnect.addListener(onDisconnect);
-    }
+    port.onMessage(onMessage);
+    port.onDisconnect(onDisconnect);
   }
 
   htmlParser.start = function(request) {
@@ -250,8 +249,7 @@ define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'
   };
 
   htmlParser.subscribe = observer.subscribe;
-
-  chrome.extension.onConnect.addListener(onConnect);
+  browser.onBackgroundConnection(onConnect);
 
   return htmlParser;
 });

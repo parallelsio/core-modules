@@ -1,7 +1,7 @@
 'use strict';
 
-define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htmlParser/common/processor'],
-  function (wininfo, util, processor) {
+define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htmlParser/common/processor', 'browser'],
+  function (wininfo, util, processor, browser) {
 
     var bgPort, docs = {}, pageId, doc = document, docElement, canvasData = [], config, processSelection;
 
@@ -454,10 +454,9 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htm
           config = opts.config;
           processSelection = opts.processSelection;
           if (!bgPort) {
-            // bgPort = messenger.openBgPort();
-            bgPort = chrome.extension.connect({name: "parallels"});
+            bgPort = browser.connectToBackground({name: 'parallels'});
 
-            bgPort.onMessage.addListener(function (message) {
+            bgPort.onBackgroundMessage(function(message) {
               if (message.getResourceContentResponse)
                 getResourceContentResponse(message);
               if (message.setFrameContentRequest)

@@ -52,10 +52,14 @@ define(function () {
       return chrome.extension.getURL(path);
     },
 
-    sendMessageToDom: function (message) {
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, message);
-      });
+    sendMessageToDom: function (message, tabId) {
+      if (tabId) {
+        chrome.tabs.sendMessage(tabId, message);
+      } else {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, message);
+        });
+      }
     },
 
     sendMessageToBackground: function (message) {
@@ -66,6 +70,29 @@ define(function () {
       chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         callback(tabs[0]);
       });
+    },
+
+    onBackgroundConnection: function(callback) {
+      chrome.extension.onConnect.addListener(function(port) {
+        if (port.name === 'parallels') {
+          callback({
+            id: port._portId,
+            senderId: port.sender.tab.id,
+            onMessage: port.onMessage.addListener,
+            onDisconnect: port.onDisconnect.addListener,
+            postMessage: port.postMessage
+          });
+        }
+      });
+    },
+
+    connectToBackground: function() {
+      var port = chrome.extension.connect({name: 'parallels'});
+      return {
+        onBackgroundMessage: function(listener) {
+          port.onMessage.addListener(listener);
+        }
+      };
     }
   };
 });

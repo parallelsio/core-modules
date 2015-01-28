@@ -1,6 +1,6 @@
 'use strict';
 
-define(function () {
+define(['browser', 'modules/messenger'], function (browser, messenger) {
 
   var
     wininfo = {},
@@ -161,10 +161,11 @@ define(function () {
       wininfo.frames = wininfo.frames.filter(function (frame) {
         return frame.winId;
       });
-      chrome.extension.sendMessage({
+      browser.sendMessageToBackground({data: {
         initResponse: true,
+        event: 'init-response',
         processableDocs: wininfo.frames.length + 1
-      });
+      }});
     }
 
     if (timeoutInit) {
@@ -243,7 +244,7 @@ define(function () {
 
   wininfo.init = function () {
     if (window == top) {
-      chrome.extension.onMessage.addListener(onExtensionMessage);
+      messenger.registerEvent('init-request', onExtensionMessage);
     }
     addEventListener("contextmenu", function () {
       window.contextmenuTime = (new Date()).getTime();
