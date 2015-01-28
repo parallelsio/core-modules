@@ -1,6 +1,6 @@
 'use strict';
 
-define(function() {
+define(function () {
 
   function getDoctype(doc) {
     var docType = doc.doctype, docTypeStr;
@@ -20,7 +20,7 @@ define(function() {
   }
 
   return {
-    getDocContent: function(doc, docElement) {
+    getDocContent: function (doc, docElement) {
       docElement = docElement || doc.documentElement;
       return getDoctype(doc) + docElement.outerHTML;
     }

@@ -308,7 +308,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htm
             doc.removeEventListener("DOMSubtreeModified", onDOMSubtreeModified, true);
             element.innerHTML = message.content;
             doc.addEventListener("DOMSubtreeModified", onDOMSubtreeModified, true);
-            bgPort.onMessage.removeListener(onSetDocFragment);
+            bgPort.removeListener(onSetDocFragment);
           }
         }
 
@@ -321,7 +321,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htm
               content: element.innerHTML,
               mutationEventId: id
             });
-            bgPort.onMessage.addListener(onSetDocFragment);
+            bgPort.onMessage(onSetDocFragment);
             mutationEventId++;
           } else
             processDocFn = processor.initProcess(doc, element, false, doc.baseURI, doc.characterSet, config, canvasData, docs[winId].requestManager,
@@ -456,7 +456,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htm
           if (!bgPort) {
             bgPort = browser.connectToBackground({name: 'parallels'});
 
-            bgPort.onBackgroundMessage(function(message) {
+            bgPort.onBackgroundMessage(function (message) {
               if (message.getResourceContentResponse)
                 getResourceContentResponse(message);
               if (message.setFrameContentRequest)

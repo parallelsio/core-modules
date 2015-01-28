@@ -1,6 +1,6 @@
 'use strict';
 
-define(['modules/messenger', 'browser'], function(messenger, browser) {
+define(['modules/messenger', 'browser'], function (messenger, browser) {
   var callback;
 
   function onInitResponse(message) {
@@ -13,15 +13,15 @@ define(['modules/messenger', 'browser'], function(messenger, browser) {
   messenger.registerEvent('init-response', onInitResponse);
 
   return {
-    init : function(tabId, cb) {
+    init: function (tabId, cb) {
       callback = cb;
       console.log('background:wininfo:init: send init-request');
       browser.sendMessageToDom({
         data: {
-          initRequest : true,
+          initRequest: true,
           event: 'init-request',
-          winId : "0",
-          index : 0
+          winId: "0",
+          index: 0
         }
       }, tabId);
     }

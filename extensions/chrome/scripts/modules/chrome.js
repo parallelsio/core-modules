@@ -79,6 +79,7 @@ define(function () {
             id: port._portId,
             senderId: port.sender.tab.id,
             onMessage: port.onMessage.addListener,
+            removeListener: port.onMessage.removeListener,
             onDisconnect: port.onDisconnect.addListener,
             postMessage: port.postMessage
           });

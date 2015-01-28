@@ -161,11 +161,13 @@ define(['browser', 'modules/messenger'], function (browser, messenger) {
       wininfo.frames = wininfo.frames.filter(function (frame) {
         return frame.winId;
       });
-      browser.sendMessageToBackground({data: {
-        initResponse: true,
-        event: 'init-response',
-        processableDocs: wininfo.frames.length + 1
-      }});
+      browser.sendMessageToBackground({
+        data: {
+          initResponse: true,
+          event: 'init-response',
+          processableDocs: wininfo.frames.length + 1
+        }
+      });
     }
 
     if (timeoutInit) {
