@@ -27,7 +27,7 @@ env:
     - METEOR_EMAIL=angelcabo
     - secure: "pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc="
     - SAUCE_USERNAME=angelcabo3
-    - secure: "JJvO3qCxdRQGnyxuvpm+yyKGNfziMMDWOui5u55icFo8EKjNJZVEy/lII4Kt7en4pwwbGiRZnBsJ5JYupBN/KYHoXCGmsTJsj6sTrjPFbpumP2KKZCafMD+yDm5sxrZOcmryewtoqnbXhR5vAgSlQLpJ1kGgp4B5sNlrmdNt/Xs="
+    - secure: "UYFJn1QtcklD60smQFzuimoyMS67XwXtIQr6mvx03B3NMhYp5hqpkaciw73iWyS8Sdb7NLvFPnY6SWRjB+Xalgp1SNIohKkXW95Oeuhwd4XqdMz8VRazZoPUXDaeOkIJojXRbo+NnHAVnMg6AwRHgx1bUmfuzP8KO/iZHeVDTTg="
 
 script:
   - "expect deploy.exp"
