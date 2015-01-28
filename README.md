@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/parallelsio/core-modules.svg?branch=master)](https://travis-ci.org/parallelsio/core-modules)
+
 <img src="http://i.imgur.com/lI0HhvV.png" />
 
 ##[Parallels](http://parallels.io) : A free + open source platform for creating, connecting + sharing documents as networks of ideas. 
