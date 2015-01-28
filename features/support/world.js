@@ -25,7 +25,7 @@ var World = function (callback) {
     var webdriver = require('selenium-webdriver');
 
     browser = new webdriver.Builder().
-      usingServer('http://' + username + ':' + accessKey + '@localhost:4445/wd/hub').
+      usingServer('http://' + username + ':' + accessKey + '@ondemand.saucelabs.com:80/wd/hub').
       withCapabilities({
         'browserName': 'chrome',
         'name': 'Chrome Clipper Integration Tests',
