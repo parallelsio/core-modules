@@ -31,7 +31,6 @@ var World = function (callback) {
         'name': 'Chrome Clipper Integration Tests',
         'username': username,
         'accessKey': accessKey,
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
         'chromeOptions': {
           'args': ["user-data-dir=chromeprofile"],
           'extensions': [extension.base64]
