@@ -1,3 +1,5 @@
+'use strict';
+
 define(function () {
 
   var IMPORT_URL_VALUE_EXP = /(url\s*\(\s*(?:'|")?\s*([^('"\))]*)\s*(?:'|")?\s*\))|(@import\s*\(?\s*(?:'|")?\s*([^('"\))]*)\s*(?:'|")?\s*(?:\)|;))/i;

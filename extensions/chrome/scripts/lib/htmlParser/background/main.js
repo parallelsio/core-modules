@@ -1,3 +1,5 @@
+'use strict';
+
 define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'], function(observer, core) {
 
   var htmlParser = {};

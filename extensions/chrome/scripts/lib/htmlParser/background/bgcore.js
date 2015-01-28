@@ -1,3 +1,5 @@
+'use strict';
+
 define(['lib/htmlParser/background/nio', 'lib/htmlParser/common/util', 'lib/htmlParser/common/processor', 'lib/htmlParser/background/wininfo'], function(nio, util, processor, wininfo) {
   var core = {};
 

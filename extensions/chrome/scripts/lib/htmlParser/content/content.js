@@ -1,3 +1,5 @@
+'use strict';
+
 define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htmlParser/common/processor'],
   function (wininfo, util, processor) {
 
