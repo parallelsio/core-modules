@@ -1,24 +1,4 @@
-/*
- * Copyright 2011 Gildas Lormeau
- * contact : gildas.lormeau <at> gmail.com
- *
- * This file is part of SingleFile Core.
- *
- *   SingleFile Core is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   SingleFile Core is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License
- *   along with SingleFile Core.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-(function () {
+define(function () {
 
   var IMPORT_URL_VALUE_EXP = /(url\s*\(\s*(?:'|")?\s*([^('"\))]*)\s*(?:'|")?\s*\))|(@import\s*\(?\s*(?:'|")?\s*([^('"\))]*)\s*(?:'|")?\s*(?:\)|;))/i;
   var URL_VALUE_EXP = /url\s*\(\s*(?:'|")?\s*([^('"\))]*)\s*(?:'|")?\s*\)/i;
@@ -372,93 +352,92 @@
     });
   }
 
-  // ----------------------------------------------------------------------------------------------
+  return {
+    initProcess: function (doc, docElement, addDefaultFavico, baseURI, characterSet, config, canvasData, requestManager, onInit, onProgress, onEnd) {
+      console.log('docprocessor:initProcess:');
+      var initManager = new RequestManager(), manager = new RequestManager(onProgress);
 
-  parallels.initProcess = function (doc, docElement, addDefaultFavico, baseURI, characterSet, config, canvasData, requestManager, onInit, onProgress, onEnd) {
-    console.log('docprocessor:initProcess:');
-    var initManager = new RequestManager(), manager = new RequestManager(onProgress);
+      function RequestManager(onProgress) {
+        var that = this, currentCount = 0, requests = [];
+        this.requestCount = 0;
+        this.send = function (url, responseHandler, characterSet, mediaTypeParam) {
+          this.requestCount++;
+          requests.push({
+            url: url,
+            responseHandler: responseHandler,
+            characterSet: characterSet,
+            mediaTypeParam: mediaTypeParam
+          });
+        };
+        this.doSend = function () {
+          requests.forEach(function (request) {
+            requestManager.send(request.url, function (response) {
+              request.responseHandler(response);
+              currentCount++;
+              if (onProgress)
+                onProgress(currentCount, that.requestCount);
+              if (currentCount == that.requestCount) {
+                that.requestCount = 0;
+                currentCount = 0;
+                if (that.onEnd)
+                  that.onEnd();
+              }
+            }, request.characterSet, request.mediaTypeParam);
+          });
+          requests = [];
+        };
+      }
 
-    function RequestManager(onProgress) {
-      var that = this, currentCount = 0, requests = [];
-      this.requestCount = 0;
-      this.send = function (url, responseHandler, characterSet, mediaTypeParam) {
-        this.requestCount++;
-        requests.push({
-          url: url,
-          responseHandler: responseHandler,
-          characterSet: characterSet,
-          mediaTypeParam: mediaTypeParam
-        });
-      };
-      this.doSend = function () {
-        requests.forEach(function (request) {
-          requestManager.send(request.url, function (response) {
-            request.responseHandler(response);
-            currentCount++;
-            if (onProgress)
-              onProgress(currentCount, that.requestCount);
-            if (currentCount == that.requestCount) {
-              that.requestCount = 0;
-              currentCount = 0;
-              if (that.onEnd)
-                that.onEnd();
-            }
-          }, request.characterSet, request.mediaTypeParam);
-        });
-        requests = [];
-      };
-    }
+      function cbImports() {
+        if (config.removeScripts)
+          removeScripts(docElement);
+        if (config.removeObjects)
+          removeObjects(docElement);
+        if (config.removeFrames || config.getRawDoc)
+          removeFrames(docElement);
+        resetFrames(docElement, baseURI);
+        removeBlockquotesCite(docElement);
+        removeMetaRefresh(docElement);
+        setAbsoluteLinks(docElement, baseURI);
+        if (addDefaultFavico)
+          insertDefaultFavico(doc, docElement, baseURI);
+        processStyleAttributes(docElement, baseURI, manager);
+        processBgAttributes(docElement, baseURI, manager);
+        processImages(docElement, baseURI, manager);
+        processSVGs(docElement, baseURI, manager);
+        processStyles(docElement, baseURI, manager);
+        processScripts(docElement, baseURI, characterSet, manager);
+        processCanvas(doc, docElement, canvasData);
+        if (onInit)
+          setTimeout(function () {
+            onInit(manager.requestCount);
+          }, 1);
+      }
 
-    function cbImports() {
-      if (config.removeScripts)
-        removeScripts(docElement);
-      if (config.removeObjects)
-        removeObjects(docElement);
-      if (config.removeFrames || config.getRawDoc)
-        removeFrames(docElement);
-      resetFrames(docElement, baseURI);
-      removeBlockquotesCite(docElement);
-      removeMetaRefresh(docElement);
-      setAbsoluteLinks(docElement, baseURI);
-      if (addDefaultFavico)
-        insertDefaultFavico(doc, docElement, baseURI);
-      processStyleAttributes(docElement, baseURI, manager);
-      processBgAttributes(docElement, baseURI, manager);
-      processImages(docElement, baseURI, manager);
-      processSVGs(docElement, baseURI, manager);
-      processStyles(docElement, baseURI, manager);
-      processScripts(docElement, baseURI, characterSet, manager);
-      processCanvas(doc, docElement, canvasData);
-      if (onInit)
-        setTimeout(function () {
-          onInit(manager.requestCount);
-        }, 1);
-    }
-
-    function cbStylesheets() {
-      initManager.onEnd = function (noRequests) {
-        if (noRequests)
+      function cbStylesheets() {
+        initManager.onEnd = function (noRequests) {
+          if (noRequests)
+            cbImports();
+          else
+            cbStylesheets();
+        };
+        processImports(docElement, baseURI, characterSet, initManager);
+        initManager.doSend();
+        if (initManager.requestCount == 0)
           cbImports();
-        else
-          cbStylesheets();
-      };
-      processImports(docElement, baseURI, characterSet, initManager);
+      }
+
+      manager.onEnd = onEnd;
+      processStylesheets(doc, docElement, baseURI, initManager);
+      initManager.onEnd = cbStylesheets;
       initManager.doSend();
       if (initManager.requestCount == 0)
-        cbImports();
+        initManager.onEnd();
+      return function () {
+        manager.doSend();
+        if (manager.onEnd && manager.requestCount == 0)
+          manager.onEnd();
+      };
     }
-
-    manager.onEnd = onEnd;
-    processStylesheets(doc, docElement, baseURI, initManager);
-    initManager.onEnd = cbStylesheets;
-    initManager.doSend();
-    if (initManager.requestCount == 0)
-      initManager.onEnd();
-    return function () {
-      manager.doSend();
-      if (manager.onEnd && manager.requestCount == 0)
-        manager.onEnd();
-    };
-  };
-
-})();
+  }
+});

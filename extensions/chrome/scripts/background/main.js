@@ -1,6 +1,6 @@
 'use strict';
 
-define(['browser', 'modules/server', 'htmlParser/background'],
+define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
   function (browser, server, HTMLParser) {
 
     // TODO: How should we add new bits locally and at the same time have the list refresh while in development?

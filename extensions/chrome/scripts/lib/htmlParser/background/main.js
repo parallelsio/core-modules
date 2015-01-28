@@ -1,26 +1,6 @@
-/*
- * Copyright 2011 Gildas Lormeau
- * contact : gildas.lormeau <at> gmail.com
- *
- * This file is part of SingleFile Core.
- *
- *   SingleFile Core is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   SingleFile Core is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License
- *   along with SingleFile Core.  If not, see <http://www.gnu.org/licenses/>.
- */
+define(['lib/htmlParser/background/observer', 'lib/htmlParser/background/bgcore'], function(observer, core) {
 
-(function() {
-
-  parallels.htmlParser = {};
+  var htmlParser = {};
 
   var DEFAULT_CONFIG = {
     removeFrames : true,
@@ -35,11 +15,11 @@
     getRawDoc : false
   };
 
-  var tabs = parallels.tabs = [], processingPagesCount = 0, pageId = 0;
+  var tabs = [], processingPagesCount = 0, pageId = 0;
 
   function processInit(tabId, port, message) {
     console.log('background:processInit:');
-    parallels.observer.publish('bg-init', {data: {
+    observer.publish('bg-init', {data: {
       event: 'bg-init'
     }});
     console.log(message);
@@ -57,7 +37,7 @@
   function setContentResponse(tabId, pageId, docData, content) {
     var pageData = tabs[tabId][pageId];
     processingPagesCount--;
-    parallels.observer.publish('process-end', {data: {
+    observer.publish('process-end', {data: {
       event: 'process-end',
       processEnd : true,
       pageId : pageId,
@@ -85,7 +65,7 @@
       pageData.processableDocs = pageData.initializedDocs;
       pageData.initProcess();
       processingPagesCount++;
-      parallels.observer.publish('process-start', {data: {
+      observer.publish('process-start', {data: {
         event: 'process-start',
         processStart : true,
         pageId : pageData.pageId,
@@ -138,7 +118,7 @@
         progressMax += tabData.progressMax;
       }
     });
-    parallels.observer.publish('process-progress', {data: {
+    observer.publish('process-progress', {data: {
       event: 'process-progress',
       processProgress : true,
       pageId : pageData.pageId,
@@ -175,7 +155,7 @@
     tabs[tabId] = tabs[tabId] || [];
     tabs[tabId].processing = true;
     console.log(tabs);
-    pageData = new parallels.PageData(tabId, pageId, config, processSelection, processFrame, function() {
+    pageData = new core.PageData(tabId, pageId, config, processSelection, processFrame, function() {
       console.log('background:process:executeScripts');
       chrome.tabs.sendMessage(tabId, {data: configScript});
     });
@@ -250,7 +230,7 @@
     }
   }
 
-  function start(request) {
+  htmlParser.start = function(request) {
     var property, config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
     if (request.config)
       for (property in request.config)
@@ -265,9 +245,11 @@
       });
     else
       process(request.id, config, false, false);
-  }
+  };
+
+  htmlParser.subscribe = observer.subscribe;
 
   chrome.extension.onConnect.addListener(onConnect);
-  parallels.htmlParser.start = start;
 
-})();
+  return htmlParser;
+});

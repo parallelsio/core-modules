@@ -1,27 +1,8 @@
-/*
- * Copyright 2011 Gildas Lormeau
- * contact : gildas.lormeau <at> gmail.com
- *
- * This file is part of SingleFile Core.
- *
- *   SingleFile Core is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU Lesser General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   SingleFile Core is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License
- *   along with SingleFile Core.  If not, see <http://www.gnu.org/licenses/>.
- */
+define(['lib/htmlParser/background/nio', 'lib/htmlParser/common/util', 'lib/htmlParser/common/processor', 'lib/htmlParser/background/wininfo'], function(nio, util, processor, wininfo) {
+  var core = {};
 
-(function() {
-
-  parallels.PageData = PageData;
-  parallels.DocData = DocData;
+  core.PageData = PageData;
+  core.DocData = DocData;
 
   function PageData(tabId, pageId, config, processSelection, processFrame, callback) {
     var timeoutError, that = this;
@@ -35,7 +16,7 @@
     this.processFrame = processFrame;
     this.processing = true;
     this.tabId = tabId;
-    this.requestManager = new parallels.nio.RequestManager();
+    this.requestManager = new nio.RequestManager();
     this.progressIndex = 0;
     this.progressMax = 0;
     this.title = null;
@@ -87,7 +68,7 @@
       }
       if (this.config.processInBackground && docData.content) {
         docData.parseContent();
-        docData.processDocCallback = parallels.initProcess(docData.doc, docData.doc.documentElement, topWindow, baseURI, characterSet, this.config,
+        docData.processDocCallback = processor.initProcess(docData.doc, docData.doc.documentElement, topWindow, baseURI, characterSet, this.config,
           canvasData, this.requestManager, function(maxIndex) {
             callbacks.init(that, docData, maxIndex);
           }, function(index, maxIndex) {
@@ -100,7 +81,7 @@
     processDocFragment : function(docData, mutationEventId, content) {
       var doc = document.implementation.createHTMLDocument();
       doc.body.innerHTML = content;
-      docData.processDocCallback = parallels.initProcess(doc, doc.documentElement, this.top == docData, docData.baseURI, docData.characterSet,
+      docData.processDocCallback = processor.initProcess(doc, doc.documentElement, this.top == docData, docData.baseURI, docData.characterSet,
         this.config, null, this.requestManager, function() {
           docData.processDocCallback();
         }, null, function() {
@@ -134,7 +115,7 @@
       }
 
       function bgPageEnd(pageData, docData, callback) {
-        var content = parallels.util.getDocContent(docData.doc);
+        var content = util.getDocContent(docData.doc);
         if (pageData.config.displayProcessedPage)
           pageData.top.setContent(content);
         else
@@ -170,7 +151,7 @@
           selectedDocData = this.top;
         if (this.config.processInBackground)
           buildPage(selectedDocData, function(docData, callback) {
-            var content = encodeURI(parallels.util.getDocContent(docData.doc)), maxFrameSize = that.config.maxFrameSize;
+            var content = encodeURI(util.getDocContent(docData.doc)), maxFrameSize = that.config.maxFrameSize;
             if (maxFrameSize > 0 && content.length > maxFrameSize * 1024 * 1024)
               content = "";
             docData.parent.docFrames[docData.index].setAttribute("src", "data:text/html;charset=utf-8," + content);
@@ -276,7 +257,7 @@
       this.port.postMessage({
         setContentRequest : true,
         content : content,
-        winProperties : parallels.winProperties
+        winProperties : core.winProperties
       });
     },
     getContent : function(callback) {
@@ -303,7 +284,8 @@
     var property, winProperties = {};
     for (property in window)
       winProperties[property] = true;
-    parallels.winProperties = winProperties;
+    core.winProperties = winProperties;
   })();
 
-})();
+  return core;
+});

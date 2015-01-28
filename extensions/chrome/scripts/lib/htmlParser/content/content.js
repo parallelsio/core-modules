@@ -1,7 +1,7 @@
-define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'lib/htmlParser/common/util', 'lib/htmlParser/common/docprocessor'],
-  function (wininfo) {
+define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/common/util', 'lib/htmlParser/common/processor'],
+  function (wininfo, util, processor) {
 
-    var bgPort, docs = {}, pageId, doc = document, docElement, canvasData = [], config;
+    var bgPort, docs = {}, pageId, doc = document, docElement, canvasData = [], config, processSelection;
 
     function RequestManager(pageId, winId) {
       var requestId = 0, callbacks = [];
@@ -114,7 +114,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
         docElement: docElement,
         frames: docElement.querySelectorAll("iframe, frame"),
         requestManager: requestManager,
-        processDoc: parallels.initProcess(doc, docElement, topWindow, doc.baseURI, doc.characterSet, config, canvasData, requestManager, function (maxIndex) {
+        processDoc: processor.initProcess(doc, docElement, topWindow, doc.baseURI, doc.characterSet, config, canvasData, requestManager, function (maxIndex) {
           console.log('content:initProcess:docInit:');
           bgPort.postMessage({
             docInit: true,
@@ -136,7 +136,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
             docEnd: true,
             pageId: pageId,
             winId: winId,
-            content: topWindow ? null : parallels.util.getDocContent(doc, docElement)
+            content: topWindow ? null : util.getDocContent(doc, docElement)
           });
         })
       };
@@ -187,7 +187,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
 
       function doFgProcessInit() {
         sendFgProcessInit();
-        if (docElement && (!parallels.processSelection || selectedContent)) {
+        if (docElement && (!processSelection || selectedContent)) {
           initProcess(doc, docElement, wininfo.winId, topWindow, canvasData);
           if (topWindow && !config.removeFrames && !config.getRawDoc)
             wininfo.frames.forEach(function (frame) {
@@ -206,9 +206,9 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
 
       function bgProcessInit() {
         var xhr;
-        if (parallels.processSelection) {
+        if (processSelection) {
           if (selectedContent || !topWindow)
-            sendBgProcessInit(topWindow ? parallels.util.getDocContent(doc, selectedContent) : null);
+            sendBgProcessInit(topWindow ? util.getDocContent(doc, selectedContent) : null);
         } else {
           if (config.getRawDoc && topWindow) {
             xhr = new XMLHttpRequest();
@@ -220,7 +220,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
             xhr.overrideMimeType('text/plain; charset=' + doc.characterSet);
             xhr.send(null);
           } else {
-            sendBgProcessInit(parallels.util.getDocContent(doc));
+            sendBgProcessInit(util.getDocContent(doc));
             if (topWindow && !config.removeFrames)
               wininfo.frames.forEach(function (frame) {
                 console.log('content:bgProcessInit: frame ');
@@ -237,7 +237,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
 
       function fgProcessInit() {
         var xhr, tmpDoc;
-        if (parallels.processSelection) {
+        if (processSelection) {
           if (selectedContent || topWindow) {
             docElement = selectedContent;
             doFgProcessInit();
@@ -322,7 +322,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
             bgPort.onMessage.addListener(onSetDocFragment);
             mutationEventId++;
           } else
-            processDocFn = parallels.initProcess(doc, element, false, doc.baseURI, doc.characterSet, config, canvasData, docs[winId].requestManager,
+            processDocFn = processor.initProcess(doc, element, false, doc.baseURI, doc.characterSet, config, canvasData, docs[winId].requestManager,
               function (maxIndex) {
                 doc.removeEventListener("DOMSubtreeModified", onDOMSubtreeModified, true);
                 processDocFn();
@@ -345,7 +345,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
           timeoutSetContent = null;
         }
         doc.removeEventListener('WindowPropertiesCleaned', onWindowPropertiesCleaned, true);
-        if (config.processInBackground || parallels.processSelection || (!config.processInBackground && !config.removeScripts))
+        if (config.processInBackground || processSelection || (!config.processInBackground && !config.removeScripts))
           if (location.pathname.indexOf(".txt") + 4 == location.pathname.length) {
             tmpDoc = document.implementation.createHTMLDocument();
             tmpDoc.open();
@@ -355,7 +355,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
             replaceDoc();
           } else {
             doc.open();
-            doc.write(message.content || parallels.util.getDocContent(doc, docElement));
+            doc.write(message.content || util.getDocContent(doc, docElement));
             doc.addEventListener("DOMSubtreeModified", onDOMSubtreeModified, true);
             doc.close();
           }
@@ -376,13 +376,13 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
       }
 
       function setContentResponse() {
-        if (parallels.processSelection)
+        if (processSelection)
           sendSetContentResponse(message.content);
         else {
           if (config.processInBackground)
-            sendSetContentResponse(parallels.util.getDocContent(doc, doc.documentElement));
+            sendSetContentResponse(util.getDocContent(doc, doc.documentElement));
           else
-            sendSetContentResponse(config.removeUnusedCSSRules ? parallels.util.getDocContent(doc, doc.documentElement) : parallels.util
+            sendSetContentResponse(config.removeUnusedCSSRules ? util.getDocContent(doc, doc.documentElement) : util
               .getDocContent(doc, docElement));
         }
       }
@@ -421,14 +421,14 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
           getContentResponse: true,
           winId: message.winId,
           pageId: pageId,
-          content: parallels.util.getDocContent(docs[message.winId].doc, docs[message.winId].docElement)
+          content: util.getDocContent(docs[message.winId].doc, docs[message.winId].docElement)
         });
       else
         bgPort.postMessage({
           getContentResponse: true,
           pageId: pageId,
           winId: message.winId,
-          content: parallels.util.getDocContent(doc, docElement)
+          content: util.getDocContent(doc, docElement)
         });
     }
 
@@ -450,7 +450,7 @@ define(['lib/htmlParser/content/wininfo', 'lib/htmlParser/background/index', 'li
         if (doc.documentElement instanceof HTMLHtmlElement) {
           pageId = opts.pageId;
           config = opts.config;
-          parallels.processSelection = opts.processSelection;
+          processSelection = opts.processSelection;
           if (!bgPort) {
             // bgPort = messenger.openBgPort();
             bgPort = chrome.extension.connect({name: "parallels"});

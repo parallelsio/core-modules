@@ -13,11 +13,11 @@ define(['Squire'], function(Squire) {
     screenshot: function(fn) { fn('imgDataUrl'); },
     sendMessageToDom: function(msg) { scriptMsgs.push(msg); }
   });
-
-  injector.mock('htmlParser/background', {
-    start: function() {},
-    subscribe: function() {}
-  });
+  //
+  //injector.mock('htmlParser/background', {
+  //  start: function() {},
+  //  subscribe: function() {}
+  //});
 
   var Background;
 
@@ -41,14 +41,21 @@ define(['Squire'], function(Squire) {
         });
       });
 
+      it('should not create multiple extension listeners when initializing page parsing multiple times.', function () {
+        Background.startClipping({
+          url: 'testurl.com',
+          title: 'Test Url',
+          nativeWidth: '600',
+          nativeHeight: '800'
+        });
+      });
+
       it('should save the bit to local storage', function() {
         expect(localStorage['parallels:bits'][btoa('testurl.com')]).not.toBeNull();
         expect(localStorage['parallels:bits'][btoa('testurl.com')].title).toEqual('Test Url');
       });
 
-      it('should immediately notify the user the save request was received', function() {
-        expect(userMsgs.length).toEqual(1);
-      });
+      it('should immediately notify the user the save request was received');
 
       it('should immediately save initial data back to the server');
 
