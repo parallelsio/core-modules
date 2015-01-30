@@ -253,6 +253,7 @@ module.exports = function (grunt) {
     jasmine: {
       all: {
         options: {
+          display: 'short',
           keepRunner: true,
           specs: '<%= config.chrome_ext %>/tests/*spec.js',
           helpers: '<%= config.chrome_ext %>/tests/*helper.js',
@@ -264,8 +265,8 @@ module.exports = function (grunt) {
               baseUrl: './<%= config.chrome_ext %>/scripts/',
               paths: {
                 'Squire': '../bower_components/squire/src/Squire',
-                'browser': '../tests/browser.stub',
-                'modules/server': '../tests/server.stub'
+                'browser': '../tests/stubs/browser.stub',
+                'modules/server': '../tests/stubs/server.stub'
               }
             }
           },
