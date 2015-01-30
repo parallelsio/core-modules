@@ -1,6 +1,6 @@
 'use strict';
 
-define(function () {
+define(['browser'], function (browser) {
   var registry = [];
 
   /**
@@ -29,15 +29,13 @@ define(function () {
       eventReceived(message.event, message);
   }, false);
 
-  //TODO: should move to browser specific module and encapsulate sending extension message
-  // i.e. browser.initListeners(function (request) {} );
-  if (chrome) {
-    chrome.extension.onMessage.addListener(function (request) {
-      //console.log('chrome extension message received');
-      var message = request.data;
+  //TODO: should move to browser specific module and encapsulate extension env check
+  if (window.chrome && window.chrome.extension) {
+    browser.initMessageListener(function (message) {
+      var data = message.data;
 
-      if (message && message.event)
-        eventReceived(message.event, message);
+      if (data && data.event)
+        eventReceived(data.event, data);
     });
   }
 

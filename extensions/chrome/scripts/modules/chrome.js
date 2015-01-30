@@ -94,6 +94,10 @@ define(function () {
           port.onMessage.addListener(listener);
         }
       };
+    },
+
+    initMessageListener: function(listener) {
+      chrome.extension.onMessage.addListener(listener);
     }
   };
 });

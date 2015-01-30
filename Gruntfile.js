@@ -235,18 +235,12 @@ module.exports = function (grunt) {
           hostname: 'localhost',
           open: false,
           base: [
-            '<%= config.chrome_ext %>'
+            '<%= config.chrome_ext %>',
+            './'
           ]
         }
       },
-      test : {
-        port: 8000,
-        hostname: 'localhost',
-        base: [
-          '<%= config.chrome_ext %>'
-        ],
-        open: false
-      }
+      test : { }
     },
     env : {
       ci : {
@@ -269,10 +263,15 @@ module.exports = function (grunt) {
             requireConfig: {
               baseUrl: './<%= config.chrome_ext %>/scripts/',
               paths: {
-                'Squire': '../bower_components/squire/src/Squire'
+                'Squire': '../bower_components/squire/src/Squire',
+                'browser': '../tests/browser.stub',
+                'modules/server': '../tests/server.stub'
               }
             }
-          }
+          },
+          styles: [
+            '<%= config.chrome_ext %>/styles/**/*.css'
+          ]
         }
       }
     }
