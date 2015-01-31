@@ -78,10 +78,18 @@ define(function () {
           callback({
             id: port._portId,
             senderId: port.sender.tab.id,
-            onMessage: port.onMessage.addListener,
-            removeListener: port.onMessage.removeListener,
-            onDisconnect: port.onDisconnect.addListener,
-            postMessage: port.postMessage
+            onMessage: function(cb) {
+              port.onMessage.addListener(cb);
+            },
+            onDisconnect: function(cb) {
+              port.onDisconnect.addListener(cb);
+            },
+            removeListener: function(cb) {
+              port.onMessage.removeListener(cb);
+            },
+            postMessage: function(message) {
+              port.postMessage(message);
+            }
           });
         }
       });
@@ -92,6 +100,9 @@ define(function () {
       return {
         onBackgroundMessage: function(listener) {
           port.onMessage.addListener(listener);
+        },
+        postMessage: function(message) {
+          port.postMessage(message);
         }
       };
     },
