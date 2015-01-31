@@ -17,8 +17,6 @@ The web application: a digital canvas where documents are created + remixed. Bas
 ---
 A Chrome extension for easily tagging + saving browser content found on the web, to your Parallels canvas
 
-[![Build Status](https://travis-ci.org/parallelsio/chrome-clipper.svg?branch=master)](https://travis-ci.org/parallelsio/chrome-clipper)
-
 ---  
 #### Notes
  
