@@ -9,7 +9,7 @@ Template.map.helpers({
 
 
 Template.map.rendered = function(){
-  
+  UI.insert(UI.render(Template.feed), document.body, document.getElementById('first'));
   sound.play('welcome-v1.mp3');
 
 };
@@ -22,17 +22,17 @@ Template.map.events({
     console.log("bit:text:create");
 
     if(event.target.classList.contains('map')){
-      var id = Bits.insert( { 
+      var id = Bits.insert( {
                   content: '',
-                  type: 'text', 
+                  type: 'text',
                   color: 'white',
-                  position_x: event.pageX, 
+                  position_x: event.pageX,
                   position_y: event.pageY });
 
       Session.set('bitEditingId', id);
 
     }
   }
-  
+
 
 });
