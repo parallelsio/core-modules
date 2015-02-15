@@ -1,9 +1,10 @@
-.map {	  
+.map {
 
 	// required to get dlbe click/ bit:new text to show
-	min-height:2000px;
-	min-width:2000px;
-	
+  // TODO: Need some other way to create an infinite scroll canvas area.
+//	min-height:2000px;
+//	min-width:2000px;
+
 	height:100%;
   	width:100%;
   }

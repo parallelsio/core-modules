@@ -42,11 +42,11 @@ Template.feed.rendered = function(){
       $original = $(this.target);
       $card = $original.clone(true);
 
-      // 14 is the top/bottom margin for each card in the feed.
-      var top = ($original.position().top - ($original.position().top - $original.offset().top + 14 * 3));
+      var cardMargin = parseInt(window.getComputedStyle($('.card')[0]).marginBottom, 10);
+      var top = ($original.position().top - ($original.position().top - $original.offset().top + cardMargin * 3));
 
-      // 538.5 is the left/right padding on the activity feed.
-      var left = (($original.offset().left - 538.5) - $original.position().left);
+      var activityFeedMargin = (($(window).width() - $(window).width() / 4) / 2);
+      var left = (($original.offset().left - activityFeedMargin) - $original.position().left);
 
       $card.css('top', top);
       $card.css('left', left);
