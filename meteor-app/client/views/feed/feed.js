@@ -42,9 +42,14 @@ Template.feed.rendered = function(){
       $original = $(this.target);
       $card = $original.clone(true);
 
+      // 14 is the top/bottom margin for each card in the feed.
       var top = ($original.position().top - ($original.position().top - $original.offset().top + 14 * 3));
 
+      // 538.5 is the left/right padding on the activity feed.
+      var left = (($original.offset().left - 538.5) - $original.position().left);
+
       $card.css('top', top);
+      $card.css('left', left);
       $card.css('transform', $original.css('transform'));
 
       $('#dropzone').append($card);
@@ -56,7 +61,6 @@ Template.feed.rendered = function(){
       $card.css('transform', $original.css('transform'))
     },
     onDragEnd:function(e) {
-      console.log('drag end');
       $('#dropzone').empty();
       $('.drop').hide();
       $activityFeed.dimmer('hide');
