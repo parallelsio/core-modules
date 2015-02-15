@@ -36,3 +36,5 @@ window.PARALLELS.Events = {
   }
 
 };
+
+window.PARALLELS.Events.initialize();
