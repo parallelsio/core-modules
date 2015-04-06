@@ -148,21 +148,6 @@ Meteor.startup(function(){
     // create utility
     // var element = document.querySelector("[data-id='" + this.data._id + "']");
     // var getParallelsID = ""
-
-    // TODO: fix to display properly
-    getSessionVars: function(toPrint){
-      var map = [];
-      console.log('********* SESSION VARS ***********');
-      for (var prop in Session.keys) {
-        map.push({ key: prop, value: Session.get(prop) });
-        if (toPrint) {
-          console.log("session." + prop, ":", Session.get(prop));
-        }
-      }
-      console.log('************************');
-
-      return map;
-    }
   });
 
 
@@ -173,8 +158,6 @@ Meteor.startup(function(){
   Session.set('bitEditingId', null);
   Session.set('isDrawingParallel', false);
   
-  utility.getSessionVars(true); 
-
   // TODO: why doesnt JS native selector work here
   // but Jquery does?
   // var elem = document.querySelector('.bit');
