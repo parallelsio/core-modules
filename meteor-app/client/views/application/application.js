@@ -41,16 +41,15 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
            nativeWidth       x (previewWidth) 
       */
       var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
-
       var toWidth, toHeight, easeType;
 
       // *************** set the options, for what will happen when animation runs
+      // the main difference is that on the way down it bounces, to give it a feel like gravity is at play
       if (direction === "expand")
       {
         toWidth = previewWidth;
         toHeight = previewHeight;
         easeType = Expo.easeOut;
-
       }
       
       else if (direction === "contract")
@@ -103,7 +102,6 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
           Session.set('bitPreviewingId', null);
           Session.set('bitThumbnailWidth', null);
           Session.set('bitThumbnailHeight', null);
-
         }
 
         console.log("bit:preview:", bitPreviewingId, "tween done." );
@@ -116,15 +114,13 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
       });
 
 
-
+      // zelda wipe in of overlay bg
+      // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
       if (direction === "expand")
       {
         console.log ("expanding");
 
         timeline
-
-          // zelda wipe in of overlay bg
-          // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
           .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
           .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
           .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
@@ -147,21 +143,17 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
 
         timeline
 
+          .fromTo(maskLeft, 0.25, { x: 0 }, { x: -documentWidth / 2, ease: Expo.easeOut }, 0.12 )
+          .fromTo(maskRight, 0.25, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.12 )
+
           // contract image from viewport height down to thumbnail size 
           .to($bitImg, 0.10, { scale: 1.1, ease:Quint.easeOut } )
           .to($bitImg, 0.25, options )
 
-          // TODO: this wont be needed after on hover, bit swaps to top of 
-          // z-index stack
           .set($($bit), { zIndex: 1 })
-
-          .fromTo(maskLeft, 0.25, { x: 0 }, { x: -documentWidth / 2, ease: Expo.easeOut }, 0.12 )
-          .fromTo(maskRight, 0.25, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.12 )
-
           .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" });
 
       }
-
       
     }
   };
@@ -185,6 +177,7 @@ Meteor.startup(function(){
   Session.set('bitPreviewingId', null);
   Session.set('bitEditingId', null);
   Session.set('isDrawingParallel', false);
+
   
   // TODO: why doesnt JS native selector work here
   // but Jquery does?
