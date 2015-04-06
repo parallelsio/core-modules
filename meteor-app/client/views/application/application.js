@@ -8,7 +8,7 @@ _ = lodash;
   
 
 // TODO: refactor this out into its own namespace
-var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, direction){
+var scaleImage = function(bitData, $bitImg, bitPreviewingId,  $bit, bitTemplate, direction){
 
   var bitThumbnailHeight = $bitImg.height()
   var bitThumbnailWidth = $bitImg.width()
@@ -64,55 +64,40 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
           // disable bit actions (drag)
       };
 
-      var timelineDone = function( bitHoveringId ){
-        console.log("bit:preview:", bitHoveringId, "tween done." );
+      var timelineDone = function( bitPreviewingId, direction ){
         
-        // TODO:  wire up escape here to close?
+        if (direction === "expand")
+        {
+          Session.set('bitPreviewingId', bitPreviewingId);
+        }
 
-        // inside of close function, make sure to set Session.set('bitPreviewingId', null);
+        else if (direction === "contract")
+        {
+          bitPreviewingId = "";
+          Session.set('bitPreviewingId', null);
+        }
+
+        console.log("bit:preview:", bitPreviewingId, "tween done." );
       };
 
       var timeline = new TimelineMax({ 
         onStart: timelineStart,
         onComplete: timelineDone, 
-        onCompleteParams:[ bitHoveringId ]
+        onCompleteParams:[ bitPreviewingId, direction ]
       });
 
-      if (direction == "expand")
+
+
+      if (direction === "expand")
       {
-        console.log ("expanding")
+        console.log ("expanding");
 
-        timeline
-
-                // zelda wipe in of overlay bg
-                // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-                .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
-                .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-                .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-
-                // TODO: this wont be needed after on hover, bit swaps to top of 
-                // z-index stack
-                .set($($bit), { zIndex: 10 })
-
-                // TODO: move/center viewport around the image
-
-                // blow up image from thumbnail size up to fit the viewport height
-                // TODO: overlap with zelda swipe in
-                .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
-                .to($bitImg, 0.25, options );
-      }
-
-      else if (direction == "contract")
-      {
-        console.log ("contracting")
         timeline
 
           // zelda wipe in of overlay bg
           // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-          .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" })
-          
+          .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
           .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-          
           .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
 
           // TODO: this wont be needed after on hover, bit swaps to top of 
@@ -125,6 +110,28 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
           // TODO: overlap with zelda swipe in
           .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
           .to($bitImg, 0.25, options );
+      }
+
+      else if (direction === "contract")
+      {
+        console.log ("contracting");
+
+        timeline
+
+          .to($bitImg, 0.25, options )
+
+          // contract image from viewport height down to thumbnail size 
+          .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+
+          // TODO: this wont be needed after on hover, bit swaps to top of 
+          // z-index stack
+          .set($($bit), { zIndex: 1 })
+
+          .fromTo(maskLeft, 0.25, { x: 0 }, { x: -documentWidth / 2, ease: Expo.easeOut }, 0.12 )
+          .fromTo(maskRight, 0.25, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.12 )
+
+          .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" });
+
       }
 
       
