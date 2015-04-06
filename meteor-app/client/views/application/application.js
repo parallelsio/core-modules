@@ -68,8 +68,8 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
         console.log("bit:preview:", bitHoveringId, "tween done." );
         
         // TODO:  wire up escape here to close?
-        // inside of close function, make sure to set Session.set('bitPreviewingId', null);
 
+        // inside of close function, make sure to set Session.set('bitPreviewingId', null);
       };
 
       var timeline = new TimelineMax({ 
@@ -78,24 +78,52 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
         onCompleteParams:[ bitHoveringId ]
       });
 
-      timeline
+      if (direction == "open")
+      {
+        console.log ("opening")
 
-        // zelda wipe in of overlay bg
-        // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-        .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
-        .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-        .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+        timeline
 
-        // TODO: this wont be needed after on hover, bit swaps to top of 
-        // z-index stack
-        .set($($bit), { zIndex: 10 })
+                // zelda wipe in of overlay bg
+                // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
+                .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
+                .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+                .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
 
-        // TODO: move/center viewport around the image
+                // TODO: this wont be needed after on hover, bit swaps to top of 
+                // z-index stack
+                .set($($bit), { zIndex: 10 })
 
-        // blow up image from thumbnail size up to fit the viewport height
-        // TODO: overlap with zelda swipe in
-        .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
-        .to($bitImg, 0.25, options );
+                // TODO: move/center viewport around the image
+
+                // blow up image from thumbnail size up to fit the viewport height
+                // TODO: overlap with zelda swipe in
+                .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+                .to($bitImg, 0.25, options );
+      }
+
+      else if (direction == "close")
+      {
+        console.log ("closing")
+        timeline
+
+          // zelda wipe in of overlay bg
+          // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
+          .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
+          .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+          .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+
+          // TODO: this wont be needed after on hover, bit swaps to top of 
+          // z-index stack
+          .set($($bit), { zIndex: 10 })
+
+          // TODO: move/center viewport around the image
+
+          // blow up image from thumbnail size up to fit the viewport height
+          // TODO: overlap with zelda swipe in
+          .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+          .to($bitImg, 0.25, options );
+      }
 
       
     }
@@ -179,7 +207,8 @@ Meteor.startup(function(){
     if(bitPreviewingId)
     {
       console.log('gotta hide this image!');
-
+    // timeline.reverse();
+        // timeline.play();
 
       Session.set('bitPreviewingId', null);
     }
@@ -214,7 +243,6 @@ Meteor.startup(function(){
         $bitImg = $(bitTemplate.templateInstance().$('img'));
 
         scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "open");
-
       }
 
       else if (bitData.type === "text") {
