@@ -5,90 +5,8 @@
 _ = lodash;
 
 
-Meteor.startup(function(){
-
-
-  // TODO: move to another file
-  var utility = ({
-
-    // create utility
-    // var element = document.querySelector("[data-id='" + this.data._id + "']");
-    // var getParallelsID = ""
-
-    // TODO: fix to display properly
-    getSessionVars: function(toPrint){
-      var map = [];
-      console.log('********* SESSION VARS ***********');
-      for (var prop in Session.keys) {
-        map.push({ key: prop, value: Session.get(prop) });
-        if (toPrint) {
-          console.log("session." + prop, ":", Session.get(prop));
-        }
-      }
-      console.log('************************');
-
-      return map;
-    }
-  });
-
-
-  console.log("Meteor.startup start.");
-  
-    // reset any leftover session vars from last load
-  Session.set('bitPreviewingId', null);
-  Session.set('bitEditingId', null);
-  Session.set('isDrawingParallel', false);
-
-  
-  utility.getSessionVars(true); 
-
-  // TODO: why doesnt JS native selector work here
-  // but Jquery does?
-  // var elem = document.querySelector('.bit');
-  // var elem = $('.bit');
-  // console.log(elem);
-
-
-  // TODO: belong here, or on map?
-  Mousetrap.bind("d", function() {
-
-    console.log("pressed d");
-
-    var bitHoveringId = Session.get('bitHoveringId');
-    console.log();
-
-    if(bitHoveringId)
-    {
-      Bits.remove(bitHoveringId);
-      console.log("bit:delete: " + bitHoveringId);
-    }
-  });
-
-  // bind globally, so escape is caught even inside forms
-  Mousetrap.bindGlobal('esc', function() {
-    event.preventDefault();
-    event.stopPropagation();
-
-    console.log('escape key');
-    var bitEditingId = Session.get('bitEditingId');
-    var bitPreviewingId = Session.get('bitPreviewingId');
-
-    if (bitEditingId)
-    {
-        Bits.remove( bitEditingId );
-        Session.set('bitEditingId', null);
-    }
-
-    if(bitPreviewingId)
-    {
-      console.log('gotta hide this image!');
-
-
-      Session.set('bitPreviewingId', null);
-    }
-  });
-
-var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate ){
+// TODO: refactor this out into its own namespace
+var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, direction){
 
   var bitThumbnailHeight = $bitImg.height()
   var bitThumbnailWidth = $bitImg.width()
@@ -175,10 +93,94 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate ){
         // TODO:  wire up escape here to close?
         // inside of close function, make sure to set Session.set('bitPreviewingId', null);
       };
-
-
     }
   };
+
+
+  
+Meteor.startup(function(){
+
+
+  // TODO: move to another file
+  var utility = ({
+
+    // create utility
+    // var element = document.querySelector("[data-id='" + this.data._id + "']");
+    // var getParallelsID = ""
+
+    // TODO: fix to display properly
+    getSessionVars: function(toPrint){
+      var map = [];
+      console.log('********* SESSION VARS ***********');
+      for (var prop in Session.keys) {
+        map.push({ key: prop, value: Session.get(prop) });
+        if (toPrint) {
+          console.log("session." + prop, ":", Session.get(prop));
+        }
+      }
+      console.log('************************');
+
+      return map;
+    }
+  });
+
+
+  console.log("Meteor.startup start.");
+  
+    // reset any leftover session vars from last load
+  Session.set('bitPreviewingId', null);
+  Session.set('bitEditingId', null);
+  Session.set('isDrawingParallel', false);
+
+  
+  utility.getSessionVars(true); 
+
+  // TODO: why doesnt JS native selector work here
+  // but Jquery does?
+  // var elem = document.querySelector('.bit');
+  // var elem = $('.bit');
+  // console.log(elem);
+
+
+  // TODO: belong here, or on map?
+  Mousetrap.bind("d", function() {
+
+    console.log("pressed d");
+
+    var bitHoveringId = Session.get('bitHoveringId');
+    console.log();
+
+    if(bitHoveringId)
+    {
+      Bits.remove(bitHoveringId);
+      console.log("bit:delete: " + bitHoveringId);
+    }
+  });
+
+  // bind globally, so escape is caught even inside forms
+  Mousetrap.bindGlobal('esc', function() {
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log('escape key');
+    var bitEditingId = Session.get('bitEditingId');
+    var bitPreviewingId = Session.get('bitPreviewingId');
+
+    if (bitEditingId)
+    {
+        Bits.remove( bitEditingId );
+        Session.set('bitEditingId', null);
+    }
+
+    if(bitPreviewingId)
+    {
+      console.log('gotta hide this image!');
+
+
+      Session.set('bitPreviewingId', null);
+    }
+  });
+
 
 
   Mousetrap.bind("space", function() {
