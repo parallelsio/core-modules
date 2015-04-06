@@ -8,7 +8,9 @@ _ = lodash;
   
 
 // TODO: refactor this out into its own namespace
-var scaleImage = function(bitData, $bitImg, bitPreviewingId,  $bit, bitTemplate, direction){
+var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction){
+
+  $bitImg = $(bitTemplate.templateInstance().$('img'));
 
   var bitThumbnailHeight = $bitImg.height()
   var bitThumbnailWidth = $bitImg.width()
@@ -40,9 +42,22 @@ var scaleImage = function(bitData, $bitImg, bitPreviewingId,  $bit, bitTemplate,
       */
       var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
 
+      // *************** set the options, for what will happen when animation runs
+      if (direction === "expand")
+      {
+        toWidth = previewWidth;
+        toHeight = previewHeight;
+      }
+      
+      else if (direction === "contract")
+      {
+        toWidth = previewWidth;
+        toHeight = previewHeight;
+      }
+      
       var options = { 
-        width: previewWidth, 
-        height: previewHeight,
+        width: toWidth, 
+        height: toHeight,
         scale: 1,
         ease: Expo.easeOut
       }; 
@@ -118,10 +133,9 @@ var scaleImage = function(bitData, $bitImg, bitPreviewingId,  $bit, bitTemplate,
 
         timeline
 
-          .to($bitImg, 0.25, options )
-
           // contract image from viewport height down to thumbnail size 
-          .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+          .to($bitImg, 0.10, { scale: 1.1, ease:Quint.easeOut } )
+          .to($bitImg, 0.25, options )
 
           // TODO: this wont be needed after on hover, bit swaps to top of 
           // z-index stack
@@ -217,19 +231,19 @@ Meteor.startup(function(){
       // the bit type as the determining factor, if we should expand it
       if ((bitData.type === "image") || (bitData.type === "webpage")){
         console.log("bit:image:preview: " + bitHoveringId);
-        $bitImg = $(bitTemplate.templateInstance().$('img'));
 
         // now, let's see if it needs to be expanded, or closed:
         if (bitPreviewingId === null)
         {
+
           // nothing is being previewed currently, expand the image
-          scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "expand");
+          scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "expand");
         }
 
         else if (bitPreviewingId)
         {
           // bit is being previewed, close/restore to thumbnail size
-          scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "contract");
+          scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "contract");
         }
 
       }
