@@ -71,13 +71,115 @@ Meteor.startup(function(){
 
     console.log('escape key');
     var bitEditingId = Session.get('bitEditingId');
+    var bitPreviewingId = Session.get('bitPreviewingId');
 
     if (bitEditingId)
     {
         Bits.remove( bitEditingId );
         Session.set('bitEditingId', null);
     }
+
+    if(bitPreviewingId)
+    {
+      console.log('gotta hide this image!');
+
+
+      Session.set('bitPreviewingId', null);
+    }
   });
+
+var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate ){
+
+  var bitThumbnailHeight = $bitImg.height()
+  var bitThumbnailWidth = $bitImg.width()
+
+    // padding for top and bottom, in pixels
+    var edgePadding = 10; 
+
+    // using d.d.c faster than jQuery(window).width()
+    // http://ryanve.com/lab/dimensions
+    // TODO: refactor to use Verge lib. available as Meteor package?
+
+    // calc the height available, accounting for space for image to breathe from edges
+    var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
+   
+    // use freeHeight to determine how to preview
+    // TODO: use height + width, for cases where height fits nicely 
+    // in the viewport, but image is very wide, wider than viewport 
+    if ((bitData.nativeHeight > bitThumbnailHeight) && 
+        (bitThumbnailHeight <= freeHeight)) {
+
+      var previewHeight = freeHeight;
+
+      /*
+          calc for the new width:
+
+           nativeHeight       previewHeight
+          -------------  =  ----------------
+           nativeWidth       x (previewWidth) 
+      */
+      var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
+
+      var options = { 
+        width: previewWidth, 
+        height: previewHeight,
+        scale: 1,
+        ease: Expo.easeOut
+      }; 
+
+      var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
+      var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
+    
+      var documentWidth  = $(document).width();
+      var documentHeight = $(document).height();
+
+      var timelineStart = function () {
+          console.log('bit:preview timeline starting ...');
+
+          // TODO: kill all running animations
+
+          // disable scrolling
+          $("body").css( "overflow", "hidden");
+
+          // disable bit actions (drag)
+      };
+
+      var timeline = new TimelineMax({ 
+        onStart: timelineStart,
+        onComplete: timelineDone, 
+        onCompleteParams:[ bitHoveringId ]
+      });
+
+      timeline
+
+        // zelda wipe in of overlay bg
+        // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
+        .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
+        .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+        .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+
+        // TODO: this wont be needed after on hover, bit swaps to top of 
+        // z-index stack
+        .set($($bit), { zIndex: 10 })
+
+        // TODO: move/center viewport around the image
+
+        // blow up image from thumbnail size up to fit the viewport height
+        // TODO: overlap with zelda swipe in
+        .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
+        .to($bitImg, 0.25, options );
+
+      var timelineDone = function( bitHoveringId ){
+        console.log("bit:preview:", bitHoveringId, "tween done." );
+        
+        // TODO:  wire up escape here to close?
+        // inside of close function, make sure to set Session.set('bitPreviewingId', null);
+      };
+
+
+    }
+  };
+
 
   Mousetrap.bind("space", function() {
     event.preventDefault();
@@ -100,101 +202,13 @@ Meteor.startup(function(){
       var bitTemplate = Blaze.getView($bit);
       var bitData = Blaze.getData(bitTemplate);
 
-      if (bitData.type === "image"){
+      if ((bitData.type === "image") || (bitData.type = "webpage")){
         console.log("bit:image:preview: " + bitHoveringId);
         
         $bitImg = $(bitTemplate.templateInstance().$('img'));
-        var bitThumbnailHeight = $bitImg.height();
-        var bitThumbnailWidth  = $bitImg.width();
 
-        (function scaleImageToFitWindow(){
+        scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate);
 
-          // padding for top and bottom, in pixels
-          var edgePadding = 10; 
-
-          // using d.d.c faster than jQuery(window).width()
-          // http://ryanve.com/lab/dimensions
-          // TODO: refactor to use Verge lib. available as Meteor package?
-
-          // calc the height available, accounting for space for image to breathe from edges
-          var freeHeight = document.documentElement.clientHeight - (edgePadding * 2);
-         
-          // use freeHeight to determine how to preview
-          // TODO: use height + width, for cases where height fits nicely 
-          // in the viewport, but image is very wide, wider than viewport 
-          if ((bitData.nativeHeight > bitThumbnailHeight) && 
-              (bitThumbnailHeight <= freeHeight)) {
-
-            var previewHeight = freeHeight;
-  
-            /*
-                calc for the new width:
-
-                 nativeHeight       previewHeight
-                -------------  =  ----------------
-                 nativeWidth       x (previewWidth) 
-            */
-            var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
-
-            var options = { 
-              width: previewWidth, 
-              height: previewHeight,
-              scale: 1,
-              ease: Expo.easeOut
-            }; 
-
-            var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
-            var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
-          
-            var documentWidth  = $(document).width();
-            var documentHeight = $(document).height();
-
-            var timelineStart = function () {
-                console.log('bit:preview timeline starting ...');
-
-                // TODO: kill all running animations
-
-                // disable scrolling
-                $("body").css( "overflow", "hidden");
-
-                // disable bit actions (drag)
-            };
-
-            var timeline = new TimelineMax({ 
-              onStart: timelineStart,
-              onComplete: timelineDone, 
-              onCompleteParams:[ bitHoveringId ]
-            });
-
-            timeline
-
-              // zelda wipe in of overlay bg
-              // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-              .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
-              .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-              .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-
-              // TODO: this wont be needed after on hover, bit swaps to top of 
-              // z-index stack
-              .set($($bit), { zIndex: 10 })
-
-              // TODO: move/center viewport around the image
-
-              // blow up image from thumbnail size up to fit the viewport height
-              // TODO: overlap with zelda swipe in
-              .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
-              .to($bitImg, 0.25, options );
-
-            var timelineDone = function( bitHoveringId ){
-              console.log("bit:preview:", bitHoveringId, "tween done." );
-              
-              // TODO:  wire up escape here to close?
-              // inside of close function, make sure to set Session.set('bitPreviewingId', null);
-            };
-
-
-          }
-        })();
       }
 
       else if (bitData.type === "text") {
