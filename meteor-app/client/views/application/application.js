@@ -5,6 +5,8 @@
 _ = lodash;
 
 
+  
+
 // TODO: refactor this out into its own namespace
 var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, direction){
 
@@ -62,6 +64,14 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
           // disable bit actions (drag)
       };
 
+      var timelineDone = function( bitHoveringId ){
+        console.log("bit:preview:", bitHoveringId, "tween done." );
+        
+        // TODO:  wire up escape here to close?
+        // inside of close function, make sure to set Session.set('bitPreviewingId', null);
+
+      };
+
       var timeline = new TimelineMax({ 
         onStart: timelineStart,
         onComplete: timelineDone, 
@@ -87,17 +97,11 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
         .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
         .to($bitImg, 0.25, options );
 
-      var timelineDone = function( bitHoveringId ){
-        console.log("bit:preview:", bitHoveringId, "tween done." );
-        
-        // TODO:  wire up escape here to close?
-        // inside of close function, make sure to set Session.set('bitPreviewingId', null);
-      };
+      
     }
   };
 
 
-  
 Meteor.startup(function(){
 
 
@@ -209,7 +213,7 @@ Meteor.startup(function(){
         
         $bitImg = $(bitTemplate.templateInstance().$('img'));
 
-        scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate);
+        scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "open");
 
       }
 
