@@ -78,9 +78,9 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
         onCompleteParams:[ bitHoveringId ]
       });
 
-      if (direction == "open")
+      if (direction == "expand")
       {
-        console.log ("opening")
+        console.log ("expanding")
 
         timeline
 
@@ -102,15 +102,17 @@ var scaleImage = function(bitData, $bitImg, bitHoveringId,  $bit, bitTemplate, d
                 .to($bitImg, 0.25, options );
       }
 
-      else if (direction == "close")
+      else if (direction == "contract")
       {
-        console.log ("closing")
+        console.log ("contracting")
         timeline
 
           // zelda wipe in of overlay bg
           // inspired by: https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-          .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
+          .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" })
+          
           .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+          
           .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
 
           // TODO: this wont be needed after on hover, bit swaps to top of 
@@ -163,7 +165,6 @@ Meteor.startup(function(){
   Session.set('bitPreviewingId', null);
   Session.set('bitEditingId', null);
   Session.set('isDrawingParallel', false);
-
   
   utility.getSessionVars(true); 
 
@@ -203,15 +204,6 @@ Meteor.startup(function(){
         Bits.remove( bitEditingId );
         Session.set('bitEditingId', null);
     }
-
-    if(bitPreviewingId)
-    {
-      console.log('gotta hide this image!');
-    // timeline.reverse();
-        // timeline.play();
-
-      Session.set('bitPreviewingId', null);
-    }
   });
 
 
@@ -219,37 +211,50 @@ Meteor.startup(function(){
   Mousetrap.bind("space", function() {
     event.preventDefault();
     event.stopPropagation();
-    console.log("pressed spacebar");
 
     var bitHoveringId = Session.get('bitHoveringId');
     var bitPreviewingId = Session.get('bitPreviewingId');
 
-    if (bitPreviewingId)
+    if (bitHoveringId)
     {
-      console.log('already previewing bit:', bitPreviewingId);
-    }
-
-    else if(bitHoveringId)
-    {
-      Session.set('bitPreviewingId', bitHoveringId);
+      console.log("pressed spacebar over bit: ", bitHoveringId);
 
       var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
       var bitTemplate = Blaze.getView($bit);
       var bitData = Blaze.getData(bitTemplate);
 
-      if ((bitData.type === "image") || (bitData.type = "webpage")){
+      // currently, we're only supporting preview for images, so use 
+      // the bit type as the determining factor, if we should expand it
+      if ((bitData.type === "image") || (bitData.type === "webpage")){
         console.log("bit:image:preview: " + bitHoveringId);
-        
         $bitImg = $(bitTemplate.templateInstance().$('img'));
 
-        scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "open");
+        // now, let's see if it needs to be expanded, or closed:
+        if (bitPreviewingId === null)
+        {
+          // nothing is being previewed currently, expand the image
+          scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "expand");
+        }
+
+        else if (bitPreviewingId)
+        {
+          // bit is being previewed, close/restore to thumbnail size
+          scaleImage(bitData, $bitImg, bitHoveringId, $bit, bitTemplate, "contract");
+        }
+
       }
 
-      else if (bitData.type === "text") {
-        // TODO: how to preview text?
-        console.log("bit:preview:", bitHoveringId, " is type text. Feature not built yet." );
+      else {
+        console.log("bit:preview:", bitHoveringId, " is not an image. Do nothing." );
       }
+
+
     }
+
+    else {
+      console.log ('space key ignored, not captured for a specific bit')
+    }
+
   });
 
   Mousetrap.bind("shift", function() {
