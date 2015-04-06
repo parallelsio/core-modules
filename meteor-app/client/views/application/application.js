@@ -42,24 +42,29 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
       */
       var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
 
+      var toWidth, toHeight, easeType;
+
       // *************** set the options, for what will happen when animation runs
       if (direction === "expand")
       {
         toWidth = previewWidth;
         toHeight = previewHeight;
+        easeType = Expo.easeOut;
+
       }
       
       else if (direction === "contract")
       {
-        toWidth = previewWidth;
-        toHeight = previewHeight;
+        toWidth = Session.get('bitThumbnailWidth');
+        toHeight = Session.get('bitThumbnailHeight');
+        easeType = Elastic.easeOut.config(2, 0.4)
       }
       
       var options = { 
         width: toWidth, 
         height: toHeight,
         scale: 1,
-        ease: Expo.easeOut
+        ease: easeType
       }; 
 
       var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
@@ -76,7 +81,13 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
           // disable scrolling
           $("body").css( "overflow", "hidden");
 
-          // disable bit actions (drag)
+          // TODO: disable bit actions (drag, delete)
+
+          if (direction === "expand")
+          {
+            Session.set('bitThumbnailHeight', bitThumbnailHeight);
+            Session.set('bitThumbnailWidth', bitThumbnailWidth);
+          }
       };
 
       var timelineDone = function( bitPreviewingId, direction ){
@@ -90,6 +101,9 @@ var scaleImage = function(bitData, bitPreviewingId, $bit, bitTemplate, direction
         {
           bitPreviewingId = "";
           Session.set('bitPreviewingId', null);
+          Session.set('bitThumbnailWidth', null);
+          Session.set('bitThumbnailHeight', null);
+
         }
 
         console.log("bit:preview:", bitPreviewingId, "tween done." );
@@ -240,7 +254,7 @@ Meteor.startup(function(){
           scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "expand");
         }
 
-        else if (bitPreviewingId)
+        else
         {
           // bit is being previewed, close/restore to thumbnail size
           scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "contract");
