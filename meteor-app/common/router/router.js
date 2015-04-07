@@ -2,7 +2,7 @@ Router.configure({
   layout: 'layout',
   loadingTemplate: 'loading',
   waitOn: function() {
-    return Meteor.subscribe('bits');
+    // return Meteor.subscribe('bits');
   }
 });
 

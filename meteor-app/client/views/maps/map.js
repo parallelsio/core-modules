@@ -1,6 +1,8 @@
 Template.map.helpers({
   bits: function() {
-    return Bits.find();
+    // return Bits.find();
+    var Bits = Meteor.neo4j.call('allBits',{});
+    return Bits;
   }
 });
 

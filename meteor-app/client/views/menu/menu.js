@@ -5,9 +5,17 @@ Template.menu.helpers({
   },
   
   bitsCount: function() { 
-    return Bits.find().count();
-  } 
+    // return Bits.find().count();
+    myCount = -1;
+    Meteor.neo4j.call('allBits',{},function(error,data) {
+      console.log(error);
+      console.log('bits count' + data['a'].length);
+      myCount = data['a'].length;
+    });
+    //TODO non-async call/force wait?
+   return myCount;
   
+  }
 });
 
 

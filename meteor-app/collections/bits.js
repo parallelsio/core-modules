@@ -6,4 +6,4 @@
 // https://groups.google.com/forum/#!topic/meteor-talk/tkH-p_B-wbY
 
 // TODO: for this map only
-Bits = new Meteor.Collection("bits");
+// Bits = new Meteor.Collection("bits");

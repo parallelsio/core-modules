@@ -1,8 +1,10 @@
-Template.debug.helpers({
-  bits: function() {
-    return Bits.find();
-  }
-});
+// Template.debug.helpers({
+//   bits: function() {
+//     // return Bits.find();
+//     // var Bits = Meteor.neo4j.call('allBits',{});
+//     return Bits;
+//   }
+// });
 
 Template.debug.rendered = function(){
 

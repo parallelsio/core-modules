@@ -325,7 +325,9 @@ Meteor.startup(function(){
   console.log("Meteor.startup done.");
 
   Tracker.autorun(function() {
-    console.log(Bits.find().count() + ' bits... updated via deps');
+    // console.log(Bits.find().count() + ' bits... updated via deps');
+    var Bits = Meteor.neo4j.call('allBits',{});
+    // console.log(Bits.get());
   });
 
 
