@@ -18,10 +18,10 @@ Template.menu.created = function() {
   self.bitCount = new ReactiveVar("count not yet processed.");
   
   Meteor.neo4j.call('allBits',{},function(error,data) {
-    if (error)
-      console.log(error);
-    else 
-      console.log('callback returned count: ' + data['a'].length);
+    // if (error)
+      // console.log(error);
+    // else 
+      // console.log('callback returned count: ' + data['a'].length);
       
       // self.myAsyncValue.set(asyncValue);
       self.bitCount.set(data['a'].length);

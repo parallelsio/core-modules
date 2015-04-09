@@ -1,7 +1,6 @@
 
 Template.bit.rendered = function() {
-
-  var element = document.querySelector("[data-id='" + this.data._id + "']");
+  var element = document.querySelector("[data-id='" + this.data.metadata.id + "']");
 
   // TODO: hide + then stagger + shimmer back in
 
@@ -159,12 +158,13 @@ Template.bit.rendered = function() {
       var mongoId = this.target.dataset.id;
       console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
       
-      Bits.update( mongoId , {
-        $set: {
-          "position_x": x,
-          "position_y": y
-        }
-      });
+      //TODO: Fix with neo query
+      // Bits.update( mongoId , {
+      //   $set: {
+      //     "position_x": x,
+      //     "position_y": y
+      //   }
+      // });
       
       sound.play('glue.mp3');
 
