@@ -1,7 +1,7 @@
 
 Template.bit.rendered = function() {
   var element = document.querySelector("[data-id='" + this.data.metadata.id + "']");
-
+  console.log("neo id is: " + this.data.metadata.id);
   // TODO: hide + then stagger + shimmer back in
 
   // Technique 3: Display bits in coordinate space using transform: translate3d()
@@ -155,16 +155,16 @@ Template.bit.rendered = function() {
       var x = this.endX;
       var y = this.endY;
 
-      var mongoId = this.target.dataset.id;
-      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+      // console.log(this);
+      var neoId = this.target.dataset.id;
+      console.log(event.type + ": " + neoId + " : " + x + " : " + y);
       
-      //TODO: Fix with neo query
-      // Bits.update( mongoId , {
-      //   $set: {
-      //     "position_x": x,
-      //     "position_y": y
-      //   }
-      // });
+      Meteor.neo4j.call('updateBitPosition',{
+        _id: neoId,
+        position_x: x,
+        position_y: y
+      });
+
       
       sound.play('glue.mp3');
 
@@ -184,7 +184,7 @@ Template.bit.events({
     event.stopPropagation();
 
     if (event.target.classList.contains('bit')) {
-      Session.set('bitHoveringId', template.data._id);
+      Session.set('bitHoveringId', template.data.metadata.id);
       console.log("bit:hover:in " + Session.get('bitHoveringId'));
 
       // TODO: shimmer on hover
@@ -213,14 +213,14 @@ Template.bit.events({
   'click .bit': function (event, template){
 
     // TODO: Zelda triforce focus here, zoom sound
-    console.log("bit:click: " + this._id);     
+    console.log("bit:click: " + template.data.metadata.id);     
   },
 
   'dblclick .bit': function (event, template){
     event.preventDefault();
     event.stopPropagation();
 
-    Session.set('bitEditingId',this._id);
+    Session.set('bitEditingId',template.data.metadata.id);
     console.log("bit:edit: " + Session.get('bitEditingId'));
   },
 
@@ -231,9 +231,9 @@ Template.bit.events({
     // console.log('bit:key up: key code:' + event.which + ': ');
 
     if(event.which === 13){
-      Bits.update( this._id , {
-        $set: { "content": template.find('.editbit').value }
-      });
+      // Bits.update( this._id , {
+      //   $set: { "content": template.find('.editbit').value }
+      // });
 
       sound.play('ch-chaing-v2.mp3');
 
@@ -246,7 +246,7 @@ Template.bit.events({
 
 
 Template.bit.isEditingThisBit = function() {
-  return Session.equals('bitEditingId', this._id);
+  return Session.equals('bitEditingId', this.data.metadata.id);
 };
 
 

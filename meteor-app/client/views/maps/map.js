@@ -20,7 +20,7 @@ Template.map.helpers({
 Template.map.created = function(){
   var self = this;
   console.log('map rendered.');
-  self.bits = new ReactiveVar(["bits not yet processed."]);
+  self.bits = new ReactiveVar(false);
   Meteor.neo4j.call('allBits',{},function(error,data) {
     // if (error)
       // console.log(error);

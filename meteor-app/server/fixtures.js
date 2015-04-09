@@ -1,3 +1,5 @@
+// TODO: add in check to prevent fixtures from running if any data exists
+
   Meteor.N4JDB.query('CREATE (a:Bit {  type: { type }, position_x: { position_x }, position_y: { position_y }, color: { color }, content: { content } } )', 
     // Meteor.N4JDB.query('CREATE (a:Bit);',
 
