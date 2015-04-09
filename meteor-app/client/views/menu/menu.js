@@ -1,30 +1,35 @@
+
 Template.menu.helpers({
 
   bitEditingId: function() { 
     return Session.get('bitEditingId'); 
   },
-  
+
   bitsCount: function() { 
-    // return Bits.find().count();
-    myCount = -1;
-    Meteor.neo4j.call('allBits',{},function(error,data) {
-      console.log(error);
-      console.log('bits count' + data['a'].length);
-      myCount = data['a'].length;
-    });
-    //TODO non-async call/force wait?
-   return myCount;
-  
+    return Template.instance().bitCount.get();
   }
 });
 
 
-
-Template.menu.rendered = function() {
+Template.menu.created = function() {
+  var self = this;
   console.log('menu rendered.');
 
+  self.bitCount = new ReactiveVar("count not yet processed.");
   
+  Meteor.neo4j.call('allBits',{},function(error,data) {
+    if (error)
+      console.log(error);
+    else 
+      console.log('callback returned count: ' + data['a'].length);
+      
+      // self.myAsyncValue.set(asyncValue);
+      self.bitCount.set(data['a'].length);
+  });
+}
 
+
+Template.menu.rendered = function() {
 
   // *********************************************************************
 
