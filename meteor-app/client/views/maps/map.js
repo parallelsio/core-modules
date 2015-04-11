@@ -2,7 +2,8 @@ Template.map.helpers({
 
   bits: function() {
     var myBits = Template.instance().bits.get();
-    // console.log(myBits);
+    console.log("returned bits below")
+    console.log(myBits);
 
     return myBits;
   }

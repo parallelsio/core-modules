@@ -7,7 +7,10 @@ Meteor.neo4j.methods({
 	  return 'MATCH a RETURN a';
 	},
 	'updateBitPosition': function(){
-		console.log("position_x");
-		return 'MATCH n WHERE id(n)={_id} SET n.position_x = { position_x } ';
+		// console.log("position_x");
+		// return 'MATCH n WHERE id(n)={_id} SET n.position_x = { position_x } RETURN';
+		var cypherQuery = 'MATCH n WHERE id(n)={_id} SET n.position_x = { position_x } RETURN n';
+		console.log(cypherQuery)
+		return cypherQuery;
 	}
 });

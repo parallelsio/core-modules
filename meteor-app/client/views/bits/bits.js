@@ -163,6 +163,15 @@ Template.bit.rendered = function() {
         _id: neoId,
         position_x: x,
         position_y: y
+      },function(error,data) {
+        if (error)
+        {
+          console.log(error);
+        }
+        else
+        {
+          console.log(data);
+        }
       });
 
       
