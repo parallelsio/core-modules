@@ -20,8 +20,11 @@ fi
 
 # Run integration tests
 node node_modules/cucumber/bin/cucumber.js features
+status=$?
 
 # Do some cleanup if running locally
 if [ -z "$CI" ]; then
   kill $(jobs -p)
 fi
+
+exit $status
