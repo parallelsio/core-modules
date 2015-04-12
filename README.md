@@ -257,7 +257,7 @@ $ grunt
 # recompiling manually sometimes does the trick
 
 # SCSS, with:
-$ grunt compass:chrome 
+$ grunt sass 
 
 # and your Jade templates, with:
 $ grunt jade
@@ -299,13 +299,7 @@ A: Yup, go to http://localhost:9000/_SpecRunner.html after you have your local s
 
 Q: Why I made changes to the Chrome extension source code. My changes aren't being recognized by the extension when I try to clip/save a tab? 
 
-A: The system which listens  for changes # automatically reload your newest changes, *without you having to reconfigure 
-# the extension, unpack or copy files anywhere.
-
-# However, you *will need to refresh the tab in which you are testing the clipper, 
-# *every time you edit to the source code
-```
-
+A: The system which listens  for changes # automatically reload your newest changes, *without you having to reconfigure the extension, unpack or copy files anywhere. However, you *will need to refresh the tab in which you are testing the clipper, every time you edit the source code
 
 ----------
 
