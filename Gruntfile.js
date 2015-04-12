@@ -12,8 +12,8 @@ module.exports = function (grunt) {
           APPROOTURL: config.appRootUrl[environment]
         }
       },
-      src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
-      dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
+      src: 'tmp/scripts/modules/config.template.js',
+      dest: '<%= config.dist %>/chrome/scripts/modules/config.js'
     };
   }
 
@@ -22,27 +22,32 @@ module.exports = function (grunt) {
     config: config,
     copy: {
       dist: {
-        expand: true,
-        cwd: 'extensions/chrome',
-        src: [
-          '_locales/**',
-          'bower_components/jquery/dist/jquery.js',
-          'bower_components/gsap/src/minified/TweenMax.min.js',
-          'bower_components/ddp.js/src/ddp.js',
-          'bower_components/q/q.js',
-          'bower_components/asteroid/dist/asteroid.chrome.js',
-          'bower_components/requirejs/require.js',
-          'bower_components/mousetrap/mousetrap.js',
-          'html/*',
-          'images/*',
-          'scripts/**',
-          '!scripts/modules/config.template.js',
-          'styles/compiled/*',
-          'styles/vendor/*',
-          'typefaces/*',
-          'manifest.json'
-        ],
-        dest: '<%= config.dist %>/chrome/'
+        files: [
+          {
+            expand: true,
+            cwd: 'extensions/chrome',
+            src: [
+              '_locales/**',
+              'bower_components/jquery/dist/jquery.js',
+              'bower_components/gsap/src/minified/TweenMax.min.js',
+              'bower_components/ddp.js/src/ddp.js',
+              'bower_components/q/q.js',
+              'bower_components/asteroid/dist/asteroid.chrome.js',
+              'bower_components/requirejs/require.js',
+              'bower_components/mousetrap/mousetrap.js',
+              'html/*',
+              'images/*',
+              'scripts/**',
+              '!scripts/modules/config.template.js',
+              'styles/compiled/*',
+              'styles/vendor/*',
+              'typefaces/*',
+              'manifest.json'
+            ],
+            dest: '<%= config.dist %>/chrome/'
+          },
+          {expand: true, cwd: 'extensions/chrome', src: ['scripts/modules/config.template.js'], dest: 'tmp/'}
+        ]
       }
     },
     clean: {
@@ -79,8 +84,8 @@ module.exports = function (grunt) {
             APPROOTURL: config.appRootUrl.local
           }
         },
-        src: '<%= config.chrome_ext %>/scripts/modules/config.template.js',
-        dest: '<%= config.chrome_ext %>/scripts/modules/config.js'
+        src: 'tmp/scripts/modules/config.template.js',
+        dest: '<%= config.dist %>/chrome/scripts/modules/config.js'
       }
     },
     crx: {
@@ -316,11 +321,11 @@ module.exports = function (grunt) {
     ];
 
     if (target === 'local') {
-      tasks = tasks.concat(['preprocess:local', 'clean:dist', 'copy:dist', 'crx:dist', 'encode']);
+      tasks = tasks.concat(['clean:dist', 'copy:dist', 'preprocess:local', 'crx:dist', 'encode']);
     } else if (target === 'ci') {
-      tasks = tasks.concat(['preprocess:ci', 'clean:dist', 'copy:dist', 'crx:dist', 'encode']);
+      tasks = tasks.concat(['clean:dist', 'copy:dist', 'preprocess:ci', 'crx:dist', 'encode']);
     } else {
-      tasks = tasks.concat(['preprocess:dist', 'clean:dist', 'copy:dist', 'crx:dist', 'encode']);
+      tasks = tasks.concat(['clean:dist', 'copy:dist', 'preprocess:dist', 'crx:dist', 'encode']);
     }
 
     grunt.task.run(tasks);

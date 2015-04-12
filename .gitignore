@@ -10,6 +10,5 @@ build/
 .grunt/
 *.log
 *.crx
-extensions/chrome/scripts/modules/config.js
 _SpecRunner.html
 .DS_Store
