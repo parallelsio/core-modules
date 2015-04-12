@@ -3,7 +3,6 @@ node_modules
 build/chrome
 .npm/
 tmp
-.sass-cache/
 extensions/chrome/bower_components
 chromeprofile/
 build/

@@ -1,4 +1,3 @@
-/* line 3, ../main.scss */
 #parallels-dialog-iframe-wrapper {
   position: fixed;
   z-index: 2147483647;
@@ -7,208 +6,159 @@
   left: auto;
   width: 100%;
   margin: 0 2em;
-  background: #5B5B5B;
-}
-/* line 13, ../main.scss */
-#parallels-dialog-iframe-wrapper iframe {
-  border: none !important;
-  width: 100%;
-  height: 67px;
-}
+  background: #5B5B5B; }
+  #parallels-dialog-iframe-wrapper iframe {
+    border: none !important;
+    width: 100%;
+    height: 67px; }
 
-/* line 20, ../main.scss */
 .parallels-dialog-wrapper {
   /* use pixels here to define the base size for type in this document.
     everywhere else, we'll use ems, which is relative sizing based on this */
   font-size: 14px !important;
-  /* this makes all margin + padding inside the box, which makes design much easier */
-}
-/* line 27, ../main.scss */
-.parallels-dialog-wrapper * {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-}
-/* line 29, ../main.scss */
-.parallels-dialog-wrapper .bit-title {
-  /*
+  /* this makes all margin + padding inside the box, which makes design much easier */ }
+  .parallels-dialog-wrapper * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased; }
+  .parallels-dialog-wrapper .bit-title {
+    /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
   */
-  padding: 8px 8px 6px 8px;
-  margin: 0;
-  outline: none;
-  border: none;
-  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
-  background-size: 1px 6px, 1px 1px, 1px 6px;
-  font-family: 'ChaparralPro-Regular' !important;
-  font-size: 1.3em !important;
-  color: #FFF;
-  display: inline-block;
-  max-width: 50%;
-  margin: 0;
-  padding: 0.5em 0.5em 0.25em 0.5em;
-}
-/* line 25, ../_globals.scss */
-.parallels-dialog-wrapper .bit-title:hover, .parallels-dialog-wrapper .bit-title:focus {
-  background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
-  background-size: 1px 6px, 1px 1px, 1px 6px;
-}
-/* line 38, ../main.scss */
-.parallels-dialog-wrapper .bit-panel {
-  margin: 0 1em 1em 1em;
-}
-/* line 39, ../main.scss */
-.parallels-dialog-wrapper .bit-screenshot {
-  height: 10em;
-  display: none;
-}
-/* line 40, ../main.scss */
-.parallels-dialog-wrapper .bit-context {
-  /*
+    padding: 8px 8px 6px 8px;
+    margin: 0;
+    outline: none;
+    border: none;
+    background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+    background-size: 1px 6px, 1px 1px, 1px 6px;
+    font-family: 'ChaparralPro-Regular' !important;
+    font-size: 1.3em !important;
+    color: #FFF;
+    display: inline-block;
+    max-width: 50%;
+    margin: 0;
+    padding: 0.5em 0.5em 0.25em 0.5em; }
+    .parallels-dialog-wrapper .bit-title:hover, .parallels-dialog-wrapper .bit-title:focus {
+      background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+      background-size: 1px 6px, 1px 1px, 1px 6px; }
+  .parallels-dialog-wrapper .bit-panel {
+    margin: 0 1em 1em 1em; }
+  .parallels-dialog-wrapper .bit-screenshot {
+    height: 10em;
+    display: none; }
+  .parallels-dialog-wrapper .bit-context {
+    /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
   */
-  padding: 8px 8px 6px 8px;
-  margin: 0;
-  outline: none;
-  border: none;
-  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
-  background-size: 1px 6px, 1px 1px, 1px 6px;
-  font-family: 'ChaparralPro-Regular' !important;
-  font-size: 1.3em !important;
-  color: #FFF;
-}
-/* line 25, ../_globals.scss */
-.parallels-dialog-wrapper .bit-context:hover, .parallels-dialog-wrapper .bit-context:focus {
-  background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
-  background-size: 1px 6px, 1px 1px, 1px 6px;
-}
-/* line 45, ../main.scss */
-.parallels-dialog-wrapper .bit-actions {
-  margin-top: 2em;
-}
-/* line 47, ../main.scss */
-.parallels-dialog-wrapper .tag-editor {
-  /*
+    padding: 8px 8px 6px 8px;
+    margin: 0;
+    outline: none;
+    border: none;
+    background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+    background-size: 1px 6px, 1px 1px, 1px 6px;
+    font-family: 'ChaparralPro-Regular' !important;
+    font-size: 1.3em !important;
+    color: #FFF; }
+    .parallels-dialog-wrapper .bit-context:hover, .parallels-dialog-wrapper .bit-context:focus {
+      background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+      background-size: 1px 6px, 1px 1px, 1px 6px; }
+  .parallels-dialog-wrapper .bit-actions {
+    margin-top: 2em; }
+  .parallels-dialog-wrapper .tag-editor {
+    /*
       from https://stackoverflow.com/questions/11816166/android-ics-like-input-field-in-css
   */
-  padding: 8px 8px 6px 8px;
-  margin: 0;
-  outline: none;
-  border: none;
-  background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
-  background-size: 1px 6px, 1px 1px, 1px 6px;
-  display: inline-block;
-  float: none;
-  cursor: text;
-  min-width: 15em;
-  min-height: 3.3em;
-  max-width: 50%;
-}
-/* line 25, ../_globals.scss */
-.parallels-dialog-wrapper .tag-editor:hover, .parallels-dialog-wrapper .tag-editor:focus {
-  background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
-  background-size: 1px 6px, 1px 1px, 1px 6px;
-}
-/* line 57, ../main.scss */
-.parallels-dialog-wrapper .tag-editor div {
-  float: none;
-  padding: 0;
-}
-/* line 62, ../main.scss */
-.parallels-dialog-wrapper .tag-editor .placeholder {
-  padding: 0;
-  color: gray;
-}
-/* line 67, ../main.scss */
-.parallels-dialog-wrapper .tag-editor input {
-  color: white;
-  background: transparent;
-}
-/* line 69, ../main.scss */
-.parallels-dialog-wrapper .tag-editor li:first-child {
-  display: none;
-}
-/* line 70, ../main.scss */
-.parallels-dialog-wrapper .tag-editor li {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  float: none;
-  padding: 0.25em 0.75em;
-  padding-right: 1.5em;
-  margin: 0 0.5em 0 0.35em;
-  border-radius: 2em;
-  background-color: gray;
-}
-/* line 81, ../main.scss */
-.parallels-dialog-wrapper .tag-editor li .tag-editor-spacer {
-  display: none;
-}
-/* line 83, ../main.scss */
-.parallels-dialog-wrapper .tag-editor li .tag-editor-tag {
-  -webkit-user-select: none;
-  /* Chrome all / Safari all */
-  -moz-user-select: none;
-  /* Firefox all */
-  -ms-user-select: none;
-  /* IE 10+ */
-  /* No support for these yet, future proofing */
-  -o-user-select: none;
-  user-select: none;
-  font-family: 'ChaparralPro-Regular' !important;
-  font-size: 1.3em !important;
-  color: #FFF;
-  display: inline-block;
-  overflow: visible;
-  background: transparent;
-  border-radius: 0;
-  line-height: initial;
-}
-/* line 94, ../main.scss */
-.parallels-dialog-wrapper .tag-editor li .tag-editor-delete {
-  position: absolute;
-  display: inline-block;
-  width: 1em;
-  height: 2em;
-  top: -15px;
-  padding: 0;
-  margin: 0 0.5em;
-  background: transparent;
-  color: white;
-  border-radius: 0;
-  background: #FF0;
-}
-/* line 107, ../main.scss */
-.parallels-dialog-wrapper .tag-editor li .tag-editor-delete i {
-  display: none;
-}
-/* line 112, ../main.scss */
-.parallels-dialog-wrapper button {
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  width: auto;
-  height: auto;
-  padding: 1em;
-  text-transform: uppercase;
-  border: 0;
-}
-/* line 123, ../main.scss */
-.parallels-dialog-wrapper .blue {
-  color: #fff;
-  background-color: #357ae8;
-  background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
-  background-image: -moz-linear-gradient(top, #4d90fe, #357ae8);
-  background-image: -ms-linear-gradient(top, #4d90fe, #357ae8);
-  background-image: -o-linear-gradient(top, #4d90fe, #357ae8);
-  background-image: linear-gradient(top, #4d90fe, #357ae8);
-}
-/* line 134, ../main.scss */
-.parallels-dialog-wrapper .gray {
-  color: #444;
-  background-color: #f5f5f5;
-  background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
-}
+    padding: 8px 8px 6px 8px;
+    margin: 0;
+    outline: none;
+    border: none;
+    background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
+    background-size: 1px 6px, 1px 1px, 1px 6px;
+    display: inline-block;
+    float: none;
+    cursor: text;
+    min-width: 15em;
+    min-height: 3.3em;
+    max-width: 50%; }
+    .parallels-dialog-wrapper .tag-editor:hover, .parallels-dialog-wrapper .tag-editor:focus {
+      background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+      background-size: 1px 6px, 1px 1px, 1px 6px; }
+    .parallels-dialog-wrapper .tag-editor div {
+      float: none;
+      padding: 0; }
+    .parallels-dialog-wrapper .tag-editor .placeholder {
+      padding: 0;
+      color: gray; }
+    .parallels-dialog-wrapper .tag-editor input {
+      color: white;
+      background: transparent; }
+    .parallels-dialog-wrapper .tag-editor li:first-child {
+      display: none; }
+    .parallels-dialog-wrapper .tag-editor li {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      float: none;
+      padding: 0.25em 0.75em;
+      padding-right: 1.5em;
+      margin: 0 0.5em 0 0.35em;
+      border-radius: 2em;
+      background-color: gray; }
+      .parallels-dialog-wrapper .tag-editor li .tag-editor-spacer {
+        display: none; }
+      .parallels-dialog-wrapper .tag-editor li .tag-editor-tag {
+        -webkit-user-select: none;
+        /* Chrome all / Safari all */
+        -moz-user-select: none;
+        /* Firefox all */
+        -ms-user-select: none;
+        /* IE 10+ */
+        /* No support for these yet, future proofing */
+        -o-user-select: none;
+        user-select: none;
+        font-family: 'ChaparralPro-Regular' !important;
+        font-size: 1.3em !important;
+        color: #FFF;
+        display: inline-block;
+        overflow: visible;
+        background: transparent;
+        border-radius: 0;
+        line-height: initial; }
+      .parallels-dialog-wrapper .tag-editor li .tag-editor-delete {
+        position: absolute;
+        display: inline-block;
+        width: 1em;
+        height: 2em;
+        top: -15px;
+        padding: 0;
+        margin: 0 0.5em;
+        background: transparent;
+        color: white;
+        border-radius: 0;
+        background: #FF0; }
+        .parallels-dialog-wrapper .tag-editor li .tag-editor-delete i {
+          display: none; }
+  .parallels-dialog-wrapper button {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    padding: 1em;
+    text-transform: uppercase;
+    border: 0; }
+  .parallels-dialog-wrapper .blue {
+    color: #fff;
+    background-color: #357ae8;
+    background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
+    background-image: -moz-linear-gradient(top, #4d90fe, #357ae8);
+    background-image: -ms-linear-gradient(top, #4d90fe, #357ae8);
+    background-image: -o-linear-gradient(top, #4d90fe, #357ae8);
+    background-image: linear-gradient(top, #4d90fe, #357ae8); }
+  .parallels-dialog-wrapper .gray {
+    color: #444;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(top, #f5f5f5, #f1f1f1); }

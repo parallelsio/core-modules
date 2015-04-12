@@ -160,6 +160,18 @@ module.exports = function (grunt) {
         }
       }
     },
+    sass: {
+      options: {
+        sourceMap: false
+      },
+      dist: {
+        files: {
+          '<%= config.chrome_ext %>/styles/compiled/main.css': '<%= config.chrome_ext %>/styles/main.scss',
+          '<%= config.chrome_ext %>/styles/compiled/typefaces.css': '<%= config.chrome_ext %>/styles/typefaces.scss',
+          '<%= config.chrome_ext %>/styles/compiled/jquery.tag.override.css': '<%= config.chrome_ext %>/styles/vendor/jquery.tag.override.css'
+        }
+      }
+    },
     jade: {
       compile: {
         options: {
@@ -195,9 +207,9 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
-      compass: {
+      sass: {
         files: ['<%= config.chrome_ext %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:chrome']
+        tasks: ['sass']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -316,7 +328,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', 'Build chrome extension', function (target) {
     var tasks = [
       'bgShell:bowerChromeExt',
-      'compass:chrome',
+      'sass',
       'jade'
     ];
 
@@ -338,7 +350,7 @@ module.exports = function (grunt) {
     var tasks = [
       'jshint',
       'bgShell:bowerChromeExt',
-      'compass:chrome',
+      'sass',
       'jade',
       'connect:chrome',
       'concurrent:server' + target

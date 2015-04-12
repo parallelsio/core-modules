@@ -1,36 +1,35 @@
 @font-face {
   font-family: 'ChaparralPro-Light';
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.eot");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.eot');
   /* IE9 Compat Modes */
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.eot?#iefix") format("embedded-opentype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.woff") format("woff"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.ttf") format("truetype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.svg#chaparralprolight") format("svg");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.eot?#iefix') format('embedded-opentype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.woff') format('woff'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.ttf') format('truetype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolight.svg#chaparralprolight') format('svg');
   /* Legacy iOS */
   font-weight: normal;
-  font-style: normal;
-}
+  font-style: normal; }
+
 @font-face {
   font-family: 'ChaparralPro-LightIt';
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.eot");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.eot');
   /* IE9 Compat Modes */
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.eot?#iefix") format("embedded-opentype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.woff") format("woff"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.ttf") format("truetype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.svg#chaparralprolightit") format("svg");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.eot?#iefix') format('embedded-opentype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.woff') format('woff'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.ttf') format('truetype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprolightit.svg#chaparralprolightit') format('svg');
   /* Legacy iOS */
   font-weight: normal;
-  font-style: normal;
-}
+  font-style: normal; }
+
 @font-face {
   font-family: 'ChaparralPro-Regular';
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.eot");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.eot');
   /* IE9 Compat Modes */
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.eot?#iefix") format("embedded-opentype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.woff") format("woff"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.ttf") format("truetype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.svg#chaparralproregular") format("svg");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.eot?#iefix') format('embedded-opentype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.woff') format('woff'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.ttf') format('truetype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralproregular.svg#chaparralproregular') format('svg');
   /* Legacy iOS */
   font-weight: normal;
-  font-style: normal;
-}
+  font-style: normal; }
+
 @font-face {
   font-family: 'ChaparralPro-Semibold';
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.eot");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.eot');
   /* IE9 Compat Modes */
-  src: url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.eot?#iefix") format("embedded-opentype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.woff") format("woff"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.ttf") format("truetype"), url("chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.svg#chaparralprosemibold") format("svg");
+  src: url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.eot?#iefix') format('embedded-opentype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.woff') format('woff'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.ttf') format('truetype'), url('chrome-extension://__MSG_@@extension_id__/typefaces/chaparralprosemibold.svg#chaparralprosemibold') format('svg');
   /* Legacy iOS */
   font-weight: normal;
-  font-style: normal;
-}
+  font-style: normal; }
