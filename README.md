@@ -2,14 +2,21 @@
 
 <img src="http://i.imgur.com/lI0HhvV.png" />
 
-##[Parallels](http://parallels.io) : A free + open source platform for creating, connecting + sharing documents as networks of ideas. 
+##[Parallels](http://parallels.io) : A free, digital tool for creativity + play, enabling you to fluidly create, remix + share documents as networks of ideas. 
 
-The project consists of 2 main components which need to run side by side, included in this repository:
+When we say document, we imagine playing with fragments, or bits, of media just like digital Lego. These documents are more like digital collections, that you can create and remix on your own, work on together with a group of friends and co-workers, or publish for people you've yet to meet. 
+
+Parallels is an engine for the discovery of ideas.
+
+* [Motivation, goals, open research questions](http://bit.ly/1JbkU4y)
+* [Blog](http://parallels.ghost.io)
+
+Currently consists of 2 main components which need to run side by side, included in this repository:
    
 
 ###[/meteor-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app)
 ---
-The web application: a digital canvas where documents are created + remixed. Based on the [Meteor JS](http://www.meteor.com) platform
+The web application: a digital canvas where documents are created + remixed. Based on the [Meteor JS](http://www.meteor.com)
 
       
 
@@ -21,16 +28,16 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 #### Notes
  
 * This is an alpha version, a proof of concept. It is incomplete, with bugs and continuously changing code, design + features
-* It currently only works locally (on your computer) - the extension is not yet published to the Extension Store, and the web app is not yet hosted as a service. This means all of the data you create while running this stays private to you.
+* It currently only works locally (on your computer) - the extension is not yet published to the Extension Store, and the web app is not yet hosted as a service. You'll need to point this extension to your source code in Chrome after enabling Developer mode. This means all of the data you create while running this stays private to you.
 
 ---  
 ### Tested with latest versions:
 
-* OSX / Linux. (Windows dev may work, but it has not been tested)
+* OSX / Linux (Windows dev may work, but it has not been tested)
 * Node (0.10.26)
 * Ruby (2.0.0p247) (needed only for Compass)
 * NPM (1.4.28) 
-* Meteor JS (1.0.2.1)
+* [Meteor JS](https://www.meteor.com) 
 * git (2.1.0)
 * [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating, modern) browsers: Chrome, Firefox, Safari, FireFox, IE10+
  
@@ -42,30 +49,38 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 
 * [Slack](http://parallelsio.slack.com) for realtime chat + collaboration. [Email](mailto:steven@parallels.io) or [tweet](http://www.twitter.com/makeparallels) for access
 
-* [Trello](https://trello.com/b/XtenDuNO/parallels-design-dev) for keeping track of stories (units of development work)
+* [Trello](https://trello.com/b/XtenDuNO/parallels-design-dev) for keeping track of stories (units of design + development work)
 
-* [Screenhero](https://screenhero.com/) for remote screenshare / pairing
 
-* [TravisCI](http://travis-ci.com) Continous Integration system, which runs our tests and deploys the app.
+* [TravisCI](http://www.travis-ci.com), a Continous Integration system to run automate running our tests and deployment.
 
-* [Saucelabs](http://saucelabs.com) Automated cross-browser esting on various platforms
+* [Saucelabs](https://www.saucelabs.com) Automated cross-browser testing on various platforms
+
+<br/>
+#### Special thanks for the free licenses + support from:
+
+* [Screenhero](https://www.screenhero.com) for remote screenshare / pairing
+
+* [Doodle](https://www.doodle.com), great for scheduling team meetings across time zones
+
+* [Ghost](https://ghost.org/about) Simple, open source blogging platform 
 
 ---
 
 ### Contribute
 
-We're a diverse, distributed team of designers, developers and researchers with a goal of changing the way we organize and connect ideas. We'd love you to join us: get in touch if would like to contribute. No contribution is too small.
+We're a [diverse, distributed](https://hackpad.com/Parallels-Cast-Friends-XGzlw9Mxg39) team of designers, developers and researchers with a goal of changing the way we organize and connect ideas. We'd love you to join us: get in touch if would like to contribute. No contribution is too small.
 
 
 #### Current challenges:
 
 * A zoomable user interface (ZUI) with coordinate system for map-based layout/content
 * Modeling documents in graph-based data structures (potential candidates are Neo4J, MongoDB, TitanDB, OrientDB, Datomic, Arango, ReThink DB) 
-* Decentralized (cloud-less) infrastructure / file storage
 * Browser extensions for clipping web content
 * Physics-based UI animations + transitions, via WebGL, CSS3, Canvas + JS 
-* Interactive documentation, think Bret Vector reactive documents
+* Interactive documentation, think Bret Vector's definition of [reactive documents](http://worrydream.com/ExplorableExplanations/), to help prevent [this](https://i.imgur.com/Ssz6pjF.png)
 * iOS / Android apps
+* Decentralized (cloud-less) infrastructure / file storage
 
 For code contributions: fixes + features:
 
@@ -240,14 +255,7 @@ $ grunt
 ```
 <img src="http://i.imgur.com/yMwBRaY.png" />
 
-```
-# Note, while editing the Chrome extension source code, the browser  *should 
-# automatically reload your newest changes, *without you having to reconfigure 
-# the extension, unpack or copy files anywhere.
 
-# However, you *will need to refresh the tab in which you are testing the clipper, 
-# *every time you edit to the source code
-```
 
 ```
 # RUNNING PARTS MANUALLY
@@ -293,6 +301,24 @@ By combining everything under one umbrella, testing is now signficantly easier. 
 Q: How do I run the end to end tests manually?
 
 A: `grunt e2e-tests`
+
+----------
+
+Q: Can I see test output in one place?
+
+A: Yup, go to http://localhost:9000/_SpecRunner.html after you have your local server running 
+
+------
+
+Q: Why I made changes to the Chrome extension source code. My changes aren't being recognized by the extension when I try to clip/save a tab? 
+
+A: The system which listens  for changes # automatically reload your newest changes, *without you having to reconfigure 
+# the extension, unpack or copy files anywhere.
+
+# However, you *will need to refresh the tab in which you are testing the clipper, 
+# *every time you edit to the source code
+```
+
 
 ----------
 
