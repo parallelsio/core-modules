@@ -35,7 +35,6 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 
 * OSX / Linux (Windows dev may work, but it has not been tested)
 * Node (0.10.26)
-* Ruby (2.0.0p247) (needed only for Compass)
 * NPM (1.4.28) 
 * [Meteor JS](https://www.meteor.com) 
 * git (2.1.0)
@@ -136,11 +135,6 @@ $ cd core-modules
 # install Bower, a dependency manager which will download all the 
 # front-end assets (libraries) needed to run this project
 $ npm install bower -g 
-```
-
-```
-# install Compass, a Ruby gem used to compile SCSS stylesheets into CSS 
-$ gem install compass
 ```
 
 ```
@@ -276,13 +270,6 @@ $ grunt jade
 ---
 
 ### FAQ
-
-Q: I'm getting an error: `bash: bundle: command not found`
-
-A: Bundler, the required Ruby packager, is not installed. Do:
-`gem install bundler`
-
-------
 
 Q: I know I've installed Npm, but when I try to run it `npm install`, I'm getting all sorts of errors.
 
