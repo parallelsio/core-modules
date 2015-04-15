@@ -21,6 +21,31 @@
 
 
 
+
+### Tools we use
+
+> * Twitter: [@makeparallels](http://www.twitter.com/makeparallels)
+
+> * [Slack](http://parallelsio.slack.com) for realtime chat + collaboration. [Email](mailto:steven@parallels.io) or [tweet](http://www.twitter.com/makeparallels) for access
+
+> * [Trello](https://trello.com/b/XtenDuNO/parallels-design-dev) for keeping track of stories (units of design + development work)
+
+> * [TravisCI](http://www.travis-ci.com), a Continous Integration system to run automate running our tests and deployment.
+
+> * [Saucelabs](https://www.saucelabs.com) Automated cross-browser testing on various platforms
+
+
+
+### Special thanks for free licenses + support from:
+
+> * [Screenhero](https://www.screenhero.com), for remote screenshare / pairing
+
+> * [Doodle](https://www.doodle.com), great for scheduling team meetings across time zones
+
+> * [Ghost](https://ghost.org/about) Simple, open source blogging platform 
+
+
+
 ### Components
 
 > 2 main components, meant to run together, in this repository:
@@ -151,7 +176,7 @@
 
 
 ### Start The Web App
-> Run a task that:
+> We created a task that does a few things at once:
 
 > * Checks the quality of the JS code via jshint
 > * Compiles the SCSS files into CSS
@@ -169,14 +194,13 @@
 
 ### Design, Develop + Carry on!
 
-> you should now be able to click the Extension icon in Chrome on a web page to
-> bring up the web clipper dialog box.
-
-> Currently, the clipper will only work on http websites, not https
-> This is only locally during dev, as Chrome places restrictions on SSL (https) content
+> You should now be able to modify either of the components (Meteor web app, JS Chrome extension).
 
 > Save a web page using the web clipper. You should see that 'bit' instantly on 
 > your Parallels canvas. 
+
+> Note: currently, the clipper will only work on http websites, not https
+> This is only locally during dev, as Chrome places restrictions on SSL (https) content locally.
 
 > <img src="http://i.imgur.com/yMwBRaY.png" />
 
@@ -200,7 +224,7 @@
 <br>
 > __Q__: How do I run the end to end tests manually?
 
-> __A__: `grunt e2e-tests`
+> __A__: Run `$ grunt e2e-tests`
 
 
 <br>
@@ -226,13 +250,11 @@
 
 
 
-### Contribute
+### Contribute! 
 
-> We'd love you to join us: get in touch if would like to contribute. No contribution is too small.
+> We'd love for you to join us. There are many ways to contribute: code is an important, but only one, aspect.
 
-
-
-### Current challenges:
+> #### Current challenges:
 
 > * A zoomable user interface (ZUI) with coordinate system for map-based layout/content
 > * Modeling documents in graph-based databases. Currently exploring neo4j
@@ -240,42 +262,22 @@
 > * Physics-based UI animations + transitions, via Greensock JS, SVG, CSS3, WebGL 
 > * Interactive documentation, think Bret Vector's definition of [reactive documents](http://worrydream.com/ExplorableExplanations/), to help prevent [this](https://i.imgur.com/Ssz6pjF.png)
 > * iOS / Android apps
+
+> #### Later:
 > * Decentralized (cloud-less) infrastructure / file storage
 
 
+<br>
+> #### Designers + Developers:
 
-### Tools we use
-
-> * Twitter: [@makeparallels](http://www.twitter.com/makeparallels)
-
-> * [Slack](http://parallelsio.slack.com) for realtime chat + collaboration. [Email](mailto:steven@parallels.io) or [tweet](http://www.twitter.com/makeparallels) for access
-
-> * [Trello](https://trello.com/b/XtenDuNO/parallels-design-dev) for keeping track of stories (units of design + development work)
-
-> * [TravisCI](http://www.travis-ci.com), a Continous Integration system to run automate running our tests and deployment.
-
-> * [Saucelabs](https://www.saucelabs.com) Automated cross-browser testing on various platforms
-
-
-
-### Special thanks for free licenses + support from:
-
-> * [Screenhero](https://www.screenhero.com), for remote screenshare / pairing
-
-> * [Doodle](https://www.doodle.com), great for scheduling team meetings across time zones
-
-> * [Ghost](https://ghost.org/about) Simple, open source blogging platform 
-
-
-
-### Contribute! 
-
-> * Fork the project [https://help.github.com/articles/fork-a-repo](https://help.github.com/articles/fork-a-repo)
-
-> * Modify the code
+> * [Fork the project](https://help.github.com/articles/fork-a-repo), instead of cloning, in the setup details above. Modify the code. 
 
 > * Run the end-to-end test suite when finished with a unit of work.
 > This runs all the tests which ensure the components still work (clipper, web canvas)  
-$ `grunt e2e-tests` 
+`$ grunt e2e-tests` 
 
 > * If tests pass, please [submit a Github Pull Request](https://help.github.com/articles/using-pull-requests)
+
+
+
+
