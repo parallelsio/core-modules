@@ -31,13 +31,13 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 * It currently only works locally (on your computer) - the extension is not yet published to the Extension Store, and the web app is not yet hosted as a service. You'll need to point this extension to your source code in Chrome after enabling Developer mode. This means all of the data you create while running this stays private to you.
 
 ---  
-### Tested with latest versions:
+### Tested with latest version, unless otherwise specified:
 
 * OSX / Linux (Windows dev may work, but it has not been tested)
-* Node (0.10.26)
-* NPM (1.4.28) 
+* Node (0.10.38) [Meteor requires the latest .10.x, no higher](https://forums.meteor.com/t/meteor-nodejs-0-12/2769/3)
+* NPM 
 * [Meteor JS](https://www.meteor.com) 
-* git (2.1.0)
+* git
 * [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating, modern) browsers: Chrome, Firefox, Safari, FireFox, IE10+
  
 ---
@@ -56,9 +56,9 @@ A Chrome extension for easily tagging + saving browser content found on the web,
 * [Saucelabs](https://www.saucelabs.com) Automated cross-browser testing on various platforms
 
 <br/>
-#### Special thanks for the free licenses + support from:
+#### Special thanks for free licenses + support from:
 
-* [Screenhero](https://www.screenhero.com) for remote screenshare / pairing
+* [Screenhero](https://www.screenhero.com), for remote screenshare / pairing
 
 * [Doodle](https://www.doodle.com), great for scheduling team meetings across time zones
 
@@ -97,17 +97,23 @@ $ grunt e2e-tests
 $ https://help.github.com/articles/using-pull-requests
 ```
 
----
-
 ### License
 
 GNU Affero General Public License. Pay it forward.
 
 
 ---  
-### Setup, Building + Developing
+
+<br>
+## Setup, Building + Developing
 
 Having any trouble at all? Ping us on Twitter [@makeparallels](http://www.twitter.com/makeparallels), or [email](mailto:steven@parallels.io) to arrange for a remote pairing session to set you up!
+
+---
+
+#### Install NVM (Node's Version Manager)
+This will allow you to use different versions of Node for different projects.
+[General](https://github.com/creationix/nvm) [](http://stackoverflow.com/questions/8108609/install-multiple-version-of-node-js-using-nvm-ubuntu)
 
 ---
 
@@ -251,22 +257,6 @@ $ grunt
 
 
 
-```
-# RUNNING PARTS MANUALLY
-# sometimes Chrome gets funky when trying to reload changes
-# recompiling manually sometimes does the trick
-
-# SCSS, with:
-$ grunt sass 
-
-# and your Jade templates, with:
-$ grunt jade
-
-# if all else fails, and your changes are not being picked up by the extension
-# disable, then re-enable the extension via Chrome Settings: 
-# http://chrome://extensions
-```
-
 ---
 
 ### FAQ
@@ -297,9 +287,10 @@ A: Yup, go to http://localhost:9000/_SpecRunner.html after you have your local s
 
 ------
 
-Q: Why I made changes to the Chrome extension source code. My changes aren't being recognized by the extension when I try to clip/save a tab? 
+Q: I made changes to the Chrome extension source code. Why are my changes not being recognized by the extension when I try to clip/save a tab? 
 
-A: The system which listens  for changes # automatically reload your newest changes, *without you having to reconfigure the extension, unpack or copy files anywhere. However, you *will need to refresh the tab in which you are testing the clipper, every time you edit the source code
+A: The system which listens for changes # automatically reload your newest changes, *without you having to reconfigure the extension, unpack or copy files anywhere. However, you *will need to refresh the tab in which you are testing the clipper, every time you edit the source code
+```
 
 ----------
 
