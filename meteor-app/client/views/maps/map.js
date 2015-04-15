@@ -5,19 +5,6 @@ Template.map.helpers({
 });
 
 
-Template.map.gestures({
-  'press .map': function (event, template) {
-    /* Do something when user swipes left on .item .panel (elements(s) inside the template html) */
-    /* `event` is the Hammer.js event object */
-    /* `template` is the `Blaze.TemplateInstance` */
-    /* `this` is the data context of the element in your template */
-
-    sound.play('glue.mp3');
-
-
-  }
-});
-
 
 Template.map.rendered = function(){
   
