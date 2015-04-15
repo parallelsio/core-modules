@@ -12,13 +12,14 @@
 > * [Motivation, goals, open research questions](http://bit.ly/1JbkU4y)
 > * [Blog](http://parallels.ghost.io)
 
------
+
+
 
 ### License
 
 > GNU Affero General Public License. Pay it forward.
 
------
+
 
 ### Components
 
@@ -29,7 +30,7 @@
 > 
 > [/extensions/chrome](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome) - a Chrome extension for easily tagging + saving browser content found on the web, to your Parallels canvas
 
----
+
 
 ### Requirements + Dependencies
 
@@ -45,13 +46,13 @@
 > * [git](https://git-scm.herokuapp.com)
 > * [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating, modern) browsers: Chrome, Firefox, Safari, FireFox, IE10+
  
----
+
 
 ### Setup, Building + Developing
 
 > Having any trouble at all? Ping us on Twitter [@makeparallels](http://www.twitter.com/makeparallels), or [email](mailto:steven@parallels.io) to arrange for a remote pairing session to set you up!
 
----
+
 
 #### Install [Node.js](https://nodejs.org) + [NPM](https://www.npmjs.com) (Node Package Manager)
  
@@ -66,7 +67,7 @@
 > $ nvm use 0.10.38
 > ```
 
-#### - - - OR - - - 
+##### - - - OR - - - 
 
 > __2) Manually__
 > All projects you use on your computer will be tied to one version of Node.js.
@@ -75,12 +76,12 @@
 > * [OSX, via Homebrew](http://thechangelog.com/install-node-js-with-homebrew-on-os-x ) 
 > * [Linux via Apt ](https://www.digitalocean.com/community/tutorials/how-to-use-npm-to-manage-node-js-packages-on-a-linux-server)
 
----
+
 
 #### Install [Meteor](https://www.meteor.com) 
 > `$ curl install.meteor.com | sh`
 
----
+
 
 #### Copy this repository to your computer
 > ```
@@ -88,30 +89,30 @@
 > $ cd parallels-core-modules
 >```
 
----
+
 
 #### Install [Bower](http://bower.io)
 > A dependency manager which will download all the front-end assets (libraries) needed to run this project
 > `$ npm install bower -g`
 
----
+
 
 #### Install [Mongo Database](https://www.mongodb.org)
 > A Mongo instance is used for the end to end tests, to avoid conflicting with local Mongo install used by the Meteor app
 > [Installation Instructions](http://docs.mongodb.org/manual/installation)
 
----
+
 
 #### Install [Grunt](http://gruntjs.com)
 > The Javascript-based task runner, to run the tests, clean + prepare files, start the server
 > `$ npm install grunt-cli -g`
 
----
+
 
 #### Download + install all required Node.js packages 
 > `$ npm install`
 
----
+
 
 #### Build the Chrome Extension
 
@@ -119,7 +120,7 @@
 > where the bits that you clip / save will go, when extension is used.
 > To do so, build the extension in one of three ways:
 
----
+
 
 > 1) to the local server, at [http://localhost:3000](http://localhost:3000)
 > No one will see your data with this option.
@@ -141,13 +142,13 @@
 > Please take care what you clip here.
 > `$ grunt build:dist`
 
----
+
 
 ### Install The Extension
 > Point the Chrome browser to the extension source code folder: `/extensions/chrome/`
 > [Detailed directions](https://developer.chrome.com/extensions/getstarted#unpacked)
 
----
+
 
 ### Start The Web App
 > Run a task that:
@@ -164,7 +165,7 @@
 > When grunt is complete, your terminal output should look something like this:
 > <img src="http://i.imgur.com/5zxxnoC.png" />
 
----
+
 
 ### Design, Develop + Carry on!
 
@@ -179,7 +180,7 @@
 
 > <img src="http://i.imgur.com/yMwBRaY.png" />
 
----
+
 
 ### FAQ
 
@@ -187,7 +188,7 @@
 
 > __A__: You might've installed Npm with `sudo` (root permissions). This can be problematic. Follow [this](https://gist.github.com/DanHerbert/9520689) tutorial to re-install it
 
--------
+
 
 > __Q__: Why do you combine the 2 modules (Meteor app + Chrome extension)? Isn't it better to be modular and separate the repositories out?
 
@@ -195,19 +196,19 @@
 
 > By combining everything under one umbrella, testing is now signficantly easier. Once the 2 codebases mature, we'll consider separating them
 
-----------
+
 
 > __Q__: How do I run the end to end tests manually?
 
 > __A__: `grunt e2e-tests`
 
-----------
+
 
 > __Q__: Can I see test output in one place?
 
 > __A__: Yup, go to [http://localhost:9000/_SpecRunner.html](http://localhost:9000/_SpecRunner.html) after you have your local server running 
 
-------
+
 
 > __Q__: I made changes to the Chrome extension source code. Why are my changes not being recognized by the extension when I try to clip/save a tab? 
 
@@ -215,7 +216,7 @@
 
 > However, you *will need to refresh the tab in which you are testing the clipper, every time you edit the source code
 
-----------
+
 
 ### Having trouble? 
 
@@ -223,13 +224,13 @@
 
 > We'll get back to you pronto, and if necessary, arrange for a remote pairing session to set you up!
 
----
+
 
 ### Contribute
 
 > We'd love you to join us: get in touch if would like to contribute. No contribution is too small.
 
----
+
 
 ### Current challenges:
 
@@ -241,7 +242,7 @@
 > * iOS / Android apps
 > * Decentralized (cloud-less) infrastructure / file storage
 
------------
+
 
 ### Tools we use
 
@@ -255,7 +256,7 @@
 
 > * [Saucelabs](https://www.saucelabs.com) Automated cross-browser testing on various platforms
 
-----
+
 
 ### Special thanks for free licenses + support from:
 
@@ -265,7 +266,7 @@
 
 > * [Ghost](https://ghost.org/about) Simple, open source blogging platform 
 
----
+
 
 ### Contribute! 
 
@@ -278,5 +279,3 @@
 $ `grunt e2e-tests` 
 
 > * If tests pass, please [submit a Github Pull Request](https://help.github.com/articles/using-pull-requests)
-
-
