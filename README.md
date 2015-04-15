@@ -189,7 +189,7 @@
 > __A__: You might've installed Npm with `sudo` (root permissions). This can be problematic. Follow [this](https://gist.github.com/DanHerbert/9520689) tutorial to re-install it
 
 
-
+<br>
 > __Q__: Why do you combine the 2 modules (Meteor app + Chrome extension)? Isn't it better to be modular and separate the repositories out?
 
 > __A__: Yes, generally it is. However, since the 2 parts depend on each other at this early stage, we wanted to get integration tests running across the 2 modules, to make sure when a page, or bit, as we call them is clipped, it indeeds arrives onto the canvas. 
@@ -197,19 +197,19 @@
 > By combining everything under one umbrella, testing is now signficantly easier. Once the 2 codebases mature, we'll consider separating them
 
 
-
+<br>
 > __Q__: How do I run the end to end tests manually?
 
 > __A__: `grunt e2e-tests`
 
 
-
+<br>
 > __Q__: Can I see test output in one place?
 
 > __A__: Yup, go to [http://localhost:9000/_SpecRunner.html](http://localhost:9000/_SpecRunner.html) after you have your local server running 
 
 
-
+<br>
 > __Q__: I made changes to the Chrome extension source code. Why are my changes not being recognized by the extension when I try to clip/save a tab? 
 
 > __A__: The system which listens for changes automatically reload your newest changes, *without you having to reconfigure the extension, unpack or copy files anywhere. 
