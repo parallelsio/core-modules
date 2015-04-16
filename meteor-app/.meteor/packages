@@ -6,7 +6,6 @@
 meteor-platform
 coffeescript
 insecure
-awatson1978:mousetrap
 underscore
 iron:router
 alethes:lodash
@@ -21,3 +20,4 @@ clubfest:raphael
 msavin:mongol
 msavin:jetsetter
 chriswessels:hammer
+awatson1978:mousetrap
