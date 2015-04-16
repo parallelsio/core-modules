@@ -13,7 +13,6 @@ Transform = {
     var documentWidth  = $(document).width();
     var documentHeight = $(document).height();
 
-
     var toWidth, toHeight, easeType;
 
     // set up and calculate the vars to be used during the animation differently, 

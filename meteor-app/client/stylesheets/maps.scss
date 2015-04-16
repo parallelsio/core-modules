@@ -1,21 +1,9 @@
 .map {	  
 
-	// required to get dlbe click/ bit:new text to show
+	// required to get dble click/ bit:new text to show
 	min-height:2000px;
 	min-width:2000px;
 	
 	height:100%;
-  	width:100%;
-  }
-
-
-
-.image_upload {
-
-/*	position:fixed;
-	left:100px;
-	top:200px;
-	height:400px;*/
-	z-index:5000 !important;
-	position: fixed;
+  width:100%;
 }

@@ -4,54 +4,51 @@
 }
 
 .bit .container {
-    color: #666;
-    display: inline-block;
-    font-size: 16px;
+  color: #666;
+  display: inline-block;
+  font-size: 1em;
 }
 
 .bit .container .ui-widget-header {
-    display: none;
-    cursor: move;
-    background-color: #ccc;
-    position: absolute;
-    top: -7px;
-    left: 0;
-    margin: 0;
-    padding: 0;
+  display: none;
+  cursor: move;
+  background-color: #ccc;
+  position: absolute;
+  top: -7px;
+  left: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .bit .container:hover .ui-widget-header {
-    display: block;
-    height: 8px;
-    width: 100%;
+  display: block;
+  height: 8px;
+  width: 100%;
 }
 
-
 .bit.image .container .face.front { 
-    padding: 0;
+  padding: 0; 
 }
 
 .bit.editing .container .face.front,
 .bit.text .container .face.front { 
 
-    background-color: #fff;
-    padding:15px;
+  background-color: #fff;
+  padding:15px;
 }
 
 .bit.image .content .zoom a { cursor:default;}
 
-
 .blue { background: #f0f0fa !important;
-    font-family: 'Merriweather Sans', sans-serif;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size:11px; 
+  font-family: 'Merriweather Sans', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size:0.75em; 
 } 
 
 .bit img { 
   width:200px;
 }
-
 
 .bit.text {
   background-color: white;
