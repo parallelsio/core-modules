@@ -1,4 +1,4 @@
-sound = {
+Sound = {
 
   _folderPath: "sounds/",
 
@@ -9,8 +9,5 @@ sound = {
         urls: [ this._folderPath + soundFileName ]
       }).play();
     }
-
   }
-
-
 };

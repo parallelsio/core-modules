@@ -62,9 +62,5 @@ Template.menu.rendered = function() {
   start();  // run wipe transition
 
   // *********************************************************************
-
-
-
-  
 };
 

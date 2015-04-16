@@ -165,7 +165,7 @@ Template.bit.rendered = function() {
         }
       });
       
-      sound.play('glue.mp3');
+      Sound.play('glue.mp3');
 
       return true;
     }
