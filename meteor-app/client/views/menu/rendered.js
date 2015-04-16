@@ -1,25 +1,8 @@
-Template.menu.helpers({
-
-  bitEditingId: function() { 
-    return Session.get('bitEditingId'); 
-  },
-  
-  bitsCount: function() { 
-    return Bits.find().count();
-  } 
-  
-});
-
-
-
 Template.menu.rendered = function() {
+  
   console.log('menu rendered.');
 
-  
-
-
   // *********************************************************************
-
   // adapated code from   : http://codepen.io/vdaguenet/pen/Ebycz
 
   var screenWidth;

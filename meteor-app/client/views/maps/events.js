@@ -1,17 +1,3 @@
-Template.map.helpers({
-  bits: function() {
-    return Bits.find();
-  }
-});
-
-
-
-Template.map.rendered = function(){
-  
-  sound.play('welcome-v1.mp3');
-
-};
-
 Template.map.events({
   'dblclick .map': function (event, template){
     event.preventDefault();
@@ -31,6 +17,4 @@ Template.map.events({
 
     }
   }
-  
-
 });
