@@ -26,6 +26,8 @@ Mousetrap.bindGlobal('esc', function() {
     Bits.remove( bitEditingId );
     Session.set('bitEditingId', null);
   }
+
+
 });
 
 
@@ -78,68 +80,89 @@ Mousetrap.bind("shift", function() {
   event.preventDefault();
   event.stopPropagation();
   
-  console.log("pressed shift");
+  console.log("pressed Shift key.");
+
   var bitHoveringId = Session.get('bitHoveringId');
-  var isDrawingParallel = Session.get('isDrawingParallel');
+  var isCreatingParallel = Session.get('isCreatingParallel');
 
-  console.log();
-
-  if(bitHoveringId && (!isDrawingParallel))
+  if(bitHoveringId && (!isCreatingParallel))
   {
-    console.log("bit:ready for drag: " + bitHoveringId);
+    var isCreatingParallel = true;
+    var bitParallelCreateOriginId = bitHoveringId;
+    var $bitOrigin = document.querySelector("[data-id='" + bitParallelCreateOriginId + "']");
 
-    // mark it as in progress
-    Session.set('isDrawingParallel', true);
+    Session.set('isCreatingParallel', isCreatingParallel);
+    Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
 
-    // creates transparent canvas 
-    // merge with zelda animation, as that uses it too
-    // var r = Raphael(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
+    console.log("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
 
-    // get bit obj
-    // template.data.position_x
-    // template.data.position_y
+    Mousetrap.bind('esc', function() {
+      event.preventDefault();
+      event.stopPropagation();
 
-    var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
+      console.log('escape key, inside create parallel, exiting mode');
 
-    $($bit).addClass('dashed-stroke');
+      // OQ: can this be passed into the function. Will it eval to the right value at runtime?
+      var isCreatingParallel = Session.get('isCreatingParallel'); 
 
-    // var documentWidth  = $(document).width();
-    // var documentHeight = $(document).height();
+      if (isCreatingParallel)
+      {
+      // OQ: same as above? 
+        var $bitOrigin = document.querySelector("[data-id='" + bitParallelCreateOriginId + "']");
+        
+        Session.set('isCreatingParallel', null);
+        Session.set('bitParallelCreateOriginId', null);
 
-    //     // draw line
-    // var snapSurface = Snap(documentWidth, documentHeight);
-    // var bigCircle = snapSurface.circle($bit.position_x, $bit.position_y, 100);
+        $(".map").removeClass('mode--create-parallel'); 
+        $($bitOrigin).removeClass('dashed-stroke');
 
+        // stop heartbeat animation
+        // how do we store reference for this? 
+        
+        console.log('exiting create parallel mode complete');
+      }
+    });
+
+    // abstract out into reusable mode concept. 
+    // here, it might be : enterMode.createParallel()
     $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
+    $($bitOrigin).addClass('dashed-stroke');
+    // TODO: 
+    // disable events
+    // fix offset from adding stroke
+    // try bg overlay over other bits too?
+   // disable scrolling
+
+    var timelineStart = function () {
+      console.log('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
+    };
+
+    var timelineDone = function( bitOriginId ){
+      console.log('bit:parallel:create. End mode, origin bit' + bitParallelCreateOriginId + ': selected-loop animation ending.');
+          
+      Session.set('isDrawingParallel', null);
+      Session.set('bitParallelCreateOriginId', null);
+
+      $(this).unbind();
+
+      Mousetrap.unbind('esc');
+    };
 
     var timeline = new TimelineMax({ 
-      // onStart: timelineStart,
-      // onComplete: timelineDone, 
-      // onCompleteParams:[ bitPreviewingId, direction ],
+      onStart: timelineStart,
+      onComplete: timelineDone, 
+      onCompleteParams:[ bitParallelCreateOriginId ],
       repeat: -1
     });
 
     timeline
-      // .set($('#' + $bit), { alpha: 1, display: "block" })
-
       // play heartbeat animation
-      .to($bit, 0.30, { scale: 1.05, ease:Quint.easeOut } )
-      .to($bit, 0.5, { scale: 0.95, ease:Expo.easeOut } );
-
-    // TODO: disable events
-    // enterMode.createParallel()
-
-    // fix offset from adding stroke
-
-    // make shift a toggle
+      .to($bitOrigin, 0.50, { scale: 1.02, ease:Expo.easeOut } )
+      .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
 
     // draw line 
-
     
     // TODO: only enable if none others are going
-
-    // var circle = r.circle( $bit.position_x, $bit.position_y, 10 );
-    // circle.attr({ fill: "blue" });
 
     // TODO: move to map? merge map.js + app.js?
 
@@ -147,10 +170,5 @@ Mousetrap.bind("shift", function() {
     //   console.log("mouse event.page_: ", event.pageX, event.pageY);
     // });
     
-    // $(this).unbind();
-
-    // tween the fill to blue (#00f) and x to 100, y to 100, 
-    // width to 100 and height to 50 over the course of 3 seconds using an ease of Power1.easeInOut
-    // TweenLite.to(rect, 3, { raphael:{ fill:"#00f", x:100, y:100, width:100, height:50 }, ease:Power1.easeInOut});
   }
 });
