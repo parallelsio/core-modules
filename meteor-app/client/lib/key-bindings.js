@@ -99,9 +99,32 @@ Mousetrap.bind("shift", function() {
     // template.data.position_x
     // template.data.position_y
 
-    var $element = document.querySelector("[data-id='" + bitHoveringId + "']");
+    var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
 
-    $($element).addClass('dashed-stroke');
+    $($bit).addClass('dashed-stroke');
+
+    // var documentWidth  = $(document).width();
+    // var documentHeight = $(document).height();
+
+    //     // draw line
+    // var snapSurface = Snap(documentWidth, documentHeight);
+    // var bigCircle = snapSurface.circle($bit.position_x, $bit.position_y, 100);
+
+    $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
+
+    var timeline = new TimelineMax({ 
+      // onStart: timelineStart,
+      // onComplete: timelineDone, 
+      // onCompleteParams:[ bitPreviewingId, direction ],
+      repeat: -1
+    });
+
+    timeline
+      // .set($('#' + $bit), { alpha: 1, display: "block" })
+
+      // play heartbeat animation
+      .to($bit, 0.30, { scale: 1.05, ease:Quint.easeOut } )
+      .to($bit, 0.5, { scale: 0.95, ease:Expo.easeOut } );
 
     // TODO: disable events
     // enterMode.createParallel()
@@ -115,14 +138,14 @@ Mousetrap.bind("shift", function() {
     
     // TODO: only enable if none others are going
 
-    // var circle = r.circle( $element.position_x, $element.position_y, 10 );
+    // var circle = r.circle( $bit.position_x, $bit.position_y, 10 );
     // circle.attr({ fill: "blue" });
 
     // TODO: move to map? merge map.js + app.js?
 
-    $(this).mousemove( function(event) {
-      console.log("mouse event.page_: ", event.pageX, event.pageY);
-    });
+    // $(this).mousemove( function(event) {
+    //   console.log("mouse event.page_: ", event.pageX, event.pageY);
+    // });
     
     // $(this).unbind();
 
