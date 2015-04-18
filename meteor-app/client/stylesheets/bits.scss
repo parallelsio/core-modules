@@ -57,6 +57,30 @@
   padding: 0.25em;
 }
 
+/* 
+  for SVG animated dashed stroke.
+  This works on a fixed size.
+  Need to use JS to dynamically set the 
+  stroke-dasharray: 100 value  
+*/
+
+.dashed-stroke-animation
+{
+  stroke-dasharray: 100;
+  
+  animation: dash 5s linear;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 1000;
+  }
+}
 
 
+.dashed-stroke{
+  border-width: 0.25em; 
+  border-style: dashed; 
+  border-color: red;
+}
 

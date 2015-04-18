@@ -93,17 +93,29 @@ Mousetrap.bind("shift", function() {
 
     // creates transparent canvas 
     // merge with zelda animation, as that uses it too
-    var r = Raphael(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
-
-    var element = document.querySelector("[data-id='" + bitHoveringId + "']");
+    // var r = Raphael(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
 
     // get bit obj
     // template.data.position_x
     // template.data.position_y
+
+    var $element = document.querySelector("[data-id='" + bitHoveringId + "']");
+
+    $($element).addClass('dashed-stroke');
+
+    // TODO: disable events
+    // enterMode.createParallel()
+
+    // fix offset from adding stroke
+
+    // make shift a toggle
+
+    // draw line 
+
     
     // TODO: only enable if none others are going
 
-    // var circle = r.circle(element.position.x, element.position.y, 10);
+    // var circle = r.circle( $element.position_x, $element.position_y, 10 );
     // circle.attr({ fill: "blue" });
 
     // TODO: move to map? merge map.js + app.js?
@@ -116,6 +128,6 @@ Mousetrap.bind("shift", function() {
 
     // tween the fill to blue (#00f) and x to 100, y to 100, 
     // width to 100 and height to 50 over the course of 3 seconds using an ease of Power1.easeInOut
-    TweenLite.to(rect, 3, { raphael:{ fill:"#00f", x:100, y:100, width:100, height:50 }, ease:Power1.easeInOut});
+    // TweenLite.to(rect, 3, { raphael:{ fill:"#00f", x:100, y:100, width:100, height:50 }, ease:Power1.easeInOut});
   }
 });
