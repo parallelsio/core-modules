@@ -78,7 +78,20 @@ Mousetrap.bind("space", function() {
 
 });
 
-function onEscape(bitOrigin) {
+/*
+TODO:
+
+* ESC needs to work in multiplfe contexts (previewing a bit, editing a bit, and creating a parallel)
+* Animation does not stop after exiting from creating a parallel
+* syncronize multiple bits heartbeat animation
+
+Bonus:
+* Unit testing framework in place
+* refactoring into a modes/features namespace
+
+*/
+
+function onEscape(bitOrigin, timeline) {
   console.log('escape key, inside create parallel, exiting mode');
 
   // OQ: can this be passed into the function. Will it eval to the right value at runtime?
@@ -93,8 +106,8 @@ function onEscape(bitOrigin) {
     bitOrigin.removeClass('dashed-stroke');
 
     // stop heartbeat animation
-    // how do we store reference for this? 
-    
+    timeline.kill();
+      
     console.log('exiting create parallel mode complete');
   }
 }
@@ -119,7 +132,8 @@ Mousetrap.bind("shift", function() {
 
     console.log("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
 
-    Mousetrap.bind('esc', onEscape.bind(null, $bitOrigin));
+  
+    
 
     // abstract out into reusable mode concept. 
     // here, it might be : enterMode.createParallel()
@@ -141,8 +155,8 @@ Mousetrap.bind("shift", function() {
     var timelineDone = function( bitOriginId ){
       console.log('bit:parallel:create. End mode, origin bit' + bitParallelCreateOriginId + ': selected-loop animation ending.');
           
-      Session.set('isDrawingParallel', null);
-      Session.set('bitParallelCreateOriginId', null);
+      // Session.set('isDrawingParallel', null);
+      // Session.set('bitParallelCreateOriginId', null);
 
       // $(this).unbind();
 
@@ -156,6 +170,8 @@ Mousetrap.bind("shift", function() {
       repeat: -1
     });
 
+
+    Mousetrap.bind('esc', onEscape.bind(null, $bitOrigin, timeline));
 
     timeline
       // play heartbeat animation
