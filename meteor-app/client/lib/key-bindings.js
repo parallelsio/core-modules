@@ -12,7 +12,7 @@ Mousetrap.bind("d", function() {
   }
 });
 
-// bind globally, so escape is caught even inside forms
+
 Mousetrap.bindGlobal('esc', function() {
   event.preventDefault();
   event.stopPropagation();
@@ -27,6 +27,8 @@ Mousetrap.bindGlobal('esc', function() {
     Session.set('bitEditingId', null);
   }
 
+  var mode = Session.getCurrentMode();
+  mode.exit();
 
 });
 
@@ -76,6 +78,27 @@ Mousetrap.bind("space", function() {
 
 });
 
+function onEscape(bitOrigin) {
+  console.log('escape key, inside create parallel, exiting mode');
+
+  // OQ: can this be passed into the function. Will it eval to the right value at runtime?
+  var isCreatingParallel = Session.get('isCreatingParallel'); 
+
+  if (isCreatingParallel)
+  {
+    Session.set('isCreatingParallel', null);
+    Session.set('bitParallelCreateOriginId', null);
+
+    $(".map").removeClass('mode--create-parallel'); 
+    bitOrigin.removeClass('dashed-stroke');
+
+    // stop heartbeat animation
+    // how do we store reference for this? 
+    
+    console.log('exiting create parallel mode complete');
+  }
+}
+
 Mousetrap.bind("shift", function() {
   event.preventDefault();
   event.stopPropagation();
@@ -89,49 +112,27 @@ Mousetrap.bind("shift", function() {
   {
     var isCreatingParallel = true;
     var bitParallelCreateOriginId = bitHoveringId;
-    var $bitOrigin = document.querySelector("[data-id='" + bitParallelCreateOriginId + "']");
+    var $bitOrigin = $(document.querySelector("[data-id='" + bitParallelCreateOriginId + "']"));
 
     Session.set('isCreatingParallel', isCreatingParallel);
     Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
 
     console.log("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
 
-    Mousetrap.bind('esc', function() {
-      event.preventDefault();
-      event.stopPropagation();
-
-      console.log('escape key, inside create parallel, exiting mode');
-
-      // OQ: can this be passed into the function. Will it eval to the right value at runtime?
-      var isCreatingParallel = Session.get('isCreatingParallel'); 
-
-      if (isCreatingParallel)
-      {
-      // OQ: same as above? 
-        var $bitOrigin = document.querySelector("[data-id='" + bitParallelCreateOriginId + "']");
-        
-        Session.set('isCreatingParallel', null);
-        Session.set('bitParallelCreateOriginId', null);
-
-        $(".map").removeClass('mode--create-parallel'); 
-        $($bitOrigin).removeClass('dashed-stroke');
-
-        // stop heartbeat animation
-        // how do we store reference for this? 
-        
-        console.log('exiting create parallel mode complete');
-      }
-    });
+    Mousetrap.bind('esc', onEscape.bind(null, $bitOrigin));
 
     // abstract out into reusable mode concept. 
     // here, it might be : enterMode.createParallel()
     $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
-    $($bitOrigin).addClass('dashed-stroke');
+    
+    // TODO: animate
+    $bitOrigin.addClass('dashed-stroke');
     // TODO: 
     // disable events
     // fix offset from adding stroke
     // try bg overlay over other bits too?
-   // disable scrolling
+    // disable scrolling
+    
 
     var timelineStart = function () {
       console.log('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
@@ -143,7 +144,7 @@ Mousetrap.bind("shift", function() {
       Session.set('isDrawingParallel', null);
       Session.set('bitParallelCreateOriginId', null);
 
-      $(this).unbind();
+      // $(this).unbind();
 
       Mousetrap.unbind('esc');
     };
@@ -154,6 +155,7 @@ Mousetrap.bind("shift", function() {
       onCompleteParams:[ bitParallelCreateOriginId ],
       repeat: -1
     });
+
 
     timeline
       // play heartbeat animation
