@@ -84,6 +84,7 @@ TODO:
 * ESC needs to work in multiplfe contexts (previewing a bit, editing a bit, and creating a parallel)
 * Animation does not stop after exiting from creating a parallel
 * syncronize multiple bits heartbeat animation
+* is timeline.kill() the best way to gracefully end heartbeat animation on escape
 
 Bonus:
 * Unit testing framework in place
