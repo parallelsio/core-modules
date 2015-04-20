@@ -1,6 +1,5 @@
-Template.bit.events({
-
-  'mouseenter .bit': function (event, template){
+BitEvents = {
+  toggleSelectedClass: function (event, template) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -16,8 +15,12 @@ Template.bit.events({
 
       $(event.target).addClass('selected');
     }
+  }
+};
 
-  },
+Template.bit.events({
+
+  'mouseenter .bit': BitEvents.toggleSelectedClass,
 
   'mouseleave .bit': function (event, template){
     event.preventDefault();
@@ -34,7 +37,7 @@ Template.bit.events({
   'click .bit': function (event, template){
 
     // TODO: Zelda triforce focus here, zoom sound
-    console.log("bit:click: " + this._id);     
+    console.log("bit:click: " + this._id);
   },
 
   'dblclick .bit': function (event, template){
