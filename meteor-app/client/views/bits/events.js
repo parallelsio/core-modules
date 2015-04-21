@@ -1,8 +1,5 @@
 BitEvents = {
   toggleSelectedClass: function (event, template) {
-    event.preventDefault();
-    event.stopPropagation();
-
     if (event.target.classList.contains('bit')) {
       Session.set('bitHoveringId', template.data._id);
       console.log("bit:hover:in " + Session.get('bitHoveringId'));
@@ -22,38 +19,21 @@ Template.bit.events({
 
   'mouseenter .bit': BitEvents.toggleSelectedClass,
 
-  'mouseleave .bit': function (event, template){
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (event.target.classList.contains('bit')) {
-      Session.set('bitHoveringId', '');
-      console.log("bit:hover:out " + Session.get('bitHoveringId'));
-      // $(event.target).removeClass('selected');
-
-    }
+  'mouseleave .bit': function () {
+    console.log("bit:hover:out " + Session.get('bitHoveringId'));
   },
 
-  'click .bit': function (event, template){
-
+  'click .bit': function () {
     // TODO: Zelda triforce focus here, zoom sound
     console.log("bit:click: " + this._id);
   },
 
-  'dblclick .bit': function (event, template){
-    event.preventDefault();
-    event.stopPropagation();
-
-    Session.set('bitEditingId',this._id);
+  'dblclick .bit': function () {
+    Session.set('bitEditingId', this._id);
     console.log("bit:edit: " + Session.get('bitEditingId'));
   },
 
-  'keyup .bit': function (event, template){
-    event.stopPropagation();
-    event.preventDefault();
-
-    // console.log('bit:key up: key code:' + event.which + ': ');
-
+  'keyup .bit': function (event, template) {
     if(event.which === 13){
       Bits.update( this._id , {
         $set: { "content": template.find('.editbit').value }
@@ -61,7 +41,7 @@ Template.bit.events({
 
       Sound.play('ch-chaing-v2.mp3');
 
-      Session.set('bitEditingId',null);
+      Session.set('bitEditingId', null);
     }
   }
 });

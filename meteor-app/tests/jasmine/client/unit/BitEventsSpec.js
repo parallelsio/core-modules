@@ -8,7 +8,7 @@ describe('BitEvents', function() {
     mockTemplate = {data: {_id: 1}};
   });
 
-  describe('#toggleSelectedClass', function () {
+  describe('toggleSelectedClass', function () {
     it('should NOT add a "selected" css class if the target element does not have a "bit" class', function() {
       var nonBitTarget = document.createElement('div');
       $(nonBitTarget).addClass('dummy');
