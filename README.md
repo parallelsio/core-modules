@@ -130,7 +130,7 @@
 
 #### Install [Grunt](http://gruntjs.com)
 > The Javascript-based task runner, to run the tests, clean + prepare files, start the server
-> `$ npm install grunt-cli -g`
+> `$  npm install grunt-cli -g`
 
 
 
