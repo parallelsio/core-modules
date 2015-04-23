@@ -7,7 +7,7 @@ describe('MapEvents', function() {
         spyOn(window.Bits, 'insert');
 
         // EXCECUTE
-        var dblClickMap = Inverter.get('map.events')['dblclick .map'];
+        var dblClickMap = Parallels.Handlers.get('map.events')['dblclick .map'];
         var event = { target : $('<div class="map"></div>')[0] };
         dblClickMap(event);
 

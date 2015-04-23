@@ -29,8 +29,7 @@ Template.bit.events({
   },
 
   'dblclick .bit': function () {
-    Session.set('bitEditingId', this._id);
-    console.log("bit:edit: " + Session.get('bitEditingId'));
+    Parallels.AppModes['edit-bit'].enter(this._id);
   },
 
   'keyup .bit': function (event, template) {
@@ -42,6 +41,7 @@ Template.bit.events({
       Sound.play('ch-chaing-v2.mp3');
 
       Session.set('bitEditingId', null);
+      Session.set('currentMode', null);
     }
   }
 });

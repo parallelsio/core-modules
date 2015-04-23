@@ -1,0 +1,4 @@
+Parallels = {
+  AppModes: {},
+  Handlers: Inverter
+};
