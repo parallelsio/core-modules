@@ -116,21 +116,9 @@
 
 
 
-#### Install [Bower](http://bower.io)
-> A dependency manager which will download all the front-end assets (libraries) needed to run this project
-> `$ npm install bower -g`
-
-
-
 #### Install [Mongo Database](https://www.mongodb.org)
 > A Mongo instance is used for the end to end tests, to avoid conflicting with local Mongo install used by the Meteor app
 > [Installation Instructions](http://docs.mongodb.org/manual/installation)
-
-
-
-#### Install [Grunt](http://gruntjs.com)
-> The Javascript-based task runner, to run the tests, clean + prepare files, start the server
-> `$ npm install grunt-cli -g`
 
 
 
@@ -173,21 +161,31 @@
 > Point the Chrome browser to the extension source code folder: `/extensions/chrome/source`
 > [Detailed directions](https://developer.chrome.com/extensions/getstarted#unpacked)
 
+### Development Workflow Scripts
+> There are several scripts available using `npm` that are designed to make the development process as painless as possible:
 
+> * `npm test`: Runs all tests in the project
+> * `npm run units`: Run only units tests for the extensions and meteor
+> * `npm run e2e`: Run only e2e tests
+> * `npm run local`: Build a version of the clipper to extensions/chrome/build that points to localhost
+> * `npm run ci`: Build a version of the clipper to extensions/chrome/build that points to parallels-ci.meteor.com
+> * `npm run prod`: Build a version of the clipper to extensions/chrome/build that points to parallels.meteor.com
+> * `npm run server`: Starts the meteor app and livereload for the clipper source
+
+> You can see all these scripts (and maybe more) by running `npm run`.
 
 ### Start The Web App
 > We created a task that does a few things at once:
 
-> * Checks the quality of the JS code via jshint
 > * Compiles the SCSS files into CSS
 > * Compiles the Jade template files
 > * Runs `bower install` to get all front-end dependencies (JavaScript libraries etc)
 > * Boots up a local Meteor JS server, and listens for changes to the Meteor source code in `/meteor-app`
 > * Runs a watcher, listening for changes to Chrome's extension source code, which lives in `/extensions/chrome/source`
 
-> `$ grunt`
+> `$ npm run server`
 
-> When grunt is complete, your terminal output should look something like this:
+> When server has finished booting, your terminal output should look something like this:
 > <img src="http://i.imgur.com/5zxxnoC.png" />
 
 
@@ -224,11 +222,23 @@
 <br>
 > __Q__: How do I run the end to end tests manually?
 
-> __A__: Run `$ grunt e2e-tests`
+> __A__: Run `$ npm run e2e`
 
 
 <br>
-> __Q__: Can I see test output in one place?
+> __Q__: How do I run the unit tests manually?
+
+> __A__: Run `$ npm run units`
+
+
+<br>
+> __Q__: How do I run all the tests?
+
+> __A__: Run `$ npm test`
+
+
+<br>
+> __Q__: Can I see the chrome extension unit tests in one place?
 
 > __A__: Yup, go to [http://localhost:9000/_SpecRunner.html](http://localhost:9000/_SpecRunner.html) after you have your local server running 
 

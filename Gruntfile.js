@@ -152,7 +152,7 @@ module.exports = function (grunt) {
       bowerChromeExt: {
         cmd: [
           'cd <%= config.chromeExt %>',
-          'bower install'
+          'node_modules/.bin/bower install'
         ].join('&&'),
         bg: false,
         stdout: true,
@@ -301,7 +301,7 @@ module.exports = function (grunt) {
   });
 
   // Load all grunt tasks
-  require('matchdep').filterDev(['grunt-*', '!grunt-template-jasmine-requirejs']).forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev(['grunt-*', '!grunt-cli', '!grunt-template-jasmine-requirejs']).forEach(grunt.loadNpmTasks);
 
   //chromeOptions needs the extension to be a Base64 encoded string
   //so encode it, then build a requirejs module for it
