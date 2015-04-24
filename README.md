@@ -139,21 +139,21 @@
 > No one will see your data with this option.
 > Your data is persistent, in that it will survive reloading Meteor
 > and when you run your local end-to-end tests
-> `$ grunt build:local`
+> `$ npm run local`
 
 ---------- OR ------------
 
 > 2) to the CI (Continous Integration) server at [http://parallels-ci.meteor.com](http://parallels-ci.meteor.com)
 > This data is public, but not persistent: it gets cleared whenever 
 > someone pushes new code to master
-> `$ grunt build:ci`
+> `$ npm run ci`
   
 ---------- OR ------------
 
 > 3) To our sandbox server, at [http://parallels.meteor.com](http://parallels.meteor.com)
 > This link is public + persists. Our production sandbox for now.
 > Please take care what you clip here.
-> `$ grunt build:dist`
+> `$ npm run prod`
 
 
 
@@ -284,7 +284,7 @@
 
 > * Run the end-to-end test suite when finished with a unit of work.
 > This runs all the tests which ensure the components still work (clipper, web canvas)  
-`$ grunt e2e-tests` 
+`$ npm run e2e` 
 
 > * If tests pass, please [submit a Github Pull Request](https://help.github.com/articles/using-pull-requests)
 
