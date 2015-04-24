@@ -152,7 +152,7 @@ module.exports = function (grunt) {
       bowerChromeExt: {
         cmd: [
           'cd <%= config.chromeExt %>',
-          'node_modules/.bin/bower install'
+          '../../../node_modules/.bin/bower install'
         ].join('&&'),
         bg: false,
         stdout: true,
