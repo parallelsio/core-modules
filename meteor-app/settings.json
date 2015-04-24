@@ -1,7 +1,7 @@
 {
   "public": {
         "options": {
-          "isSoundEnabled": true
+          "isSoundEnabled": false
         }
     }
 }

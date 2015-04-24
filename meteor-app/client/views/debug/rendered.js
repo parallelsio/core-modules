@@ -1,9 +1,3 @@
-Template.debug.helpers({
-  bits: function() {
-    return Bits.find();
-  }
-});
-
 Template.debug.rendered = function(){
 
   // Open all links and forms in a new tab
@@ -19,10 +13,3 @@ Template.debug.rendered = function(){
   });
 };
 
-Template.debug.events({
-
-});
-
-Template.debug.isWebpage = function() {
-  return this.type === 'webpage';
-};
