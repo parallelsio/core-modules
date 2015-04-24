@@ -4,11 +4,9 @@
 .grunt/
 .idea
 .npm/
-.sass-cache
 _SpecRunner.html
-build/
-build/chrome
+extensions/chrome/build/
 chromeprofile/
-extensions/chrome/bower_components
+extensions/chrome/source/bower_components
 node_modules
 tmp

@@ -3,7 +3,16 @@
 var fs = require('fs'), util = require('util');
 
 module.exports = function (grunt) {
-  var config = grunt.file.readJSON('config.json');
+  var config = {
+    "dist": "extensions/chrome/build",
+    "test": "tests",
+    "chrome_ext": "extensions/chrome/source",
+    "appRootUrl": {
+      "local": "localhost:3000",
+      "ci": "parallels-ci.meteor.com",
+      "dist": "parallels.meteor.com"
+    }
+  };
 
   function preprocessChromeExtensionConfig(environment) {
     return {
@@ -13,7 +22,7 @@ module.exports = function (grunt) {
         }
       },
       src: 'tmp/scripts/modules/config.template.js',
-      dest: '<%= config.dist %>/chrome/scripts/modules/config.js'
+      dest: '<%= config.dist %>/scripts/modules/config.js'
     };
   }
 
@@ -25,7 +34,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'extensions/chrome',
+            cwd: 'extensions/chrome/source',
             src: [
               '_locales/**',
               'bower_components/jquery/dist/jquery.js',
@@ -44,9 +53,9 @@ module.exports = function (grunt) {
               'typefaces/*',
               'manifest.json'
             ],
-            dest: '<%= config.dist %>/chrome/'
+            dest: '<%= config.dist %>/'
           },
-          {expand: true, cwd: 'extensions/chrome', src: ['scripts/modules/config.template.js'], dest: 'tmp/'}
+          {expand: true, cwd: 'extensions/chrome/source', src: ['scripts/modules/config.template.js'], dest: 'tmp/'}
         ]
       }
     },
@@ -78,22 +87,14 @@ module.exports = function (grunt) {
     preprocess: {
       dist: preprocessChromeExtensionConfig('dist'),
       ci: preprocessChromeExtensionConfig('ci'),
-      local: {
-        options: {
-          context: {
-            APPROOTURL: config.appRootUrl.local
-          }
-        },
-        src: 'tmp/scripts/modules/config.template.js',
-        dest: '<%= config.dist %>/chrome/scripts/modules/config.js'
-      }
+      local: preprocessChromeExtensionConfig('local')
     },
     crx: {
       dist: {
-        src: '<%= config.dist %>/chrome/',
+        src: '<%= config.dist %>/',
         dest: '<%= config.dist %>/parallels.crx',
         exclude: ['.git', '*.pem'],
-        privateKey: 'extensions/chrome.pem'
+        privateKey: 'extensions/chrome/chrome.pem'
       }
     },
     encode: {
@@ -104,7 +105,7 @@ module.exports = function (grunt) {
     },
     bgShell: {
       e2e: {
-        cmd: './bin/run_tests.sh',
+        cmd: './end2end-tests/bin/run_tests.sh',
         bg: false,
         stdout: true,
         stderr: true,
@@ -272,6 +273,7 @@ module.exports = function (grunt) {
         options: {
           display: 'short',
           keepRunner: true,
+          outfile : '<%= config.chrome_ext %>/tests/_SpecRunner.html',
           specs: '<%= config.chrome_ext %>/tests/*spec.js',
           helpers: '<%= config.chrome_ext %>/tests/*helper.js',
           host: 'http://127.0.0.1:8000/',
@@ -279,7 +281,7 @@ module.exports = function (grunt) {
           templateOptions: {
             requireConfigFile: '<%= config.chrome_ext %>/scripts/lib/requireConfig.js',
             requireConfig: {
-              baseUrl: './<%= config.chrome_ext %>/scripts/',
+              baseUrl: '../scripts/',
               paths: {
                 'Squire': '../bower_components/squire/src/Squire',
                 'browser': '../tests/stubs/browser.stub',

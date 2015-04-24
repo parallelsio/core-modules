@@ -1,0 +1,23 @@
+{
+  "name": "jade-runtime.js",
+  "version": "1.8.0",
+  "homepage": "https://github.com/mathiasschopmans/jade-runtime.js",
+  "authors": [
+    "Mathias Schopmans <mathias.schopmans@aijko.com>"
+  ],
+  "description": "Jade's runtime.js proxied for bower",
+  "main": "runtime.js",
+  "keywords": [
+    "jade",
+    "runtime",
+    "client"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

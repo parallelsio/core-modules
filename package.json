@@ -27,6 +27,6 @@
     "selenium-webdriver": "^2.44.0"
   },
   "scripts": {
-    "test": "./bin/run_tests.sh"
+    "test": "./end2end-tests/bin/run_tests.sh"
   }
 }

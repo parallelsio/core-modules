@@ -1,9 +1,0 @@
-{
-  "dist": "build",
-  "test": "tests",
-  "appRootUrl": {
-    "local": "http://localhost:3000",
-    "qa": "https://testserver.com",
-    "dist": "https://liveserver.com"
-  }
-}

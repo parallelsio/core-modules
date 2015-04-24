@@ -53,7 +53,7 @@
 > [/meteor-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - the reactive, web app: a digital canvas where documents are created, remixed and shared. Based on [Meteor JS](http://www.meteor.com)
 > 
 > 
-> [/extensions/chrome](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome) - a Chrome extension for easily tagging + saving browser content found on the web, to your Parallels canvas
+> [/extensions/chrome/source](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome/source) - a Chrome extension for easily tagging + saving browser content found on the web, to your Parallels canvas
 
 
 
@@ -170,7 +170,7 @@
 
 
 ### Install The Extension
-> Point the Chrome browser to the extension source code folder: `/extensions/chrome/`
+> Point the Chrome browser to the extension source code folder: `/extensions/chrome/source`
 > [Detailed directions](https://developer.chrome.com/extensions/getstarted#unpacked)
 
 
@@ -183,7 +183,7 @@
 > * Compiles the Jade template files
 > * Runs `bower install` to get all front-end dependencies (JavaScript libraries etc)
 > * Boots up a local Meteor JS server, and listens for changes to the Meteor source code in `/meteor-app`
-> * Runs a watcher, listening for changes to Chrome's extension source code, which lives in `/extensions/chrome`
+> * Runs a watcher, listening for changes to Chrome's extension source code, which lives in `/extensions/chrome/source`
 
 > `$ grunt`
 
