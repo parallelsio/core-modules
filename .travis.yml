@@ -28,7 +28,6 @@ env:
     - secure: "UYFJn1QtcklD60smQFzuimoyMS67XwXtIQr6mvx03B3NMhYp5hqpkaciw73iWyS8Sdb7NLvFPnY6SWRjB+Xalgp1SNIohKkXW95Oeuhwd4XqdMz8VRazZoPUXDaeOkIJojXRbo+NnHAVnMg6AwRHgx1bUmfuzP8KO/iZHeVDTTg="
 
 script:
-  - meteor --test --release velocity:METEOR@1.1.0.2_2
   - "expect deploy.exp"
   - "sleep 5"
-  - grunt e2e-tests:ci
+  - grunt all-tests --target=ci

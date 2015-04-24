@@ -27,6 +27,12 @@
     "selenium-webdriver": "^2.44.0"
   },
   "scripts": {
-    "test": "./end2end-tests/bin/run_tests.sh"
+    "test": "grunt all-tests",
+    "units": "grunt unit-tests",
+    "e2e": "grunt e2e-tests",
+    "local": "grunt build:local",
+    "ci": "grunt build:ci",
+    "prod": "grunt build",
+    "server": "grunt server"
   }
 }

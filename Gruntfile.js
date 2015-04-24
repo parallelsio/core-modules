@@ -3,14 +3,17 @@
 var fs = require('fs'), util = require('util');
 
 module.exports = function (grunt) {
+
+  var target = grunt.option('target') || 'local';
+
   var config = {
-    "dist": "extensions/chrome/build",
-    "test": "tests",
-    "chrome_ext": "extensions/chrome/source",
-    "appRootUrl": {
-      "local": "localhost:3000",
-      "ci": "parallels-ci.meteor.com",
-      "dist": "parallels.meteor.com"
+    dist: 'extensions/chrome/build',
+    test: 'tests',
+    chromeExt: 'extensions/chrome/source',
+    appRootUrl: {
+      local: 'localhost:3000',
+      ci: 'parallels-ci.meteor.com',
+      dist: 'parallels.meteor.com'
     }
   };
 
@@ -79,8 +82,8 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= config.chrome_ext %>/scripts/**/*.js',
-        '!<%= config.chrome_ext %>/scripts/lib/**/*',
+        '<%= config.chromeExt %>/scripts/**/*.js',
+        '!<%= config.chromeExt %>/scripts/lib/**/*',
         'test/spec/{,*/}*.js'
       ]
     },
@@ -120,6 +123,16 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true
       },
+      meteorTests: {
+        cmd: [
+          'cd meteor-app',
+          'meteor --test --release velocity:METEOR@1.1.0.2_2'
+        ].join('&&'),
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: true
+      },
       resetTestDb: {
         cmd: 'mongo parallels_test --eval "printjson(db.dropDatabase())"',
         bg: false,
@@ -138,7 +151,7 @@ module.exports = function (grunt) {
       },
       bowerChromeExt: {
         cmd: [
-          'cd <%= config.chrome_ext %>',
+          'cd <%= config.chromeExt %>',
           'bower install'
         ].join('&&'),
         bg: false,
@@ -152,24 +165,15 @@ module.exports = function (grunt) {
         stderr: true
       }
     },
-    // Compiles Sass to CSS and generates necessary files if requested
-    compass: {
-      chrome: {
-        options: {
-          sassDir: '<%= config.chrome_ext %>/styles',
-          cssDir: '<%= config.chrome_ext %>/styles/compiled'
-        }
-      }
-    },
     sass: {
       options: {
         sourceMap: false
       },
       dist: {
         files: {
-          '<%= config.chrome_ext %>/styles/compiled/main.css': '<%= config.chrome_ext %>/styles/main.scss',
-          '<%= config.chrome_ext %>/styles/compiled/typefaces.css': '<%= config.chrome_ext %>/styles/typefaces.scss',
-          '<%= config.chrome_ext %>/styles/compiled/jquery.tag.override.css': '<%= config.chrome_ext %>/styles/vendor/jquery.tag.override.css'
+          '<%= config.chromeExt %>/styles/compiled/main.css': '<%= config.chromeExt %>/styles/main.scss',
+          '<%= config.chromeExt %>/styles/compiled/typefaces.css': '<%= config.chromeExt %>/styles/typefaces.scss',
+          '<%= config.chromeExt %>/styles/compiled/jquery.tag.override.css': '<%= config.chromeExt %>/styles/vendor/jquery.tag.override.css'
         }
       }
     },
@@ -181,7 +185,7 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          '<%= config.chrome_ext %>/html/web_clipper.html': ['<%= config.chrome_ext %>/templates/web_clipper.jade']
+          '<%= config.chromeExt %>/html/web_clipper.html': ['<%= config.chromeExt %>/templates/web_clipper.jade']
         }
       }
     },
@@ -199,31 +203,30 @@ module.exports = function (grunt) {
         logConcurrentOutput: true
       }
     },
-    // Watches files for changes and runs tasks based on the changed files
     watch: {
       js: {
-        files: '<%= config.chrome_ext %>/scripts/**/*.js',
+        files: '<%= config.chromeExt %>/scripts/**/*.js',
         tasks: ['jshint'],
         options: {
           livereload: true
         }
       },
       sass: {
-        files: ['<%= config.chrome_ext %>/styles/{,*/}*.{scss,sass}'],
+        files: ['<%= config.chromeExt %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['sass']
       },
       gruntfile: {
         files: ['Gruntfile.js']
       },
       styles: {
-        files: ['<%= config.chrome_ext %>/styles/compiled/{,*/}*.css', '<%= config.chrome_ext %>/styles/vendor/{,*/}*.css'],
+        files: ['<%= config.chromeExt %>/styles/compiled/{,*/}*.css', '<%= config.chromeExt %>/styles/vendor/{,*/}*.css'],
         tasks: [],
         options: {
           livereload: true
         }
       },
       templates: {
-        files: ['<%= config.chrome_ext %>/templates/{,*/}*.jade'],
+        files: ['<%= config.chromeExt %>/templates/{,*/}*.jade'],
         tasks: ['jade'],
         options: {
           livereload: true
@@ -234,10 +237,10 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.chrome_ext %>/html/*.html',
-          '<%= config.chrome_ext %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= config.chrome_ext %>/manifest.json',
-          '<%= config.chrome_ext %>/_locales/{,*/}*.json'
+          '<%= config.chromeExt %>/html/*.html',
+          '<%= config.chromeExt %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= config.chromeExt %>/manifest.json',
+          '<%= config.chromeExt %>/_locales/{,*/}*.json'
         ]
       }
     },
@@ -253,7 +256,7 @@ module.exports = function (grunt) {
           hostname: 'localhost',
           open: false,
           base: [
-            '<%= config.chrome_ext %>',
+            '<%= config.chromeExt %>',
             './'
           ]
         }
@@ -273,13 +276,13 @@ module.exports = function (grunt) {
         options: {
           display: 'short',
           keepRunner: true,
-          outfile : '<%= config.chrome_ext %>/tests/_SpecRunner.html',
-          specs: '<%= config.chrome_ext %>/tests/*spec.js',
-          helpers: '<%= config.chrome_ext %>/tests/*helper.js',
+          outfile : '<%= config.chromeExt %>/tests/_SpecRunner.html',
+          specs: '<%= config.chromeExt %>/tests/*spec.js',
+          helpers: '<%= config.chromeExt %>/tests/*helper.js',
           host: 'http://127.0.0.1:8000/',
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
-            requireConfigFile: '<%= config.chrome_ext %>/scripts/lib/requireConfig.js',
+            requireConfigFile: '<%= config.chromeExt %>/scripts/lib/requireConfig.js',
             requireConfig: {
               baseUrl: '../scripts/',
               paths: {
@@ -290,7 +293,7 @@ module.exports = function (grunt) {
             }
           },
           styles: [
-            '<%= config.chrome_ext %>/styles/**/*.css'
+            '<%= config.chromeExt %>/styles/**/*.css'
           ]
         }
       }
@@ -326,7 +329,6 @@ module.exports = function (grunt) {
     });
   });
 
-  // builds the chrome extension
   grunt.registerTask('build', 'Build chrome extension', function (target) {
     var tasks = [
       'bgShell:bowerChromeExt',
@@ -350,7 +352,6 @@ module.exports = function (grunt) {
       target = '';
 
     var tasks = [
-      'jshint',
       'bgShell:bowerChromeExt',
       'sass',
       'jade',
@@ -361,28 +362,20 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  //grunt.registerTask('test', 'Run the testing tasks', function (target) {
-  //  if (target !== 'debug')
-  //    target = '';
-  //
-  //  grunt.task.run('bgShell:tests' + target);
-  //});
-  grunt.registerTask('test', ['connect:test', 'jasmine']);
+  grunt.registerTask('all-tests', 'Run units + integration tests', [
+    'jshint',
+    'bgShell:meteorTests',
+    'connect:test',
+    'jasmine',
+    'env:' + target,
+    'build:' + target,
+    'bgShell:resetTestDb',
+    'bgShell:e2e'
+  ]);
 
-  grunt.registerTask('e2e-tests', 'Run integration tests', function (target) {
-    var tasks;
+  grunt.registerTask('unit-tests', 'Run unit tests', ['jshint', 'bgShell:meteorTests', 'connect:test', 'jasmine']);
 
-    if (target === 'ci') {
-      tasks = ['env:ci', 'build:ci'];
-    } else {
-      tasks = ['env:local', 'build:local'];
-    }
-
-    tasks = tasks.concat(['bgShell:resetTestDb', 'bgShell:e2e']);
-
-    grunt.task.run(tasks);
-  });
-
+  grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
 
   grunt.registerTask('default', 'server');
 };
