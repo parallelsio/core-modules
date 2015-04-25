@@ -63,3 +63,18 @@ body { height: 100%; }
 	width: calc(50%) !important; // overwrite the line in the middle, not needed here
 	background: #222;
 }
+
+.menu {
+	height:2em;
+	width:100%;
+	background: #ECECEC;
+	font-family: 'Helvetica' !important;
+	box-sizing: border-box;
+	padding: 0.5em;
+}
+
+#menu-bar{
+  position: relative;
+  top:-100px;
+}
+

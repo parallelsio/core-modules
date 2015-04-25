@@ -20,7 +20,7 @@ Parallels.AppModes['create-parallel'] = {
     {
       isCreatingParallel = true;
       var bitParallelCreateOriginId = bitHoveringId;
-      $bitOrigin = $(document.querySelector("[data-id='" + bitParallelCreateOriginId + "']"));
+      $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
 
       Session.set('isCreatingParallel', isCreatingParallel);
       Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);

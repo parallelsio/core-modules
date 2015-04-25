@@ -2,31 +2,71 @@ Template.menu.rendered = function() {
   
   console.log('menu rendered.');
 
-  // *********************************************************************
-  // adapated code from   : http://codepen.io/vdaguenet/pen/Ebycz
+  var screenWidth  = document.documentElement.clientWidth;
+  var screenHeight = document.documentElement.clientHeight;
 
-  var screenWidth;
-  var screenHeight;
+  // TODO: refactor all settings into Session obj
+  console.log("Meteor.settings.public.options.displayIntroAnimation: ", 
+              Meteor.settings.public.options.displayIntroAnimation);
+
+  // adapted from: http://codepen.io/GreenSock/pen/ramJGv
+  // TODO:
+  // 1) pull out into Animation class
+  // 2) instead of making this part of the callback, can we have menu emit an event?
+  var shimmerDisplayBits = function(){
+
+    var delayMultiplier = 0.0005;
+    var duration = 0.4;
+    var shimmerTimeline = new TimelineMax();
+
+    var elements = $(".map .bit");
+
+    elements.each(function() {
+
+      // Greensock applied transforms to position bits when OnRendered was called.
+      // "translate3d(132px, 89px, 0px)"
+      // we need the x/y position to pass to the Timeline obj to give a nice wipe/shimmer effect
+      var cssTransform = this.style["transform"]; 
+      var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
+
+      // slice + dice the string with a regexp to remove everything except
+      // for number values. Split the string into an array.
+      var array = _.words(cssTransform.replace(pattern, ''));
+      var offset = parseFloat(array[0]) + parseFloat(array[1]);
+      var delay = parseFloat(offset * delayMultiplier).toFixed(2);
+
+      console.log("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
+
+      shimmerTimeline.fromTo(
+        this,
+        duration,
+        { scale:0.95, ease:Expo.easeIn, opacity: 0,  display:'block' },
+        { scale:1, ease:Expo.easeIn, opacity: 1,  display:'block' },
+        delay
+      );
+      
+    });
+
+  };
+
+  var timeline = new TimelineMax({ 
+    onComplete: shimmerDisplayBits
+  });
 
   function start () {
-      resize();
+    var tlLoader     = setTimelineLoader();
+    var tlGlobal     = new TimelineMax();
 
-      var tlLoader     = setTimelineLoader();
-      var tlGlobal     = new TimelineMax();
-
-      // tlGlobal.set($('.overlay'), {alpha: 0});
-      tlGlobal.add(tlLoader);
-
-      // tlGlobal.set($('.overlay'), {alpha: 1});
-      tlGlobal.play();
+    tlGlobal.add(tlLoader);
+    tlGlobal.play();
   };
 
-  function resize () {
-      screenWidth  = document.documentElement.clientWidth;
-      screenHeight = document.documentElement.clientHeight;
-  };
 
+  // adapted code from   : http://codepen.io/vdaguenet/pen/raXBKp
   function setTimelineLoader () {
+
+    if (Meteor.settings.public.options.displayIntroAnimation) {
+     
       var topToBottomLine  = $('.wipe.top-to-bottom .line');
       var maskTop          = $('.wipe.top-to-bottom .mask.top');
       var maskBottom       = $('.wipe.top-to-bottom .mask.bottom');
@@ -37,30 +77,30 @@ Template.menu.rendered = function() {
 
       TweenMax.set($('.wipe.load.side-to-side'), { alpha: 0 });
 
-      var tl = new TimelineMax();
+      timeline.fromTo(topToBottomLine, 0.4, { x: screenWidth }, { x: 0, ease: Circ.easeIn }, 0);
+      timeline.fromTo(maskTop, 0.4, { y: 0 }, { y: -screenHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
+      timeline.fromTo(maskBottom, 0.4, { y: 0 }, { y: screenHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
+      timeline.set($('.wipe.load.top-to-bottom'), { alpha: 0, display: "none" });
 
-      tl.fromTo(topToBottomLine, 0.4, { x: screenWidth }, { x: 0, ease: Circ.easeIn }, 0);
-      tl.fromTo(maskTop, 0.4, { y: 0 }, { y: -screenHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
-      tl.fromTo(maskBottom, 0.4, { y: 0 }, { y: screenHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
-      tl.set($('.wipe.load.top-to-bottom'), { alpha: 0, display: "none" });
+      timeline.set($('.wipe.load.side-to-side'), { alpha: 1, display: "block"});
+      timeline.fromTo(sideToSideLine, 0.4, { y: -screenHeight}, {y: 0, ease: Circ.easeIn});
+      timeline.fromTo(maskRight, 0.4, { x: 0 }, {x: screenWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
+      timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -screenWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
+      timeline.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
 
-      tl.set($('.wipe.load.side-to-side'), { alpha: 1, display: "block"});
-      tl.fromTo(sideToSideLine, 0.4, { y: -screenHeight}, {y: 0, ease: Circ.easeIn});
-      tl.fromTo(maskRight, 0.4, { x: 0 }, {x: screenWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
-      tl.fromTo(maskLeft, 0.4, { x: 0 }, {x: -screenWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
-      tl.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
+    }
 
-      // TODO: open up to canvas, instead of hard cutting
+    else {
+      $('.wipe.load').hide();
+    }
 
-      var menuBar = document.getElementById("menu-bar");
-      tl.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
+    var menuBar = document.getElementById("menu-bar");
+    timeline.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut})
 
-      return tl;
+    return timeline;
   }
+      
+  start();  
 
-  
-  start();  // run wipe transition
-
-  // *********************************************************************
 };
 

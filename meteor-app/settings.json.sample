@@ -1,8 +1,8 @@
 {
   "public": {
-        "options": {
-          "isSoundEnabled": true
-        }
+    "options": {
+      "isSoundEnabled": true,
+      "displayIntroAnimation": true
     }
+  }
 }
-

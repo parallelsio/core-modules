@@ -1,5 +1,4 @@
 aldeed:template-extension@3.4.3
-alethes:lodash@0.7.1
 amplify@1.0.0
 autoupdate@1.2.1
 awatson1978:mousetrap@1.5.2
@@ -79,6 +78,7 @@ sanjo:meteor-version@1.0.0
 session@1.1.0
 spacebars@1.0.6
 spacebars-compiler@1.0.6
+stevezhu:lodash@3.7.0
 templating@1.1.1
 tracker@1.0.7
 ui@1.0.6

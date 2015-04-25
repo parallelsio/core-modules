@@ -10,7 +10,7 @@ Parallels.AppModes['preview-bit'] = {
     {
       console.log("pressed spacebar over bit: ", bitHoveringId);
 
-      var $bit = document.querySelector("[data-id='" + bitHoveringId + "']");
+      var $bit = $("[data-id='" + bitHoveringId + "']");
       var bitTemplate = Blaze.getView($bit);
       var bitData = Blaze.getData(bitTemplate);
 

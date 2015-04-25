@@ -8,7 +8,6 @@ coffeescript
 insecure
 underscore
 iron:router
-alethes:lodash
 waitingkuo:normalize
 meteorhacks:kadira
 meteorhacks:inject-initial
@@ -25,3 +24,4 @@ jeremy:snapsvg
 sanjo:jasmine
 velocity:html-reporter
 xolvio:inverter
+stevezhu:lodash

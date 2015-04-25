@@ -4,12 +4,6 @@ BitEvents = {
       Session.set('bitHoveringId', template.data._id);
       console.log("bit:hover:in " + Session.get('bitHoveringId'));
 
-      // TODO: shimmer on hover
-      // TODO: scale
-      // TweenLite.to(Template.instance().firstNode, 0.3, { left:"+=10px", ease:Elastic.easeOut});
-      // var yoyo = myTimeline.yoyo(); //gets current yoyo state
-      // myTimeline.yoyo( true ); //sets yoyo to true
-
       $(event.target).addClass('selected');
     }
   }
@@ -24,7 +18,6 @@ Template.bit.events({
   },
 
   'click .bit': function () {
-    // TODO: Zelda triforce focus here, zoom sound
     console.log("bit:click: " + this._id);
   },
 

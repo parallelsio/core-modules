@@ -35,6 +35,6 @@
     "local": "grunt build:local",
     "ci": "grunt build:ci",
     "prod": "grunt build",
-    "server": "grunt server"
+    "server": "JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server"
   }
 }
