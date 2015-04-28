@@ -12,7 +12,7 @@ Template.map.onRendered(function (){
       var bitDatabaseId = bitDataContext._id;
 
       // TODO: use Greensock's force3D flag, instead of 0.01px hack [which triggers GPU rendering]
-      var transformString =  "translate3d(" + bitDataContext.position_x + "px, " + bitDataContext.position_y + "px, 0.01px)";
+      var transformString =  "translate3d(" + bitDataContext.position.x + "px, " + bitDataContext.position.y + "px, 0.01px)";
 
       console.log('_uihook: moment before bit insert: ', bitDatabaseId);
       console.log('********');
@@ -25,20 +25,20 @@ Template.map.onRendered(function (){
         .insertBefore(next)
         .css( { transform: transformString } )
         .find('.editbit').focus();  // TODO: bug: focus doesnt work the 2nd time
-      
+
         // TODO: add conditional to the editbit focus, as only relevant for text bits
-      
+
         function timelineInsertDone(node){
           console.log("bit:insert:uihook timeline animate done.");
         }
 
-        var timelineInsert = new TimelineMax({ 
-          onComplete: timelineInsertDone, 
+        var timelineInsert = new TimelineMax({
+          onComplete: timelineInsertDone,
           onCompleteParams:[ node ]
         });
 
         timelineInsert
-          .to(node, 0, { x: bitDataContext.position_x, y: bitDataContext.position_y })
+          .to(node, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y })
           .to(node, 0.125, { ease:Bounce.easeIn , display:'block', opacity: 0, alpha: 0 })
           .to(node, 0.125, { scale: 0.95, ease:Quint.easeOut , opacity: 1, alpha: 1} )
           .to(node, 0.275, { scale: 1, ease:Elastic.easeOut } );
@@ -52,8 +52,8 @@ Template.map.onRendered(function (){
         console.log("bit:remove:uihook : timeline animate done. removed bit.");
       }
 
-      var timelineRemove = new TimelineMax({ 
-        onComplete: timelineRemoveDone, 
+      var timelineRemove = new TimelineMax({
+        onComplete: timelineRemoveDone,
         onCompleteParams:[ node ]
       });
 

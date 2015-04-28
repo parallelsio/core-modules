@@ -26,10 +26,10 @@ Template.bit.onRendered(function (){
   });
 
   // move to position, immediately hide
-  timeline.to(bitHtmlElement, 0, { display: "none", alpha: 0, x: bitDataContext.position_x, y: bitDataContext.position_y })
+  timeline.to(bitHtmlElement, 0, { display: "none", alpha: 0, x: bitDataContext.position.x, y: bitDataContext.position.y })
 
 
-  // // Needs to happen after position set, or else positions 
+  // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
   // // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   Draggable.create(Template.instance().firstNode, {
@@ -48,14 +48,14 @@ Template.bit.onRendered(function (){
 
       var mongoId = this.target.dataset.id;
       console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
-      
+
       Bits.update( mongoId , {
         $set: {
-          "position_x": x,
-          "position_y": y
+          "position.x": x,
+          "position.y": y
         }
       });
-      
+
       Sound.play('glue.mp3');
 
       return true;

@@ -6,8 +6,10 @@ Parallels.AppModes['create-bit'] = {
       content: '',
       type: 'text',
       color: 'white',
-      position_x: event.pageX,
-      position_y: event.pageY
+      position: {
+        x: event.pageX,
+        y: event.pageY
+      }
     });
 
     Session.set('bitEditingId', id);
