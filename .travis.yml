@@ -1,19 +1,20 @@
 language: node_js
 
 node_js:
-  - "0.10"
+- '0.10'
 
 services:
   - mongodb
 
 before_install:
+  - openssl aes-256-cbc -K $encrypted_6660af64ad3a_key -iv $encrypted_6660af64ad3a_iv -in settings.prod.json.enc -out meteor-app/settings.prod.json -d
   - sudo apt-get install expect
   - npm install -g grunt-cli bower
-  - "curl https://install.meteor.com | /bin/sh"
+  - curl https://install.meteor.com | /bin/sh
 
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 notifications:
   slack:
@@ -21,13 +22,13 @@ notifications:
 
 env:
   global:
-    - METEOR_DEPLOY_URL=http://parallels-ci.meteor.com
-    - METEOR_EMAIL=angelcabo
-    - secure: "pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc="
-    - SAUCE_USERNAME=angelcabo3
-    - secure: "UYFJn1QtcklD60smQFzuimoyMS67XwXtIQr6mvx03B3NMhYp5hqpkaciw73iWyS8Sdb7NLvFPnY6SWRjB+Xalgp1SNIohKkXW95Oeuhwd4XqdMz8VRazZoPUXDaeOkIJojXRbo+NnHAVnMg6AwRHgx1bUmfuzP8KO/iZHeVDTTg="
+  - METEOR_DEPLOY_URL=http://parallels-ci.meteor.com
+  - METEOR_EMAIL=angelcabo
+  - secure: pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc=
+  - SAUCE_USERNAME=angelcabo3
+  - secure: UYFJn1QtcklD60smQFzuimoyMS67XwXtIQr6mvx03B3NMhYp5hqpkaciw73iWyS8Sdb7NLvFPnY6SWRjB+Xalgp1SNIohKkXW95Oeuhwd4XqdMz8VRazZoPUXDaeOkIJojXRbo+NnHAVnMg6AwRHgx1bUmfuzP8KO/iZHeVDTTg=
 
 script:
-  - "expect deploy.exp"
-  - "sleep 5"
+  - expect deploy.exp
+  - sleep 5
   - grunt all-tests --target=ci

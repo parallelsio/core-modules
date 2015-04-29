@@ -11,7 +11,7 @@ Parallels.AppModes['preview-bit'] = {
       console.log("pressed spacebar over bit: ", bitHoveringId);
 
       var $bit = $("[data-id='" + bitHoveringId + "']");
-      var bitTemplate = Blaze.getView($bit);
+      var bitTemplate = Blaze.getView($bit[0]);
       var bitData = Blaze.getData(bitTemplate);
 
       // currently, we're only supporting preview for images, so use
