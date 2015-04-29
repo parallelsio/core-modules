@@ -13,8 +13,11 @@ Template.bit.events({
 
   'mouseenter .bit': BitEvents.toggleSelectedClass,
 
-  'mouseleave .bit': function () {
+  'mouseleave .bit': function (event) {
     console.log("bit:hover:out " + Session.get('bitHoveringId'));
+    if (event.target.classList.contains('bit')) {
+      Session.set('bitHoveringId', '');
+    }
   },
 
   'click .bit': function () {
