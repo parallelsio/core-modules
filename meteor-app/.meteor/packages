@@ -12,7 +12,6 @@ waitingkuo:normalize
 meteorhacks:kadira
 meteorhacks:inject-initial
 infinitedg:gsap
-ovcharik:howler
 fourseven:scss
 wolves:bourbon
 clubfest:raphael
@@ -30,3 +29,5 @@ meteorhacks:npm
 npm-container
 ostrio:neo4jreactivity
 stevezhu:lodash
+mrt:require
+jquery
