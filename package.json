@@ -35,6 +35,7 @@
     "local": "grunt build:local",
     "ci": "grunt build:ci",
     "prod": "grunt build",
-    "server": "JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server"
+    "server": "JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server",
+    "resetdb": "neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start"
   }
 }

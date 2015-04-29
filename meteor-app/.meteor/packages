@@ -24,4 +24,9 @@ jeremy:snapsvg
 sanjo:jasmine
 velocity:html-reporter
 xolvio:inverter
+meteorhacks:npm
+
+
+npm-container
+ostrio:neo4jreactivity
 stevezhu:lodash

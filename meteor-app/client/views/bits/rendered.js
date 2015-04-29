@@ -1,5 +1,5 @@
 Template.bit.onCreated(function (){
-  
+
   template = this;
   var bitDataContext = template.data;
   var bitDatabaseId = bitDataContext._id;
@@ -20,8 +20,8 @@ Template.bit.onRendered(function (){
     console.log("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
   }
 
-  var timeline = new TimelineMax({ 
-    onComplete: timelineDone, 
+  var timeline = new TimelineMax({
+    onComplete: timelineDone,
     onCompleteParams:[ bitDatabaseId  ]
   });
 
@@ -35,7 +35,7 @@ Template.bit.onRendered(function (){
   Draggable.create(Template.instance().firstNode, {
     throwProps:false,
     zIndexBoost:false,
-    
+
     // onDragStart:function(event){
 
     // },
@@ -62,6 +62,6 @@ Template.bit.onRendered(function (){
     }
   });
 
-});  
+});
 
 

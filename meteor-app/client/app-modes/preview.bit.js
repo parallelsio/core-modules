@@ -51,7 +51,7 @@ Parallels.AppModes['preview-bit'] = {
 
     if (bitEditingId)
     {
-      Bits.remove( bitEditingId );
+      Meteor.call('removeBit', bitEditingId);
       Session.set('bitEditingId', null);
     }
   }

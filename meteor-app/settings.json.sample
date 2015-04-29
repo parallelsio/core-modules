@@ -1,4 +1,5 @@
 {
+  "neo4jUrl": "http://localhost:7474",
   "public": {
     "options": {
       "isSoundEnabled": true,

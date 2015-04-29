@@ -20,7 +20,7 @@ Meteor.startup(function() {
     console.log("pressed d");
     var bitHoveringId = Session.get('bitHoveringId');
     if (bitHoveringId) {
-      Bits.remove(bitHoveringId);
+      Meteor.call('removeBit', bitHoveringId);
       console.log("bit:delete: " + bitHoveringId);
     }
   });
