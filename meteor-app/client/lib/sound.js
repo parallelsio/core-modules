@@ -1,22 +1,28 @@
 Sound = {
 
-  play: function(definition){
+  _enviro: false,
+  _folderPath: "sounds/",
 
+  // this._folderPath + soundFileName
+
+  init: function(){
+    "use strict"
     if (Meteor.settings.public.options.isSoundEnabled) {
-      "use strict";
-
-      var enviro = flock.init();
-      var synth = flock.synth(Sound.definition.impulseDrop);
-              
-      enviro.play();
+      this._enviro = flock.init();
     }
   },
 
-  stop: function(){
-    // kill all sound immediately.
-    return false;
+  play: function(definition){
+    console.log("sound:play: trigger", definition);
+    var synth = flock.synth(definition);
+    this._enviro.play();
+    return synth;
   },
 
+  stopAllNow: function(){
+    // TODO: Stub
+    return false;
+  },
 
 
   // Each sound in our app is defined below as a definition object.
@@ -26,7 +32,7 @@ Sound = {
   // The "synthDef" key in every definition object is required, 
   // as Flocking lib expects this on its .play() function: do not change.
 
-  definition: {
+  definitions: {
    
     impulseDrop: {  // name of this definition
     /******************************************/
@@ -35,28 +41,34 @@ Sound = {
       synthDef: {  // do not change this label, 
         ugen: "flock.ugen.impulse",
         freq: {
-            ugen: "flock.ugen.xLine",
-            start: 880,
-            end: 2,
-            duration: 4.0
+          ugen: "flock.ugen.xLine",
+          start: 880,
+          end: 2,
+          duration: 6.0
         },
-        mul: 0.25
+        mul: 0.25,
+        options: {
+          callback: {
+            func: function () {
+              console.log("sound:definition: impulseDrop done.")
+            }
+          }
+        }
       }
     },
 
-    // be careful with this one! turn down the volume!
-    highHat: {
+    loudSound: {
     /******************************************/
       synthDef: {
         ugen: "flock.ugen.playBuffer",
         buffer: {
-            url: "glue.mp3" // TODO: update this, not sure if it can play mp3s. 
+          url: "glue.mp3" // TODO: update this, not sure if it can play mp3s. 
         },
         trigger: {
-            ugen: "flock.ugen.mouse.click",
-            options: {
-                target: ".bit"
-            }
+          ugen: "flock.ugen.mouse.click",
+          options: {
+            target: ".bit"
+          }
         }
       }
     }

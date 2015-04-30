@@ -1,6 +1,6 @@
 Template.map.onRendered(function (){
 
-  Sound.play('welcome-v1.mp3');
+  Sound.play(Sound.definitions.impulseDrop);
 
   var mapTemplate = this;
   var container = mapTemplate.find('.map');

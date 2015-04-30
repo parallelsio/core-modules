@@ -56,7 +56,7 @@ Template.bit.onRendered(function (){
         }
       });
 
-      Sound.play('glue.mp3');
+      Sound.play(Sound.definitions.impulseDrop);
 
       return true;
     }

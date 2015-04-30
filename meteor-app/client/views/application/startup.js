@@ -1,5 +1,7 @@
 Meteor.startup(function(){
 
+  Sound.init();
+
   console.log("Meteor.startup begin.");
   
   Tracker.autorun(function() {

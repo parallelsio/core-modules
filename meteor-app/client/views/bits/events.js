@@ -34,7 +34,7 @@ Template.bit.events({
         $set: { "content": template.find('.editbit').value }
       });
 
-      Sound.play('ch-chaing-v2.mp3');
+      Sound.play(Sound.definitions.impulseDrop);
 
       Session.set('bitEditingId', null);
       Session.set('currentMode', null);
