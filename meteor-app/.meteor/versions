@@ -69,6 +69,7 @@ ovcharik:howler@1.1.26
 package-version-parser@3.0.3
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
+raix:ui-dropped-event@0.0.7
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5
