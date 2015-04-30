@@ -67,7 +67,8 @@
 > * [NVM](https://github.com/creationix/nvm) (optional, but recommended)
 > * [Node.js](https://nodejs.org) (0.10.38) [Meteor requires the latest .10.x, no higher](https://forums.meteor.com/t/meteor-nodejs-0-12/2769/3)
 > * [NPM](https://www.npmjs.com) 
-> * [Meteor JS](https://www.meteor.com) 
+> * [Meteor JS](https://www.meteor.com)
+> * [Neo4j](http://www.neo4j.com) 
 > * [git](https://git-scm.herokuapp.com)
 > * [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating, modern) browsers: Chrome, Firefox, Safari, FireFox, IE10+
  
