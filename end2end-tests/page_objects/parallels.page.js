@@ -7,7 +7,7 @@ function ParallelsPage(world, callback) {
 
 ParallelsPage.prototype._navigate = function (callback) {
   this.browser.get(this.parallelsUrl);
-  this.browser.sleep(2000); // wait for the animations
+  this.browser.sleep(6000); // wait for the animations
 
   // Have to chain 'then' to make this a promise and not immediately execute
   return this.browser.isElementPresent({xpath: '//div[@class="map"]'}).then(callback);

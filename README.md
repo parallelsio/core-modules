@@ -67,7 +67,8 @@
 > * [NVM](https://github.com/creationix/nvm) (optional, but recommended)
 > * [Node.js](https://nodejs.org) (0.10.38) [Meteor requires the latest .10.x, no higher](https://forums.meteor.com/t/meteor-nodejs-0-12/2769/3)
 > * [NPM](https://www.npmjs.com) 
-> * [Meteor JS](https://www.meteor.com) 
+> * [Meteor JS](https://www.meteor.com)
+> * [Neo4j](http://www.neo4j.com) 
 > * [git](https://git-scm.herokuapp.com)
 > * [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating, modern) browsers: Chrome, Firefox, Safari, FireFox, IE10+
  
@@ -122,6 +123,12 @@
 
 
 
+#### Install [Neo4j](http://neo4j.com/)
+> We use Neo4j to graph the relationship between Bits and more. We recommend installing using a package manager. Our preference is Brew but feel free to use whatever you're comfortable with.
+> [Installation Instructions](http://brewformulas.org/Neo4j)
+
+
+
 #### Download + install all required Node.js packages 
 > `$ npm install`
 
@@ -173,6 +180,13 @@
 > * `npm run server`: Starts the meteor app and livereload for the clipper source
 
 > You can see all these scripts (and maybe more) by running `npm run`.
+
+
+### Start The Neo4j Server
+> We assume your Neo4j instance will be up and running at localhost:7474. If not, you'll need to update the meteor-app/settings.json with your environment's location.
+> `$ neo4j start`
+
+
 
 ### Start The Web App
 > We created a task that does a few things at once:

@@ -10,8 +10,8 @@ Meteor.neo4j.methods({
 Meteor.methods({
   'insertBit': function (attributes) {
     try {
-      console.log('methods:insertBit: ', attributes);
       var mongoId = Bits.insert(attributes);
+      console.log('methods:insertBit: created ', mongoId);
       Meteor.call('addBitToGraph', {mongoId: mongoId});
       return mongoId;
     } catch(err) {
@@ -20,8 +20,8 @@ Meteor.methods({
   },
   'removeBit': function (id) {
     try {
-      console.log('methods:removeBit: ', id);
       Bits.remove(id);
+      console.log('methods:removeBit: ', id);
       return Meteor.call('removeBitFromGraph', {mongoId: id});
     } catch(err) {
       console.log(err);

@@ -3,7 +3,7 @@ module.exports = function () {
 
   var Website = require("../page_objects/website.page.js").WebsitePage;
   var Clipper = require("../page_objects/clipper.page.js").ClipperPage;
-  var ParallelsApp = require("../page_objects/parallels.page.js").ParallelsPage;
+  var ParallelsPage = require("../page_objects/parallels.page.js").ParallelsPage;
 
   var website, clipper, parallelsApp;
 
@@ -25,7 +25,7 @@ module.exports = function () {
   });
 
   this.Then(/^the page should be saved to my canvas$/, function (callback) {
-    parallelsApp = new ParallelsApp(this, function (pageLoaded) {
+    parallelsApp = new ParallelsPage(this, function (pageLoaded) {
       if (pageLoaded) {
         parallelsApp.isBitPresent('Wikipedia').then(function (isPresent) {
           if (isPresent)
