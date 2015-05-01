@@ -22,6 +22,15 @@ Parallels.Handlers.register('map.events', {
   'dropped .map': function(event) {
     eachFile(event, function (file) {
       console.log('uploading file: ', file);
+      Parallels.Uploader.send(file, function (error, downloadUrl) {
+        if (error) {
+          console.error('Error uploading', Parallels.Uploader.xhr.response);
+          alert (error);
+        }
+        else {
+          console.log('Success uploading', downloadUrl);
+        }
+      });
     });
   }
 });

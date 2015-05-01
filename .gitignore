@@ -6,7 +6,7 @@
 .npm/
 _SpecRunner.html
 extensions/chrome/build/
-chromeprofile/
+end2end-tests/.tmp/
 extensions/chrome/source/bower_components
 node_modules
 tmp

@@ -258,7 +258,30 @@ module.exports = function (grunt) {
           base: [
             '<%= config.chromeExt %>',
             './'
-          ]
+          ],
+          middleware: function (connect, options) {
+            var middlewares = [
+              connect().use(connect.bodyParser({ uploadDir: 'end2end-tests/.tmp' })),
+              connect().use('/', function (req, res, next) {
+                res.statusCode = 200;
+                res.end();
+              })
+            ];
+
+            // add the static paths in options.base
+            options.base.forEach(function (base) {
+              middlewares.push(connect.static(base));
+            });
+
+            // add CORS headers
+            middlewares.unshift(function (req, res, next) {
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              res.setHeader('Access-Control-Allow-Methods', '*');
+              return next();
+            });
+
+            return middlewares;
+          }
         }
       },
       test : { }

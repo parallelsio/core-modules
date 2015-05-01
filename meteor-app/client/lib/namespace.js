@@ -1,4 +1,5 @@
 Parallels = {
   AppModes: {},
-  Handlers: Inverter
+  Handlers: Inverter,
+  Uploader: new Slingshot.Upload("fileSystemUploader")
 };
