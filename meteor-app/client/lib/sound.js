@@ -15,13 +15,17 @@ Sound = {
   play: function(definition){
     console.log("sound:play: trigger", definition);
     var synth = flock.synth(definition);
-    this._enviro.play();
-    return synth;
+    return this._enviro.play();
   },
 
-  stopAllNow: function(){
-    // TODO: Stub
-    return false;
+  pause: function(definition){
+    console.log("sound:pause");
+    return this._enviro.pause();
+  },
+
+  stop: function(){
+    console.log("sound:stop");
+    return this._enviro.stop();
   },
 
 
@@ -39,6 +43,7 @@ Sound = {
 
       // The Impulse ugen's frequency controlled by a descending xLine
       synthDef: {  // do not change this label, 
+        id: "impulseDrop",
         ugen: "flock.ugen.impulse",
         freq: {
           ugen: "flock.ugen.xLine",
@@ -57,20 +62,18 @@ Sound = {
       }
     },
 
-    loudSound: {
-    /******************************************/
-      synthDef: {
-        ugen: "flock.ugen.playBuffer",
-        buffer: {
-          url: "glue.mp3" // TODO: update this, not sure if it can play mp3s. 
-        },
-        trigger: {
-          ugen: "flock.ugen.mouse.click",
-          options: {
-            target: ".bit"
-          }
-        }
-      }
-    }
+    synthDef: {
+      id: "duster",
+      // Simple example of random audio noise, in a room of reverb
+      ugen: "flock.ugen.freeverb",
+      source: {
+          ugen: "flock.ugen.dust",
+          density: 200,
+          mul: 0.25
+      },
+      mix: 0.7,
+      room: 0.25,
+      damp: 1
+    }  
   }
 }
