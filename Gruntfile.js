@@ -30,7 +30,6 @@ module.exports = function (grunt) {
     };
   }
 
-  //TODO: lock version of meteor to use with --release [VERSION] while starting meteor?
   grunt.initConfig({
     config: config,
     copy: {
@@ -127,7 +126,7 @@ module.exports = function (grunt) {
       meteorTests: {
         cmd: [
           'cd meteor-app',
-          'meteor --test --release velocity:METEOR@1.1.0.2_2'
+          'meteor --test --release velocity:METEOR@1.1.0.2_2 --settings settings.json'
         ].join('&&'),
         bg: false,
         stdout: true,

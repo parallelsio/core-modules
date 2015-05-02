@@ -1,3 +1,7 @@
+MeteorSettings.setDefaults({
+  public: { options: { uploader: 'fileSystemUploader' } }
+});
+
 Parallels = {
   AppModes: {},
   Handlers: Inverter,
