@@ -2,6 +2,10 @@
 
   {{> menu }}
 
+  {{#if isUploading }}
+    {{> progressBar }}
+  {{/if}}
+
   <div class="map">
 
     {{ #each bits }}
@@ -10,4 +14,13 @@
 
   </div>
 
+</template>
+
+
+<template name="progressBar">
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+      <h1 class="sr-only">{{progress}}% Complete</h1>
+    </div>
+  </div>
 </template>

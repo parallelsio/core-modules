@@ -1,6 +1,6 @@
 'use strict';
 
-var fs = require('fs'), util = require('util');
+var fs = require('fs'), util = require('util'), busboy = require('connect-busboy');
 
 module.exports = function (grunt) {
 
@@ -256,12 +256,35 @@ module.exports = function (grunt) {
           open: false,
           base: [
             '<%= config.chromeExt %>',
-            './'
+            './',
+            './end2end-tests/.tmp/'
           ],
           middleware: function (connect, options) {
             var middlewares = [
-              connect().use(connect.bodyParser({ uploadDir: 'end2end-tests/.tmp' })),
+              connect().use(busboy()),
+              connect().use('/upload', function (req, res) {
+                console.log('/upload request');
+                if (req.method === 'OPTIONS') {
+                  res.statusCode = 200;
+                  res.end();
+                } else {
+                  var fstream;
+                  req.pipe(req.busboy);
+                  req.busboy.on('file', function (fieldname, file, filename) {
+                    console.log("Uploading: " + filename);
+
+                    fstream = fs.createWriteStream(__dirname + '/end2end-tests/.tmp/' + filename);
+                    file.pipe(fstream);
+                    fstream.on('close', function () {
+                      console.log("Upload Finished of " + filename);
+                      res.statusCode = 200;
+                      res.end();
+                    });
+                  });
+                }
+              }),
               connect().use('/', function (req, res) {
+                console.log('/ request');
                 res.statusCode = 200;
                 res.end();
               })
@@ -269,7 +292,7 @@ module.exports = function (grunt) {
 
             // add the static paths in options.base
             options.base.forEach(function (base) {
-              middlewares.push(connect.static(base));
+              middlewares.unshift(connect.static(base));
             });
 
             // add CORS headers

@@ -32,7 +32,7 @@ FileSystemUploader = {
 
     return {
       // Endpoint where the file is to be uploaded:
-      upload: "http://localhost:9000/",
+      upload: "http://localhost:9000/upload",
 
       // Download URL, once the file uploaded:
       download: "http://localhost:9000/" + file.name,
