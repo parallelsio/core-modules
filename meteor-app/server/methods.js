@@ -1,4 +1,4 @@
-var N4JDB = new Meteor.Neo4j(process.env.NEO4J_URL);
+var N4JDB = new Meteor.Neo4j(process.env.GRAPHENEDB_URL);
 
 function addBitToGraph (mongoId) {
   N4JDB.query('CREATE (:Bit {mongoId:"' + mongoId + '"})', null, function (err) {
