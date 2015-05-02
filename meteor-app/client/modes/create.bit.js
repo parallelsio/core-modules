@@ -14,8 +14,6 @@ Parallels.AppModes['create-bit'] = {
       console.log(err);
       Session.set('bitEditingId', id);
     });
-
-    Session.set('bitEditingId', id);
   },
   exit: function () {
     Session.set('currentMode', null);

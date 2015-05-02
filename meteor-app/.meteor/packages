@@ -28,7 +28,7 @@ meteorhacks:npm
 
 
 npm-container
-ostrio:neo4jreactivity
 stevezhu:lodash
 raix:ui-dropped-event
 edgee:slingshot
+ostrio:neo4jdriver
