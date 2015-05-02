@@ -1,6 +1,5 @@
 'use strict';
 
-require('dotenv').load();
 var fs = require('fs'), util = require('util');
 
 module.exports = function (grunt) {
@@ -371,6 +370,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('server', 'Run server', function (target) {
+    require('dotenv').load();
+
     if (target !== 'debug')
       target = '';
 
