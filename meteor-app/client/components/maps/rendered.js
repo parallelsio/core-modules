@@ -2,6 +2,8 @@ Template.map.onRendered(function (){
 
   Sound.play('welcome-v1.mp3');
 
+  UI.insert(UI.render(Template.upload), document.body, document.getElementById('first'));
+
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
   container._uihooks = {
