@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').load();
 var fs = require('fs'), util = require('util');
 
 module.exports = function (grunt) {
@@ -262,7 +263,7 @@ module.exports = function (grunt) {
           middleware: function (connect, options) {
             var middlewares = [
               connect().use(connect.bodyParser({ uploadDir: 'end2end-tests/.tmp' })),
-              connect().use('/', function (req, res, next) {
+              connect().use('/', function (req, res) {
                 res.statusCode = 200;
                 res.end();
               })

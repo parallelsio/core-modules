@@ -1,8 +1,7 @@
 {
-  "AWSAccessKeyId": "...",
-  "AWSSecretAccessKey": "...",
   "public": {
     "options": {
+      "uploader": "fileSystemUploader",
       "isSoundEnabled": true,
       "displayIntroAnimation": true
     }
