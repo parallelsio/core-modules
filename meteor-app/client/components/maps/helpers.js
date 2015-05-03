@@ -3,14 +3,12 @@ Template.map.helpers({
     return Bits.find();
   },
   isUploading: function () {
-    //return Session.get('uploading');
-    return false;
+    return Session.get('uploading');
   }
 });
 
 Template.progressBar.helpers({
   progress: function () {
-    return '';
-    //return Math.round((Parallels.Uploader.progress() || 0) * 100);
+    return Session.get('uploadProgress');
   }
 });
