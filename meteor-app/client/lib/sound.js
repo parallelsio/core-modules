@@ -1,3 +1,34 @@
+/*
+
+  OQ: How can we write tests for ensuring audio gets played?
+
+  OQ: How can we trigger a callback, so for example, when impulseResponse def plays and gets
+      down to the end point, frequency of 2, we can trigger an envelope to turn off sound output 
+      untill next sound is triggered?
+
+  OQ: What is the relationship between 'inputs' and 'source'? 
+      
+      Is it always:
+
+        source: {
+            inputs: {
+              param1: value
+              param2: value
+            }
+        }
+      Or is it uGen specific?
+
+  OQ: what does 'add' do? 'multiply'? they are used everywhere.
+
+  OQ: what does 'value' mean in this context:
+      https://github.com/colinbdclark/Flocking/blob/master/docs/ugens/triggers.md
+
+  OQ: What modules dont we need based on current use?
+  
+
+*/ 
+
+
 Sound = {
 
   _enviro: false,
@@ -39,17 +70,17 @@ Sound = {
   // uGens can be combined with a definition, like Lego, to make complex sounds 
 
   // To see what inputs/outputs/options are available for each uGen, 
-  // look at `flocking-ugens.js` submodule.
+  // look at 'flocking-ugens.js' submodule.
 
-  // This is an example of a ugen called `dust`, which makes a scratchy, noise sound.
-  // It'll be defined in `flocking-ugens.js` submodule like this:
+  // This is an example of a ugen called 'dust', which makes a scratchy, noise sound.
+  // It'll be defined in 'flocking-ugens.js' submodule like this:
   
   //    flock.ugen.dust = function (inputs, output, options) {
   //       ........ the math algorthim used to generate the sound .........
   //       .............. we dont touch any of this .......................
   //    }
   
-  // Directly underneath each ugen definition in the `flocking-ugens.js` submodule,
+  // Directly underneath each ugen definition in the 'flocking-ugens.js' submodule,
   // are the defaults for that uGen. These give us clues how to use/control it:
 
   //    fluid.defaults("flock.ugen.dust", {
@@ -74,111 +105,114 @@ Sound = {
   // We then control these parameters in real time via user input
   // and other data related to Parallels around our Meteor app
 
+
      
   definitions: {
 
-    /* 
-     *
-     */
-    impulseDrop: {  // The arbitrary name of this definition
 
-          synthDef: {   // <-- don't change `synthDef`: Flocking depends on this exact spelling 
+    /* Example:
 
-            // we use the `id` key to lookup this definition when handling events: 
-            // https://github.com/colinbdclark/Flocking/blob/master/docs/responding-to-user-input.md 
-            id: "impulseDrop",  
-            ugen: "flock.ugen.impulse",
-            inputs: {
-                freq: {
-                  ugen: "flock.ugen.xLine",
-                  start: 880,
-                  end: 2,
-                  duration: 6.0
-                },
-                mul: 0.25
-            },
+        // The arbitrary name we made up for this definition
+        twinSineDrones: {  
+            
+            // don't change the key name 'synthDef'           
+            // Flocking depends on this exact spelling        
+            synthDef:     { 
 
-            options: {
-              callback: {
-                func: function () {
-                  console.log("sound:definition: impulseDrop done.")
-                  this._enviro.stop();
+              // we use the 'id' key to lookup this definition,
+              // when handling events in Meteor elsewhere.      
+              // For readability, use the same name as 
+              id: "twinSineDrones",
+
+              ugen: "flock.ugen.xxxxxx",
+              
+              inputs: {
+    
+              },
+
+              outputs: {
+  
+              },
+
+              options: {
+                callback: {
+                  func: function () {
+                    console.log("sound:definition: done.")
+                    this._enviro.stop();
+                  }
                 }
               }
             }
-          }
-    },
+        }
+    */
 
-    /*
-        Simple example of random audio noise, in a room of reverb
-    */ 
- //    duster: {  
- //      synthDef: {   
+    /* 
+     *  Using an xLine ugen to curve down the frequency of an impulse.
+     *  Send this as a source to a reverb effect.
+     */
+    impulseDrop: {  
 
- //        id: "duster",  
- //        ugen: "flock.ugen.freeverb",
- //        inputs: {
- //            freq: {
- //              ugen: "flock.ugen.xLine",
- //              start: 880,
- //              end: 2,
- //              duration: 6.0
- //            },
- //            mul: 0.25
- //        },
+      synthDef: {   
 
- //        options: {
- //          callback: {
- //            func: function () {
- //              console.log("sound:definition: impulseDrop done.")
- //              this._enviro.stop();
- //            }
- //          }
- //        }
- //      }
- //    },
-
- //    // ***********************
- //    duster: {
- //      synthDef: {
- //        id: "duster",
-
- //        inputs: {
- //          source: {
- //            ugen: "flock.ugen.dust",
- //            density: 200,
- //            mul: 0.25
- //          },
- //        }
-
- //        options: {
- //          mix: 0.7,
- //          room: 0.25,
- //          damp: 1  
- //        }
- //      }       
- //    }
- //    // ***********************
-
-
-
- // synthDef: {
- //      ugen: "flock.ugen.out",
-      
- //        inputs: {
- //           sources: [
- //            {
- //              ugen: "flock.ugen.sinOsc"
- //            },
- //            {
- //              ugen: "flock.ugen.sinOsc",
- //              freq: 444
- //            }
- //          ] 
- //      } 
+        id: "reverb",  
+        ugen: "flock.ugen.freeverb",
+        inputs: {
+            source: {
+              ugen: "flock.ugen.impulse",
+              inputs: {
+                  freq: {
+                    ugen: "flock.ugen.xLine",
+                    start: 880,
+                    end: 2,
+                    duration: 6.0
+                  },
+                  mul: 0.25
+              },
+            },
         
-   
- //    }
+            mix: 0.93,
+            room: 0.5,
+            damp: 0.5
+        },
+      }
+
+    }
+
+
+
+
+
+
+    // // /*
+    // //     Simple example of random audio noise, in a room of reverb
+    // // */ 
+    // duster: {  
+    //   synthDef: {   
+
+    //     id: "duster",  
+    //     ugen: "flock.ugen.freeverb",
+    //     inputs: {
+    //         freq: {
+    //           ugen: "flock.ugen.xLine",
+    //           start: 880,
+    //           end: 2,
+    //           duration: 6.0
+    //         },
+    //         mul: 0.25
+    //     },
+
+    //     options: {
+    //       callback: {
+    //         func: function () {
+    //           console.log("sound:definition: impulseDrop done.")
+    //           this._enviro.stop();
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+
+
 
   }
 

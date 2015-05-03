@@ -1,6 +1,6 @@
 Template.map.onRendered(function (){
 
-  Sound.play(Sound.definitions.impulseDrop);
+  Sound.play(Sound.definitions.duster);
 
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
