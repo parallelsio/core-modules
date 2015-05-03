@@ -35,7 +35,7 @@ var createImageBit = function (file, downloadUrl, event, index) {
 Parallels.Handlers.register('map.events', {
 
   'dblclick .map': function (event) {
-    console.log("bit:text:create");
+    log.debug("bit:text:create");
 
     if(event.target.classList.contains('map')) {
       Parallels.AppModes['create-bit'].enter(event);

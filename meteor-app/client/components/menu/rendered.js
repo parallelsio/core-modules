@@ -5,13 +5,13 @@ MeteorSettings.setDefaults({
 
 Template.menu.rendered = function() {
 
-  console.log('menu rendered.');
+  log.debug('menu rendered.');
 
   var screenWidth  = document.documentElement.clientWidth;
   var screenHeight = document.documentElement.clientHeight;
 
   // TODO: refactor all settings into Session obj
-  console.log("Meteor.settings.public.options.displayIntroAnimation: ",
+  log.debug("Meteor.settings.public.options.displayIntroAnimation: ",
               Meteor.settings.public.options.displayIntroAnimation);
 
   // adapted from: http://codepen.io/GreenSock/pen/ramJGv
@@ -40,7 +40,7 @@ Template.menu.rendered = function() {
       var offset = parseFloat(array[0]) + parseFloat(array[1]);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      console.log("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
+      log.debug("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
 
       shimmerTimeline.fromTo(
         this,
@@ -64,7 +64,7 @@ Template.menu.rendered = function() {
 
     tlGlobal.add(tlLoader);
     tlGlobal.play();
-  };
+  }
 
 
   // adapted code from   : http://codepen.io/vdaguenet/pen/raXBKp
@@ -100,7 +100,7 @@ Template.menu.rendered = function() {
     }
 
     var menuBar = document.getElementById("menu-bar");
-    timeline.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut})
+    timeline.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
 
     return timeline;
   }

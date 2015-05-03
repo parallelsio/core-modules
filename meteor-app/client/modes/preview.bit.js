@@ -1,14 +1,14 @@
 Parallels.AppModes['preview-bit'] = {
   enter: function () {
     Session.set('currentMode', 'preview-bit');
-    console.log("mode:preview-bit:enter");
+    log.debug("mode:preview-bit:enter");
 
     var bitHoveringId = Session.get('bitHoveringId');
     var bitPreviewingId = Session.get('bitPreviewingId');
 
     if (bitHoveringId)
     {
-      console.log("pressed spacebar over bit: ", bitHoveringId);
+      log.debug("pressed spacebar over bit: ", bitHoveringId);
 
       var $bit = $("[data-id='" + bitHoveringId + "']");
       var bitTemplate = Blaze.getView($bit[0]);
@@ -17,7 +17,7 @@ Parallels.AppModes['preview-bit'] = {
       // currently, we're only supporting preview for images, so use
       // the bit type as the determining factor, if we should expand it
       if ((bitData.type === "image") || (bitData.type === "webpage")){
-        console.log("bit:image:preview: " + bitHoveringId);
+        log.debug("bit:image:preview: " + bitHoveringId);
 
         // now, let's see if it needs to be expanded, or closed:
         if (bitPreviewingId === null)
@@ -34,17 +34,17 @@ Parallels.AppModes['preview-bit'] = {
       }
 
       else {
-        console.log("bit:preview:", bitHoveringId, " is not an image. Do nothing." );
+        log.debug("bit:preview:", bitHoveringId, " is not an image. Do nothing." );
       }
     }
 
     else {
-      console.log ('space key ignored, not captured for a specific bit')
+      log.debug ('space key ignored, not captured for a specific bit')
     }
   },
   exit: function () {
     Session.set('currentMode', null);
-    console.log("mode:preview-bit:exit");
+    log.debug("mode:preview-bit:exit");
 
     var bitEditingId = Session.get('bitEditingId');
     var bitPreviewingId = Session.get('bitPreviewingId');

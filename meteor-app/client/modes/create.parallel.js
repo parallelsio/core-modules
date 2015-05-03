@@ -11,7 +11,7 @@ Parallels.AppModes['create-parallel'] = {
   enter: function () {
     Session.set('currentMode', 'create-parallel');
 
-    console.log("pressed Shift key.");
+    log.debug("pressed Shift key.");
 
     var bitHoveringId = Session.get('bitHoveringId');
     var isCreatingParallel = Session.get('isCreatingParallel');
@@ -25,7 +25,7 @@ Parallels.AppModes['create-parallel'] = {
       Session.set('isCreatingParallel', isCreatingParallel);
       Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
 
-      console.log("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
+      log.debug("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
 
       // abstract out into reusable mode concept.
       // here, it might be : enterMode.createParallel()
@@ -41,11 +41,11 @@ Parallels.AppModes['create-parallel'] = {
 
 
       var timelineStart = function () {
-        console.log('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
+        log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
       };
 
       var timelineDone = function( bitOriginId ){
-        console.log('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
+        log.debug('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
         // Session.set('isDrawingParallel', null);
         // Session.set('bitParallelCreateOriginId', null);
 
@@ -72,14 +72,14 @@ Parallels.AppModes['create-parallel'] = {
       // TODO: move to map? merge map.js + app.js?
 
       // $(this).mousemove( function(event) {
-      //   console.log("mouse event.page_: ", event.pageX, event.pageY);
+      //   log.debug("mouse event.page_: ", event.pageX, event.pageY);
       // });
     }
   },
   exit: function () {
     Session.set('currentMode', null);
 
-    console.log('escape key, inside create parallel, exiting mode');
+    log.debug('escape key, inside create parallel, exiting mode');
 
     var isCreatingParallel = Session.get('isCreatingParallel');
 
@@ -94,7 +94,7 @@ Parallels.AppModes['create-parallel'] = {
       // stop heartbeat animation
       timeline.kill();
 
-      console.log('exiting create parallel mode complete');
+      log.debug('exiting create parallel mode complete');
     }
   }
 };

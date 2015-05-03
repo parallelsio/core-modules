@@ -17,11 +17,11 @@ Meteor.startup(function() {
   });
 
   Mousetrap.bind("d", function() {
-    console.log("pressed d");
+    log.debug("pressed d");
     var bitHoveringId = Session.get('bitHoveringId');
     if (bitHoveringId) {
       Meteor.call('removeBit', bitHoveringId);
-      console.log("bit:delete: " + bitHoveringId);
+      log.debug("bit:delete: " + bitHoveringId);
     }
   });
 });
