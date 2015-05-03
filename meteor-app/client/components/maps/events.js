@@ -3,12 +3,10 @@ MeteorSettings.setDefaults({
 });
 
 var eachFile = function(e, f) {
-  var evt = (e.originalEvent || e);
-
-  var files = evt.target.files;
+  var files = e.target.files;
 
   if (!files || files.length == 0)
-    files = evt.dataTransfer ? evt.dataTransfer.files : [];
+    files = e.dataTransfer ? e.dataTransfer.files : [];
 
   for (var i = 0; i < files.length; i++) {
     f(files[i], i);
@@ -23,38 +21,31 @@ Parallels.Handlers.register('map.events', {
       Parallels.AppModes['create-bit'].enter(event);
     }
   },
-  'dropped .map': function(event) {
+  'dropped .map': function(e) {
+    var event = (e.originalEvent || e);
+
     eachFile(event, function (file, index) {
-      console.log(file);
-      Session.set('uploading', true);
       var uploader = new Slingshot.Upload(Meteor.settings.public.options.uploader);
       uploader.send(file, function (error, downloadUrl) {
-        Session.set('uploading', false);
-        if (error) {
-          console.error('Error uploading', Parallels.Uploader.xhr.response);
-          alert (error);
-        }
+        if (error) { alert(error); }
         else {
-          console.log('Success uploading', downloadUrl);
           var u = URL.createObjectURL(file);
           var img = new Image;
-
           img.onload = function() {
             var newBitAttributes = {
               type: "image",
               position: {
-                x: 300 * index,
-                y: 20
+                x: event.clientX + (30 * index),
+                y: event.clientY
               },
               filename: downloadUrl,
               nativeWidth: img.width,
               nativeHeight: img.height
             };
             Meteor.call('insertBit', newBitAttributes, function (err) {
-              console.log(err);
+              if (err) alert(err);
             });
           };
-
           img.src = u;
         }
       });
