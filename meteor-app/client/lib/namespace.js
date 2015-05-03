@@ -1,4 +1,7 @@
 Parallels = {
   AppModes: {},
-  Handlers: Inverter
+  Handlers: Inverter,
+  Sound: {
+    Definition: {}
+  },
 };
