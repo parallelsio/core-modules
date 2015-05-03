@@ -9,6 +9,7 @@ module.exports = function (grunt) {
   var config = {
     dist: 'extensions/chrome/build',
     test: 'tests',
+    testImageUploads: 'end2end-tests/.tmp/',
     chromeExt: 'extensions/chrome/source',
     appRootUrl: {
       local: 'localhost:3000',
@@ -256,14 +257,21 @@ module.exports = function (grunt) {
           open: false,
           base: [
             '<%= config.chromeExt %>',
-            './',
-            './end2end-tests/.tmp/'
+            '<%= config.testImageUploads %>'
           ],
           middleware: function (connect, options) {
             var middlewares = [
               connect().use(busboy()),
+
+              // Add CORS Headers for testing Image Upload
+              connect().use(function (req, res, next) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', '*');
+                return next();
+              }),
+
+              // Add mock upload server for testing Image Upload
               connect().use('/upload', function (req, res) {
-                console.log('/upload request');
                 if (req.method === 'OPTIONS') {
                   res.statusCode = 200;
                   res.end();
@@ -271,35 +279,20 @@ module.exports = function (grunt) {
                   var fstream;
                   req.pipe(req.busboy);
                   req.busboy.on('file', function (fieldname, file, filename) {
-                    console.log("Uploading: " + filename);
-
-                    fstream = fs.createWriteStream(__dirname + '/end2end-tests/.tmp/' + filename);
+                    fstream = fs.createWriteStream(__dirname + '/' + config.testImageUploads + filename);
                     file.pipe(fstream);
                     fstream.on('close', function () {
-                      console.log("Upload Finished of " + filename);
                       res.statusCode = 200;
                       res.end();
                     });
                   });
                 }
-              }),
-              connect().use('/', function (req, res) {
-                console.log('/ request');
-                res.statusCode = 200;
-                res.end();
               })
             ];
 
             // add the static paths in options.base
             options.base.forEach(function (base) {
               middlewares.unshift(connect.static(base));
-            });
-
-            // add CORS headers
-            middlewares.unshift(function (req, res, next) {
-              res.setHeader('Access-Control-Allow-Origin', '*');
-              res.setHeader('Access-Control-Allow-Methods', '*');
-              return next();
             });
 
             return middlewares;
