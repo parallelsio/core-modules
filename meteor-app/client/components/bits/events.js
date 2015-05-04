@@ -34,8 +34,8 @@ Template.bit.events({
         $set: { "content": template.find('.editbit').value }
       });
 
-      Parallels.Sound.play(Parallels.Sound.Definition.impulseDrop);
-
+      Parallels.Sound.player.play('impulseDrop');
+      
       Session.set('bitEditingId', null);
       Session.set('currentMode', null);
     }

@@ -56,8 +56,7 @@ Template.bit.onRendered(function (){
         }
       });
 
-      Parallels.Sound.play(Parallels.Sound.Definition.impulseDrop);
-
+      Parallels.Sound.player.play('impulseDrop');
       return true;
     }
   });

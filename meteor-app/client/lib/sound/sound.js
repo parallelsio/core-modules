@@ -7,12 +7,9 @@
   TODO: standardize reverb times by making an effect bus; 
         wire all synthDefs through it [vs wrapping each in a reverb individually]
 
-  TODO: Ugly, refactor:
-        Parallels.Sound.play(Parallels.Sound.Definition.ImpulseDrop); 
 */ 
 
-
-Parallels.Sound = {
+Parallels.Sound.player = {
 
   _enviro: false,
   _folderPath: "sounds/",
@@ -26,7 +23,7 @@ Parallels.Sound = {
 
   play: function(definition){
     console.log("sound:play: trigger", definition);
-    var synth = flock.synth(definition);
+    var synth = flock.synth(Parallels.Sound.Definition[definition]);
     return this._enviro.play();
   },
 

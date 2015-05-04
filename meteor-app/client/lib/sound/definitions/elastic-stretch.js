@@ -4,11 +4,11 @@
 
  */
 
-Parallels.Sound.Definition.ElasticStretch = {
+Parallels.Sound.Definition['elasticStretch'] = {
 
   synthDef: {   
 
-    id: "reverb",  
+    id: "elasticStretch",  
     ugen: "flock.ugen.freeverb",
     inputs: {
       source: {
@@ -21,6 +21,6 @@ Parallels.Sound.Definition.ElasticStretch = {
       mix: 0.93,
       room: 0.5,
       damp: 0.5
-    },
+    }
   }
 }
