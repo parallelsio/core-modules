@@ -3,5 +3,5 @@ Parallels = {
   Handlers: Inverter,
   Sound: {
     Definition: {}
-  },
+  }
 };

@@ -12,6 +12,7 @@ input + output paramters, and particular options.
 uGens can be combined inside a single definition, like Lego, to make complex sounds 
 
 [More info](https://github.com/colinbdclark/Flocking/blob/master/docs/synths/creating-synths.md)
+[Overlaps with SuperCollider](https://www.youtube.com/watch?v=LKGGWsXyiyo&index=6&list=WL)
 
 To see what inputs/outputs/options are available for each uGen, 
 look at `flocking-ugens.js` submodule.

@@ -9,29 +9,29 @@
 
  */
 
-Parallels.Sound.Definition.ImpulseDrop = {
+Parallels.Sound.Definition['impulseDrop'] = {
 
   synthDef: {   
 
-    id: "reverb",  
     ugen: "flock.ugen.freeverb",
     inputs: {
       source: {
           ugen: "flock.ugen.impulse",
           inputs: {
               freq: {
+                id: "impulseDropxLine",
                 ugen: "flock.ugen.xLine",
                 start: 880,
                 end: 2,
                 duration: 3.0
               },
-              mul: 0.25
+              mul: 0.5
           },
       },
 
       mix: 0.93,
       room: 0.5,
       damp: 0.5
-    },
+    }
   }
 }

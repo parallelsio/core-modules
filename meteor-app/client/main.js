@@ -1,6 +1,6 @@
 Meteor.startup(function(){
 
-  Sound.init();
+  Parallels.Sound.player.init();
 
   console.log("Meteor.startup begin.");
   

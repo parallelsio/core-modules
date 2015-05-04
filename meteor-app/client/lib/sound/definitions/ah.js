@@ -4,7 +4,7 @@
  *  OQ: I love the tone of the SoundPrism app on iOS. How do we replicate that here?
  */
 
-Parallels.Sound.Definition.ah = {
+// Parallels.Sound.Definition.ah = {
 
     // _fundamental: 440;
 
@@ -76,6 +76,6 @@ Parallels.Sound.Definition.ah = {
     //     polySynth[event.action](event.noteName, event.change);
     //     idx++;
     // });
-}
+// }
 
         

@@ -4,7 +4,7 @@ Template.bit.gestures({
     /* `template` is the `Blaze.TemplateInstance` */
     /* `this` is the data context of the element in your template */
 
-    Parallels.Sound.play(Parallels.Sound.definitions.impulseDrop);
+    // Parallels.Sound.player.play('impulseDrop');
     console.log('bit:long-press');
   }
 });

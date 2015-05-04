@@ -1,13 +1,3 @@
-Template.bit.onCreated(function (){
-
-  template = this;
-  var bitDataContext = template.data;
-  var bitDatabaseId = bitDataContext._id;
-  var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
-  console.log("bit:created: ", bitDatabaseId);
-
-});
-
 Template.bit.onRendered(function (){
 
   template = this;
@@ -15,6 +5,9 @@ Template.bit.onRendered(function (){
   var bitDatabaseId = bitDataContext._id;
   var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
   console.log("bit:render: ", bitDatabaseId);
+
+  // Parallels.Sound.player.play('elasticStretch');
+  var bitDragSoundInstance = "";
 
   function timelineDone(bitDatabaseId){
     console.log("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
@@ -36,9 +29,27 @@ Template.bit.onRendered(function (){
     throwProps:false,
     zIndexBoost:false,
 
-    // onDragStart:function(event){
+    onDragStart:function(event){
+      var x = this.endX;
+      var y = this.endY;
 
-    // },
+      // TODO: delay play so it's got time to 'breathe', and doesnt stutter ?
+      bitDragSoundInstance = Parallels.Sound.player.play('elasticStretch');
+      console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
+    },
+
+    // OQ: what's the diff between:
+    // Draggable.addEventListener("onDrag", yourFunc);
+    // and:
+    onDrag:function(event){
+      var x = this.endX;
+      var y = this.endY;
+
+      // TODO: only display if changed from last reading's value
+      console.log(event.type, " : dragging: ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragSoundInstance);
+
+      bitDragSoundInstance.set("elasticStretch.source.freq", x)
+    },
 
     onDragEnd:function( event ) {
       console.log("done dragging.");
@@ -56,8 +67,14 @@ Template.bit.onRendered(function (){
         }
       });
 
-      Parallels.Sound.play(Parallels.Sound.Definition.impulseDrop);
+      Session.set("dragInstance", null);
 
+      // replace with envelope close instead:
+      // it would be more performant, less slitch
+      // and would be more like turning down the volume on the stereo,
+      // rather than how we have it now, where were 
+      // pressing the power button to turn off
+      Parallels.Sound.player.stop();
       return true;
     }
   });
