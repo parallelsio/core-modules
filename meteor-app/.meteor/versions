@@ -16,6 +16,7 @@ coffeescript@1.0.6
 dburles:mongo-collection-instances@0.3.3
 ddp@1.1.0
 deps@1.0.7
+edgee:slingshot@0.6.2
 ejson@1.0.6
 email@1.0.6
 fastclick@1.0.3
@@ -62,12 +63,14 @@ msavin:jetsetter@1.0.11
 msavin:mongol@1.0.22
 npm-container@1.0.0
 observe-sequence@1.0.6
+ogourment:settings@1.0.1
 ordered-dict@1.0.3
 ostrio:neo4jdriver@0.2.12
 ovcharik:howler@1.1.26
 package-version-parser@3.0.3
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
+raix:ui-dropped-event@0.0.7
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5

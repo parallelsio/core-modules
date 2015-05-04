@@ -11,7 +11,7 @@ Parallels.AppModes['create-bit'] = {
       }
     };
     Meteor.call('insertBit', newBitAttributes, function (err, id) {
-      console.log(err);
+      log.debug(err);
       Session.set('bitEditingId', id);
     });
   },

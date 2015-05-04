@@ -5,6 +5,6 @@ Template.bit.gestures({
     /* `this` is the data context of the element in your template */
 
     Sound.play('glue.mp3');
-    console.log('bit:long-press');
+    log.debug('bit:long-press');
   }
 });

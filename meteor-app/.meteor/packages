@@ -29,4 +29,8 @@ meteorhacks:npm
 
 npm-container
 stevezhu:lodash
+raix:ui-dropped-event
+edgee:slingshot
 ostrio:neo4jdriver
+ogourment:settings
+practicalmeteor:loglevel

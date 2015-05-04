@@ -1,3 +1,7 @@
+MeteorSettings.setDefaults({
+  public: { options: { isSoundEnabled: true } }
+});
+
 Sound = {
 
   _folderPath: "sounds/",
