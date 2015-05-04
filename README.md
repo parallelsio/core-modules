@@ -2,7 +2,7 @@
 
 <img src="http://i.imgur.com/lI0HhvV.png" />
 
-##[Parallels](http://parallels.io) : A free, digital tool for creativity + play, enabling you to fluidly create, remix + share documents as networks of ideas. 
+##[Parallels](http://parallels.io) (working title) : A free, digital tool for creativity + play, enabling you to fluidly create, remix + share documents as networks of ideas. 
 
 > When we say document, we imagine playing with fragments, or bits, of media just like digital Lego. These documents are more like digital collections, that you can create and remix on your own, work on together with a group of friends and co-workers, or publish for people you've yet to meet. 
 > Parallels is an engine for the discovery of ideas.
@@ -263,6 +263,72 @@
 > __A__: The system which listens for changes automatically reload your newest changes, *without you having to reconfigure the extension, unpack or copy files anywhere. 
 
 > However, you *will need to refresh the tab in which you are testing the clipper, every time you edit the source code
+
+<br>
+
+> __Q__: How do I close the server after running `npm run server`?
+
+> __A__: Press Control X, Control C to kill the process.
+
+<br>
+
+> __Q__: I'm trying to run Meteor commands, and I keep seeing errors/output like 
+` You are not in a Meteor project directory`
+
+> __A__: Our project has 2 sub-projects in it: The web canvas, in `/meteor-app`, and the extensions, in `/extensions` part. You need to enter the Meteor directory to run Meteor commands. Try `cd meteor-app` from the project root.
+
+<br>
+
+> __Q__: I'm trying to run `npm run server` to start the server and get going. I see:
+
+```
+xxx@username:~/code/parallels-core-modules/meteor-app(flocking-audio)]$ npm run server
+npm ERR! Error: ENOENT, open '/Users/xxxxx/code/parallels-core-modules/meteor-app/package.json'
+npm ERR! If you need help, you may report this *entire* log,
+npm ERR! including the npm and node versions, at:
+npm ERR!     <http://github.com/npm/npm/issues>
+
+npm ERR! System Darwin 13.4.0
+npm ERR! command "node" "/usr/local/bin/npm" "run" "server"
+npm ERR! cwd /Users/xxxxx/code/parallels-core-modules/meteor-app
+npm ERR! node -v v0.10.32
+npm ERR! npm -v 1.4.28
+npm ERR! path /Users/xxxxx/code/parallels-core-modules/meteor-app/package.json
+npm ERR! code ENOENT
+npm ERR! errno 34
+npm ERR!
+npm ERR! Additional logging details can be found in:
+npm ERR!     /Users/xxxxx/Code/code/parallels-core-modules/meteor-app/npm-debug.log
+npm ERR! not ok code 0
+
+```
+
+> __A__: `npm` commands need to be run from the project root. 
+
+<br>
+
+
+> __Q__: I dont want to run all the stuff that happens when `npm run server` runs. I just want the one meteor run command. 
+
+> __A__: `cd meteor-app` and run your meteor commands there. To start the server, you'll need to start with the settings file. Try `meteor run --settings settings.json --port 3000`, or update the port number to change to another port. This is useful if you have something else you are working on that defaults to port `3000`
+
+<br>
+
+
+> __Q__: I just finished adding some code and am trying to run `npm run e2e` to make sure I didn't break anything. THe terminal process hangs, and the browser never actually opens to run the end to end test. My hangs, after something like this: 
+
+```
+Running "bgShell:e2e" (bgShell) task
+Starting Selenium server...
+Starting Meteor App with DB: mongodb://localhost:27017/parallels_test
+```
+
+
+> __A__: `npm run server` or your Meteor server is running because you turned it on manually in another tab. You'll need to stop it to run your tests. Do: Control X, and Control C on the tab running `npm run server`, and try running your tests again with `npm run e2e`
+
+
+
+---------
 
 
 
