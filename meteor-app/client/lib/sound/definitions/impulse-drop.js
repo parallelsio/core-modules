@@ -10,7 +10,6 @@
  */
 
 
-
 var customEnvelope = {
     levels: [0, 0.5, 0],
     times: [0.05, 0.05, 1],
@@ -25,11 +24,11 @@ var gateDef = {
 };
 
 
-
 Parallels.Sound.Definition['impulseDrop'] = {
 
   synthDef: {   
 
+    id: "impulseDrop",  
     ugen: "flock.ugen.freeverb",
     inputs: {
       source: {
@@ -53,9 +52,9 @@ Parallels.Sound.Definition['impulseDrop'] = {
           }
       },
 
-      mix: 0.7,
-      room: 0.2,
-      damp: 0
+      mix: 0.93,
+      room: 0.5,
+      damp: 0.5
     }
   }
 }
