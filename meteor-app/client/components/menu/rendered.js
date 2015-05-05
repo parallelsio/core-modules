@@ -25,7 +25,9 @@ Template.menu.rendered = function() {
 
       // Greensock applied transforms to position bits when OnRendered was called.
       // "translate3d(132px, 89px, 0px)"
-      // we need the x/y position to pass to the Timeline obj to give a nice wipe/shimmer effect
+      // we need the x/y position to pass to the Timeline obj,
+      // which will use the distance between the bits to calc a delay offset
+      // this delay offset is what gives it a nice wipe/shimmering effect
       var cssTransform = this.style["transform"]; 
       var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
 
@@ -36,6 +38,16 @@ Template.menu.rendered = function() {
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
       console.log("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
+
+      // calc a sound frequency to use as a parameter for the sound played
+      // Using the delay param we used above for the animation will tie 
+      // the 2 together nicely 
+      var newFreq = Math.random() * 1000 + 1060;
+      newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
+
+      console.log("newFreq", newFreq);
+      bitDragSoundInstance = Parallels.Sound.player.play('elasticStretch');
+      bitDragSoundInstance.set("elasticStretch.source.freq", newFreq);
 
       shimmerTimeline.fromTo(
         this,

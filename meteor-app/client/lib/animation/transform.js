@@ -22,7 +22,6 @@ Transform = {
     // and save the image's thumbnail height+width in a session var
     if (direction === "expand")
     {
-
       // padding for top and bottom, in pixels
       var edgePadding = 10; 
 
