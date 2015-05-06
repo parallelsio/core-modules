@@ -140,26 +140,11 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
-      meteordebug: {
-        cmd: [
-          'cd meteor-app',
-          'NODE_OPTIONS=\'--debug-brk\' meteor run --settings settings.json'
-        ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true
-      },
       bowerChromeExt: {
         cmd: [
           'cd <%= config.chromeExt %>',
           '../../../node_modules/.bin/bower install'
         ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true
-      },
-      tests: {
-        cmd: 'echo "NOTHING HERE YET"',
         bg: false,
         stdout: true,
         stderr: true
@@ -190,10 +175,6 @@ module.exports = function (grunt) {
       }
     },
     concurrent: {
-      serverdebug: [
-        'bgShell:meteordebug',
-        'watch'
-      ],
       server: [
         'bgShell:meteor',
         'watch'
@@ -303,10 +284,18 @@ module.exports = function (grunt) {
     },
     env : {
       ci : {
-        PARALLELS_DOMAIN : 'parallels-ci.meteor.com'
+        PARALLELS_DOMAIN : 'parallels-ci.meteor.com',
+        NEW_RELIC_NO_CONFIG_FILE: 'TRUE',
+        NEW_RELIC_ENABLED: 'FALSE',
+        AWS_ACCESS_KEY_ID: "KEY",
+        AWS_SECRET_ACCESS_KEY: "SECRET"
       },
       local : {
-        PARALLELS_DOMAIN : '127.0.0.1:3000'
+        PARALLELS_DOMAIN : '127.0.0.1:3000',
+        NEW_RELIC_NO_CONFIG_FILE: 'TRUE',
+        NEW_RELIC_ENABLED: 'FALSE',
+        AWS_ACCESS_KEY_ID: "KEY",
+        AWS_SECRET_ACCESS_KEY: "SECRET"
       }
     },
     jasmine: {
@@ -385,35 +374,27 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask('server', 'Run server', function (target) {
-    require('dotenv').load();
-
-    if (target !== 'debug')
-      target = '';
-
-    var tasks = [
-      'bgShell:bowerChromeExt',
-      'sass',
-      'jade',
-      'connect:chrome',
-      'concurrent:server' + target
-    ];
-
-    grunt.task.run(tasks);
-  });
+  grunt.registerTask('server', 'Run server', [
+    'env:' + target,
+    'bgShell:bowerChromeExt',
+    'sass',
+    'jade',
+    'connect:chrome',
+    'concurrent:server'
+  ]);
 
   grunt.registerTask('all-tests', 'Run units + integration tests', [
     'jshint',
+    'env:' + target,
     'bgShell:meteorTests',
     'connect:test',
     'jasmine',
-    'env:' + target,
     'build:' + target,
     'bgShell:resetTestDb',
     'bgShell:e2e'
   ]);
 
-  grunt.registerTask('unit-tests', 'Run unit tests', ['jshint', 'bgShell:meteorTests', 'connect:test', 'jasmine']);
+  grunt.registerTask('unit-tests', 'Run unit tests', ['jshint', 'env:' + target, 'bgShell:meteorTests', 'connect:test', 'jasmine']);
 
   grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
 

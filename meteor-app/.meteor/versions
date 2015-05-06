@@ -61,6 +61,7 @@ mongo@1.1.0
 mongo-livedata@1.0.8
 msavin:jetsetter@1.0.11
 msavin:mongol@1.0.22
+mycartio:newrelic@1.0.5
 npm-container@1.0.0
 observe-sequence@1.0.6
 ogourment:settings@1.0.1
