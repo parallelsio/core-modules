@@ -7,7 +7,7 @@ Router.configure({
 });
 
 Router.route('/', function () {
-  this.render('map');
+  this.render('BitMap');
 });
 
 Router.route('/debug', function () {
