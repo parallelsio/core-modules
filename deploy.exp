@@ -17,5 +17,5 @@ expect -- "*Logged in as*"
 spawn meteor deploy --delete $env(METEOR_DEPLOY_URL)
 expect -- "Deleted."
 
-spawn NEW_RELIC_NO_CONFIG_FILE=TRUE NEW_RELIC_ENABLED=FALSE meteor deploy $env(METEOR_DEPLOY_URL) --settings settings.prod.json
+spawn meteor deploy $env(METEOR_DEPLOY_URL) --settings settings.prod.json
 expect -- "*Now serving at $env(METEOR_DEPLOY_URL)"
