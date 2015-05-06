@@ -1,7 +1,5 @@
 Meteor.startup(function () {
 
-  Meteor.require('newrelic');
-
   if (Bits.find().count() === 0) {
     [
       {
