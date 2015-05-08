@@ -1,11 +1,18 @@
 Template.menu.helpers({
 
-  bitEditingId: function() { 
-    return Session.get('bitEditingId'); 
+  bitEditingId: function() {
+    return Session.get('bitEditingId');
   },
-  
-  bitsCount: function() { 
+
+  bitsCount: function() {
     return Bits.find().count();
-  } 
-  
+  },
+
+  isUploading: function () {
+    return Session.get('uploading');
+  },
+
+  progress: function () {
+    return Session.get('uploadProgress');
+  }
 });

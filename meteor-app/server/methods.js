@@ -2,18 +2,13 @@ var N4JDB = new Meteor.Neo4j(process.env.GRAPHENEDB_URL);
 
 function addBitToGraph (mongoId) {
   N4JDB.query('CREATE (:Bit {mongoId:"' + mongoId + '"})', null, function (err) {
-    if (err) {
-      log.debug('Neo4j addBitToGraph failed: ', mongoId, err);
-    }
+    if (err) log.debug('Neo4j addBitToGraph failed: ', mongoId, err);
   });
 }
 
-function removeBitFromGraph (mongoId, cb) {
+function removeBitFromGraph (mongoId) {
   N4JDB.query('MATCH (a:Bit {mongoId:"' + mongoId + '"}) DELETE a', null, function (err) {
-    if (err) {
-      log.debug('Neo4j removeBitFromGraph failed: ', mongoId, err);
-    }
-    cb(err, null);
+    if (err) log.debug('Neo4j removeBitFromGraph failed: ', mongoId, err);
   });
 }
 
@@ -32,8 +27,7 @@ Meteor.methods({
     try {
       Bits.remove(id);
       log.debug('methods:removeBit: ', id);
-      var removeBitFromGraphPromise = Meteor.wrapAsync(removeBitFromGraph);
-      return removeBitFromGraphPromise(id);
+      removeBitFromGraph(id);
     } catch(err) {
       log.debug(err);
     }

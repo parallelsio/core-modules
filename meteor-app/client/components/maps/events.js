@@ -11,7 +11,7 @@ var getDroppedFiles = function(e) {
   return files;
 };
 
-var createImageBit = function (file, downloadUrl, event, index) {
+var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
   var u = URL.createObjectURL(file);
   var img = new Image;
   img.onload = function() {
@@ -21,7 +21,9 @@ var createImageBit = function (file, downloadUrl, event, index) {
         x: event.clientX + (30 * index),
         y: event.clientY
       },
-      filename: downloadUrl,
+      filename: file.name,
+      uploadKey: uploadKey,
+      imageSource: downloadUrl,
       nativeWidth: img.width,
       nativeHeight: img.height
     };
@@ -51,13 +53,13 @@ Parallels.Handlers.register('map.events', {
     var droppedFiles = getDroppedFiles(event);
 
     var fileUploads = _.map(droppedFiles, function (file, index) {
+      var uploadKey = Math.random().toString(36).slice(2);
       var uploader = new Slingshot.Upload(Meteor.settings.public.options.uploader);
-      uploader.send(file, function (error, downloadUrl) {
-        if (error) { alert(error); }
-        else {
-          createImageBit(file, downloadUrl, event, index);
-        }
+      uploader.send(file, function (error) {
+        if (error) alert(error);
       });
+      Parallels.FileUploads[uploadKey] = uploader;
+      createImageBit(file, uploader.url(true), event, uploadKey, index);
       return uploader;
     });
 
