@@ -19,7 +19,8 @@ if [ -z "$CI" ]; then
 fi
 
 # Run integration tests
-node node_modules/cucumber/bin/cucumber.js end2end-tests
+TESTS=${GROUP:-end2end-tests}
+node node_modules/cucumber/bin/cucumber.js $TESTS $CUCUMBER_ARGS
 status=$?
 
 # Do some cleanup if running locally

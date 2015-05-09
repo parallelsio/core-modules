@@ -406,6 +406,7 @@ module.exports = function (grunt) {
     'jshint',
     'bgShell:meteorTests',
     'connect:test',
+    'connect:chrome',
     'jasmine',
     'env:' + target,
     'build:' + target,
@@ -415,7 +416,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('unit-tests', 'Run unit tests', ['jshint', 'bgShell:meteorTests', 'connect:test', 'jasmine']);
 
-  grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
+  grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'connect:chrome', 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
 
   grunt.registerTask('default', 'server');
 };

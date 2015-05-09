@@ -1,5 +1,5 @@
 <template name="bit">
-  <div data-id="{{ _id }}" class="bit {{ type }}" data-title="{{ title }}" data-upload-key="{{ uploadKey }}">
+  <div data-id="{{ _id }}" class="bit {{ type }}" data-title="{{ title }}" data-filename="{{ filename }}" data-upload-key="{{ uploadKey }}">
     <div class="container">
       <div class="face front {{ color }}">
         <div class="content {{uploadStatus}}">
@@ -41,16 +41,9 @@
           {{ else }}
 
             {{#if isImage }}
-              <img src="{{ imageSource }}">
-
+              <img src="{{ imageSrc }}">
             {{ else }}
-
-              {{#if imageDataUrl }}
-                <img src="{{ imageDataUrl }}">
-              {{ else }}
-                {{ content }}
-              {{/if}}
-
+              {{ content }}
             {{/if}}
 
           {{/if }}
