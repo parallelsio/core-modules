@@ -56,7 +56,7 @@ Parallels.Handlers.register('map.events', {
       var uploadKey = Math.random().toString(36).slice(2);
       var uploader = new Slingshot.Upload(Meteor.settings.public.options.uploader);
       uploader.send(file, function (error) {
-        if (error) alert(error);
+        if (error) Errors.insert({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
       });
       Parallels.FileUploads[uploadKey] = uploader;
       createImageBit(file, uploader.url(true), event, uploadKey, index);

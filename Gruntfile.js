@@ -276,16 +276,8 @@ module.exports = function (grunt) {
                   res.statusCode = 200;
                   res.end();
                 } else {
-                  var fstream;
-                  req.pipe(req.busboy);
-                  req.busboy.on('file', function (fieldname, file, filename) {
-                    fstream = fs.createWriteStream(__dirname + '/' + config.testImageUploads + filename);
-                    file.pipe(fstream);
-                    fstream.on('close', function () {
-                      res.statusCode = 200;
-                      res.end();
-                    });
-                  });
+                  res.statusCode = 400;
+                  res.end();
                 }
               })
             ];
