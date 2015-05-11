@@ -1,24 +1,31 @@
 BitEvents = {
-  toggleSelectedClass: function (event, template) {
-    if (event.target.classList.contains('bit')) {
-      Session.set('bitHoveringId', template.data._id);
-      log.debug("bit:hover:in " + Session.get('bitHoveringId'));
 
-      $(event.target).addClass('selected');
+  hoverInBit: function (event, template) {
+    
+    if (event.target.classList.contains('selected') === false) {
+      Session.set('bitHoveringId', template.data._id);
+      log.debug("bit:hover:in : " + Session.get('bitHoveringId'));
+      $(event.target).addClass('selected'); 
     }
+
+    else { 
+      log.debug("bit:hover: already hovered");
+    }
+  },
+
+  hoverOutBit: function (event, template){
+    log.debug("bit:hover:out : " + Session.get('bitHoveringId'));
+    Session.set('bitHoveringId', null);
+    $(event.target).removeClass('selected');
   }
 };
 
+
 Template.bit.events({
 
-  'mouseenter .bit': BitEvents.toggleSelectedClass,
+  'mouseenter .bit': BitEvents.hoverInBit,
 
-  'mouseleave .bit': function (event) {
-    log.debug("bit:hover:out " + Session.get('bitHoveringId'));
-    if (event.target.classList.contains('bit')) {
-      Session.set('bitHoveringId', '');
-    }
-  },
+  'mouseleave .bit': BitEvents.hoverOutBit,
 
   'click .bit': function () {
     log.debug("bit:click: " + this._id);
