@@ -21,7 +21,6 @@ notifications:
 
 env:
   global:
-  - CUCUMBER_ARGS="--tags ~@dev"
   - METEOR_DEPLOY_URL=http://parallels-ci.meteor.com
   - METEOR_EMAIL=angelcabo
   - secure: pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc=

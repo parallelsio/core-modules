@@ -27,8 +27,8 @@
     "grunt-template-jasmine-requirejs": "^0.2.0",
     "jshint-stylish": "^1.0.0",
     "matchdep": "^0.3.0",
-    "selenium-standalone": "^2.44.0-7",
-    "selenium-webdriver": "^2.44.0"
+    "selenium-standalone": "2.44.0-7",
+    "selenium-webdriver": "2.44.0"
   },
   "scripts": {
     "test": "grunt all-tests",
