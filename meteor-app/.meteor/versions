@@ -11,6 +11,7 @@ boilerplate-generator@1.0.3
 callback-hook@1.0.3
 check@1.0.5
 chriswessels:hammer@3.1.1
+chuangbo:marked@0.3.5
 clubfest:raphael@1.0.0
 coffeescript@1.0.6
 dburles:mongo-collection-instances@0.3.3

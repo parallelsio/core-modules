@@ -36,14 +36,14 @@
 
           {{#if isEditingThisBit }}
 
-            <input class="editbit" type="text" autofocus value={{ content }}>
+            <input type="text" class="editbit" autofocus value={{content}}>
 
           {{ else }}
 
             {{#if imageSrc }}
               <img src="{{ imageSrc }}">
             {{ else }}
-              {{ content }}
+              {{#markdown}}{{content}}{{/markdown}}
             {{/if}}
 
           {{/if }}
