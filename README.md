@@ -328,6 +328,30 @@ Starting Meteor App with DB: mongodb://localhost:27017/parallels_test
 
 
 
+> __Q__: I did `cd meteor-app` and then `meteor reset` to clear the Mongo db, but I'm getting an error:
+
+```
+reset: Meteor is running.
+
+This command does not work while Meteor is running your application. Exit the running Meteor development server.
+```
+> __A__: You can't run this command while Meteor is running. Shut down your meteor server by closing all open terminal windows that are running `npm run server` (which runs the Meteor server under the hood). 
+
+> If there are none, there's probably an orphan lock and some Meteor process still running. Try
+
+>`ps -x | grep meteor` , which should gives you some output like :
+
+> ```
+50136 ??         0:03.24 /Users/xxxxx/.meteor/packages/velocity_meteor-tool/.1.1.3_3.1ieennv++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/mongodb/bin/mongod --bind_ip 127.0.0.1 --smallfiles --port 3001 --dbpath /Users/thoughtworker/Code/code/parallels-core-modules/meteor-app/.meteor/local/db --oplogSize 8 --replSet meteor
+51804 ttys000    0:00.00 grep meteor
+```
+
+> take the process ID for the Meteor entry, in this case `50136`, and run the kill command, like so:
+
+> `kill -s KILL 50136`
+
+Now try `meteor reset`
+
 ---------
 
 
