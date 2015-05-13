@@ -48,15 +48,15 @@ Meteor.methods({
     }
   },
 
-  'deleteBit': function (id) {
+  'deleteBit': function (mongoId) {
     try {
-      log.debug('methods:deleteBit: ', id);
+      log.debug('methods:deleteBit: ', mongoId);
 
       // 1: delete from Mongo db
-      Bits.remove(id);
+      Bits.remove(mongoId);
 
       // 2: delete from Neo4j db
-      deleteBitFromGraph(id);
+      deleteBitFromGraph(mongoId);
     } 
     catch(err) {
       log.debug(err);

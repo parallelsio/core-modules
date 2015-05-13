@@ -13,12 +13,7 @@ Template.map.onRendered(function (){
 
       // TODO: use Greensock's force3D flag, instead of 0.01px hack [which triggers GPU rendering]
       var transformString =  "translate3d(" + bitDataContext.position.x + "px, " + bitDataContext.position.y + "px, 0.01px)";
-
       log.debug('_uihook: moment before bit insert: ', bitDatabaseId);
-      log.debug('_uihook: ********');
-      // log.debug('node: ', node);
-      // log.debug('next: ', next);
-      log.debug('_uihook: ********');
 
       $(node)
         .hide()
