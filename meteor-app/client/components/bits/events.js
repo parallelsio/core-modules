@@ -27,10 +27,6 @@ Template.bit.events({
 
   'mouseleave .bit': BitEvents.hoverOutBit,
 
-  'click .bit': function () {
-    log.debug("bit:click: " + this._id);
-  },
-
   'dblclick .bit': function () {
     Parallels.AppModes['edit-bit'].enter(this._id);
   },

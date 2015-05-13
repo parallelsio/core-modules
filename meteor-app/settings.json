@@ -2,7 +2,7 @@
   "public": {
     "options": {
       "uploader": "fileSystemUploader",
-      "isSoundEnabled": false,
+      "isSoundEnabled": true,
       "displayIntroAnimation": true
     }
   }

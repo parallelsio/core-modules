@@ -19,7 +19,7 @@ var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
       type: "image",
       position: {
         x: event.clientX + (30 * index),
-        y: event.clientY
+        y: event.clientY + (30 * index),
       },
       filename: file.name,
       uploadKey: uploadKey,
