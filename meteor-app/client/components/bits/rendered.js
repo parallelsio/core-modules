@@ -1,3 +1,7 @@
+Template.bit.onDestroyed(function(){
+  Session.set('bitHoveringId', null);
+});
+
 Template.bit.onRendered(function (){
 
   var template = this;
