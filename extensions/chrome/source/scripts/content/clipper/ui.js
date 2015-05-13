@@ -35,7 +35,7 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
     console.log(data);
 
     bit = {
-      type: 'image',
+      type: 'webpage',
       url: data.url,
       title: data.title,
       imageDataUrl: data.imageDataUrl,

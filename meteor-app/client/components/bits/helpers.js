@@ -4,10 +4,6 @@ Template.bit.helpers({
     return Session.equals('bitEditingId', this._id);
   },
 
-  isImage: function () {
-    return this.type === 'image';
-  },
-
   imageSrc: function () {
     return this.imageDataUrl || this.imageSource;
   },
