@@ -1,6 +1,7 @@
 Meteor.startup(function() {
 
   Mousetrap.bind('space', function (event) {
+    log.debug("pressed 'Space' key");
     try {
       event.stopPropagation();
       event.preventDefault();
@@ -8,20 +9,24 @@ Meteor.startup(function() {
     Parallels.AppModes['preview-bit'].enter();
   });
 
-  Mousetrap.bind('shift', Parallels.AppModes['create-parallel'].enter);
+  Mousetrap.bind('shift', function (){
+    log.debug("pressed 'Shift' key");
+    Parallels.AppModes['create-parallel'].enter();
+  });
 
   Mousetrap.bindGlobal('esc', function() {
+    log.debug("pressed 'Esc' key");
     var currentMode = Session.get('currentMode');
     if (!currentMode) return;
     Parallels.AppModes[currentMode].exit();
   });
 
   Mousetrap.bind("d", function() {
-    log.debug("pressed d");
+    log.debug("pressed 'd' key");
     var bitHoveringId = Session.get('bitHoveringId');
     if (bitHoveringId) {
-      Meteor.call('removeBit', bitHoveringId);
-      log.debug("bit:delete: " + bitHoveringId);
+      log.debug("starting bit:delete on ", bitHoveringId);
+      Meteor.call('deleteBit', bitHoveringId);
     }
   });
 });

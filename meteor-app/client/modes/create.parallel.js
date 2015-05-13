@@ -11,8 +11,6 @@ Parallels.AppModes['create-parallel'] = {
   enter: function () {
     Session.set('currentMode', 'create-parallel');
 
-    log.debug("pressed Shift key.");
-
     var bitHoveringId = Session.get('bitHoveringId');
     var isCreatingParallel = Session.get('isCreatingParallel');
 

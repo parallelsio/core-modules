@@ -27,7 +27,7 @@ var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
       nativeWidth: img.width,
       nativeHeight: img.height
     };
-    Meteor.call('insertBit', newBitAttributes, function (err) {
+    Meteor.call('createBit', newBitAttributes, function (err) {
       if (err) alert(err);
     });
   };

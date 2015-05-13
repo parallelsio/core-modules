@@ -24,7 +24,6 @@ Template.map.onRendered(function (){
         .hide()
         .insertBefore(next)
         .css( { transform: transformString } )
-        .find('.editbit').focus();  // TODO: bug: focus doesnt work the 2nd time
 
         // TODO: add conditional to the editbit focus, as only relevant for text bits
 

@@ -12,7 +12,7 @@ Meteor.startup(function () {
         color: "white"
       }
     ].map(function (data) {
-        Meteor.call('insertBit', data);
+        Meteor.call('createBit', data);
       });
   }
 });

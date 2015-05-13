@@ -8,7 +8,7 @@ Parallels.AppModes['preview-bit'] = {
 
     if (bitHoveringId)
     {
-      log.debug("pressed spacebar over bit: ", bitHoveringId);
+      log.debug("triggered preview over bit: ", bitHoveringId);
 
       var $bit = $("[data-id='" + bitHoveringId + "']");
       var bitTemplate = Blaze.getView($bit[0]);
@@ -51,7 +51,7 @@ Parallels.AppModes['preview-bit'] = {
 
     if (bitEditingId)
     {
-      Meteor.call('removeBit', bitEditingId);
+      Meteor.call('deleteBit', bitEditingId);
       Session.set('bitEditingId', null);
     }
   }

@@ -17,7 +17,7 @@ Template.bit.onRendered(function (){
     if (bitUpload.status() === 'failed') {
       //bitHtmlElement.find('.content')[0].classList.add('complete', 'error'); // would show a friendly error message but the next line we remove the bit so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
       computation.stop();
-      Meteor.call('removeBit', bitDatabaseId);
+      Meteor.call('deleteBit', bitDatabaseId);
       return;
     }
 

@@ -4,7 +4,7 @@ BitEvents = {
     
     if (event.target.classList.contains('selected') === false) {
       Session.set('bitHoveringId', template.data._id);
-      log.debug("bit:hover:in : " + Session.get('bitHoveringId'));
+      log.debug("bit:hover:in : ", + Session.get('bitHoveringId'));
       $(event.target).addClass('selected'); 
     }
 
@@ -14,7 +14,7 @@ BitEvents = {
   },
 
   hoverOutBit: function (event, template){
-    log.debug("bit:hover:out : " + Session.get('bitHoveringId'));
+    log.debug("bit:hover:out : ", Session.get('bitHoveringId'));
     Session.set('bitHoveringId', null);
     $(event.target).removeClass('selected');
   }
@@ -32,6 +32,7 @@ Template.bit.events({
   },
 
   'keyup .bit': function (event, template) {
+
     if(event.which === 13){
       Bits.update( this._id , {
         $set: { "content": template.find('.editbit').value }
