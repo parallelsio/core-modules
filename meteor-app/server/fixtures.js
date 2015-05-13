@@ -5,8 +5,8 @@ Meteor.startup(function () {
       {
         type: "text",
         position: {
-          x: 450,
-          y: 400
+          x: 250,
+          y: 200
         },
         content: "Hello world!",
         color: "white"

@@ -15,10 +15,10 @@ Template.map.onRendered(function (){
       var transformString =  "translate3d(" + bitDataContext.position.x + "px, " + bitDataContext.position.y + "px, 0.01px)";
 
       log.debug('_uihook: moment before bit insert: ', bitDatabaseId);
-      log.debug('********');
-      log.debug('node: ', node);
-      log.debug('next: ', next);
-      log.debug('********');
+      log.debug('_uihook: ********');
+      // log.debug('node: ', node);
+      // log.debug('next: ', next);
+      log.debug('_uihook: ********');
 
       $(node)
         .hide()

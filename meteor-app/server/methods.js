@@ -12,7 +12,7 @@ function addBitToGraph (mongoId) {
     });
 }
 
-function removeBitFromGraph (mongoId) {
+function deleteBitFromGraph (mongoId) {
   log.debug('Neo4j removeBitFromGraph starting ', mongoId);
 
   N4JDB.query(

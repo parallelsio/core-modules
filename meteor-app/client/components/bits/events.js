@@ -2,11 +2,9 @@ BitEvents = {
 
   hoverInBit: function (event, template) {
     Session.set('bitHoveringId', template.data._id);
-    log.debug("bit:hover:in : ", + Session.get('bitHoveringId'));
   },
 
   hoverOutBit: function (event, template){
-    log.debug("bit:hover:out : ", Session.get('bitHoveringId'));
     Session.set('bitHoveringId', null);
   }
 };
