@@ -47,7 +47,7 @@ Template.map.onRendered(function (){
     removeElement: function(node) {
 
       function timelineRemoveDone(node){
-        $(this).remove();
+        $(node).remove();
         log.debug("bit:remove:uihook : timeline animate done. removed bit.");
       }
 

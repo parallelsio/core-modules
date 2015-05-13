@@ -2,14 +2,18 @@ BitEvents = {
 
   hoverInBit: function (event, template) {
     Session.set('bitHoveringId', template.data._id);
+    // TODO: play sound here
   },
 
   hoverOutBit: function (event, template){
     Session.set('bitHoveringId', null);
+    // TODO: play sound here
   }
 };
 
 
+
+// for more bit events see /client/lib/key-bindings.js
 Template.bit.events({
 
   'mouseenter .bit': BitEvents.hoverInBit,

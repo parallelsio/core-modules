@@ -42,14 +42,14 @@ Meteor.methods({
       log.debug('bit:create to Neo4j successful: ', mongoId);
 
       return mongoId;
-    } catch(err) {
+    } 
+    catch(err) {
       log.debug(err);
     }
   },
 
   'deleteBit': function (id) {
     try {
-
       log.debug('methods:deleteBit: ', id);
 
       // 1: delete from Mongo db
@@ -57,8 +57,8 @@ Meteor.methods({
 
       // 2: delete from Neo4j db
       deleteBitFromGraph(id);
-
-    } catch(err) {
+    } 
+    catch(err) {
       log.debug(err);
     }
   }
