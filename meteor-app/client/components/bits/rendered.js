@@ -50,7 +50,6 @@ Template.bit.onRendered(function (){
 
   function timelineDone(bitDatabaseId){
     log.debug("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
-    log.debug(bitHtmlElement);
   }
 
   var timeline = new TimelineMax({
