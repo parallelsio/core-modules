@@ -14,12 +14,14 @@ var getDroppedFiles = function(e) {
 var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
   var u = URL.createObjectURL(file);
   var img = new Image;
+  var xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+  var yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
   img.onload = function() {
     var newBitAttributes = {
       type: "image",
       position: {
-        x: event.clientX + (30 * index),
-        y: event.clientY + (30 * index),
+        x: (event.clientX + xOffset) + (30 * index),
+        y: (event.clientY + yOffset) + (30 * index)
       },
       filename: file.name,
       uploadKey: uploadKey,
