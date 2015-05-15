@@ -25,7 +25,7 @@ Template.bit.onRendered(function (){
       return;
     }
 
-    if (Math.round((bitUpload.progress() || 0) * 100) === 100) {
+    if (bitUpload.status() === 'done') {
       bitHtmlElement.find('.content')[0].classList.add('complete', 'success');
       Bits.update( bitDatabaseId , {
         $set: { imageSource: bitUpload.instructions.download, uploadKey: null }

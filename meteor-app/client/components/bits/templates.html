@@ -4,7 +4,9 @@
       <div class="face front {{ color }}">
         <div class="content {{uploadStatus}}">
 
-          <div class="progress"><span class="upload" style="width: 100%;"></span></div>
+          <div class="progress">
+            <span class="upload" style="width: {{ uploadProgress }}%;"></span>
+          </div>
 
           <div class="error-message"><span>Oh no! Upload failed.</span></div>
 
