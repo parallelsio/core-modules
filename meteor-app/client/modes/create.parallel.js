@@ -38,6 +38,9 @@ Parallels.AppModes['create-parallel'] = {
       // disable scrolling
 
 
+      // var s = new Snap('.parallel-line-stroke-container');
+
+
       var timelineStart = function () {
         log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
       };
