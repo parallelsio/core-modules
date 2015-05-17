@@ -19,6 +19,7 @@ Parallels.AppModes['create-parallel'] = {
       isCreatingParallel = true;
       var bitParallelCreateOriginId = bitHoveringId;
       $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
+      var bitData = Blaze.getData($bitOrigin[0]);
 
       Session.set('isCreatingParallel', isCreatingParallel);
       Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
@@ -37,9 +38,31 @@ Parallels.AppModes['create-parallel'] = {
       // try bg overlay over other bits too?
       // disable scrolling
 
+      // TODO: make helper on Bit obj
+      // var getBitCenterPoint function(){
 
-      // var s = new Snap('.parallel-line-stroke-container');
+      // }
+      // var centerCoords = getCenterPointOfBit()
 
+      // set up a container to draw the line stroke
+      var svg = document.createElement('svg');
+      $(svg).addClass("parallel-line-container");
+      $(svg).attr(height, 5000);
+      $(svg).attr(width, 5000);
+      $('.map').prepend(svg);
+
+      var s = Snap(800,700);
+      s
+        .line(
+          bitData.position.x, 
+          bitData.position.y, 
+          bitData.position.x + 100, 
+          bitData.position.y + 100)
+        .attr({
+          fill: "none",
+          stroke: "#bada55",
+          strokeWidth: 5
+        });
 
       var timelineStart = function () {
         log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
@@ -91,6 +114,7 @@ Parallels.AppModes['create-parallel'] = {
 
       $(".map").removeClass('mode--create-parallel');
       $bitOrigin.removeClass('dashed-stroke');
+      $('.parallel-line-container').remove();
 
       // stop heartbeat animation
       timeline.kill();
