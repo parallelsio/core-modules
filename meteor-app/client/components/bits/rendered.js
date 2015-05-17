@@ -21,14 +21,26 @@ Template.bit.onRendered(function (){
     if (bitUpload.status() === 'failed') {
       //bitHtmlElement.find('.content')[0].classList.add('complete', 'error'); // would show a friendly error message but the next line we remove the bit so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
       computation.stop();
-      Meteor.call('deleteBit', bitDatabaseId);
+      Meteor.call('changeState', {
+        command: 'deleteBit',
+        data: {
+          canvasId: '1',
+          _id: bitDatabaseId
+        }
+      });
       return;
     }
 
     if (bitUpload.status() === 'done') {
       bitHtmlElement.find('.content')[0].classList.add('complete', 'success');
-      Bits.update( bitDatabaseId , {
-        $set: { imageSource: bitUpload.instructions.download, uploadKey: null }
+      Meteor.call('changeState', {
+        command: 'uploadImage',
+        data: {
+          canvasId: '1',
+          _id: bitDatabaseId,
+          imageSource: bitUpload.instructions.download,
+          uploadKey: null
+        }
       });
       computation.stop();
     }
@@ -47,8 +59,7 @@ Template.bit.onRendered(function (){
   });
 
   // move to position, immediately hide
-  timeline.to(bitHtmlElement, 0, { alpha: 0, x: bitDataContext.position.x, y: bitDataContext.position.y });
-
+  timeline.to(bitHtmlElement, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y });
 
   // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
@@ -64,7 +75,7 @@ Template.bit.onRendered(function (){
       // TODO: delay play so it's got time to 'breathe', and doesnt stutter ?
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
       // console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
-      
+
       Parallels.Audio.player.play('fx-cinq-drop');
 
 
@@ -79,7 +90,7 @@ Template.bit.onRendered(function (){
         onComplete: timelineDone,
         onCompleteParams:[ bitDatabaseId  ]
       });
-      
+
       timeline.to(bitHtmlElement, 0.25, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });
 
     },
@@ -108,17 +119,19 @@ Template.bit.onRendered(function (){
       var mongoId = this.target.dataset.id;
       log.debug(event.type + ": " + mongoId + " : " + x + " : " + y);
 
-      Bits.update( mongoId , {
-        $set: {
-          "position.x": x,
-          "position.y": y
+      Meteor.call('changeState', {
+        command: 'updateBitPosition',
+        data: {
+          canvasId: '1',
+          _id: mongoId,
+          position: { x: x, y: y }
         }
       });
 
       Session.set("dragInstance", null);
-      
-      Parallels.Audio.player.play('fx-ffft');      
-      
+
+      Parallels.Audio.player.play('fx-ffft');
+
       function timelineDone(bitDatabaseId){
         log.debug("bit:drag:end", bitDatabaseId);
       }
@@ -127,7 +140,7 @@ Template.bit.onRendered(function (){
         onComplete: timelineDone,
         onCompleteParams:[ bitDatabaseId  ]
       });
-      
+
       timeline.to(bitHtmlElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
 
 
@@ -135,7 +148,7 @@ Template.bit.onRendered(function (){
       // replace with envelope close instead:
       // it would be more performant, less slitch
       // and would be more like turning down the volume on the stereo,
-      // rather than how we have it now, where were 
+      // rather than how we have it now, where were
       // pressing the power button to turn off
       // Parallels.Audio.player.stop();
       return true;

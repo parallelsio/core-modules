@@ -11,4 +11,6 @@ Meteor.startup(function(){
     log.debug('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
   });
 
+  Session.set('newTextBit', null);
+
 });

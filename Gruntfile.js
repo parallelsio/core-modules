@@ -140,6 +140,16 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+      resetMeteorDb: {
+        cmd: [
+          'cd meteor-app',
+          'meteor reset'
+        ].join('&&'),
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: true
+      },
       meteordebug: {
         cmd: [
           'cd meteor-app',

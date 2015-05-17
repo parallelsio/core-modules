@@ -1,3 +1,5 @@
 {
-  "neo4j": "1.1.1"
+  "neo4j": "1.1.1",
+  "sourced": "0.0.14",
+  "sourced-repo-mongo": "0.3.2"
 }

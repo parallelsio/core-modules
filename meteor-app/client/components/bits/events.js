@@ -27,10 +27,18 @@ Template.bit.events({
   'keyup .bit': function (event, template) {
 
     if(event.which === 13){
-      Bits.update( this._id , {
-        $set: { "content": template.find('.editbit').value }
-      });
-      
+
+      if (this.content != template.find('.editbit').value) {
+        Meteor.call('changeState', {
+          command: 'updateBitContent',
+          data: {
+            canvasId: '1',
+            _id: this._id,
+            content: template.find('.editbit').value
+          }
+        });
+      }
+
       Parallels.Audio.player.play('fx-cha-ching');
 
       Session.set('bitEditingId', null);

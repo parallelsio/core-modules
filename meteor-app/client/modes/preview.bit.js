@@ -49,7 +49,13 @@ Parallels.AppModes['preview-bit'] = {
 
     if (bitEditingId)
     {
-      Meteor.call('deleteBit', bitEditingId);
+      Meteor.call('changeState', {
+        command: 'deleteBit',
+        data: {
+          canvasId: '1',
+          _id: bitEditingId
+        }
+      });
       Session.set('bitEditingId', null);
     }
   }
