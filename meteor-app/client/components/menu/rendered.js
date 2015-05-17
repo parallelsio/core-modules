@@ -28,6 +28,7 @@ Template.menu.rendered = function() {
 
     elements.each(function() {
 
+      // TODO: why arent we going right to the bit.position attribute in the data instead?
       // Greensock applied transforms to position bits when OnRendered was called.
       // "translate3d(132px, 89px, 0px)"
       // we need the x/y position to pass to the Timeline obj to give a nice wipe/shimmer effect
@@ -37,6 +38,8 @@ Template.menu.rendered = function() {
       // slice + dice the string with a regexp to remove everything except
       // for number values. Split the string into an array.
       var array = _.words(cssTransform.replace(pattern, ''));
+
+
       var offset = parseFloat(array[0]) + parseFloat(array[1]);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
