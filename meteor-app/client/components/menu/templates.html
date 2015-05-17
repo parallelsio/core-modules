@@ -22,6 +22,11 @@
 		<span>{{ bitsCount }} bits</span>
 		<span class="sep"> : </span>
 		<span>Editing Bit ID: {{ bitEditingId }}</span>
+
+    {{#if isUploading }}
+      <div class="progress"><h3>Uploading: {{ progress }}% Complete</h3></div>
+    {{/if}}
+
 	</div>
 
 </template>

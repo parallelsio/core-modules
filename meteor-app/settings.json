@@ -1,8 +1,8 @@
 {
-  "neo4jUrl": "http://localhost:7474",
   "public": {
     "options": {
       "isAudioEnabled": true,
+      "uploader": "fileSystemUploader",
       "displayIntroAnimation": true
     }
   }

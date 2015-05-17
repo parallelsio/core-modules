@@ -35,7 +35,7 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
     console.log(data);
 
     bit = {
-      type: 'image',
+      type: 'webpage',
       url: data.url,
       title: data.title,
       imageDataUrl: data.imageDataUrl,
@@ -43,7 +43,11 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
       nativeHeight: data.nativeHeight,
       tags: [],
       context: null,
-      createdAt: new Date()
+      createdAt: new Date(),
+      position: {
+        x: 100,
+        y: 100
+      }
     };
 
     $('.bit-title').val(data.title);

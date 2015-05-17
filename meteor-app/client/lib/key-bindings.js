@@ -1,28 +1,42 @@
 Meteor.startup(function() {
 
   Mousetrap.bind('space', function (event) {
+    log.debug("pressed 'Space' key");
+    
     try {
       event.stopPropagation();
       event.preventDefault();
-    } catch (err) { /* Try/Catch is here for integration tests: https://github.com/ccampbell/mousetrap/issues/257 */ }
+    } 
+    catch (err) { 
+      /*  Try/Catch is here for integration tests: 
+          https://github.com/ccampbell/mousetrap/issues/257 
+      */ 
+    }
+    
     Parallels.AppModes['preview-bit'].enter();
   });
 
-  Mousetrap.bind('shift', Parallels.AppModes['create-parallel'].enter);
+  Mousetrap.bind('shift', function (){
+    log.debug("pressed 'Shift' key");
+    Parallels.AppModes['create-parallel'].enter();
+  });
 
   Mousetrap.bindGlobal('esc', function() {
+    log.debug("pressed 'Esc' key");
     var currentMode = Session.get('currentMode');
+
     if (!currentMode) return;
     Parallels.AppModes[currentMode].exit();
   });
 
   Mousetrap.bind("d", function() {
-    console.log("pressed d");
+    log.debug("pressed 'd' key");
     var bitHoveringId = Session.get('bitHoveringId');
+
     if (bitHoveringId) {
-      Meteor.call('removeBit', bitHoveringId);
-      console.log("bit:delete: " + bitHoveringId);
+      log.debug("starting bit:delete on ", bitHoveringId);
       Parallels.Audio.player.play('fx-tri');
+      Meteor.call('deleteBit', bitHoveringId);
     }
   });
 });

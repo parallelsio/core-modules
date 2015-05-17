@@ -1,6 +1,6 @@
 'use strict';
 
-var fs = require('fs'), util = require('util');
+var fs = require('fs'), util = require('util'), busboy = require('connect-busboy');
 
 module.exports = function (grunt) {
 
@@ -9,6 +9,7 @@ module.exports = function (grunt) {
   var config = {
     dist: 'extensions/chrome/build',
     test: 'tests',
+    testImageUploads: 'end2end-tests/.tmp/',
     chromeExt: 'extensions/chrome/source',
     appRootUrl: {
       local: 'localhost:3000',
@@ -29,7 +30,6 @@ module.exports = function (grunt) {
     };
   }
 
-  //TODO: lock version of meteor to use with --release [VERSION] while starting meteor?
   grunt.initConfig({
     config: config,
     copy: {
@@ -126,7 +126,7 @@ module.exports = function (grunt) {
       meteorTests: {
         cmd: [
           'cd meteor-app',
-          'meteor --test --release velocity:METEOR@1.1.0.2_2'
+          'meteor --test --release velocity:METEOR@1.1.0.2_2 --settings settings.json'
         ].join('&&'),
         bg: false,
         stdout: true,
@@ -257,8 +257,46 @@ module.exports = function (grunt) {
           open: false,
           base: [
             '<%= config.chromeExt %>',
-            './'
-          ]
+            '<%= config.testImageUploads %>'
+          ],
+          middleware: function (connect, options) {
+            var middlewares = [
+              connect().use(busboy()),
+
+              // Add CORS Headers for testing Image Upload
+              connect().use(function (req, res, next) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', '*');
+                return next();
+              }),
+
+              // Add mock upload server for testing Image Upload
+              connect().use('/upload', function (req, res) {
+                if (req.method === 'OPTIONS') {
+                  res.statusCode = 200;
+                  res.end();
+                } else {
+                  var fstream;
+                  req.pipe(req.busboy);
+                  req.busboy.on('file', function (fieldname, file, filename) {
+                    fstream = fs.createWriteStream(__dirname + '/' + config.testImageUploads + filename);
+                    file.pipe(fstream);
+                    fstream.on('close', function () {
+                      res.statusCode = 200;
+                      res.end();
+                    });
+                  });
+                }
+              })
+            ];
+
+            // add the static paths in options.base
+            options.base.forEach(function (base) {
+              middlewares.unshift(connect.static(base));
+            });
+
+            return middlewares;
+          }
         }
       },
       test : { }
@@ -348,6 +386,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('server', 'Run server', function (target) {
+    require('dotenv').load();
+
     if (target !== 'debug')
       target = '';
 
@@ -366,6 +406,7 @@ module.exports = function (grunt) {
     'jshint',
     'bgShell:meteorTests',
     'connect:test',
+    'connect:chrome',
     'jasmine',
     'env:' + target,
     'build:' + target,
@@ -375,7 +416,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('unit-tests', 'Run unit tests', ['jshint', 'bgShell:meteorTests', 'connect:test', 'jasmine']);
 
-  grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
+  grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'connect:chrome', 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
 
   grunt.registerTask('default', 'server');
 };

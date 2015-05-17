@@ -10,4 +10,4 @@ chromeprofile/
 extensions/chrome/source/bower_components
 node_modules
 tmp
-end2end-tests/.tmp/
+.env

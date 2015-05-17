@@ -10,19 +10,17 @@ Parallels.AppModes['create-bit'] = {
         y: event.pageY
       }
     };
-    Meteor.call('insertBit', newBitAttributes, function (err, id) {
-      console.log(err);
+    Meteor.call('createBit', newBitAttributes, function (err, id) {
+      log.debug(err);
       Session.set('bitEditingId', id);
     });
-
-    Session.set('bitEditingId', id);
   },
   exit: function () {
     Session.set('currentMode', null);
     var bitEditingId = Session.get('bitEditingId');
     if (bitEditingId)
     {
-      Meteor.call('removeBit', bitEditingId);
+      Meteor.call('deleteBit', bitEditingId);
       Session.set('bitEditingId', null);
     }
   }

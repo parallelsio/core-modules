@@ -13,23 +13,17 @@ Template.map.onRendered(function (){
 
       // TODO: use Greensock's force3D flag, instead of 0.01px hack [which triggers GPU rendering]
       var transformString =  "translate3d(" + bitDataContext.position.x + "px, " + bitDataContext.position.y + "px, 0.01px)";
-
-      console.log('_uihook: moment before bit insert: ', bitDatabaseId);
-      console.log('********');
-      console.log('node: ', node);
-      console.log('next: ', next);
-      console.log('********');
+      log.debug('_uihook: moment before bit insert: ', bitDatabaseId);
 
       $(node)
         .hide()
         .insertBefore(next)
         .css( { transform: transformString } )
-        .find('.editbit').focus();  // TODO: bug: focus doesnt work the 2nd time
 
         // TODO: add conditional to the editbit focus, as only relevant for text bits
 
         function timelineInsertDone(node){
-          console.log("bit:insert:uihook timeline animate done.");
+          log.debug("bit:insert:uihook timeline animate done.");
         }
 
         var timelineInsert = new TimelineMax({
@@ -48,8 +42,8 @@ Template.map.onRendered(function (){
     removeElement: function(node) {
 
       function timelineRemoveDone(node){
-        $(this).remove();
-        console.log("bit:remove:uihook : timeline animate done. removed bit.");
+        $(node).remove();
+        log.debug("bit:remove:uihook : timeline animate done. removed bit.");
       }
 
       var timelineRemove = new TimelineMax({

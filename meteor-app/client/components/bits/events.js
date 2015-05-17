@@ -1,34 +1,31 @@
 BitEvents = {
-  toggleSelectedClass: function (event, template) {
-    if (event.target.classList.contains('bit')) {
-      Session.set('bitHoveringId', template.data._id);
-      console.log("bit:hover:in " + Session.get('bitHoveringId'));
 
-      $(event.target).addClass('selected');
-    }
+  hoverInBit: function (event, template) {
+    Session.set('bitHoveringId', template.data._id);
+    // TODO: play sound here
+  },
+
+  hoverOutBit: function (event, template){
+    Session.set('bitHoveringId', null);
+    // TODO: play sound here
   }
 };
 
+
+
+// for more bit events see /client/lib/key-bindings.js
 Template.bit.events({
 
-  'mouseenter .bit': BitEvents.toggleSelectedClass,
+  'mouseenter .bit': BitEvents.hoverInBit,
 
-  'mouseleave .bit': function (event) {
-    console.log("bit:hover:out " + Session.get('bitHoveringId'));
-    if (event.target.classList.contains('bit')) {
-      Session.set('bitHoveringId', '');
-    }
-  },
-
-  'click .bit': function () {
-    console.log("bit:click: " + this._id);
-  },
+  'mouseleave .bit': BitEvents.hoverOutBit,
 
   'dblclick .bit': function () {
     Parallels.AppModes['edit-bit'].enter(this._id);
   },
 
   'keyup .bit': function (event, template) {
+
     if(event.which === 13){
       Bits.update( this._id , {
         $set: { "content": template.find('.editbit').value }

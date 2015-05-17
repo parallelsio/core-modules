@@ -3,8 +3,9 @@
 
 Parallels = {
   AppModes: {},
-  Handlers: Inverter,
   Audio: {
     Definition: {}
-  }
+  },
+  FileUploads: {},
+  Handlers: Inverter
 };

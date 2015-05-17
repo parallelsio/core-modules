@@ -1,15 +1,44 @@
+Template.bit.onDestroyed(function(){
+  Session.set('bitHoveringId', null);
+});
+
 Template.bit.onRendered(function (){
 
-  template = this;
+  var template = this;
   var bitDataContext = template.data;
   var bitDatabaseId = bitDataContext._id;
   var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
-  console.log("bit:render: ", bitDatabaseId);
+  log.debug("bit:render: ", bitDatabaseId);
+
+  // Track upload status for new Bits
+  Tracker.autorun(function (computation) {
+    var bitUpload = Parallels.FileUploads[bitHtmlElement.data('upload-key')];
+    if (!bitUpload) {
+      computation.stop();
+      return;
+    }
+
+    if (bitUpload.status() === 'failed') {
+      //bitHtmlElement.find('.content')[0].classList.add('complete', 'error'); // would show a friendly error message but the next line we remove the bit so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
+      computation.stop();
+      Meteor.call('deleteBit', bitDatabaseId);
+      return;
+    }
+
+    if (bitUpload.status() === 'done') {
+      bitHtmlElement.find('.content')[0].classList.add('complete', 'success');
+      Bits.update( bitDatabaseId , {
+        $set: { imageSource: bitUpload.instructions.download, uploadKey: null }
+      });
+      computation.stop();
+    }
+  });
 
   var bitDragAudioInstance = "";
 
   function timelineDone(bitDatabaseId){
-    console.log("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
+    log.debug("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
+    log.debug(bitHtmlElement);
   }
 
   var timeline = new TimelineMax({
@@ -18,7 +47,7 @@ Template.bit.onRendered(function (){
   });
 
   // move to position, immediately hide
-  timeline.to(bitHtmlElement, 0, { display: "none", alpha: 0, x: bitDataContext.position.x, y: bitDataContext.position.y })
+  timeline.to(bitHtmlElement, 0, { alpha: 0, x: bitDataContext.position.x, y: bitDataContext.position.y });
 
 
   // // Needs to happen after position set, or else positions
@@ -54,13 +83,13 @@ Template.bit.onRendered(function (){
     },
 
     onDragEnd:function( event ) {
-      console.log("done dragging.");
+      log.debug("done dragging.");
 
       var x = this.endX;
       var y = this.endY;
 
       var mongoId = this.target.dataset.id;
-      console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+      log.debug(event.type + ": " + mongoId + " : " + x + " : " + y);
 
       Bits.update( mongoId , {
         $set: {

@@ -1,12 +1,17 @@
+MeteorSettings.setDefaults({
+  public: { options: { displayIntroAnimation: true } }
+});
+
+
 Template.menu.rendered = function() {
-  
-  console.log('menu rendered.');
+
+  log.debug('menu rendered.');
 
   var screenWidth  = document.documentElement.clientWidth;
   var screenHeight = document.documentElement.clientHeight;
 
   // TODO: refactor all settings into Session obj
-  console.log("Meteor.settings.public.options.displayIntroAnimation: ", 
+  log.debug("Meteor.settings.public.options.displayIntroAnimation: ",
               Meteor.settings.public.options.displayIntroAnimation);
 
   // adapted from: http://codepen.io/GreenSock/pen/ramJGv
@@ -25,6 +30,7 @@ Template.menu.rendered = function() {
 
       // Greensock applied transforms to position bits when OnRendered was called.
       // "translate3d(132px, 89px, 0px)"
+
       // we need the x/y position to pass to the Timeline obj,
       // which will use the distance between the bits to calc a delay offset
       // this delay offset is what gives it a nice wipe/shimmering effect
@@ -37,7 +43,7 @@ Template.menu.rendered = function() {
       var offset = parseFloat(array[0]) + parseFloat(array[1]);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      console.log("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
+      log.debug("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
 
       // calc a sound frequency to use as a parameter for the sound played
       // Using the delay param we used above for the animation will tie 
@@ -56,12 +62,12 @@ Template.menu.rendered = function() {
         { scale:1, ease:Expo.easeIn, opacity: 1,  display:'block', onComplete: function() { Parallels.Audio.player.play('fx-quad-ripple'); } },
         delay
       );
-      
+
     });
 
   };
 
-  var timeline = new TimelineMax({ 
+  var timeline = new TimelineMax({
     onComplete: shimmerDisplayBits
   });
 
@@ -71,14 +77,14 @@ Template.menu.rendered = function() {
 
     tlGlobal.add(tlLoader);
     tlGlobal.play();
-  };
+  }
 
 
   // adapted code from   : http://codepen.io/vdaguenet/pen/raXBKp
   function setTimelineLoader () {
 
     if (Meteor.settings.public.options.displayIntroAnimation) {
-     
+
       var topToBottomLine  = $('.wipe.top-to-bottom .line');
       var maskTop          = $('.wipe.top-to-bottom .mask.top');
       var maskBottom       = $('.wipe.top-to-bottom .mask.bottom');
@@ -107,12 +113,12 @@ Template.menu.rendered = function() {
     }
 
     var menuBar = document.getElementById("menu-bar");
-    timeline.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut})
+    timeline.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
 
     return timeline;
   }
-      
-  start();  
+
+  start();
 
 };
 

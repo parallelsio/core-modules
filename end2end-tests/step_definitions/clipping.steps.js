@@ -34,7 +34,7 @@ module.exports = function () {
             callback.fail('Bit not found on canvas');
         });
       } else {
-        callback.fail('Web page is not running or did not load successfully at ' + website.url);
+        callback.fail('Parallels app is not running or did not load successfully');
       }
     });
 

@@ -1,8 +1,8 @@
 .map {	  
 
 	// required to get dble click/ bit:new text to show
-	min-height:2000px;
-	min-width:2000px;
+	min-height:5000px;
+	min-width:5000px;
 	
 	height:100%;
   width:100%;
@@ -10,4 +10,15 @@
 
 .mode--create-parallel{
   background: #7B7B7B;
+}
+
+.progress {
+  top: 25%;
+  left: 50%;
+  position: absolute;
+}
+
+.progress h3 {
+  margin:auto;
+  vertical-align:middle;
 }
