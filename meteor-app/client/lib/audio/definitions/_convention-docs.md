@@ -3,7 +3,7 @@
 Each sound in our app is defined as a JSON object.
 Flocking.js refers to these objects as Definitions, by convention
 Definitions are really one big config file that instructs Flocking.js
-how to synthesize (generate) the sound in realtime.
+how to synthesize (generate) the audio in realtime.
 
 Each definition uses 1 or more uGen's, a unit generator.
 Think of a ugen as a sound emitter that produces a particular 
@@ -59,7 +59,7 @@ and other data related to Parallels around our Meteor app
 
 ```
 // The arbitrary name we made up for this definition in our Meteor app
-Parallels.Sound.Definition.twinSineDrones: {  
+Parallels.Audio.Definition.twinSineDrones: {  
     
     // don't change the key name 'synthDef'           
     // Flocking depends on this exact naming + spelling        
@@ -83,7 +83,7 @@ Parallels.Sound.Definition.twinSineDrones: {
       options: {
         callback: {
           func: function () {
-            console.log("sound:definition: done.")
+            console.log("audio:definition: done.")
             this._enviro.stop();
           }
         }

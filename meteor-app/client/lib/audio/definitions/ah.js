@@ -4,7 +4,7 @@
  *  OQ: I love the tone of the SoundPrism app on iOS. How do we replicate that here?
  */
 
-// Parallels.Sound.Definition.ah = {
+// Parallels.Audio.Definition.ah = {
 
     // _fundamental: 440;
 

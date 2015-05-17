@@ -1,10 +1,10 @@
 /* 
  *  
  *  OQ: How do we synthesize a stretchy sound, based on param input of drag on Create-parallel?
-
+        Lead: See Designing Sound by Andy Farnell, MIT book
  */
 
-Parallels.Sound.Definition['elasticStretch'] = {
+Parallels.Audio.Definition['elasticStretch'] = {
 
   synthDef: {   
 

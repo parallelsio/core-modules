@@ -6,8 +6,8 @@ Template.bit.onRendered(function (){
   var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
   console.log("bit:render: ", bitDatabaseId);
 
-  // Parallels.Sound.player.play('elasticStretch');
-  var bitDragSoundInstance = "";
+  // Parallels.Audio.player.play('elasticStretch');
+  var bitDragAudioInstance = "";
 
   function timelineDone(bitDatabaseId){
     console.log("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
@@ -34,7 +34,7 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: delay play so it's got time to 'breathe', and doesnt stutter ?
-      bitDragSoundInstance = Parallels.Sound.player.play('elasticStretch');
+      bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
       console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
     },
 
@@ -46,9 +46,9 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: only display if changed from last reading's value
-      console.log(event.type, " : dragging: ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragSoundInstance);
+      console.log(event.type, " : dragging: ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
-      bitDragSoundInstance.set("elasticStretch.source.freq", x)
+      bitDragAudioInstance.set("elasticStretch.source.freq", x)
     },
 
     onDragEnd:function( event ) {
@@ -74,7 +74,7 @@ Template.bit.onRendered(function (){
       // and would be more like turning down the volume on the stereo,
       // rather than how we have it now, where were 
       // pressing the power button to turn off
-      Parallels.Sound.player.stop();
+      Parallels.Audio.player.stop();
       return true;
     }
   });

@@ -46,8 +46,8 @@ Template.menu.rendered = function() {
       newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
 
       console.log("newFreq", newFreq);
-      bitDragSoundInstance = Parallels.Sound.player.play('elasticStretch');
-      bitDragSoundInstance.set("elasticStretch.source.freq", newFreq);
+      bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
+      bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
 
       shimmerTimeline.fromTo(
         this,

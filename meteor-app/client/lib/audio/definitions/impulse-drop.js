@@ -4,7 +4,7 @@
 
 
  *  OQ: How can we trigger a callback, so for example, when impulseResponse def plays and gets
- *      down to the end point, frequency of 2, we can trigger an envelope to turn off sound output 
+ *      down to the end point, frequency of 2, we can trigger an envelope to turn off audio output 
  *      untill next sound is triggered?
 
  */
@@ -24,7 +24,7 @@ var gateDef = {
 };
 
 
-Parallels.Sound.Definition['impulseDrop'] = {
+Parallels.Audio.Definition['impulseDrop'] = {
 
   synthDef: {   
 

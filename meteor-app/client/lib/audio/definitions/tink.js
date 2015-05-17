@@ -2,7 +2,7 @@
 //  *  
 //  */
 
-// Parallels.Sound.Definition.tink = {
+// Parallels.Audio.Definition.tink = {
 
 
     
@@ -28,7 +28,7 @@
 //       options: {
 //         callback: {
 //           func: function () {
-//             console.log("sound:definition: done.")
+//             console.log("audio:definition: done.")
 //             this._enviro.stop();
 //           }
 //         }

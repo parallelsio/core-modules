@@ -1,4 +1,4 @@
-Parallels.Sound.Definition['twinPipes'] = {
+Parallels.Audio.Definition['twinPipes'] = {
 
   synthDef: {   
 

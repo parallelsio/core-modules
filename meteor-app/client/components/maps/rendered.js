@@ -1,6 +1,6 @@
 Template.map.onRendered(function (){
 
-  Parallels.Sound.player.play('impulseDrop');
+  Parallels.Audio.player.play('impulseDrop');
 
   var mapTemplate = this;
   var container = mapTemplate.find('.map');

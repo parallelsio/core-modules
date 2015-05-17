@@ -9,21 +9,21 @@
 
 */ 
 
-Parallels.Sound.player = {
+Parallels.Audio.player = {
 
   _enviro: false,
-  _folderPath: "sounds/",
+  _folderPath: "audio/",
 
   init: function(){
     "use strict"
-    if (Meteor.settings.public.options.isSoundEnabled) {
+    if (Meteor.settings.public.options.isAudioEnabled) {
       this._enviro = flock.init();
     }
   },
 
   play: function(definition){
-    console.log("sound:play: trigger", definition);
-    var synth = flock.synth(Parallels.Sound.Definition[definition]);
+    console.log("audio:play: trigger", definition);
+    var synth = flock.synth(Parallels.Audio.Definition[definition]);
     this._enviro.play();
 
     // we need a reference to this obj, so we can later change 
@@ -33,12 +33,12 @@ Parallels.Sound.player = {
   },
 
   pause: function(definition){
-    console.log("sound:pause");
+    console.log("audio:pause");
     return this._enviro.pause();
   },
 
   stop: function(){
-    console.log("sound:stop");
+    console.log("audio:stop");
     return this._enviro.stop();
   }
 }
