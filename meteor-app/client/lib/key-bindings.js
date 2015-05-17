@@ -22,6 +22,7 @@ Meteor.startup(function() {
     if (bitHoveringId) {
       Meteor.call('removeBit', bitHoveringId);
       console.log("bit:delete: " + bitHoveringId);
+      Parallels.Audio.player.play('fx-tri');
     }
   });
 });

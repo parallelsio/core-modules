@@ -41,20 +41,20 @@ Parallels.Audio.Definition['impulseDrop'] = {
                 end: 2,
                 duration: 3.0
               },
-              mul: 0.5
+              mul: 0.2
           },
           mul: {
               ugen: "flock.ugen.envGen",
               rate: "control",
               envelope: customEnvelope,
-              mul: 0.5,
+              mul: 0.2,
               gate: gateDef
           }
       },
 
-      mix: 0.93,
+      mix: 0.6,
       room: 0.5,
-      damp: 0.5
+      damp: 0.25
     }
   }
 }

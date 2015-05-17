@@ -85,10 +85,14 @@ Transform = {
 
       // TODO: disable bit actions (drag, delete)
 
-      if (direction === "expand")
-      {
+      if (direction === "expand") {
         Session.set('bitThumbnailHeight', bitThumbnailHeight);
         Session.set('bitThumbnailWidth', bitThumbnailWidth);
+        Parallels.Audio.player.play('fx-quad-ripple');
+      }
+
+      else if (direction === "contract"){
+        Parallels.Audio.player.play('fx-temp-temp');
       }
     };
 

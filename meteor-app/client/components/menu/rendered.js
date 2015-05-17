@@ -46,14 +46,14 @@ Template.menu.rendered = function() {
       newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
 
       console.log("newFreq", newFreq);
-      bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
-      bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
+      // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
+      // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
 
       shimmerTimeline.fromTo(
         this,
         duration,
         { scale:0.95, ease:Expo.easeIn, opacity: 0,  display:'block' },
-        { scale:1, ease:Expo.easeIn, opacity: 1,  display:'block' },
+        { scale:1, ease:Expo.easeIn, opacity: 1,  display:'block', onComplete: function() { Parallels.Audio.player.play('fx-quad-ripple'); } },
         delay
       );
       

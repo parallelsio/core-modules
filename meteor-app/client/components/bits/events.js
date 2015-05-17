@@ -33,9 +33,9 @@ Template.bit.events({
       Bits.update( this._id , {
         $set: { "content": template.find('.editbit').value }
       });
-
-      // Parallels.Audio.player.play('impulseDrop');
       
+      Parallels.Audio.player.play('fx-cha-ching');
+
       Session.set('bitEditingId', null);
       Session.set('currentMode', null);
     }

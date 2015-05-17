@@ -20,14 +20,12 @@ Parallels.AppModes['preview-bit'] = {
         console.log("bit:image:preview: " + bitHoveringId);
 
         // now, let's see if it needs to be expanded, or closed:
-        if (bitPreviewingId === null)
-        {
+        if (bitPreviewingId === null) {
           // nothing is being previewed currently, expand the image
           Transform.scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "expand");
         }
 
-        else
-        {
+        else {
           // bit is being previewed, close/restore to thumbnail size
           Transform.scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "contract");
         }

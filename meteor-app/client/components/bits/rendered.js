@@ -6,7 +6,6 @@ Template.bit.onRendered(function (){
   var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
   console.log("bit:render: ", bitDatabaseId);
 
-  // Parallels.Audio.player.play('elasticStretch');
   var bitDragAudioInstance = "";
 
   function timelineDone(bitDatabaseId){
@@ -34,8 +33,11 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: delay play so it's got time to 'breathe', and doesnt stutter ?
-      bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
-      console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
+      // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
+      // console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
+      
+      Parallels.Audio.player.play('fx-cinq-drop');
+
     },
 
     // OQ: what's the diff between:
@@ -48,7 +50,7 @@ Template.bit.onRendered(function (){
       // TODO: only display if changed from last reading's value
       console.log(event.type, " : dragging: ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
-      bitDragAudioInstance.set("elasticStretch.source.freq", x)
+      // bitDragAudioInstance.set("elasticStretch.source.freq", x)
     },
 
     onDragEnd:function( event ) {
@@ -68,13 +70,16 @@ Template.bit.onRendered(function (){
       });
 
       Session.set("dragInstance", null);
+      
+      Parallels.Audio.player.play('fx-ffft');      
+      
 
       // replace with envelope close instead:
       // it would be more performant, less slitch
       // and would be more like turning down the volume on the stereo,
       // rather than how we have it now, where were 
       // pressing the power button to turn off
-      Parallels.Audio.player.stop();
+      // Parallels.Audio.player.stop();
       return true;
     }
   });
