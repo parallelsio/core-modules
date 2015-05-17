@@ -8,6 +8,10 @@
       {{> bit }}
     {{/each }}
 
+    {{#if isCreatingNewTextBit}}
+      {{> newTextBit}}
+    {{/if}}
+
   </div>
 
   {{> DebugErrors }}

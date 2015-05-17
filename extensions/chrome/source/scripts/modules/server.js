@@ -10,11 +10,17 @@ define(['modules/config', '../../bower_components/ddp.js/src/ddp', '../../bower_
     /**
      * Save a bit to the parallels server
      * @param bit
+     * @param cb
      */
-    saveBit: function (bit) {
+    saveBit: function (bit, cb) {
       console.log('saving to meteor');
       console.log(bit);
-      bits.insert(bit);
+      bit.canvasId = '1';
+      var promise = ddp.call('changeState', {
+        command: 'createBit',
+        data: bit
+      });
+      promise.result.then(cb);
     },
 
     /**
@@ -22,10 +28,13 @@ define(['modules/config', '../../bower_components/ddp.js/src/ddp', '../../bower_
      * @param id
      * @param bit
      */
-    updateBit: function (id, bit) {
+    updateBit: function (bit) {
       console.log('updating bit');
       console.log(bit);
-      return bits.update(id, bit);
+      return ddp.call('changeState', {
+        command: 'clipWebpage',
+        data: bit
+      });
     },
 
     findByPageIdentifier: function (pageIdentifier) {

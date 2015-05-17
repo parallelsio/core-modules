@@ -17,20 +17,21 @@ var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
   var xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
   var yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
   img.onload = function() {
-    var newBitAttributes = {
-      type: "image",
-      position: {
-        x: (event.clientX + xOffset) + (30 * index),
-        y: (event.clientY + yOffset) + (30 * index)
-      },
-      filename: file.name,
-      uploadKey: uploadKey,
-      imageSource: downloadUrl,
-      nativeWidth: img.width,
-      nativeHeight: img.height
-    };
-    Meteor.call('createBit', newBitAttributes, function (err) {
-      if (err) alert(err);
+    Meteor.call('changeState', {
+      command: 'createBit',
+      data: {
+        canvasId: "1",
+        type: "image",
+        position: {
+          x: (event.clientX + xOffset) + (30 * index),
+          y: (event.clientY + yOffset) + (30 * index)
+        },
+        filename: file.name,
+        uploadKey: uploadKey,
+        imageSource: downloadUrl,
+        nativeWidth: img.width,
+        nativeHeight: img.height
+      }
     });
   };
   img.src = u;

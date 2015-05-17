@@ -2,17 +2,17 @@ Meteor.startup(function() {
 
   Mousetrap.bind('space', function (event) {
     log.debug("pressed 'Space' key");
-    
+
     try {
       event.stopPropagation();
       event.preventDefault();
-    } 
-    catch (err) { 
-      /*  Try/Catch is here for integration tests: 
-          https://github.com/ccampbell/mousetrap/issues/257 
-      */ 
     }
-    
+    catch (err) {
+      /*  Try/Catch is here for integration tests:
+          https://github.com/ccampbell/mousetrap/issues/257
+      */
+    }
+
     Parallels.AppModes['preview-bit'].enter();
   });
 
@@ -36,7 +36,13 @@ Meteor.startup(function() {
     if (bitHoveringId) {
       log.debug("starting bit:delete on ", bitHoveringId);
       Parallels.Audio.player.play('fx-tri');
-      Meteor.call('deleteBit', bitHoveringId);
+      Meteor.call('changeState', {
+        command: 'deleteBit',
+        data: {
+          canvasId: '1',
+          _id: bitHoveringId
+        }
+      });
     }
   });
 });

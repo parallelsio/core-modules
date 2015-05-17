@@ -34,7 +34,7 @@ Template.menu.rendered = function() {
       // we need the x/y position to pass to the Timeline obj,
       // which will use the distance between the bits to calc a delay offset
       // this delay offset is what gives it a nice wipe/shimmering effect
-      var cssTransform = this.style["transform"]; 
+      var cssTransform = this.style["transform"];
       var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
 
       // slice + dice the string with a regexp to remove everything except
@@ -46,8 +46,8 @@ Template.menu.rendered = function() {
       log.debug("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
 
       // calc a sound frequency to use as a parameter for the sound played
-      // Using the delay param we used above for the animation will tie 
-      // the 2 together nicely 
+      // Using the delay param we used above for the animation will tie
+      // the 2 together nicely
       var newFreq = Math.random() * 1000 + 1060;
       newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
 
@@ -58,23 +58,23 @@ Template.menu.rendered = function() {
       shimmerTimeline.fromTo(
         this,
         duration,
-        { 
+        {
           // from
-          scale:0.95, 
-          ease:Expo.easeIn, 
+          scale:0.95,
+          ease:Expo.easeIn,
           opacity: 0,
-          display:'block' 
+          display:'block'
         },
-        { 
+        {
           // to
-          scale:1, 
-          ease:Expo.easeIn, 
+          scale:1,
+          ease:Expo.easeIn,
           opacity: 1,
-          display:'block', 
-          onComplete: function() { 
+          display:'block',
+          onComplete: function() {
             // TODO: vary this sound (pitch up?) after each iteration
-            Parallels.Audio.player.play('fx-ting3'); 
-          } 
+            Parallels.Audio.player.play('fx-ting3');
+          }
         },
         delay
       );

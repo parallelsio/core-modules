@@ -30,16 +30,15 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
       localBits[pageIdentifier].html = message.data.content;
       localBits[pageIdentifier].liftStatus = 'complete';
       var updatedBit = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
-      delete updatedBit._id;
-      var response = server.updateBit(localBits[pageIdentifier]._id, updatedBit);
-      response.remote.then(function(data) {
+      var response = server.updateBit(updatedBit);
+      response.result.then(function(data) {
         browser.notify({title: 'Bit Lift Complete', message: 'Page processed'}, function () {
           console.log('update is complete');
           console.log(data);
           delete localBits[pageIdentifier];
         });
       });
-      response.remote.fail(function(err) {
+      response.result.fail(function(err) {
         console.log('update is complete');
         console.log(err);
       });
@@ -75,7 +74,9 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
 
         browser.screenshot(function (dataUrl) {
           localBits[pageIdentifier].imageDataUrl = dataUrl;
-          saveBit({bit: localBits[pageIdentifier]});
+          saveBit({bit: localBits[pageIdentifier]}, function (bit) {
+            localBits[pageIdentifier]._id = bit._id;
+          });
           var message = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
           message.event = 'clipper-activated';
           browser.sendMessageToDom({data: message});
@@ -86,9 +87,10 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
     /**
      * Save the bit back to the server
      * @param data
+     * @param cb
      */
-    var saveBit = function (data) {
-      server.saveBit(data.bit);
+    var saveBit = function (data, cb) {
+      server.saveBit(data.bit, cb);
     };
 
     return {

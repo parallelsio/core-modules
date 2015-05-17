@@ -7,35 +7,25 @@ Template.map.onRendered(function (){
   container._uihooks = {
 
     insertElement: function(node, next) {
+      var bitDataContext = Blaze.getData(node) || Session.get('newTextBit');
 
-      var bitDataContext = Blaze.getData(node); // get child data context (bit)
-      var bitDatabaseId = bitDataContext._id;
+      $(node).insertBefore(next);
 
-      // TODO: use Greensock's force3D flag, instead of 0.01px hack [which triggers GPU rendering]
-      var transformString =  "translate3d(" + bitDataContext.position.x + "px, " + bitDataContext.position.y + "px, 0.01px)";
-      log.debug('_uihook: moment before bit insert: ', bitDatabaseId);
 
-      $(node)
-        .hide()
-        .insertBefore(next)
-        .css( { transform: transformString } )
+      function timelineInsertDone (node) {
+        $(node).find('.editbit').focus();
+      }
 
-        // TODO: add conditional to the editbit focus, as only relevant for text bits
+      var timelineInsert = new TimelineMax({
+        onComplete: timelineInsertDone,
+        onCompleteParams:[ node ]
+      });
 
-        function timelineInsertDone(node){
-          log.debug("bit:insert:uihook timeline animate done.");
-        }
-
-        var timelineInsert = new TimelineMax({
-          onComplete: timelineInsertDone,
-          onCompleteParams:[ node ]
-        });
-
-        timelineInsert
-          .to(node, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y })
-          .to(node, 0.125, { ease:Bounce.easeIn , display:'block', opacity: 0, alpha: 0 })
-          .to(node, 0.125, { scale: 0.95, ease:Quint.easeOut , opacity: 1, alpha: 1} )
-          .to(node, 0.275, { scale: 1, ease:Elastic.easeOut } );
+      timelineInsert
+        .to(node, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y })
+        .to(node, 0.125, { ease: Bounce.easeIn , display: 'block', opacity: 1, alpha: 1 })
+        .to(node, 0.125, { scale: 0.95, ease: Quint.easeOut } )
+        .to(node, 0.275, { scale: 1, ease: Elastic.easeOut } );
     },
 
 
