@@ -158,7 +158,7 @@
   
 ---------- OR ------------
 
-> 3) To our sandbox server, at [http://parallels.meteor.com](http://parallels.meteor.com)
+> 3) To our sandbox server, at [https://makeparallels.herokuapp.com](https://makeparallels.herokuapp.com)
 > This link is public + persists. Our production sandbox for now.
 > Please take care what you clip here.
 > `$ npm run prod`
