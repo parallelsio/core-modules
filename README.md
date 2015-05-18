@@ -34,6 +34,7 @@
 
 > * [Saucelabs](https://www.saucelabs.com) Automated cross-browser testing on various platforms
 
+> * [Heroku](https://www.heroku.com) Cloud hosting platform, with good API's + plugin system
 
 
 ### Special thanks for free licenses + support from:
