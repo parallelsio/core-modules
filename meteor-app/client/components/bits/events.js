@@ -2,12 +2,11 @@ BitEvents = {
 
   hoverInBit: function (event, template) {
     Session.set('bitHoveringId', template.data._id);
-    // TODO: play sound here
+      Parallels.Audio.player.play('fx-ting3');
   },
 
   hoverOutBit: function (event, template){
     Session.set('bitHoveringId', null);
-    // TODO: play sound here
   }
 };
 
