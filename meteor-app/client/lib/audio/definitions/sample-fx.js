@@ -34,6 +34,16 @@ Parallels.Audio.Definition['fx-ffft'] = {
   }
 }
 
+Parallels.Audio.Definition['fx-ting3'] = {
+  synthDef: {   
+    id: "fx-ting3",  
+    ugen: "flock.ugen.playBuffer",
+    buffer: {
+        id: "fx-ting3",  
+        url: "/sounds/fx-ting3.wav"
+    }
+  }
+}
 Parallels.Audio.Definition['fx-trips'] = {
   synthDef: {   
     id: "fx-trips",  
@@ -106,5 +116,20 @@ Parallels.Audio.Definition['fx-quad-ripple'] = {
     }
   }
 }
+
+Parallels.Audio.Definition['fx-welcome-v1'] = {
+  synthDef: {   
+    id: "fx-welcome-v1",  
+    ugen: "flock.ugen.playBuffer",
+    inputs: {
+      buffer: {
+        id: "fx-welcome-v1",  
+        url: "/sounds/fx-welcome-v1.wav"
+      }
+    }
+  }
+}
+
+
 
 

@@ -58,8 +58,24 @@ Template.menu.rendered = function() {
       shimmerTimeline.fromTo(
         this,
         duration,
-        { scale:0.95, ease:Expo.easeIn, opacity: 0,  display:'block' },
-        { scale:1, ease:Expo.easeIn, opacity: 1,  display:'block', onComplete: function() { Parallels.Audio.player.play('fx-quad-ripple'); } },
+        { 
+          // from
+          scale:0.95, 
+          ease:Expo.easeIn, 
+          opacity: 0,
+          display:'block' 
+        },
+        { 
+          // to
+          scale:1, 
+          ease:Expo.easeIn, 
+          opacity: 1,
+          display:'block', 
+          onComplete: function() { 
+            // TODO: vary this sound (pitch up?) after each iteration
+            Parallels.Audio.player.play('fx-ting3'); 
+          } 
+        },
         delay
       );
 
