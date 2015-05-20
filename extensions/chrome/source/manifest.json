@@ -29,8 +29,7 @@
       "css": [
         "styles/vendor/jquery.tag-editor.css",
         "styles/compiled/jquery.tag.override.css",
-        "styles/compiled/main.css",
-        "styles/compiled/typefaces.css"
+        "styles/compiled/main.css"
       ],
       "js": [
         "scripts/content.js",

@@ -13,6 +13,7 @@
     height: 67px; }
 
 .parallels-dialog-wrapper {
+  font-family: 'Lato', sans-serif;
   /* use pixels here to define the base size for type in this document.
     everywhere else, we'll use ems, which is relative sizing based on this */
   font-size: 14px !important;
@@ -30,7 +31,7 @@
     border: none;
     background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
     background-size: 1px 6px, 1px 1px, 1px 6px;
-    font-family: 'ChaparralPro-Regular' !important;
+    font-family: 'Lato', sans-serif;
     font-size: 1.3em !important;
     color: #FFF;
     display: inline-block;
@@ -55,7 +56,7 @@
     border: none;
     background: bottom left linear-gradient(gray, gray) no-repeat, bottom center linear-gradient(gray, gray) repeat-x, bottom right linear-gradient(gray, gray) no-repeat;
     background-size: 1px 6px, 1px 1px, 1px 6px;
-    font-family: 'ChaparralPro-Regular' !important;
+    font-family: 'Lato', sans-serif;
     font-size: 1.3em !important;
     color: #FFF; }
     .parallels-dialog-wrapper .bit-context:hover, .parallels-dialog-wrapper .bit-context:focus {
@@ -115,7 +116,7 @@
         /* No support for these yet, future proofing */
         -o-user-select: none;
         user-select: none;
-        font-family: 'ChaparralPro-Regular' !important;
+        font-family: 'Lato', sans-serif;
         font-size: 1.3em !important;
         color: #FFF;
         display: inline-block;

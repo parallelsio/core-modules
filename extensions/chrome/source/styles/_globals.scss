@@ -32,7 +32,7 @@ $extension_root: "chrome-extension://__MSG_@@extension_id__" !global;
 }
 
 @mixin base-type {
-  font-family: 'ChaparralPro-Regular' !important;
+  font-family: 'Lato', sans-serif;
   font-size: 1.3em !important;
   color: #FFF;
 }
