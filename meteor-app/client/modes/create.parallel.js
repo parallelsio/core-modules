@@ -47,11 +47,11 @@ Parallels.AppModes['create-parallel'] = {
       // set up a container to draw the line stroke
       var svg = document.createElement('svg');
       $(svg).addClass("parallel-line-container");
-      $(svg).attr(height, 5000);
-      $(svg).attr(width, 5000);
+      $(svg).attr("height", 5000);
+      $(svg).attr("width", 5000);
       $('.map').prepend(svg);
 
-      var s = Snap(800,700);
+      var s = Snap(".parallel-line-container");
       s
         .line(
           bitData.position.x, 
