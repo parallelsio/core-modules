@@ -8,27 +8,44 @@ Template.map.onRendered(function (){
   // ***************** PLOMA *************************
   var isDrawing = false;
   var canvas = $("#sketch-bit")[0];
+  var plugin = $('#wtPlugin')[0];
+  
+  // Ploma only does rendering
+  // doesnt care location + pressure data from
+  // Ploma can be used with any tablet
+  var getEventPoint = function(e){
+    var point = {};
+    point.x = e.clientX;
+    point.y = e.clientY;
 
-  // canvas is any <canvas> element
+    // fail gracefully if no pressure is detected (no tablet found)
+    // tablet reports a range of 0 to 1
+    point.p = plugin.penAPI.pressure ? plugin.penAPI.pressure : 0.6;
+    return point;
+  }
+
   var ploma = new Ploma(canvas);
   ploma.clear();
 
   // begin a stroke at the mouse down point
   canvas.onmousedown = function(e) {
     isDrawing = true;
-    ploma.beginStroke(e.clientX, e.clientY, 1);
+    var p = getEventPoint(e);
+    ploma.beginStroke(p.x, p.y, p.p);
   }
 
   // extend the stroke at the mouse move point
   canvas.onmousemove = function(e) {
     if (!isDrawing) return;
-    ploma.extendStroke(e.clientX, e.clientY, 1);
+    var p = getEventPoint(e);
+    ploma.extendStroke(p.x, p.y, p.p);
   }
 
   // end the stroke at the mouse up point
   canvas.onmouseup = function(e) {
     isDrawing = false;
-    ploma.endStroke(e.clientX, e.clientY, 1);
+    var p = getEventPoint(e);
+    ploma.endStroke(p.x, p.y, p.p);
   }
 
   // ***************** PLOMA *************************
