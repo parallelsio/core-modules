@@ -15,8 +15,10 @@ Template.map.onRendered(function (){
   // Ploma can be used with any tablet
   var getEventPoint = function(e){
     var point = {};
-    point.x = e.clientX;
-    point.y = e.clientY;
+
+    // account for offset
+    point.x = window.pageXOffset + e.clientX - canvas.offsetLeft;
+    point.y = window.pageYOffset + e.clientY - canvas.offsetTop;
 
     // fail gracefully if no pressure is detected (no tablet found)
     // tablet reports a range of 0 to 1
