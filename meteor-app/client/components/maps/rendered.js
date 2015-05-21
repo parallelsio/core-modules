@@ -30,6 +30,7 @@ var createPlomaCanvas = function(canvas){
     isDrawing = true;
     var point = getEventPoint(event, canvas, plugin);
     ploma.beginStroke(point.x, point.y, point.p);
+    Parallels.Audio.player.play('fx-cinq-drop');
   }
 
   // extend the stroke at the mouse move point
@@ -44,7 +45,10 @@ var createPlomaCanvas = function(canvas){
     isDrawing = false;
     var point = getEventPoint(event, canvas, plugin);
     ploma.endStroke(point.x, point.y, point.p);
+    Parallels.Audio.player.play('fx-ting3');
   }
+
+  return ploma;
 }
 
 
@@ -56,7 +60,23 @@ Template.map.onRendered(function (){
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
   
-  createPlomaCanvas(document.getElementById("sketch-bit"));
+  // TODO: into a 'sketch-mode'
+  // Parallels.AppModes['bit-sketch'].enter();
+  var plomaInstance = createPlomaCanvas(document.getElementById("sketch-bit"));
+
+  Mousetrap.bind('c', function (){
+    log.debug("pressed 'c' key");  
+    var bitHoveringId = Session.get('bitHoveringId');
+
+    // TODO: only if hovering over a bit, once this is moved from map to
+    // if (bitHoveringId) {
+      log.debug("clearing bit:sketch canvas on ", bitHoveringId);
+      Parallels.Audio.player.play('fx-pep');
+      plomaInstance.clear();
+      // TODO: bind clear to bit.content data reactively
+    // }
+  });
+
 
   container._uihooks = {
 

@@ -1,4 +1,4 @@
-// TODO: make function to generate JSON data for samples
+// TODO: make one function to load a sample? 
 
 Parallels.Audio.Definition['fx-pep'] = {
   synthDef: {   
@@ -21,7 +21,6 @@ Parallels.Audio.Definition['fx-cinq-drop'] = {
     }
   }
 }
-
 
 Parallels.Audio.Definition['fx-ffft'] = {
   synthDef: {   
@@ -99,19 +98,6 @@ Parallels.Audio.Definition['fx-tri'] = {
       buffer: {
         id: "fx-tri",  
         url: "/sounds/fx-tri.wav"
-      }
-    }
-  }
-}
-
-Parallels.Audio.Definition['fx-quad-ripple'] = {
-  synthDef: {   
-    id: "fx-quad-ripple",  
-    ugen: "flock.ugen.playBuffer",
-    inputs: {
-      buffer: {
-        id: "fx-quad-ripple",  
-        url: "/sounds/fx-quad-ripple.wav"
       }
     }
   }
