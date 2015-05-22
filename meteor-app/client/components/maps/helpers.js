@@ -1,5 +1,8 @@
 Template.map.helpers({
-  bits: function() {
+  textBits: function() {
+    return Bits.find();
+  },
+  sketchBits: function() {
     return Bits.find();
   },
   isCreatingNewTextBit: function () {
