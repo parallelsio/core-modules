@@ -16,6 +16,11 @@ Meteor.startup(function() {
     Parallels.AppModes['preview-bit'].enter();
   });
 
+  Mousetrap.bind('s', function (event) {
+    log.debug("pressed 's' key");
+    Parallels.AppModes['sketch-bit'].enter(event);
+  });
+
   Mousetrap.bind('shift', function (){
     log.debug("pressed 'Shift' key");
     Parallels.AppModes['create-parallel'].enter();

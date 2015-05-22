@@ -4,5 +4,8 @@ Template.map.helpers({
   },
   isCreatingNewTextBit: function () {
     return Session.get('newTextBit');
+  },
+  isCreatingSketchBit: function () {
+    return Session.get('sketchBit');
   }
 });

@@ -67,6 +67,7 @@ Template.bit.onRendered(function (){
   Draggable.create(Template.instance().firstNode, {
     throwProps:false,
     zIndexBoost:false,
+    trigger: bitHtmlElement.find('.ui-widget-header'),
 
     onDragStart:function(event){
       var x = this.endX;
@@ -77,8 +78,6 @@ Template.bit.onRendered(function (){
       // console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
 
       Parallels.Audio.player.play('fx-cinq-drop');
-
-
     },
 
     onPress: function(event){

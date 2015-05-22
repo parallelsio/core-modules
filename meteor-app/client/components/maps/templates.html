@@ -4,26 +4,16 @@
 
   <div class="map">
 
-    <!-- 
-      Supports Ploma.js integration, with Wacom tablet plugin 
-      finds NPAPI plugin type allows browser to communicate with Wacom tablet.
-
-      Mouse (x/y) gets sent natively, driver maps corrdinates stylus to mouse.
-      This object/plugin is required for pressure data.
-    -->
-    <object id="wtPlugin" type="application/x-wacomtabletplugin">
-      <param name="onload" value="pluginLoaded"/>
-    </object>
-
-    <!-- canvas when Ploma draws onto.  -->
-    <canvas id="sketch-bit" height="500" width="500"></canvas>
-
     {{ #each bits }}
       {{> bit }}
     {{/each }}
 
     {{#if isCreatingNewTextBit}}
       {{> newTextBit}}
+    {{/if}}
+
+    {{#if isCreatingSketchBit}}
+      {{> sketchBit}}
     {{/if}}
 
   </div>
