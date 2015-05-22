@@ -67,7 +67,23 @@ Template.bit.onRendered(function (){
       
       Parallels.Audio.player.play('fx-cinq-drop');
 
+
     },
+
+    onPress: function(event){
+      function timelineDone(bitDatabaseId){
+        log.debug("bit:drag:start", bitDatabaseId);
+      }
+
+      var timeline = new TimelineMax({
+        onComplete: timelineDone,
+        onCompleteParams:[ bitDatabaseId  ]
+      });
+      
+      timeline.to(bitHtmlElement, 0.25, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });
+
+    },
+
 
     // OQ: what's the diff between:
     // Draggable.addEventListener("onDrag", yourFunc);
@@ -80,6 +96,7 @@ Template.bit.onRendered(function (){
       console.log(event.type, " : dragging: ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
       // bitDragAudioInstance.set("elasticStretch.source.freq", x)
+
     },
 
     onDragEnd:function( event ) {
@@ -102,6 +119,18 @@ Template.bit.onRendered(function (){
       
       Parallels.Audio.player.play('fx-ffft');      
       
+      function timelineDone(bitDatabaseId){
+        log.debug("bit:drag:end", bitDatabaseId);
+      }
+
+      var timeline = new TimelineMax({
+        onComplete: timelineDone,
+        onCompleteParams:[ bitDatabaseId  ]
+      });
+      
+      timeline.to(bitHtmlElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
+
+
 
       // replace with envelope close instead:
       // it would be more performant, less slitch
