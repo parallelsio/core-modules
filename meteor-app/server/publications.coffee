@@ -3,3 +3,6 @@ Meteor.publish 'bits', ->
 
 Meteor.publish 'errors', ->
   return Errors.find()
+
+Meteor.publish 'events', ->
+  return Events.find()

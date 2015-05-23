@@ -1,0 +1,38 @@
+<template name="eventlog">
+  <div class="eventlog">
+    <div class="bg-white shadow">
+      <div class="px2">
+        <div class="border-bottom">
+          <div class="p2 bold">Event Stream</div>
+        </div>
+        <div class="timeline">
+          <div class="py2">
+            {{ #each events }}
+              {{> event }}
+            {{/each }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="event">
+  <div class="clearfix p1">
+    <div>
+      <div class="left mr2 mt1 icon">
+        <i class="fa fa-circle"></i>
+      </div>
+      <div class="overflow-hidden">
+        <div class="activity-body">
+          <p class="clearfix mb0">
+            <span class="left bold">{{description}}</span>
+            <span class="right"><a class="fork-link" href="#">Fork</a></span>
+          </p>
+          <p class="mb0">{{meta}} </p>
+          <p class="mb0 h6">{{time}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

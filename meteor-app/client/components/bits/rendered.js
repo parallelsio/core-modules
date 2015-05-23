@@ -10,6 +10,13 @@ Template.bit.onRendered(function (){
   var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
   log.debug("bit:render: ", bitDatabaseId);
 
+  // Track position changes for Bits
+  Tracker.autorun(function() {
+    var position = Bits.findOne(bitDatabaseId).position;
+    var timeline = new TimelineMax();
+    timeline.to(bitHtmlElement, 0, { x: position.x, y: position.y });
+  });
+
   // Track upload status for new Bits
   Tracker.autorun(function (computation) {
     var bitUpload = Parallels.FileUploads[bitHtmlElement.data('upload-key')];
@@ -19,11 +26,11 @@ Template.bit.onRendered(function (){
     }
 
     if (bitUpload.status() === 'failed') {
-      /* 
-        would show a friendly error message but the next line we remove the bit 
+      /*
+        would show a friendly error message but the next line we remove the bit
         so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
-        bitHtmlElement.find('.content')[0].classList.add('complete', 'error'); 
-      */ 
+        bitHtmlElement.find('.content')[0].classList.add('complete', 'error');
+      */
       computation.stop();
       Meteor.call('changeState', {
         command: 'deleteBit',
@@ -52,18 +59,6 @@ Template.bit.onRendered(function (){
 
   var bitDragAudioInstance = "";
 
-  function timelineDone(bitDatabaseId){
-    log.debug("bit:render. Move into position and keep hidden ", bitDatabaseId, " : timeline animate done");
-  }
-
-  var timeline = new TimelineMax({
-    onComplete: timelineDone,
-    onCompleteParams:[ bitDatabaseId  ]
-  });
-
-  // move to position, immediately hide
-  timeline.to(bitHtmlElement, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y });
-
   var resetBitSize = function(message){
     function timelineDone(bitDatabaseId){
       log.debug(message, bitDatabaseId);
@@ -76,7 +71,6 @@ Template.bit.onRendered(function (){
 
     timeline.to(bitHtmlElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
   };
-
 
   // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
@@ -110,9 +104,9 @@ Template.bit.onRendered(function (){
       });
 
       // TODO: improve performance
-      // use image asset instead of CSS shadow: 
+      // use image asset instead of CSS shadow:
       // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
-      
+
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
       timeline.to(bitHtmlElement, 0.20, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });

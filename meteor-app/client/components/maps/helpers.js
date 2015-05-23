@@ -4,5 +4,8 @@ Template.map.helpers({
   },
   isCreatingNewTextBit: function () {
     return Session.get('newTextBit');
+  },
+  viewingEventLog: function () {
+    return Session.get('viewingEventLog');
   }
 });

@@ -150,6 +150,13 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+      resetNeo4jDb: {
+        cmd: 'curl -X POST http://localhost:7474/db/data/cypher --data \'{"query":"MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r"}\' --header "Content-Type: application/json" --header "Accept: application/json"',
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: false
+      },
       meteordebug: {
         cmd: [
           'cd meteor-app',

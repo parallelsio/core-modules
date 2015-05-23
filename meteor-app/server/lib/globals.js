@@ -1,5 +1,5 @@
-EventEmitter = Npm.require('events').EventEmitter;
-StateChangeEvents = new EventEmitter();
+EventEmitter = Meteor.npmRequire('eventemitter2').EventEmitter2;
+StateChangeEvents = new EventEmitter({wildcard: true});
 
 Meteor.wrapAsync(function (cb) {
   var mongo = Meteor.npmRequire('sourced-repo-mongo/mongo');

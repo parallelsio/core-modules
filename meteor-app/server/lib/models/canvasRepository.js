@@ -23,29 +23,76 @@ _.extend(CanvasRepository.prototype, {
         CanvasRepository.super_.prototype.get.call(self, id, function (err, canvas) {
           self.cache[id] = canvas;
 
-          // todo: duplication here because we have to set event listeners on canvas which is not a global prop. Can we do better?
           canvas.on('bit.created', function (bit) {
-            StateChangeEvents.emit('canvas.bit.created', {data: {bit: bit}});
+            StateChangeEvents.emit('canvas.bit.created', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.undo_created', function (bit) {
+            StateChangeEvents.emit('canvas.bit.undo_created', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.redo_created', function (bit) {
+            StateChangeEvents.emit('canvas.bit.redo_created', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
           });
 
           canvas.on('bit.positionUpdated', function (bit) {
-            StateChangeEvents.emit('canvas.bit.positionUpdated', {data: {bit: bit}});
+            StateChangeEvents.emit('canvas.bit.positionUpdated', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.undo_positionUpdated', function (bit) {
+            StateChangeEvents.emit('canvas.bit.undo_positionUpdated', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.redo_positionUpdated', function (bit) {
+            StateChangeEvents.emit('canvas.bit.redo_positionUpdated', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
           });
 
           canvas.on('bit.contentUpdated', function (bit) {
-            StateChangeEvents.emit('canvas.bit.contentUpdated', {data: {bit: bit}});
+            StateChangeEvents.emit('canvas.bit.contentUpdated', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.undo_contentUpdated', function (bit) {
+            StateChangeEvents.emit('canvas.bit.undo_contentUpdated', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.redo_contentUpdated', function (bit) {
+            StateChangeEvents.emit('canvas.bit.redo_contentUpdated', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
           });
 
           canvas.on('bit.uploadImage', function (bit) {
-            StateChangeEvents.emit('canvas.bit.uploadImage', {data: {bit: bit}});
+            StateChangeEvents.emit('canvas.bit.uploadImage', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.undo_uploadImage', function (bit) {
+            StateChangeEvents.emit('canvas.bit.undo_uploadImage', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.redo_uploadImage', function (bit) {
+            StateChangeEvents.emit('canvas.bit.redo_uploadImage', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
           });
 
           canvas.on('bit.deleted', function (bit) {
-            StateChangeEvents.emit('canvas.bit.deleted', {data: {bit: bit}});
+            StateChangeEvents.emit('canvas.bit.deleted', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.undo_deleted', function (bit) {
+            StateChangeEvents.emit('canvas.bit.undo_deleted', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.redo_deleted', function (bit) {
+            StateChangeEvents.emit('canvas.bit.redo_deleted', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
           });
 
           canvas.on('bit.clipWebpage', function (bit) {
-            StateChangeEvents.emit('canvas.bit.clipWebpage', {data: {bit: bit}});
+            StateChangeEvents.emit('canvas.bit.clipWebpage', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.undo_clipWebpage', function (bit) {
+            StateChangeEvents.emit('canvas.bit.undo_clipWebpage', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
+          });
+
+          canvas.on('bit.redo_clipWebpage', function (bit) {
+            StateChangeEvents.emit('canvas.bit.redo_clipWebpage', {data: {bit: bit, canvas: _.pick(canvas, 'id', 'version', 'timestamp')}});
           });
 
           callback(null, canvas);

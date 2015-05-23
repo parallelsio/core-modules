@@ -1,5 +1,5 @@
 Parallels.KeyCommands = {
-  
+
   bindDelete: function(command){
     log.debug("keyCommand:bind", command);
 
@@ -22,7 +22,7 @@ Parallels.KeyCommands = {
   }
 };
 
- 
+
 
 
 
@@ -53,6 +53,21 @@ Meteor.startup(function() {
   });
 
   // **********************************************
+  Mousetrap.bind('l', function () {
+    var viewingEventLog = Session.get('viewingEventLog');
+    Session.set('viewingEventLog', !viewingEventLog);
+  });
+
+  // **********************************************
+  Mousetrap.bind(['command+z', 'ctrl+z'], function () {
+    Meteor.call('undoState', {canvasId: '1'});
+  });
+
+  Mousetrap.bind(['command+shift+z', 'ctrl+shift+z'], function () {
+    Meteor.call('redoState', {canvasId: '1'});
+  });
+
+  // **********************************************
   Mousetrap.bindGlobal('esc', function() {
     log.debug("pressed 'Esc' key");
     var currentMode = Session.get('currentMode');
@@ -62,7 +77,7 @@ Meteor.startup(function() {
   });
 
   // **********************************************
-  
+
   Parallels.KeyCommands.bindDelete();
 
 });

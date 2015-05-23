@@ -1,2 +1,2 @@
-log = loglevel.createAppLogger('parallels', defaultLevel = 'debug');
+log = loglevel.createAppLogger('parallels', defaultLevel = 'info');
 devlog = loglevel.createLogger('dev', 'debug').debug;
