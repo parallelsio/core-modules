@@ -20,7 +20,6 @@ chriswessels:hammer
 awatson1978:mousetrap
 jeremy:snapsvg
 sanjo:jasmine
-velocity:html-reporter
 xolvio:inverter
 meteorhacks:npm
 npm-container
@@ -34,3 +33,4 @@ reactjs:react
 mquandalle:autofocus
 chuangbo:marked
 random
+velocity:html-reporter
