@@ -1,5 +1,5 @@
 Slingshot.createDirective("s3Uploader", Slingshot.S3Storage, {
-  bucket: "parallels-bits",
+  bucket: process.env.AWS_BUCKET || "BUCKET",
 
   AWSAccessKeyId: process.env.AWS_ACCESS_KEY_ID || 'KEY',
   AWSSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'SECRET',
@@ -10,6 +10,6 @@ Slingshot.createDirective("s3Uploader", Slingshot.S3Storage, {
   },
 
   key: function (file) {
-    return Date.now() + "/" + file.name;
+    return file.name + "_" + Date.now();
   }
 });
