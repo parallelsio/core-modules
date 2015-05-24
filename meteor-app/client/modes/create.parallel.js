@@ -45,17 +45,35 @@ Parallels.AppModes['create-parallel'] = {
       // var centerCoords = getCenterPointOfBit()
 
       // set up a container to draw the line stroke
-      // var svg = document.createElement('svg');
-      // $(svg).addClass("parallel-line-container");
-      // $('.map').prepend(svg);
+      var element = document.createElement('div');
+      $(element)
+        .addClass("parallel-line--container")
+        // .height( 5000 )
+        // .width( 5000)
+        .prependTo(".map");
 
-      var s = Snap("#create-parallel--line");
-      var bigCircle = s.circle(150, 150, 100);
-      
-      // var path = s.path("M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z");
+      // Make an instance of two and place it on the page.
+      var params = { width: 285, height: 200 };
+      var two = new Two(params).appendTo(element);
+ 
+      // two has convenience methods to create shapes.
+      var circle = two.makeCircle(72, 100, 50);
+      var rect = two.makeRectangle(213, 100, 100, 100);
 
-      // path.animate({ d: "M179.4,83.5l62.4-11.8c15.3,43.4-76,102.6-22.6,111.5c61.5-27.6,126.1-56.9,202.6-46.1c18.7,18.9,21.5,39.8,12.2,62.3C250.6,296.7,52.4,259.2,179.4,83.5z" }, 1000, mina.bounce);
-      
+      // The object returned has many stylable properties:
+      circle.fill = '#FF8000';
+      circle.stroke = 'orangered'; // Accepts all valid css color
+      circle.linewidth = 5;
+
+      rect.fill = 'rgb(0, 200, 255)';
+      rect.opacity = 0.75;
+      rect.noStroke();
+
+      // Don't forget to tell two to render everything
+      // to the screen
+      two.update();
+
+
       // s
       //   .line(
       //     bitData.position.x, 
@@ -118,12 +136,12 @@ Parallels.AppModes['create-parallel'] = {
 
       $(".map").removeClass('mode--create-parallel');
       $bitOrigin.removeClass('dashed-stroke');
-      $('#create-parallel--line').remove();
+      $('.parallel-line--container').remove();
 
       // stop heartbeat animation
       timeline.kill();
 
-      log.debug('exiting create parallel mode complete');
+      log.debug('parallel:create: exit mode');
     }
   }
 };
