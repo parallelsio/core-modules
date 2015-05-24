@@ -52,6 +52,7 @@ Parallels.AppModes['create-parallel'] = {
       $('.map').prepend(svg);
 
       var s = Snap(".parallel-line-container");
+
       s
         .line(
           bitData.position.x, 
