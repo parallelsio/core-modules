@@ -60,14 +60,31 @@ Template.bit.onRendered(function (){
   // move to position, immediately hide
   timeline.to(bitHtmlElement, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y });
 
+  var resetBit = function(message){
+    function timelineDone(bitDatabaseId){
+      log.debug(message, bitDatabaseId);
+    }
+
+    var timeline = new TimelineMax({
+      onComplete: timelineDone,
+      onCompleteParams:[ bitDatabaseId  ]
+    });
+
+    timeline.to(bitHtmlElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
+  };
+
+
   // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
   // // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   Draggable.create(Template.instance().firstNode, {
+
     throwProps:false,
     zIndexBoost:false,
 
     onDragStart:function(event){
+      log.debug("bit:drag:onDragStart", bitDatabaseId);
+
       var x = this.endX;
       var y = this.endY;
 
@@ -76,13 +93,11 @@ Template.bit.onRendered(function (){
       // console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
 
       Parallels.Audio.player.play('fx-cinq-drop');
-
-
     },
 
     onPress: function(event){
       function timelineDone(bitDatabaseId){
-        log.debug("bit:drag:start", bitDatabaseId);
+        log.debug("bit:drag:onPress", bitDatabaseId);
       }
 
       var timeline = new TimelineMax({
@@ -90,10 +105,19 @@ Template.bit.onRendered(function (){
         onCompleteParams:[ bitDatabaseId  ]
       });
 
-      timeline.to(bitHtmlElement, 0.25, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });
-
+      // TODO: improve performance
+      // use image asset instead of CSS shadow: 
+      // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
+      
+      // TODO: ensure this happens only when in Draggable and mouse is held down
+      // and not on regular taps/clicks of bit
+      timeline.to(bitHtmlElement, 0.20, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });
     },
 
+    onRelease: function(event){
+      log.debug("bit:drag:onrelease", bitDatabaseId);
+      resetBit("bit:drag:onRelease: animation end");
+    },
 
     // OQ: what's the diff between:
     // Draggable.addEventListener("onDrag", yourFunc);
@@ -103,14 +127,13 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: only display if changed from last reading's value
-      console.log(event.type, " : dragging: ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
+      console.log("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
       // bitDragAudioInstance.set("elasticStretch.source.freq", x)
-
     },
 
     onDragEnd:function( event ) {
-      log.debug("done dragging.");
+      log.debug("bit:drag:onDragEnd", bitDatabaseId);
 
       var x = this.endX;
       var y = this.endY;
@@ -131,17 +154,7 @@ Template.bit.onRendered(function (){
 
       Parallels.Audio.player.play('fx-ffft');
 
-      function timelineDone(bitDatabaseId){
-        log.debug("bit:drag:end", bitDatabaseId);
-      }
-
-      var timeline = new TimelineMax({
-        onComplete: timelineDone,
-        onCompleteParams:[ bitDatabaseId  ]
-      });
-
-      timeline.to(bitHtmlElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
-
+      resetBit("bit:drag:onDragEnd, animation end");
 
 
       // replace with envelope close instead:
