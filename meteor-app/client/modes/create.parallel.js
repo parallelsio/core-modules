@@ -45,15 +45,16 @@ Parallels.AppModes['create-parallel'] = {
       // var centerCoords = getCenterPointOfBit()
 
       // set up a container to draw the line stroke
-      var svg = document.createElement('svg');
-      $(svg).addClass("parallel-line-container");
-      $('.map').prepend(svg);
+      // var svg = document.createElement('svg');
+      // $(svg).addClass("parallel-line-container");
+      // $('.map').prepend(svg);
 
-      var s = Snap(".parallel-line-container");
+      var s = Snap("#create-parallel--line");
+      var bigCircle = s.circle(150, 150, 100);
+      
+      // var path = s.path("M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z");
 
-      var path = s.path("M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z");
-
-      path.animate({ d: "M179.4,83.5l62.4-11.8c15.3,43.4-76,102.6-22.6,111.5c61.5-27.6,126.1-56.9,202.6-46.1c18.7,18.9,21.5,39.8,12.2,62.3C250.6,296.7,52.4,259.2,179.4,83.5z" }, 1000, mina.bounce);
+      // path.animate({ d: "M179.4,83.5l62.4-11.8c15.3,43.4-76,102.6-22.6,111.5c61.5-27.6,126.1-56.9,202.6-46.1c18.7,18.9,21.5,39.8,12.2,62.3C250.6,296.7,52.4,259.2,179.4,83.5z" }, 1000, mina.bounce);
       
       // s
       //   .line(
@@ -117,7 +118,7 @@ Parallels.AppModes['create-parallel'] = {
 
       $(".map").removeClass('mode--create-parallel');
       $bitOrigin.removeClass('dashed-stroke');
-      $('.parallel-line-container').remove();
+      $('#create-parallel--line').remove();
 
       // stop heartbeat animation
       timeline.kill();
