@@ -4,7 +4,7 @@ var timeline, $bitOrigin;
  TODO:
 
  * syncronize multiple bits heartbeat animation
- * is timeline.kill() the best way to gracefully end heartbeat animation on escape
+ * is timeline.kill() the best way to gracefully end heartbeat animation on escape?
 
  */
 Parallels.AppModes['create-parallel'] = {
