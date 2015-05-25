@@ -27,16 +27,15 @@ $map-width: 5000px;
   vertical-align:middle;
 }
 
-
-#create-parallel--proton
+.create-parallel--burst-container
 {  
   position: absolute;
 }
 
-.create-parallel--line
+.create-parallel--line-container
 {    
+  position: absolute;
   height: $map-height;
   width: $map-width;
-  position: absolute;
 }
 

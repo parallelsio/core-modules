@@ -31,10 +31,10 @@ Parallels.AppModes['create-parallel'] = {
       $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
 
       // TODO: animate
-      $bitOrigin.addClass('dashed-stroke');
+      // $bitOrigin.addClass('dashed-stroke');
+
       // TODO:
       // disable events
-      // fix offset from adding stroke
       // try bg overlay over other bits too?
       // disable scrolling
 
@@ -44,47 +44,81 @@ Parallels.AppModes['create-parallel'] = {
       // }
       // var centerCoords = getCenterPointOfBit()
 
-      // set up a container to draw the line stroke
+
+      // TODO : get working with Hammer
+
+      function getRandomColor() {
+        return 'rgb('
+          + Math.floor(Math.random() * 255) + ','
+          + Math.floor(Math.random() * 255) + ','
+          + Math.floor(Math.random() * 255) + ')';
+      }
+
+      // var getEventPoint = function(event, svg){
+
+      //     var point = {};
+
+      //     // account for where the canvas sits, offset from 0,0
+      //     point.x = (window.pageXOffset + event.clientX) - canvas.offsetLeft;
+      //     point.y = (window.pageYOffset + event.clientY) - canvas.offsetTop;
+
+      //     return point;
+      //   }
+
+
+      // set up an SVG container via two.js container to draw the line stroke
       var element = document.createElement('div');
       $(element)
-        .addClass("parallel-line--container")
-        // .height( 5000 )
-        // .width( 5000)
+        .addClass("create-parallel--line-container")
+        .height( 5000 )
+        .width( 5000)
         .prependTo(".map");
 
-      // Make an instance of two and place it on the page.
-      var params = { width: 285, height: 200 };
+      var params = { 
+        fullscreen: true
+      };
       var two = new Two(params).appendTo(element);
- 
-      // two has convenience methods to create shapes.
-      var circle = two.makeCircle(72, 100, 50);
-      var rect = two.makeRectangle(213, 100, 100, 100);
+    
+      // Session.set('createParallelTwoInstance', two);
 
-      // The object returned has many stylable properties:
-      circle.fill = '#FF8000';
-      circle.stroke = 'orangered'; // Accepts all valid css color
-      circle.linewidth = 5;
+      console.log("bitData.position:" , bitData.position);
 
-      rect.fill = 'rgb(0, 200, 255)';
-      rect.opacity = 0.75;
-      rect.noStroke();
+      // convenience method
+      var line = two.makeLine(
+        bitData.position.x, 
+        bitData.position.y, 
+        bitData.position.x + 100, 
+        bitData.position.y + 100);
 
-      // Don't forget to tell two to render everything
-      // to the screen
+      line.linewidth = 5;
+      line.stroke = getRandomColor();
+      line.cap = line.join = 'round';
+
+      // OQ: should we use Meteor binding?
+
       two.update();
 
 
-      // s
-      //   .line(
-      //     bitData.position.x, 
-      //     bitData.position.y, 
-      //     bitData.position.x + 100, 
-      //     bitData.position.y + 100)
-      //   .attr({
-      //     fill: "none",
-      //     stroke: "#bada55",
-      //     strokeWidth: 5
+      // two.bind("update", function(event){
+
+      // });
+
+      // two.play();
+
+      // https://stackoverflow.com/questions/26850747/how-do-i-create-circular-hotspots-with-two-js
+      line._renderer.elem.addEventListener('mousemove', function(event){
+        log.debug("mouse event.page_: ", event.pageX, event.pageY);
+        line.fill = getRandomColor();
+      });
+
+
+
+      // $(line._renderer.elem)
+      //   .on( "mousemove", function(event) {
+      //     line.fill = getRandomColor();
+      //     log.debug("mouse event.page_: ", event.pageX, event.pageY);
       //   });
+
 
       var timelineStart = function () {
         log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
@@ -111,7 +145,6 @@ Parallels.AppModes['create-parallel'] = {
         .to($bitOrigin, 0.50, { scale: 1.02, ease:Expo.easeOut } )
         .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
 
-      // draw line
 
       // TODO: only enable if none others are going
 
@@ -135,8 +168,8 @@ Parallels.AppModes['create-parallel'] = {
       Session.set('bitParallelCreateOriginId', null);
 
       $(".map").removeClass('mode--create-parallel');
-      $bitOrigin.removeClass('dashed-stroke');
-      $('.parallel-line--container').remove();
+      // $bitOrigin.removeClass('dashed-stroke');
+      $('.create-parallel--line-container').remove();
 
       // stop heartbeat animation
       timeline.kill();
