@@ -1,5 +1,5 @@
 Template.bit.onDestroyed(function(){
-  Session.set('bitHoveringId', null);
+  BitEvents.hoverOutBit();
 });
 
 Template.bit.onRendered(function (){
@@ -19,7 +19,11 @@ Template.bit.onRendered(function (){
     }
 
     if (bitUpload.status() === 'failed') {
-      //bitHtmlElement.find('.content')[0].classList.add('complete', 'error'); // would show a friendly error message but the next line we remove the bit so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
+      /* 
+        would show a friendly error message but the next line we remove the bit 
+        so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
+        bitHtmlElement.find('.content')[0].classList.add('complete', 'error'); 
+      */ 
       computation.stop();
       Meteor.call('changeState', {
         command: 'deleteBit',
@@ -60,7 +64,7 @@ Template.bit.onRendered(function (){
   // move to position, immediately hide
   timeline.to(bitHtmlElement, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y });
 
-  var resetBit = function(message){
+  var resetBitSize = function(message){
     function timelineDone(bitDatabaseId){
       log.debug(message, bitDatabaseId);
     }
@@ -116,7 +120,7 @@ Template.bit.onRendered(function (){
 
     onRelease: function(event){
       log.debug("bit:drag:onrelease", bitDatabaseId);
-      resetBit("bit:drag:onRelease: animation end");
+      resetBitSize("bit:drag:onRelease: animation end");
     },
 
     // OQ: what's the diff between:
@@ -154,7 +158,7 @@ Template.bit.onRendered(function (){
 
       Parallels.Audio.player.play('fx-ffft');
 
-      resetBit("bit:drag:onDragEnd, animation end");
+      resetBitSize("bit:drag:onDragEnd, animation end");
 
 
       // replace with envelope close instead:

@@ -4,13 +4,13 @@ BitEvents = {
     Session.set('bitHoveringId', template.data._id);
     Parallels.Audio.player.play('fx-ting3');
     var $bit = $(Template.instance().firstNode);
-    $bit.addClass('hovered');
+    $bit.addClass('hovering');
   },
 
   hoverOutBit: function (event, template){
     Session.set('bitHoveringId', null);
     var $bit = $(Template.instance().firstNode);
-    $bit.removeClass('hovered');
+    $bit.removeClass('hovering');
   }
 };
 
