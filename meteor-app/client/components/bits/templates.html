@@ -1,9 +1,15 @@
 <template name="bit">
-  <div data-id="{{ _id }}" class="bit {{ type }}" data-title="{{ title }}" data-filename="{{ filename }}" data-upload-key="{{ uploadKey }}">
+  <div 
+    data-id="{{ _id }}" 
+    class="bit {{ type }}" 
+    data-title="{{ title }}" 
+    data-filename="{{ filename }}" 
+    data-upload-key="{{ uploadKey }}"
+  >
   
-    <div class="container">
-      <div class="face front {{ color }}">
-        <div class="content {{uploadStatus}}">
+    
+      <div class="content {{ color }}">
+        <div class="{{uploadStatus}}">
 
           <div class="progress">
             <span class="upload" style="width: {{ uploadProgress }}%;"></span>
@@ -57,6 +63,6 @@
 
       <p class="ui-widget-header"></p>
 
-    </div>
+   
   </div>
 </template>
