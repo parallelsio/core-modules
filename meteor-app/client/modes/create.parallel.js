@@ -5,7 +5,7 @@ function getRandomColor() {
     + Math.floor(Math.random() * 255) + ')';
 }
 var timeline, $bitOrigin;
-var line, updatedLine, lineContainer, params, two, mouse;
+var line, updatedLine, lineContainer, params, two, mouse, circle;
 
 
 /*
@@ -49,6 +49,8 @@ Parallels.AppModes['create-parallel'] = {
 
       // TODO : get working with Hammer
 
+      // ****************** RENDER LINE *************
+
       // set up an SVG container via two.js container to draw the line stroke
       lineContainer = document.createElement('div');
       $(lineContainer)
@@ -72,45 +74,52 @@ Parallels.AppModes['create-parallel'] = {
         mouse.y = window.pageYOffset + event.clientY
       });
 
+      circle = two.makeCircle(
+        bitData.position.x, 
+        bitData.position.y, 
+        2 // width
+      );
+
+      circle.noStroke().fill = 'blue';
+
       // TODO: originate line from center point of bit, so it looks right
       // as person moves mouse around: var centerCoords = getCenterPointOfBit()
       // destination vector is will be overridden on first
       // update by mouse position and won't be visible.
-      line = two.makeLine( 
-              bitData.position.x,
-              bitData.position.y,
-              bitData.position.x, 
-              bitData.position.y
-      );
+
+      // by passing the circle.translation into the origin 
+      // automatically data binds the line,
+      // so whenever the circle updates in .bind below
+      // line destination updates
+      // https://github.com/jonobr1/two.js/issues/133
+      var line = new Two.Polygon([
+              circle.translation, // origin
+              new Two.Vector(bitData.position.x, bitData.position.y)
+          ]);
+
+      line.noFill().stroke = 'yellow';
       line.linewidth = 15;
-      line.cap = line.join = 'round';
+      line.cap = 'round';
     
-      two.bind('update', function(frameCount) {
-        /*  OQ: why doesnt this work?
-              var endAnchor = new Two.Anchor(mouse.x, mouse.y);
-              line.vertices[1] = endAnchor;
-        */
+      two
+        .add(line)
+        .bind('update', function(frameCount) {
+          /*  OQ: why doesnt this work?
+                var endAnchor = new Two.Anchor(mouse.x, mouse.y);
+                line.vertices[1] = endAnchor;
+          */
 
-        // OQ: is clearing the canvas the best strategy for this?
-        // in terms of painting performance?
-        two.clear();
+          circle.translation.set(mouse.x, mouse.y);
 
-        updatedLine = two.makeLine( 
-              bitData.position.x,
-              bitData.position.y,
-              mouse.x, 
-              mouse.y
-        );
+          // TODO: longer the distance, thinner the linewidth
+          
+          // TODO: depending on direction on direction parallel is pointing,
+          // addClass(left);
+        });
+      // ****************** RENDER LINE *************
 
-        // TODO: longer the distance, thinner the linewidth
-        updatedLine.linewidth = 15;
-        updatedLine.cap = updatedLine.join = 'round';
-        
-        // TODO: depending on direction on direction parallel is pointing,
-        // addClass(left);
 
-      });
-
+      // ****************** HEARTBEAT ANIMATION *************
       var timelineStart = function () {
         log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
       };
@@ -134,6 +143,8 @@ Parallels.AppModes['create-parallel'] = {
         // play heartbeat animation
         .to($bitOrigin, 0.50, { scale: 1.02, ease:Expo.easeOut } )
         .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
+      // ****************** HEARTBEAT ANIMATION *************
+
     }
   },
 
@@ -157,9 +168,9 @@ Parallels.AppModes['create-parallel'] = {
       timeline.kill();
 
       // TODO: remove all two instances
-
-      $(window).off("mousemove");
-      lineContainer, params, two, mouse, updatedLine, line = null;
+      two.unbind('update');
+      $(window).off('mousemove');
+      lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
 
       log.debug('parallel:create: exit mode');
