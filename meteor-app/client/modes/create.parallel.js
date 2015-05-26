@@ -29,6 +29,23 @@ Parallels.AppModes['create-parallel'] = {
 
     if(bitHoveringId && (!isCreatingParallel))
     {
+        
+
+    //   Mousetrap.bind('shift', function (){
+    //     log.debug("pressed 'Shift' key");
+    //     Parallels.AppModes['create-parallel'].enter();
+    //   });
+
+    // try {
+    //   event.stopPropagation();
+    //   event.preventDefault();
+    // }
+    // catch (err) {
+    //   /*  Try/Catch is here for integration tests:
+    //       https://github.com/ccampbell/mousetrap/issues/257
+    //   */
+    // }
+
       isCreatingParallel = true;
       var bitParallelCreateOriginId = bitHoveringId;
       $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
