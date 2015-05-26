@@ -46,13 +46,12 @@ Parallels.AppModes['create-parallel'] = {
       $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
 
       // TODO: animate
-      $bitOrigin.addClass('dashed-stroke');
+      $bitOrigin.addClass('create-parallel--origin');
 
       // TODO:
       // disable events
       // try bg overlay over other bits too?
       // disable scrolling
-
 
 
       // ****************** RENDER LINE *************
@@ -98,8 +97,7 @@ Parallels.AppModes['create-parallel'] = {
           ]);
 
       line.noFill().stroke = 'yellow';
-      line.linewidth = 15;
-      line.cap = 'round';
+      line.linewidth = 7;
     
       two
         .add(line)
@@ -178,7 +176,7 @@ Parallels.AppModes['create-parallel'] = {
 
       $(".map").removeClass('mode--create-parallel');
       
-      $bitOrigin.removeClass('dashed-stroke');
+      $bitOrigin.removeClass('create-parallel--origin');
       $('.create-parallel--line-container').remove();
 
       // stop heartbeat animation
