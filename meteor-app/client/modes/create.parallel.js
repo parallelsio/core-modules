@@ -9,11 +9,15 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
 
 
 /*
- TODO:
+  TODO:
 
- * syncronize multiple bits heartbeat animation
- * is timeline.kill() the best way to gracefully end heartbeat animation on escape?
+    * syncronize multiple bits heartbeat animation
+    * is timeline.kill() the best way to gracefully end heartbeat animation on escape?
 
+  OQ: 
+
+    is enter/exit for this mode intuitive? shouldnt it be three?
+    1. enter   2. cancel  3.  complete?
  */
 
 Parallels.AppModes['create-parallel'] = {
@@ -31,7 +35,7 @@ Parallels.AppModes['create-parallel'] = {
       var bitData = Blaze.getData($bitOrigin[0]);
       var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
       var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
-
+  
       Session.set('isCreatingParallel', isCreatingParallel);
       Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
 
@@ -49,10 +53,9 @@ Parallels.AppModes['create-parallel'] = {
       // try bg overlay over other bits too?
       // disable scrolling
 
-      // TODO : get working with Hammer
+
 
       // ****************** RENDER LINE *************
-
       // set up an SVG container via two.js container to draw the line stroke
       lineContainer = document.createElement('div');
       $(lineContainer)
@@ -76,8 +79,6 @@ Parallels.AppModes['create-parallel'] = {
         mouse.y = window.pageYOffset + event.clientY
       });
 
-
-
       circle = two.makeCircle(
         bitCenterX,  
         bitCenterY, 
@@ -85,11 +86,6 @@ Parallels.AppModes['create-parallel'] = {
       );
 
       circle.noStroke().fill = 'blue';
-
-      // TODO: originate line from center point of bit, so it looks right
-      // as person moves mouse around: var centerCoords = getCenterPointOfBit()
-      // destination vector is will be overridden on first
-      // update by mouse position and won't be visible.
 
       // by passing the circle.translation into the origin 
       // two.js automatically data binds the line,
@@ -110,10 +106,13 @@ Parallels.AppModes['create-parallel'] = {
         .bind('update', function(frameCount) {
           circle.translation.set(mouse.x, mouse.y);
 
-          // TODO: longer the distance, thinner the linewidth
+          // TODO: the longer the distance, the thinner the linewidth
           
           // TODO: depending on direction on direction parallel is pointing,
           // addClass(left);
+
+          // TODO: stretch sound, bind to flocking
+
         });
       // ****************** RENDER LINE *************
 
@@ -125,10 +124,6 @@ Parallels.AppModes['create-parallel'] = {
 
       var timelineDone = function( bitOriginId ){
         log.debug('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
-        // Session.set('isDrawingParallel', null);
-        // Session.set('bitParallelCreateOriginId', null);
-
-        // $(this).unbind();
       };
 
       timeline = new TimelineMax({
@@ -139,12 +134,35 @@ Parallels.AppModes['create-parallel'] = {
       });
 
       timeline
-        // play heartbeat animation
-        .to($bitOrigin, 0.50, { scale: 1.02, ease:Expo.easeOut } )
+        .to($bitOrigin, 0.50, { scale: 1.05, ease:Expo.easeOut } )
         .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
       // ****************** HEARTBEAT ANIMATION *************
 
+
+
+
     }
+
+    // play sound indicating origin start
+
+    // set up bind shift key again, to complete parallel connection
+    // in callback:
+
+      // if were hovering on a bit other than origin
+
+      // // play spark animation
+
+      // save destination bit id to session
+    
+      // play yay sound
+
+      // call neo4j save
+
+      // show form, allow person to continue, escape rids form
+
+              // Session.set('isDrawingParallel', null);
+        // Session.set('bitParallelCreateOriginId', null);
+
   },
 
   exit: function () {
