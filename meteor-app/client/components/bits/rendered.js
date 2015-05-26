@@ -123,9 +123,6 @@ Template.bit.onRendered(function (){
       resetBitSize("bit:drag:onRelease: animation end");
     },
 
-    // OQ: what's the diff between:
-    // Draggable.addEventListener("onDrag", yourFunc);
-    // and:
     onDrag:function(event){
       var x = this.endX;
       var y = this.endY;

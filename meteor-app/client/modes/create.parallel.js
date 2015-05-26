@@ -10,14 +10,13 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
 
 /*
   TODO:
-
     * syncronize multiple bits heartbeat animation
-    * is timeline.kill() the best way to gracefully end heartbeat animation on escape?
 
   OQ: 
+    * is timeline.kill() the best way to gracefully end heartbeat animation on escape?
 
-    is enter/exit for this mode intuitive? shouldnt it be three?
-    1. enter   2. cancel  3.  complete?
+    * is enter/exit for this mode intuitive? shouldnt it be three?
+      1. enter   2. cancel  3.  complete?
  */
 
 Parallels.AppModes['create-parallel'] = {
@@ -29,22 +28,32 @@ Parallels.AppModes['create-parallel'] = {
 
     if(bitHoveringId && (!isCreatingParallel))
     {
-        
+      // ****************** PREPARE KEY COMMANDS **********************
+      // Disable keys that are inappropriate here,
+      // Re-init them on exit Parallel mode
+      // TODO: Parallels.keyCommands.disableAll function?
+      // TODO: Parallels.keyCommands.disableAllExcept function?
+      Mousetrap.unbind('d'); 
+      // Mousetrap.unbind('space'); 
+      Mousetrap.unbind('shift'); 
 
-    //   Mousetrap.bind('shift', function (){
-    //     log.debug("pressed 'Shift' key");
-    //     Parallels.AppModes['create-parallel'].enter();
-    //   });
+      Mousetrap.bind('shift', function (){
+        log.debug("pressed 'Shift' key, during mode:create-parallel");
 
-    // try {
-    //   event.stopPropagation();
-    //   event.preventDefault();
-    // }
-    // catch (err) {
-    //   /*  Try/Catch is here for integration tests:
-    //       https://github.com/ccampbell/mousetrap/issues/257
-    //   */
-    // }
+        try {
+          event.stopPropagation();
+          event.preventDefault();
+          
+          // close it off
+          log.debug("show form here");
+        }
+        catch (err) {
+          /*  Try/Catch is here for integration tests:
+              https://github.com/ccampbell/mousetrap/issues/257
+          */
+        }
+      });
+
 
       isCreatingParallel = true;
       var bitParallelCreateOriginId = bitHoveringId;
@@ -199,12 +208,26 @@ Parallels.AppModes['create-parallel'] = {
       // stop heartbeat animation
       timeline.kill();
 
-      // TODO: remove all two instances
-      two.unbind('update');
       $(window).off('mousemove');
+      // stop drawing parallel line
+      two.unbind('update');
+
+      // reset vars for next use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
+      // TODO: remove the two instance. Very CPU drain as it keeps going
 
+      // rebind the shift key back 'to normal'
+      // this is a copy of the code in lib/key-bindings.js
+      // TODO: how to reuse, so the 2 functions stay in sync?
+      // Do we need a Parallels.KeyCommand?
+      Mousetrap.bind('shift', function (){
+        log.debug("pressed 'Shift' key");
+        Parallels.AppModes['create-parallel'].enter();
+      });
+
+      Parallels.KeyCommands.bindDelete();
+              
       log.debug('parallel:create: exit mode');
     }
   }

@@ -7,5 +7,6 @@ Parallels = {
     Definition: {}
   },
   FileUploads: {},
-  Handlers: Inverter
+  Handlers: Inverter,
+  KeyCommands: {}
 };
