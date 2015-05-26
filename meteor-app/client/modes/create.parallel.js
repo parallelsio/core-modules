@@ -1,5 +1,12 @@
 var timeline, $bitOrigin;
 
+function getRandomColor() {
+  return 'rgb('
+    + Math.floor(Math.random() * 255) + ','
+    + Math.floor(Math.random() * 255) + ','
+    + Math.floor(Math.random() * 255) + ')';
+}
+
 /*
  TODO:
 
@@ -42,29 +49,9 @@ Parallels.AppModes['create-parallel'] = {
       // var getBitCenterPoint function(){
 
       // }
-      // var centerCoords = getCenterPointOfBit()
-
+      
 
       // TODO : get working with Hammer
-
-      function getRandomColor() {
-        return 'rgb('
-          + Math.floor(Math.random() * 255) + ','
-          + Math.floor(Math.random() * 255) + ','
-          + Math.floor(Math.random() * 255) + ')';
-      }
-
-      // var getEventPoint = function(event, svg){
-
-      //     var point = {};
-
-      //     // account for where the canvas sits, offset from 0,0
-      //     point.x = (window.pageXOffset + event.clientX) - canvas.offsetLeft;
-      //     point.y = (window.pageYOffset + event.clientY) - canvas.offsetTop;
-
-      //     return point;
-      //   }
-
 
       // set up an SVG container via two.js container to draw the line stroke
       var element = document.createElement('div');
@@ -75,50 +62,58 @@ Parallels.AppModes['create-parallel'] = {
         .prependTo(".map");
 
       var params = { 
-        fullscreen: true
+        fullscreen: true,
+        autostart: true
       };
       var two = new Two(params).appendTo(element);
-    
-      // Session.set('createParallelTwoInstance', two);
+      var mouse = new Two.Vector();
 
-      console.log("bitData.position:" , bitData.position);
+      // OQ: should we use Meteor binding? 
+      // https://stackoverflow.com/questions/21486667/meteor-js-how-should-i-bind-events-to-the-window-in-meteor
+       $(window).on('mousemove', function(event){
+          log.debug("mouse event.page_: ", event.pageX, event.pageY);
+          mouse.x = window.pageXOffset + event.clientX;
+          mouse.y = window.pageYOffset + event.clientY
+        });
 
-      // convenience method
-      var line = two.makeLine(
-        bitData.position.x, 
-        bitData.position.y, 
-        bitData.position.x + 100, 
-        bitData.position.y + 100);
+      // TODO: originate line from center point of bit, so it looks right
+      // as person moves mouse around: var centerCoords = getCenterPointOfBit()
+      // destination vector is will be overridden on first
+      // update by mouse position and won't be visible.
+      var line = two
+        .makeLine( 
+          bitData.position.x,
+          bitData.position.y,
+          bitData.position.x, 
+          bitData.position.y
+        )
+        line.linewidth = 15;
+        line.cap = line.join = 'round';
+      
+      two.bind('update', function(frameCount) {
+        /*  OQ: why doesnt this work?
+            var endAnchor = new Two.Anchor(mouse.x, mouse.y);
+            line.vertices[1] = endAnchor;
+        */
 
-      line.linewidth = 5;
-      line.stroke = getRandomColor();
-      line.cap = line.join = 'round';
+        // OQ: is this the best strategy for this?
+        two.clear();
 
-      // OQ: should we use Meteor binding?
+        var newLine = two
+          .makeLine( 
+            bitData.position.x,
+            bitData.position.y,
+            mouse.x, 
+            mouse.y
+          )
+        newLine.linewidth = 15;
+        newLine.cap = line.join = 'round';
+        
 
-      two.update();
+        // TODO: depending on direction on direction parallel is pointing,
+        // addClass(left);
 
-
-      // two.bind("update", function(event){
-
-      // });
-
-      // two.play();
-
-      // https://stackoverflow.com/questions/26850747/how-do-i-create-circular-hotspots-with-two-js
-      line._renderer.elem.addEventListener('mousemove', function(event){
-        log.debug("mouse event.page_: ", event.pageX, event.pageY);
-        line.fill = getRandomColor();
       });
-
-
-
-      // $(line._renderer.elem)
-      //   .on( "mousemove", function(event) {
-      //     line.fill = getRandomColor();
-      //     log.debug("mouse event.page_: ", event.pageX, event.pageY);
-      //   });
-
 
       var timelineStart = function () {
         log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
@@ -173,6 +168,10 @@ Parallels.AppModes['create-parallel'] = {
 
       // stop heartbeat animation
       timeline.kill();
+
+      // TODO: remove all two instances
+
+      $(window).off("mousemove");
 
       log.debug('parallel:create: exit mode');
     }
