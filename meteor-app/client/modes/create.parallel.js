@@ -29,6 +29,8 @@ Parallels.AppModes['create-parallel'] = {
       var bitParallelCreateOriginId = bitHoveringId;
       $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
       var bitData = Blaze.getData($bitOrigin[0]);
+      var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
+      var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
 
       Session.set('isCreatingParallel', isCreatingParallel);
       Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
@@ -74,9 +76,11 @@ Parallels.AppModes['create-parallel'] = {
         mouse.y = window.pageYOffset + event.clientY
       });
 
+
+
       circle = two.makeCircle(
-        bitData.position.x, 
-        bitData.position.y, 
+        bitCenterX,  
+        bitCenterY, 
         2 // width
       );
 
@@ -88,13 +92,13 @@ Parallels.AppModes['create-parallel'] = {
       // update by mouse position and won't be visible.
 
       // by passing the circle.translation into the origin 
-      // automatically data binds the line,
-      // so whenever the circle updates in .bind below
-      // line destination updates
+      // two.js automatically data binds the line,
+      // so whenever the circle updates in .bind below,
+      // line destination updates too.
       // https://github.com/jonobr1/two.js/issues/133
       var line = new Two.Polygon([
               circle.translation, // origin
-              new Two.Vector(bitData.position.x, bitData.position.y)
+              new Two.Vector(bitCenterX, bitCenterY)
           ]);
 
       line.noFill().stroke = 'yellow';
@@ -104,11 +108,6 @@ Parallels.AppModes['create-parallel'] = {
       two
         .add(line)
         .bind('update', function(frameCount) {
-          /*  OQ: why doesnt this work?
-                var endAnchor = new Two.Anchor(mouse.x, mouse.y);
-                line.vertices[1] = endAnchor;
-          */
-
           circle.translation.set(mouse.x, mouse.y);
 
           // TODO: longer the distance, thinner the linewidth
