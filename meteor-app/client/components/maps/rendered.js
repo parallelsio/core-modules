@@ -1,6 +1,7 @@
 Template.map.onRendered(function (){
   
-  Parallels.Audio.player.play('fx-welcome-v1');
+  // TODO: why isnt this working here? is sample not yet loaded?
+  // Parallels.Audio.player.play('fx-welcome-v1');
 
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
@@ -10,7 +11,6 @@ Template.map.onRendered(function (){
       var bitDataContext = Blaze.getData(node) || Session.get('newTextBit');
 
       $(node).insertBefore(next);
-
 
       function timelineInsertDone (node) {
         $(node).find('.editbit').focus();
@@ -46,6 +46,7 @@ Template.map.onRendered(function (){
   };
 
 });
+
 
 
 

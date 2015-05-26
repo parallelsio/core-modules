@@ -44,6 +44,7 @@ Parallels.Audio.Definition['fx-ting3'] = {
     }
   }
 }
+
 Parallels.Audio.Definition['fx-trips'] = {
   synthDef: {   
     id: "fx-trips",  
@@ -129,7 +130,3 @@ Parallels.Audio.Definition['fx-welcome-v1'] = {
     }
   }
 }
-
-
-
-

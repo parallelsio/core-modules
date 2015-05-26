@@ -1,8 +1,12 @@
+$map-height: 5000px;
+$map-width: 5000px;
+
+
 .map {	  
 
 	// required to get dble click/ bit:new text to show
-	min-height:5000px;
-	min-width:5000px;
+	min-height: $map-height;
+	min-width: $map-width;
 	
 	height:100%;
   width:100%;
@@ -22,3 +26,16 @@
   margin:auto;
   vertical-align:middle;
 }
+
+.create-parallel--burst-container {  
+  position: absolute;
+}
+
+.create-parallel--line-container {    
+  position: absolute;
+  svg { 
+    // override insertion of position:fixed by two.js 'fullscreen' param
+    position: absolute !important; 
+  }
+}
+
