@@ -1,54 +1,35 @@
+$ui-header-height: 8px;
+
 .bit {
-  display: none;
+  display: none; // hide bits by default. animation functions display them 
   position: absolute;
   -webkit-font-smoothing: antialiased;
 }
 
-.bit .container {
-  display: inline-block;
-  font-size: 1em;
+.bit .ui-widget-header {
+  position: absolute;
+  display: none;
 }
 
-.bit .content p { margin: 0; }
-
-.bit .container .ui-widget-header {
-  display: none;
+.bit.hovered .ui-widget-header {
+  display: block;
+  top: -$ui-header-height;
+  height: $ui-header-height;
   cursor: move;
-  background-color: #ccc;
-  position: absolute;
-  top: -7px;
-  left: 0;
+  width: 100%;
   margin: 0;
   padding: 0;
+  background-color: #ccc;
 }
 
-.bit .container:hover .ui-widget-header {
-  display: block;
-  height: 8px;
-  width: 100%;
-}
-
-.bit.image .container .face.front {
-  padding: 0;
-}
-
-.bit.editing .container .face.front,
-.bit.text .container .face.front {
-
+.bit.editing .content,
+.bit.text .content {
   background-color: #fff;
-  padding: 15px;
+  padding: 1em;
 }
 
-.bit.image .content .zoom a {
+.bit.image .zoom a {
   cursor: default;
-}
-
-.blue {
-  background: #f0f0fa !important;
-  font-family: 'Merriweather Sans', sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 0.75em;
 }
 
 .bit img {
@@ -64,7 +45,19 @@
   border: 0.4em solid yellow;
 }
 
+.bit.parallel {
+  background: #f0f0fa !important;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.75em;
+}
 
+
+
+/*
+  file upload animation
+*/
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {
     @content;
@@ -125,10 +118,9 @@
   0% { @include prefix((transform: scale(1))); }
   10% { @include prefix((transform: scale(1.1))); }
   20% { @include prefix((transform: scale(1))); }
-
 }
 
-.bit .content {
+.bit {
   &.success .success-mark {
     @include prefix((animation: passing-through 3s cubic-bezier(0.770, 0.000, 0.175, 1.000)));
   }
