@@ -67,7 +67,6 @@ Template.bit.onRendered(function (){
   Draggable.create(Template.instance().firstNode, {
     throwProps:false,
     zIndexBoost:false,
-    trigger: bitHtmlElement.find('.ui-widget-header'),
 
     onDragStart:function(event){
       var x = this.endX;
