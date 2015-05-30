@@ -1,62 +1,84 @@
+var 
+  bitHoveringId,
+  $bit,
+  bitTemplate,
+  bitData,
+  bitPreviewingId;
+
 Parallels.AppModes['preview-bit'] = {
+
   enter: function () {
+    bitHoveringId = Session.get('bitHoveringId');
+    $bit = $("[data-id='" + bitHoveringId + "']");
+    bitTemplate = Blaze.getView($bit[0]);
+    bitData = Blaze.getData(bitTemplate);
+    bitPreviewingId = bitHoveringId;
     Session.set('currentMode', 'preview-bit');
-    log.debug("mode:preview-bit:enter");
+    Session.set('bitPreviewingId', bitPreviewingId);
+    log.debug("mode:preview-bit:enter ", bitPreviewingId);
+    
+    // TODO: disable bitHover too
 
-    var bitHoveringId = Session.get('bitHoveringId');
-    var bitPreviewingId = Session.get('bitPreviewingId');
+    // only supporting image preview currently
+    // webpage is currently represented on canvas an image
+    if ((bitData.type === "image") || (bitData.type === "webpage")){
+      log.debug("bit:image:preview: " + bitHoveringId);
 
-    if (bitHoveringId)
-    {
-      log.debug("triggered preview over bit: ", bitHoveringId);
+      Parallels.KeyCommands.disableAll();
+      Parallels.KeyCommands.bindEsc();
 
-      var $bit = $("[data-id='" + bitHoveringId + "']");
-      var bitTemplate = Blaze.getView($bit[0]);
-      var bitData = Blaze.getData(bitTemplate);
+      var options = {
+        bitData: bitData,
+        bitHoveringId: bitHoveringId,
+        $bit: $bit,
+        bitTemplate: bitTemplate,
+        direction: "expand"
+      };
 
-      // currently, we're only supporting preview for images, so use
-      // the bit type as the determining factor, if we should expand it
-      if ((bitData.type === "image") || (bitData.type === "webpage")){
-        log.debug("bit:image:preview: " + bitHoveringId);
-
-        // now, let's see if it needs to be expanded, or closed:
-        if (bitPreviewingId === null) {
-          // nothing is being previewed currently, expand the image
-          Transform.scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "expand");
-        }
-
-        else {
-          // bit is being previewed, close/restore to thumbnail size
-          Transform.scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "contract");
-        }
-      }
-
-      else {
-        log.debug("bit:preview:", bitHoveringId, " is not an image. Do nothing." );
-      }
+      Transform.scaleImage(options);
     }
 
     else {
-      log.debug ('space key ignored, not captured for a specific bit')
+      log.debug("bit:preview:", bitPreviewingId, " is not an image. Do nothing." );
     }
   },
+  
   exit: function () {
-    Session.set('currentMode', null);
+
     log.debug("mode:preview-bit:exit");
 
-    var bitEditingId = Session.get('bitEditingId');
+    // refactor: get rid of dep on these vars.
+    var bitHoveringId = Session.get('bitHoveringId');
+    var $bit = $("[data-id='" + bitHoveringId + "']");
+    var bitTemplate = Blaze.getView($bit[0]);
+    var bitData = Blaze.getData(bitTemplate);
     var bitPreviewingId = Session.get('bitPreviewingId');
 
-    if (bitEditingId)
+    if (bitPreviewingId)
     {
-      Meteor.call('changeState', {
-        command: 'deleteBit',
-        data: {
-          canvasId: '1',
-          _id: bitEditingId
-        }
-      });
-      Session.set('bitEditingId', null);
+      // TODO: pass the assignment/resetting of these 
+      // into Transform.scale,
+      // which will then reset it once the animation complete callback is triggered
+      // this will avoid potential edge cases where person takes
+      // action in between animations 
+      Session.set('currentMode', null);
+      Session.set('bitPreviewingId', null);
+
+      var options = {
+        bitData: bitData,
+        bitHoveringId: bitHoveringId,
+        $bit: $bit,
+        bitTemplate: bitTemplate,
+        direction: "contract"
+      };
+
+      Transform.scaleImage(options);
+
+      Parallels.KeyCommands.bindAll();
+    }
+
+    else {
+      log.debug("nothing to close: not previewing a bit");
     }
   }
 };

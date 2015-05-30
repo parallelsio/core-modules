@@ -30,6 +30,7 @@
     "selenium-standalone": "2.44.0-7",
     "selenium-webdriver": "2.44.0"
   },
+  
   "scripts": {
     "test": "grunt all-tests",
     "units": "grunt unit-tests",
@@ -39,6 +40,7 @@
     "ci": "grunt build:ci",
     "prod": "grunt build",
     "server": "JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server",
-    "resetdb": "grunt bgShell:resetMeteorDb && neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start"
+    "dropneo": "neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start",
+    "resetdb": "grunt bgShell:resetMeteorDb && neo4j restart && grunt bgShell:resetNeo4jDb"
   }
 }

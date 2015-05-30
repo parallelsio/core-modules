@@ -1,18 +1,17 @@
 Template.map.onRendered(function (){
   
-  Parallels.Audio.player.play('fx-welcome-v1');
+  // TODO: why isnt this working here? is sample not yet loaded?
+  // Parallels.Audio.player.play('fx-welcome-v1');
 
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
   
-
   container._uihooks = {
 
     insertElement: function(node, next) {
       var bitDataContext = Blaze.getData(node) || Session.get('newTextBit') || Session.get('sketchBit');
 
       $(node).insertBefore(next);
-
 
       function timelineInsertDone (node) {
         // TODO: if text bit
@@ -31,7 +30,6 @@ Template.map.onRendered(function (){
         .to(node, 0.275, { scale: 1, ease: Elastic.easeOut } );
     },
 
-
     removeElement: function(node) {
 
       function timelineRemoveDone(node){
@@ -49,6 +47,7 @@ Template.map.onRendered(function (){
   };
 
 });
+
 
 
 

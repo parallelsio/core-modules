@@ -28,5 +28,9 @@ Template.map.helpers({
 
   isCreatingSketchBit: function () {
     return Session.get('sketchBit');
+  },
+  
+  viewingEventLog: function () {
+    return Session.get('viewingEventLog');
   }
 });

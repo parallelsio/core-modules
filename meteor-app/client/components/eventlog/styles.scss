@@ -1,0 +1,109 @@
+.eventlog {
+  position: fixed;
+  z-index: 10;
+  top: 3em;
+  right: 1em;
+  opacity: 0;
+  width: 400px;
+  height: 600px;
+  overflow: auto;
+
+  p {
+    margin-top: 0;
+  }
+
+  .icon {
+    font-size: .8em;
+  }
+
+  .shadow {
+    box-shadow: 0 0 0.25rem 0 rgba(0,0,0,0.05);
+  }
+
+  .bg-white {
+    background-color: #FFF;
+  }
+
+  .clearfix:after {
+    clear: both;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .clearfix:before, .clearfix:after {
+    content: " ";
+    display: table;
+  }
+
+  .h6 {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .p1 {
+    padding: .65rem;
+  }
+
+  .p2 {
+    padding: 1rem;
+  }
+
+  .mr2 {
+    margin-right: 1rem;
+  }
+
+  .ml1 {
+    margin-left: 0.5rem;
+  }
+
+  .mt1 {
+    margin-top: 0.2rem;
+  }
+
+  .mb0 {
+    margin-bottom: 0;
+  }
+
+  .left {
+    float: left;
+  }
+
+  .right {
+    float: right;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .px2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .py2 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid #f3f4f5;
+  }
+
+  .timeline {
+    position: relative;
+  }
+
+  .timeline:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 13px;
+    width: 4px;
+    background-color: #f3f4f5;
+    z-index: 0;
+  }
+}

@@ -62,6 +62,7 @@ module.exports = function (grunt) {
         ]
       }
     },
+   
     clean: {
       dist: {
         files: [
@@ -75,6 +76,7 @@ module.exports = function (grunt) {
         ]
       }
     },
+   
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -87,11 +89,13 @@ module.exports = function (grunt) {
         'test/spec/{,*/}*.js'
       ]
     },
+   
     preprocess: {
       dist: preprocessChromeExtensionConfig('dist'),
       ci: preprocessChromeExtensionConfig('ci'),
       local: preprocessChromeExtensionConfig('local')
     },
+   
     crx: {
       dist: {
         src: '<%= config.dist %>/',
@@ -100,12 +104,14 @@ module.exports = function (grunt) {
         privateKey: 'extensions/chrome/chrome.pem'
       }
     },
+   
     encode: {
       client: {
         src: ['<%= config.dist %>/parallels.crx'],
         dest: '<%= config.dist %>'
       }
     },
+   
     bgShell: {
       e2e: {
         cmd: './end2end-tests/bin/run_tests.sh',
@@ -114,6 +120,7 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+   
       meteor: {
         cmd: [
           'cd meteor-app',
@@ -123,6 +130,7 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true
       },
+   
       meteorTests: {
         cmd: [
           'cd meteor-app',
@@ -133,6 +141,7 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+   
       resetTestDb: {
         cmd: 'mongo parallels_test --eval "printjson(db.dropDatabase())"',
         bg: false,
@@ -140,6 +149,7 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+
       resetMeteorDb: {
         cmd: [
           'cd meteor-app',
@@ -150,6 +160,15 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+
+      resetNeo4jDb: {
+        cmd: 'curl -X POST http://localhost:7474/db/data/cypher --data \'{"query":"MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r"}\' --header "Content-Type: application/json" --header "Accept: application/json"',
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: false
+      },
+
       meteordebug: {
         cmd: [
           'cd meteor-app',
@@ -159,6 +178,7 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true
       },
+   
       bowerChromeExt: {
         cmd: [
           'cd <%= config.chromeExt %>',
@@ -168,6 +188,7 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true
       },
+   
       tests: {
         cmd: 'echo "NOTHING HERE YET"',
         bg: false,
@@ -175,6 +196,7 @@ module.exports = function (grunt) {
         stderr: true
       }
     },
+   
     sass: {
       options: {
         sourceMap: false
@@ -187,6 +209,7 @@ module.exports = function (grunt) {
         }
       }
     },
+  
     jade: {
       compile: {
         options: {
@@ -199,6 +222,7 @@ module.exports = function (grunt) {
         }
       }
     },
+  
     concurrent: {
       serverdebug: [
         'bgShell:meteordebug',
@@ -213,6 +237,7 @@ module.exports = function (grunt) {
         logConcurrentOutput: true
       }
     },
+  
     watch: {
       js: {
         files: '<%= config.chromeExt %>/scripts/**/*.js',
@@ -221,13 +246,16 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+   
       sass: {
         files: ['<%= config.chromeExt %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['sass']
       },
+   
       gruntfile: {
         files: ['Gruntfile.js']
       },
+   
       styles: {
         files: ['<%= config.chromeExt %>/styles/compiled/{,*/}*.css', '<%= config.chromeExt %>/styles/vendor/{,*/}*.css'],
         tasks: [],
@@ -235,6 +263,7 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+   
       templates: {
         files: ['<%= config.chromeExt %>/templates/{,*/}*.jade'],
         tasks: ['jade'],
@@ -242,6 +271,7 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+    
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -254,10 +284,12 @@ module.exports = function (grunt) {
         ]
       }
     },
+    
     connect: {
       options: {
 
       },
+    
       chrome: {
         options: {
           port: 9000,
@@ -311,6 +343,7 @@ module.exports = function (grunt) {
       },
       test : { }
     },
+   
     env : {
       ci : {
         PARALLELS_DOMAIN : 'parallels-ci.meteor.com'
@@ -319,6 +352,7 @@ module.exports = function (grunt) {
         PARALLELS_DOMAIN : '127.0.0.1:3000'
       }
     },
+   
     jasmine: {
       all: {
         options: {

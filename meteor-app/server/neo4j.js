@@ -1,5 +1,6 @@
 var N4JDB = new Meteor.Neo4j(process.env.GRAPHENEDB_URL);
 
+// todo: we should be listening for undo logic here as well:
 StateChangeEvents.on('canvas.bit.created', function (event) {
   var bit = event.data.bit;
   log.debug('Neo4j addBitToGraph starting ', bit._id);

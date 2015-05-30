@@ -1,6 +1,6 @@
 Meteor.startup(function () {
 
-  if (Bits.find().count() === 0) {
+  if (Bits.find().count() === 0 && !process.env.IS_MIRROR) {
 
     CanvasRepo.get("1", function (err, canvas) {
       if (err) return log.error(err);

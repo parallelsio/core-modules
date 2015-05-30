@@ -1,53 +1,139 @@
-Meteor.startup(function() {
+/*
 
-  Mousetrap.bind('space', function (event) {
-    log.debug("pressed 'Space' key");
+  OQ:
+    * would binding 2x cause 2 listeners?
+    * how to pass contextMessage properly
 
-    try {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-    catch (err) {
-      /*  Try/Catch is here for integration tests:
-          https://github.com/ccampbell/mousetrap/issues/257
-      */
-    }
+  TODO:
+    * add a check before each bind function
+      to ensure it doesnt already exist.
 
-    Parallels.AppModes['preview-bit'].enter();
-  });
+*/
 
-  Mousetrap.bind('s', function (event) {
-    log.debug("pressed 's' key");
-    Parallels.AppModes['sketch-bit'].enter(event);
-  });
+Parallels.KeyCommands = {
 
-  Mousetrap.bind('shift', function (){
-    log.debug("pressed 'Shift' key");
-    Parallels.AppModes['create-parallel'].enter();
-  });
+  bindAll: function(){
+    log.debug("keyCommand:bindAll");
 
-  Mousetrap.bindGlobal('esc', function() {
-    log.debug("pressed 'Esc' key");
-    var currentMode = Session.get('currentMode');
+    this.bindDelete();
+    this.bindShift();
+    this.bindSpace();
+    this.bindEsc();
+    this.bindLog();
+    this.bindUndo();
+    this.bindRedo();
+  },
 
-    if (!currentMode) return;
-    Parallels.AppModes[currentMode].exit();
-  });
+  disableAll: function(){
+    log.debug("keyCommand:disableAll");
 
-  Mousetrap.bind("d", function() {
-    log.debug("pressed 'd' key");
-    var bitHoveringId = Session.get('bitHoveringId');
+    Mousetrap.unbind('d');
+    Mousetrap.unbind('space');
+    Mousetrap.unbind('shift');
+    Mousetrap.unbind('esc');
+    Mousetrap.unbind('l');
+    Mousetrap.unbind(['command+z', 'ctrl+z']);
+    Mousetrap.unbind(['command+shift+z', 'ctrl+shift+z']);
+  },
 
-    if (bitHoveringId) {
-      log.debug("starting bit:delete on ", bitHoveringId);
-      Parallels.Audio.player.play('fx-tri');
-      Meteor.call('changeState', {
-        command: 'deleteBit',
-        data: {
-          canvasId: '1',
-          _id: bitHoveringId
-        }
-      });
-    }
-  });
-});
+
+  bindDelete: function(){
+    log.debug("keyCommand:bindDelete");
+
+    Mousetrap.bind("d", function() {
+      log.debug("pressed 'd' key");
+      var bitHoveringId = Session.get('bitHoveringId');
+
+      if (bitHoveringId) {
+        log.debug("starting bit:delete on ", bitHoveringId);
+        Parallels.Audio.player.play('fx-tri');
+        Meteor.call('changeState', {
+          command: 'deleteBit',
+          data: {
+            canvasId: '1',
+            _id: bitHoveringId
+          }
+        });
+      }
+
+      else {
+        log.debug ('delete key ignored, not captured for a specific bit')
+      }
+
+    });
+  },
+
+  bindSpace: function(){
+    log.debug("keyCommand:bindSpace");
+
+    Mousetrap.bind('space', function (event) {
+      log.debug("pressed 'Space' key");
+      var bitHoveringId = Session.get('bitHoveringId');
+      var bitPreviewingId = Session.get('bitPreviewingId');
+
+      try {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      catch (err) {
+        /*  Try/Catch is here for integration tests:
+            https://github.com/ccampbell/mousetrap/issues/257
+        */
+      }
+
+      if (bitPreviewingId) {
+        log.debug("already preview bit: ", bitPreviewingId);
+        return false; // failcheck - end if we're somehow already previewing
+      }
+
+      if (bitHoveringId) {
+        Parallels.AppModes['preview-bit'].enter();
+      }
+
+      else{
+        log.debug ('space key ignored, not captured for a specific bit')
+      }
+    });
+  },
+
+  bindShift: function(){
+    //todo: would be nice to log context of where this binding came from
+    log.debug("keyCommand:bindShift");
+
+    Mousetrap.bind('shift', function (){
+      Parallels.AppModes['create-parallel'].enter();
+    });
+  },
+
+  bindEsc: function(){
+    log.debug("keyCommand:bindEsc");
+
+    Mousetrap.bindGlobal('esc', function() {
+      log.debug("pressed 'Esc' key");
+      var currentMode = Session.get('currentMode');
+
+      if (!currentMode) return;
+      Parallels.AppModes[currentMode].exit();
+    });
+  },
+
+  bindLog: function () {
+    Mousetrap.bind('l', function () {
+      var viewingEventLog = Session.get('viewingEventLog');
+      Session.set('viewingEventLog', !viewingEventLog);
+    });
+  },
+
+  bindUndo: function () {
+    Mousetrap.bind(['command+z', 'ctrl+z'], function () {
+      Meteor.call('undoState', {canvasId: '1'});
+    });
+  },
+
+  bindRedo: function () {
+    Mousetrap.bind(['command+shift+z', 'ctrl+shift+z'], function () {
+      Meteor.call('redoState', {canvasId: '1'});
+    });
+  }
+
+};
