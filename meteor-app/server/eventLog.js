@@ -41,11 +41,13 @@ var recordEventReplay = Meteor.bindEnvironment(function (payload) {
 
   var query = {
     $set: {
-      rolledBack: null,
       version: canvas.version
+    },
+    $unset: {
+      rolledBack: ""
     }
   };
-  var event = Events.findOne({ canvasId: canvas.id, rolledBack: true}, {sort: {version: -1}});
+  var event = Events.findOne({ canvasId: canvas.id, rolledBack: true}, {sort: {version: 1}});
   Events.update(event._id, query, function (err /*, result */) {
     if (err) log.error(err);
   });
