@@ -179,6 +179,9 @@
 > * `npm run ci`: Build a version of the clipper to extensions/chrome/build that points to parallels-ci.meteor.com
 > * `npm run prod`: Build a version of the clipper to extensions/chrome/build that points to parallels.meteor.com
 > * `npm run server`: Starts the meteor app and livereload for the clipper source
+> * `npm run resetdb`: Drops all data in meteor's mongo DB and the Neo4j DB
+> * `npm run exportlog`: (IMPORTANT: the app must be running when you run this command) Export your canvas's data to a json file. The file will by default be dropped in meteor-app/data-backups/canvas.events.json. You can override this by specifying the BACKUP environment variable.
+> * `npm run importlog`: (IMPORTANT: the app must be running when you run this command. However, you should run the resetdb command above before running the import) Rebuild your canvas from scratch by importing a json file of canvas events to be replayed. The task will by default try to use meteor-app/data-backups/canvas.events.json. You can override this by specifying the BACKUP environment variable.
 
 > You can see all these scripts (and maybe more) by running `npm run`.
 
@@ -218,6 +221,12 @@
 > <img src="http://i.imgur.com/yMwBRaY.png" />
 
 
+### Opening an issue
+> If you come across a bug, please open a Github issue to report it to us. It would be great if you could include your environment information including:
+
+> * Version of dependencies e.g. NodeJS, MongoDB, Meteor, and Neo4j
+> * Version of browser you are running the app in
+> * Your local instance eventlog. You can extract this by running `npm run exportlog` while the app is running. Take the output and create a gist to include in the issue. This output will include all activity in your local instance of Parallels. Be careful not to include any private activity you don't want shared! 
 
 ### FAQ
 
