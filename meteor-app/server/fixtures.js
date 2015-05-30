@@ -6,6 +6,7 @@ Meteor.startup(function () {
       if (err) return log.error(err);
       [
         {
+          canvasId: '1',
           type: "text",
           position: {
             x: 250,
