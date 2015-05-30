@@ -11,3 +11,4 @@ extensions/chrome/source/bower_components
 node_modules
 tmp
 .env
+meteor-app/data-backups/canvas.events.json

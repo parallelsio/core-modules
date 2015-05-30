@@ -23,7 +23,7 @@ _.extend(Canvas.prototype, {
   _createBit: function (digestEvent, streamEvent, payload, cb) {
     var bit = new Bit(payload);
 
-    this.digest(digestEvent, _.extend({original: {_id: bit._id}}, bit));
+    this.digest(digestEvent, _.extend({original: {_id: bit._id, canvasId: bit.canvasId}}, bit));
     this.bits.push(bit);
 
     this.enqueue(streamEvent, bit); // enqueues an event that will trigger once the canvas transaction has been committed.
@@ -44,13 +44,14 @@ _.extend(Canvas.prototype, {
 
     if (cb) cb();
   },
-  
+
   _updateBitPosition: function (digestEvent, streamEvent, payload, cb) {
     var bit = _.find(this.bits, function (b) {
       return b._id === payload._id
     });
     payload.original = {
       _id: bit._id,
+      canvasId: bit.canvasId,
       position: bit.position
     };
     this.digest(digestEvent, payload);
@@ -59,13 +60,14 @@ _.extend(Canvas.prototype, {
 
     if (cb) cb();
   },
-  
+
   _updateBitContent: function (digestEvent, streamEvent, payload, cb) {
     var bit = _.find(this.bits, function (b) {
       return b._id === payload._id
     });
     payload.original = {
       _id: bit._id,
+      canvasId: bit.canvasId,
       content: bit.content
     };
     this.digest(digestEvent, payload);
@@ -74,13 +76,14 @@ _.extend(Canvas.prototype, {
 
     if (cb) cb();
   },
-  
+
   _uploadImage: function (digestEvent, streamEvent, payload, cb) {
     var bit = _.find(this.bits, function (b) {
       return b._id === payload._id
     });
     payload.original = {
       _id: bit._id,
+      canvasId: bit.canvasId,
       imageSource: bit.imageSource,
       uploadKey: bit.uploadKey
     };
@@ -91,13 +94,14 @@ _.extend(Canvas.prototype, {
 
     if (cb) cb();
   },
-  
+
   _clipWebpage: function (digestEvent, streamEvent, payload, cb) {
     var bit = _.find(this.bits, function (b) {
       return b._id === payload._id
     });
     payload.original = {
       _id: bit._id,
+      canvasId: bit.canvasId,
       html: bit.html,
       liftStatus: bit.liftStatus
     };
