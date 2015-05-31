@@ -51,10 +51,10 @@ Parallels.KeyCommands = {
     Mousetrap.unbind(['command+shift+z', 'ctrl+shift+z']);
 
     // create new sketch bit
-    Mousetrap.unbind(['s b']);
+    Mousetrap.unbind(['s']);
 
     // create new text bit
-    Mousetrap.unbind(['n b']);
+    Mousetrap.unbind(['t']);
   },
 
 
@@ -129,15 +129,15 @@ Parallels.KeyCommands = {
   bindCreateSketchBit: function(){
     log.debug("keyCommand:bindCreateSketchBit");
 
-    Mousetrap.bind('s b', function (){
-      // Parallels.AppModes['create-parallel'].enter();
+    Mousetrap.bind('s', function (){
+      Parallels.AppModes['sketch-bit'].enter(event);
     });
   },
 
   bindCreateTextBit: function(){
     log.debug("keyCommand:bindCreateTextBit");
 
-    Mousetrap.bind('n b', function() {
+    Mousetrap.bind('t', function() {
       Parallels.AppModes['create-bit'].enter(event);
     });
   },

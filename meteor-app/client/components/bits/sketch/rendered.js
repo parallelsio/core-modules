@@ -51,6 +51,7 @@ var createPlomaCanvas = function(canvas){
 }
   
 Template.sketchBit.onRendered(function (){
+  log.debug("rendered sketch bit");  
   
   // TODO: into a 'sketch-mode'
   // Parallels.AppModes['bit-sketch'].enter();
