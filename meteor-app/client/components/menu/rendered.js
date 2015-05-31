@@ -131,8 +131,8 @@ Template.menu.rendered = function() {
       $('.wipe.load').hide();
     }
 
-    var menuBar = document.getElementById("menu-bar");
-    timeline.to(menuBar, 1, { top:"0px", ease:Elastic.easeOut});
+    var menu = $(".menu");
+    timeline.to(menu, 1, { top:"0px", ease:Elastic.easeOut});
 
     return timeline;
   }

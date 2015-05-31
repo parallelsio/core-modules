@@ -65,15 +65,10 @@ body { height: 100%; }
 }
 
 .menu {
-	height:2em;
+	position: absolute; 
 	width:100%;
+  top:-100px;
+	padding: 0.5em;
 	background: #ECECEC;
 	box-sizing: border-box;
-	padding: 0.5em;
 }
-
-#menu-bar{
-  position: relative;
-  top:-100px;
-}
-

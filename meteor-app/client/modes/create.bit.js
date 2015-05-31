@@ -2,9 +2,7 @@ Parallels.AppModes['create-bit'] = {
 
   enter: function (event) {
     log.debug("mode:create-bit:enter");
-
     var center = Utilities.getViewportCenter();
-
     Session.set('currentMode', 'create-bit');
     Session.set('createTextBit', {
       canvasId: '1',

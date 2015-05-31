@@ -1,4 +1,5 @@
 Template.createTextBit.events({
+  
   'keyup .bit': function (event, template) {
     var createTextBit = Session.get('createTextBit');
     if (createTextBit && event.which === 13) {
@@ -11,7 +12,7 @@ Template.createTextBit.events({
           color: createTextBit.color,
           position: {
             x: $(Template.instance().firstNode).position().left,
-            y: $(Template.instance().firstNode).position().top - Number($('.menu').css('height').replace('px', ''))
+            y: $(Template.instance().firstNode).position().top
           }
         }
       });
