@@ -1,5 +1,4 @@
 var 
-  bitHoveringId,
   $bit,
   bitTemplate,
   bitData,
@@ -8,28 +7,28 @@ var
 Parallels.AppModes['preview-bit'] = {
 
   enter: function () {
-    bitHoveringId = Session.get('bitHoveringId');
-    $bit = $("[data-id='" + bitHoveringId + "']");
+    log.debug("mode:preview-bit:enter");
+
+    bitPreviewingId = Session.get('bitHoveringId');
+
+    $bit = $("[data-id='" + bitPreviewingId + "']");
     bitTemplate = Blaze.getView($bit[0]);
     bitData = Blaze.getData(bitTemplate);
-    bitPreviewingId = bitHoveringId;
     Session.set('currentMode', 'preview-bit');
     Session.set('bitPreviewingId', bitPreviewingId);
-    log.debug("mode:preview-bit:enter ", bitPreviewingId);
     
     // TODO: disable bitHover too
 
     // only supporting image preview currently
     // webpage is currently represented on canvas an image
     if ((bitData.type === "image") || (bitData.type === "webpage")){
-      log.debug("bit:image:preview: " + bitHoveringId);
+      log.debug("bit:image:preview: " + bitPreviewingId);
 
       Parallels.KeyCommands.disableAll();
       Parallels.KeyCommands.bindEsc();
 
       var options = {
         bitData: bitData,
-        bitHoveringId: bitHoveringId,
         $bit: $bit,
         bitTemplate: bitTemplate,
         direction: "expand"
@@ -44,15 +43,14 @@ Parallels.AppModes['preview-bit'] = {
   },
   
   exit: function () {
-
     log.debug("mode:preview-bit:exit");
 
     // refactor: get rid of dep on these vars.
-    var bitHoveringId = Session.get('bitHoveringId');
-    var $bit = $("[data-id='" + bitHoveringId + "']");
+    var bitPreviewingId = Session.get('bitPreviewingId');
+    
+    var $bit = $("[data-id='" + bitPreviewingId + "']");
     var bitTemplate = Blaze.getView($bit[0]);
     var bitData = Blaze.getData(bitTemplate);
-    var bitPreviewingId = Session.get('bitPreviewingId');
 
     if (bitPreviewingId)
     {
@@ -66,7 +64,6 @@ Parallels.AppModes['preview-bit'] = {
 
       var options = {
         bitData: bitData,
-        bitHoveringId: bitHoveringId,
         $bit: $bit,
         bitTemplate: bitTemplate,
         direction: "contract"

@@ -17,6 +17,8 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
 Parallels.AppModes['create-parallel'] = {
 
   enter: function () {
+    log.debug("mode:create-parallel:enter");
+
     // TODO: refactor: isCreatingParallel is grabage, 
     // overlapping duties with currentMode Session var
     Session.set('currentMode', 'create-parallel');
@@ -166,8 +168,9 @@ Parallels.AppModes['create-parallel'] = {
   },
 
   exit: function () {
+    log.debug("mode:create-parallel:exit");
+    
     Session.set('currentMode', null);
-    log.debug('escape key, inside create parallel, exiting mode');
 
     var isCreatingParallel = Session.get('isCreatingParallel');
 
@@ -195,8 +198,6 @@ Parallels.AppModes['create-parallel'] = {
 
       // put key commands back to normal
       Parallels.KeyCommands.bindAll();
-              
-      log.debug('parallel:create: exit mode');
     }
   }
 };

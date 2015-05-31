@@ -1,6 +1,7 @@
 Parallels.AppModes['edit-bit'] = {
   
   enter: function (id) {
+    log.debug("bit:edit-bit:enter");
 
     var $bit = $("[data-id='" + id + "']");
     var bitTemplate = Blaze.getView($bit[0]);
@@ -10,7 +11,7 @@ Parallels.AppModes['edit-bit'] = {
     if (bitData.type === "text") {
       Session.set('currentMode', 'edit-bit');
       Session.set('bitEditingId', id);
-      log.debug("bit:edit: " + Session.get('bitEditingId'));
+      log.debug("bit:edit-bit:enter: " + Session.get('bitEditingId'));
     }
 
     else {
@@ -20,6 +21,8 @@ Parallels.AppModes['edit-bit'] = {
   },
 
   exit: function () {
+    log.debug("mode:edit-bit:exit");
+
     Session.set('currentMode', null);
     Session.set('bitEditingId', null);
 
@@ -30,7 +33,6 @@ Parallels.AppModes['edit-bit'] = {
         _id: bitEditingId
       }
     });
-
   }
 };
 

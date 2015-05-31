@@ -1,6 +1,8 @@
 Parallels.AppModes['create-bit'] = {
 
   enter: function (event) {
+    log.debug("mode:create-bit:enter");
+
     Session.set('currentMode', 'create-bit');
     Session.set('createTextBit', {
       canvasId: '1', 
@@ -15,6 +17,8 @@ Parallels.AppModes['create-bit'] = {
   },
 
   exit: function () {
+    log.debug("mode:create-bit:exit");
+
     Session.set('currentMode', null);
     Session.set('createTextBit', null);
   }

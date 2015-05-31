@@ -2,7 +2,7 @@
       TODO: pass one bit object, get the other things from it, 
       versus passing 3 diff parts of similar objects
       
-      TODO: refactor: remove bitPrevieweingId, combine bit references, 
+      TODO: refactor: combine bit references, 
       and dont go to Session store for original H/W
   */
 
@@ -105,14 +105,14 @@ Transform = {
       }
     };
 
-    var timelineDone = function( bitPreviewingId, direction ){
-      log.debug("bit:preview:", bitPreviewingId, " : " , direction, " : tween done." );
+    var timelineDone = function( direction ){
+      log.debug("bit:preview: " , direction, " : tween done." );
     };
 
     var timeline = new TimelineMax({
       onStart: timelineStart,
       onComplete: timelineDone,
-      onCompleteParams:[ options.bitPreviewingId, options.direction ]
+      onCompleteParams:[ options.direction ]
     });
 
     // run the animations.
