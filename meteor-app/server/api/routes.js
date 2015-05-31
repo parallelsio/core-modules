@@ -1,6 +1,7 @@
 Router.route('/import-eventlog', function(){
+  var responseMessage, events;
 
-  var responseMessage, events = this.request.body;
+  events = JSON.parse(Assets.getText("data-backups/canvas.events.json"));
 
   if (!events || !Array.isArray(events)) {
     this.response.statusCode = 400;
@@ -9,13 +10,14 @@ Router.route('/import-eventlog', function(){
     this.response.statusCode = 400;
     responseMessage = "\n\nYou didn't give me any events to import.\n\n";
   } else {
-    responseMessage = "\n\nCheck your canvas! You should have some new data.\n\n";
     events.forEach(function (event) {
       Meteor.call('changeState', {
         command: event.method,
         data: event.data
       });
     });
+    this.response.statusCode = 200;
+    responseMessage = "\n\nCheck your canvas! You should have some new data.\n\n";
   }
 
   this.response.setHeader("Content-Type", "application/json");
