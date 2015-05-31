@@ -57,6 +57,11 @@ Template.bit.onRendered(function (){
     }
   });
 
+  // Set a default image so we don't see a broken image in case the file can't be loaded
+  bitHtmlElement.find(".bit-image").error(function(){
+    $(this).attr('src', 'http://placehold.it/850x650&text=' + bitDataContext.filename);
+  });
+
   var bitDragAudioInstance = "";
 
   var resetBitSize = function(message){

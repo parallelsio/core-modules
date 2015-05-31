@@ -21,26 +21,30 @@ _.extend(Canvas.prototype, {
   },
 
   _createBit: function (digestEvent, streamEvent, payload, cb) {
-    var bit = new Bit(payload);
-
-    this.digest(digestEvent, _.extend({original: {_id: bit._id, canvasId: bit.canvasId}}, bit));
-    this.bits.push(bit);
-
-    this.enqueue(streamEvent, bit); // enqueues an event that will trigger once the canvas transaction has been committed.
+    var bitExists = _.find(this.bits, {_id: payload._id});
+    if (!bitExists) {
+      var bit = new Bit(payload);
+      this.digest(digestEvent, _.extend({original: {_id: bit._id, canvasId: bit.canvasId}}, bit));
+      this.bits.push(bit);
+      this.enqueue(streamEvent, bit); // enqueues an event that will trigger once the canvas transaction has been committed.
+    }
 
     if (cb) cb(null, bit);
   },
 
   _deleteBit: function (digestEvent, streamEvent, payload, cb) {
-    var deletedBit = {};
+    var deletedBit;
     this.bits = _.reject(this.bits, function (b) {
       var shouldDelete = b._id === payload._id;
       if (shouldDelete) deletedBit = b;
       return shouldDelete;
     });
-    payload.original = deletedBit;
-    this.digest(digestEvent, payload);
-    this.enqueue(streamEvent, payload);
+
+    if (deletedBit) {
+      payload.original = deletedBit;
+      this.digest(digestEvent, payload);
+      this.enqueue(streamEvent, payload);
+    }
 
     if (cb) cb();
   },

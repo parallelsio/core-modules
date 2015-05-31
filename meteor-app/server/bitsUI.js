@@ -35,7 +35,7 @@ var BitsUI = {
       }
     };
 
-    Bits.update({ _id: bit._id }, query, { upsert: true }, function (err /*, result */) {
+    Bits.update({ _id: bit._id }, query, function (err /*, result */) {
       if (err) log.error(err);
     });
   }, function (err) { log.error('bitsUI:updateBitPosition', err); }),
@@ -51,7 +51,7 @@ var BitsUI = {
       }
     };
 
-    Bits.update({ _id: bit._id }, query, { upsert: true }, function (err /*, result */) {
+    Bits.update({ _id: bit._id }, query, function (err /*, result */) {
       if (err) log.error(err);
     });
   }, function (err) { log.error('bitsUI:updateBitContent', err); }),
@@ -68,7 +68,7 @@ var BitsUI = {
       }
     };
 
-    Bits.update({ _id: bit._id }, query, { upsert: true }, function (err /*, result */) {
+    Bits.update({ _id: bit._id }, query, function (err /*, result */) {
       if (err) log.error(err);
     });
   }, function (err) { log.error('bitsUI:updateImageSource', err); }),
@@ -85,7 +85,7 @@ var BitsUI = {
       }
     };
 
-    Bits.update({ _id: bit._id }, query, { upsert: true }, function (err /*, result */) {
+    Bits.update({ _id: bit._id }, query, function (err /*, result */) {
       if (err) log.error(err);
     });
   }, function (err) { log.error('bitsUI:updateBitHtml', err); }),

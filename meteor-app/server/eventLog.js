@@ -31,12 +31,14 @@ var recordEventRollback = Meteor.bindEnvironment(function (payload) {
     }
   };
   var event = Events.findOne({ canvasId: canvas.id, rolledBack: null}, {sort: {version: -1}});
-  log.debug('eventLog:recordEventRollback: canvas:', canvas.id, event._id);
 
-  Events.update(event._id, query, function (err /*, result */) {
-    if (err) log.error(err);
-  });
+  if (event) {
+    log.debug('eventLog:recordEventRollback: canvas:', canvas.id, event._id);
 
+    Events.update(event._id, query, function (err /*, result */) {
+      if (err) log.error(err);
+    });
+  }
 }, function (err) { log.error('eventLog:recordEventRollback', err); });
 
 var recordEventReplay = Meteor.bindEnvironment(function (payload) {
@@ -51,11 +53,13 @@ var recordEventReplay = Meteor.bindEnvironment(function (payload) {
     }
   };
   var event = Events.findOne({ canvasId: canvas.id, rolledBack: true}, {sort: {version: 1}});
-  log.debug('eventLog:recordEventReplay: canvas:', canvas.id, event._id);
+  if (event) {
+    log.debug('eventLog:recordEventReplay: canvas:', canvas.id, event._id);
 
-  Events.update(event._id, query, function (err /*, result */) {
-    if (err) log.error(err);
-  });
+    Events.update(event._id, query, function (err /*, result */) {
+      if (err) log.error(err);
+    });
+  }
 
 }, function (err) { log.error('eventLog:recordEventReplay', err); });
 
