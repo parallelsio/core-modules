@@ -10,8 +10,9 @@ Parallels.AppModes['create-bit'] = {
       color: 'white', 
       content: '', 
       position: {
-        x: event.offsetX, 
-        y: event.offsetY
+        var center = Utilities.getViewportCenter();
+        x: center.x
+        y: center.y
       }
     });
   },

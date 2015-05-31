@@ -1,9 +1,13 @@
+
 /*
       TODO: pass one bit object, get the other things from it, 
       versus passing 3 diff parts of similar objects
       
       TODO: refactor: combine bit references, 
       and dont go to Session store for original H/W
+
+      TODO: account for Menu bar template height
+      
   */
 
 Transform = {

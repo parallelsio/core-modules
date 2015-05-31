@@ -102,7 +102,7 @@ Parallels.AppModes['create-parallel'] = {
       $(window).on('mousemove', function(event){
         mouse.x = window.pageXOffset + event.clientX;
         mouse.y = window.pageYOffset + event.clientY
-      });
+      });    
 
       circle = two.makeCircle(
         bitCenterX,  
