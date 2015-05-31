@@ -110,11 +110,20 @@ Parallels.KeyCommands = {
   },
 
   bindCreateParallel: function(){
-    //todo: would be nice to log context of where this binding came from
+    // TODO: would be nice to log context of where this binding came from
     log.debug("keyCommand:bindCreateParallel");
 
     Mousetrap.bind('shift', function (){
       Parallels.AppModes['create-parallel'].enter();
+    });
+  },
+
+  bindCreateSketchBit: function(){
+    log.debug("keyCommand:bindCreateSketchBit");
+
+    Mousetrap.bind('s b', function (){
+      
+      // Parallels.AppModes['create-parallel'].enter();
     });
   },
 
