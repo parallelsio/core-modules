@@ -28,6 +28,10 @@ $ui-header-height: 0.70em;
     width: 200px;
   }
 
+  &.sketch .content {
+    cursor: crosshair;
+  }
+
   &.parallel {
     background: #f0f0fa !important;
     font-family: 'Merriweather Sans', sans-serif;
