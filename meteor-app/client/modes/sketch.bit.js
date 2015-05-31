@@ -11,8 +11,8 @@ Parallels.AppModes['sketch-bit'] = {
       color: 'blue',
       content: [],
       position: {
-        x: 1 + 30,
-        y: 1 + 30
+        x: 0,
+        y: 0
       }
     });
   },
