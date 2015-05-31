@@ -34,7 +34,7 @@ Parallels.AppModes['create-parallel'] = {
       // and ready to commit this to the db/UI.
       
       // OQ: we pass this context message to the handler, but getting the keyboard event?
-      Parallels.KeyCommands.bindCreateParallel("closing a parallel");
+      Parallels.KeyCommands.bindCreateParallel();
 
       // Mousetrap.bind('shift', function (contextMessage){
       //   log.debug("pressed 'Shift' key for closing parallel");
