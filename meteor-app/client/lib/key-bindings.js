@@ -22,6 +22,8 @@ Parallels.KeyCommands = {
     this.bindHistory();
     this.bindUndo();
     this.bindRedo();
+    this.bindCreateSketchBit();
+    this.bindCreateTextBit();
   },
 
   disableAll: function(){
@@ -47,6 +49,12 @@ Parallels.KeyCommands = {
 
     // redo last action
     Mousetrap.unbind(['command+shift+z', 'ctrl+shift+z']);
+
+    // create new sketch bit
+    Mousetrap.unbind(['s b']);
+
+    // create new text bit
+    Mousetrap.unbind(['n b']);
   },
 
 
@@ -122,8 +130,15 @@ Parallels.KeyCommands = {
     log.debug("keyCommand:bindCreateSketchBit");
 
     Mousetrap.bind('s b', function (){
-      
       // Parallels.AppModes['create-parallel'].enter();
+    });
+  },
+
+  bindCreateTextBit: function(){
+    log.debug("keyCommand:bindCreateTextBit");
+
+    Mousetrap.bind('n b', function() {
+      Parallels.AppModes['create-bit'].enter(event);
     });
   },
 

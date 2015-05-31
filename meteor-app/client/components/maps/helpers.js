@@ -22,8 +22,8 @@ Template.map.helpers({
     return Bits.find({type: "webpage"});
   },
 
-  isCreatingNewTextBit: function () {
-    return Session.get('newTextBit');
+  isCreatingTextBit: function () {
+    return Session.get('createTextBit');
   },
 
   isCreatingSketchBit: function () {

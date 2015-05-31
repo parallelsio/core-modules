@@ -4,12 +4,14 @@
     class="bit {{ type }}" 
     data-title="{{ title }}" 
     data-filename="{{ filename }}" 
-    data-upload-key="{{ uploadKey }}"
-  >
+    data-upload-key="{{ uploadKey }}">
     
     <div class="content {{ color }}">
       {{#if isEditingThisBit }}
-        <input type="text" class="editbit" autofocus value="{{ content }}">
+        <input  type="text" 
+                class="editbit" 
+                autofocus 
+                value="{{ content }}">
 
       {{ else }}
         {{#if imageSrc }}

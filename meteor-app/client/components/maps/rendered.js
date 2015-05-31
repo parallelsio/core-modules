@@ -9,12 +9,12 @@ Template.map.onRendered(function (){
   container._uihooks = {
 
     insertElement: function(node, next) {
-      var bitDataContext = Blaze.getData(node) || Session.get('newTextBit') || Session.get('sketchBit');
+      var bitDataContext = Blaze.getData(node) || Session.get('createTextBit') || Session.get('sketchBit');
 
       $(node).insertBefore(next);
 
       function timelineInsertDone (node) {
-        // TODO: if text bit
+        // TODO: only if text bit
         $(node).find('.editbit').focus();
       }
 
