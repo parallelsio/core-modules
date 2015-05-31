@@ -16,10 +16,10 @@ Parallels.KeyCommands = {
     log.debug("keyCommand:bindAll");
 
     this.bindDelete();
-    this.bindShift();
-    this.bindSpace();
+    this.bindCreateParallel();
+    this.bindImagePreview();
     this.bindEsc();
-    this.bindLog();
+    this.bindHistory();
     this.bindUndo();
     this.bindRedo();
   },
@@ -27,12 +27,25 @@ Parallels.KeyCommands = {
   disableAll: function(){
     log.debug("keyCommand:disableAll");
 
-    Mousetrap.unbind('d');
-    Mousetrap.unbind('space');
-    Mousetrap.unbind('shift');
-    Mousetrap.unbind('esc');
-    Mousetrap.unbind('l');
+    // delete bit
+    Mousetrap.unbind('d');       
+    
+    // preview
+    Mousetrap.unbind('space');    
+    
+    // create-parallel
+    Mousetrap.unbind('shift');                                    
+    
+    // cancel/close
+    Mousetrap.unbind('esc');                                   
+    
+    // history dialog, for undo/redo
+    Mousetrap.unbind('h');   
+
+    // undo last action                                 
     Mousetrap.unbind(['command+z', 'ctrl+z']);
+
+    // redo last action
     Mousetrap.unbind(['command+shift+z', 'ctrl+shift+z']);
   },
 
@@ -63,8 +76,8 @@ Parallels.KeyCommands = {
     });
   },
 
-  bindSpace: function(){
-    log.debug("keyCommand:bindSpace");
+  bindImagePreview: function(){
+    log.debug("keyCommand:bindImagePreview");
 
     Mousetrap.bind('space', function (event) {
       log.debug("pressed 'Space' key");
@@ -96,9 +109,9 @@ Parallels.KeyCommands = {
     });
   },
 
-  bindShift: function(){
+  bindCreateParallel: function(){
     //todo: would be nice to log context of where this binding came from
-    log.debug("keyCommand:bindShift");
+    log.debug("keyCommand:bindCreateParallel");
 
     Mousetrap.bind('shift', function (){
       Parallels.AppModes['create-parallel'].enter();
@@ -117,22 +130,28 @@ Parallels.KeyCommands = {
     });
   },
 
-  bindLog: function () {
-    Mousetrap.bind('l', function () {
+  bindHistory: function () {
+    log.debug("keyCommand:bindHistory");
+
+    Mousetrap.bind('h', function () {
       var viewingEventLog = Session.get('viewingEventLog');
       Session.set('viewingEventLog', !viewingEventLog);
     });
   },
 
   bindUndo: function () {
+    log.debug("keyCommand:bindUndo");
+
     Mousetrap.bind(['command+z', 'ctrl+z'], function () {
-      Meteor.call('undoState', {canvasId: '1'});
+      Meteor.call('undoState', { canvasId: '1'});
     });
   },
 
   bindRedo: function () {
+    log.debug("keyCommand:bindRedo");
+
     Mousetrap.bind(['command+shift+z', 'ctrl+shift+z'], function () {
-      Meteor.call('redoState', {canvasId: '1'});
+      Meteor.call('redoState', { canvasId: '1'});
     });
   }
 
