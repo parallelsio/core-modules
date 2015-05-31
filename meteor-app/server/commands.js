@@ -23,7 +23,7 @@ Meteor.methods({
       commitRepo(canvas, {/* forceSnapshot: true */});
       return response;
     } else {
-      log.error("Command not recognized");
+      log.error("changeState: Command not recognized : ", canvasAction);
     }
   },
 
@@ -58,11 +58,11 @@ Meteor.methods({
         commitRepo(canvas, {/* forceSnapshot: true */});
         return response;
       } else {
-        log.error("Command not recognized:", undoEvent);
+        log.error("undoState: Command not recognized :", undoEvent);
       }
     }
   },
-  
+
   redoState: function (data) {
     var findLastEvent = Meteor.wrapAsync(function (callback) {
       var event = Events.findOne({ canvasId: data.canvasId, rolledBack: true }, {sort: {version: 1}});
@@ -91,7 +91,7 @@ Meteor.methods({
         commitRepo(canvas, {/* forceSnapshot: true */});
         return response;
       } else {
-        log.error("Command not recognized:", redoEvent);
+        log.error("redoState: Command not recognized :", redoEvent);
       }
     }
   }

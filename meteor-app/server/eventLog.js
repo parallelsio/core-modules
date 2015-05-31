@@ -10,6 +10,7 @@ var FriendlyDescription = {
 var insertEvent = Meteor.bindEnvironment(function (description, payload) {
   var canvas = payload.data.canvas;
   var bit = payload.data.bit;
+  log.debug('eventLog:insertEvent: canvas:', canvas.id, description, bit._id);
 
   Events.insert({
     canvasId: canvas.id,
@@ -19,7 +20,7 @@ var insertEvent = Meteor.bindEnvironment(function (description, payload) {
     version: canvas.version
   });
 
-}, function (err) { log.error(err); });
+}, function (err) { log.error('eventLog:insertEvent', err); });
 
 var recordEventRollback = Meteor.bindEnvironment(function (payload) {
   var canvas = payload.data.canvas;
@@ -30,11 +31,13 @@ var recordEventRollback = Meteor.bindEnvironment(function (payload) {
     }
   };
   var event = Events.findOne({ canvasId: canvas.id, rolledBack: null}, {sort: {version: -1}});
+  log.debug('eventLog:recordEventRollback: canvas:', canvas.id, event._id);
+
   Events.update(event._id, query, function (err /*, result */) {
     if (err) log.error(err);
   });
 
-}, function (err) { log.error(err); });
+}, function (err) { log.error('eventLog:recordEventRollback', err); });
 
 var recordEventReplay = Meteor.bindEnvironment(function (payload) {
   var canvas = payload.data.canvas;
@@ -48,11 +51,13 @@ var recordEventReplay = Meteor.bindEnvironment(function (payload) {
     }
   };
   var event = Events.findOne({ canvasId: canvas.id, rolledBack: true}, {sort: {version: 1}});
+  log.debug('eventLog:recordEventReplay: canvas:', canvas.id, event._id);
+
   Events.update(event._id, query, function (err /*, result */) {
     if (err) log.error(err);
   });
 
-}, function (err) { log.error(err); });
+}, function (err) { log.error('eventLog:recordEventReplay', err); });
 
 StateChangeEvents.on('canvas.bit.*', function (payload) {
   if (this.event.indexOf('undo_') >= 0) {
