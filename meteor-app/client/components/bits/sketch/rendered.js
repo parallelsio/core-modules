@@ -62,10 +62,10 @@ Template.sketchBit.onRendered(function (){
   var template = this;
 
    // TODO : reuse same drag init as bit.rendered (with effects, etc)
-  Draggable.create(this.firstNode, {
-    throwProps:false,
-    zIndexBoost:false
-  });
+  // Draggable.create(this.firstNode, {
+  //   throwProps:false,
+  //   zIndexBoost:false
+  // });
 
   // TODO: into a 'sketch-mode'
   // Parallels.AppModes['bit-sketch'].enter();
