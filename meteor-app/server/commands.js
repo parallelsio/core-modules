@@ -14,17 +14,19 @@ Meteor.methods({
 
   changeState: function (msg) {
     console.log("changeState: received %s on canvas %s for bit %s", msg.command, msg.data.canvasId, msg.data._id);
-    var canvas = getCanvas(msg.data.canvasId);
-    var canvasAction = canvas[msg.command];
+    if (msg.data.canvasId) {
+      var canvas = getCanvas(msg.data.canvasId);
+      var canvasAction = canvas[msg.command];
 
-    if (canvasAction) {
-      var action = Meteor.wrapAsync(canvasAction, canvas);
-      var response = action(msg.data);
-      commitRepo(canvas, {/* forceSnapshot: true */});
-      console.log("changeState: complete: canvas (%s) v%s", canvas.id, canvas.version);
-      return response;
-    } else {
-      log.error("changeState: Command not recognized : ", canvasAction);
+      if (canvasAction) {
+        var action = Meteor.wrapAsync(canvasAction, canvas);
+        var response = action(msg.data);
+        commitRepo(canvas, {/* forceSnapshot: true */});
+        console.log("changeState: complete: canvas (%s) v%s", canvas.id, canvas.version);
+        return response;
+      } else {
+        log.error("changeState: Command not recognized : ", canvasAction);
+      }
     }
   },
 
