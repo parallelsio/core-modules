@@ -3,6 +3,9 @@ Parallels.AppModes['sketch-bit'] = {
   enter: function () {
     log.debug("mode:sketch-bit:enter");
 
+    Parallels.KeyCommands.disableAll();
+    Parallels.KeyCommands.bindEsc();
+
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'sketch-bit');
     Session.set('sketchBit', { 
@@ -19,6 +22,8 @@ Parallels.AppModes['sketch-bit'] = {
 
   exit: function () {
     log.debug("mode:sketch-bit:exit");
+
+    Parallels.KeyCommands.bindAll();
 
     Session.set('currentMode', null);
     Session.set('sketchBit', null);

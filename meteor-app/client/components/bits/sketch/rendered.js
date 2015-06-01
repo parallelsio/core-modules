@@ -1,6 +1,15 @@
-// Ploma only does rendering
-// doesnt care where location + pressure data come from
-// Ploma can be used with any tablet
+/* 
+  Ploma only does rendering
+  doesnt care where location + pressure data come from
+  Ploma can be used with any tablet
+
+  SD/OQ:  - Any benefit of using Meteor template event map,
+            versus doing it here?
+
+          - Use a local collection to cache strokes to minimize
+            delays/writes to db?
+
+*/
 var createPlomaCanvas = function(template){
 
   var canvas = $(template.firstNode).find("#sketch-bit")[0];
@@ -62,9 +71,8 @@ var getEventPoint = function(event, template, plugin){
   return point;
 }
 
-
 Template.sketchBit.onRendered(function (){
-  log.debug("rendered sketch bit");  
+  log.debug("bit:sketch:render");  
   
   var template = this;
 
