@@ -17,7 +17,9 @@ var createPlomaCanvas = function(template){
     isDrawing = true;
     var point = getEventPoint(event, template, plugin);
     ploma.beginStroke(point.x, point.y, point.p);
-    Parallels.Audio.player.play('fx-cinq-drop');
+    // Parallels.Audio.player.play('fx-cinq-drop');
+    // TODO: not working
+    template.firstNode.style.cursor = 'none';
   }
 
   // extend the stroke at the mouse move point
@@ -32,7 +34,12 @@ var createPlomaCanvas = function(template){
     isDrawing = false;
     var point = getEventPoint(event, template, plugin);
     ploma.endStroke(point.x, point.y, point.p);
-    Parallels.Audio.player.play('fx-ting3');
+
+    // TODO: not working
+    template.firstNode.style.cursor = 'crosshair';
+
+    // SD: OQ: is this hurting performance?
+    // Parallels.Audio.player.play('fx-ting3');
   }
 
   return ploma;

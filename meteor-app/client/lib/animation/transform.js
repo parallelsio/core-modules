@@ -102,6 +102,7 @@ Transform = {
         Parallels.Audio.player.play('fx-quad-ripple');
       }
 
+      // TODO: refactor, move this to appropriate mode.exit
       else if (options.direction === "contract"){
         Session.set('bitThumbnailWidth', null);
         Session.set('bitThumbnailHeight', null);

@@ -28,8 +28,8 @@ $ui-header-height: 0.70em;
     width: 200px;
   }
 
-  &.sketch .content {
-    cursor: crosshair;
+  &.sketch {
+    cursor: none;
   }
 
   &.parallel {
