@@ -11,8 +11,8 @@ Template.createTextBit.events({
           content: template.find('.editbit').value,
           color: createTextBit.color,
           position: {
-            x: $(Template.instance().firstNode).position().left,
-            y: $(Template.instance().firstNode).position().top
+            x: $(template.firstNode).position().left,
+            y: $(template.firstNode).position().top
           }
         }
       });

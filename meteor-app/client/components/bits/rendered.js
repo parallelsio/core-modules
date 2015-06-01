@@ -1,5 +1,7 @@
 Template.bit.onDestroyed(function(){
-  BitEvents.hoverOutBit();
+  // fails, because there's no template instance after the delete
+  // BitEvents.hoverOutBit();
+  Session.set('bitHoveringId', null);
 });
 
 Template.bit.onRendered(function (){
@@ -10,8 +12,11 @@ Template.bit.onRendered(function (){
   var bitHtmlElement = Utilities.getBitHtmlElement(bitDatabaseId);
   log.debug("bit:render: ", bitDatabaseId);
 
-  // Track position changes for Bits
+  // Track position changes for Bits.
+  // SD: OQ: Why is this here? Doesnt a template automatically 
+  // data bind and save/sync the x/y position already?
   Tracker.autorun(function() {
+    // OQ: this is failing after a bit:delete.
     var position = Bits.findOne(bitDatabaseId).position;
     var timeline = new TimelineMax();
     timeline.to(bitHtmlElement, 0, { x: position.x, y: position.y });
@@ -27,7 +32,7 @@ Template.bit.onRendered(function (){
 
     if (bitUpload.status() === 'failed') {
       /*
-        would show a friendly error message but the next line we remove the bit
+        AB: OQ: would show a friendly error message but the next line we remove the bit
         so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
         bitHtmlElement.find('.content')[0].classList.add('complete', 'error');
       */
@@ -80,7 +85,7 @@ Template.bit.onRendered(function (){
   // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
   // // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
-  Draggable.create(Template.instance().firstNode, {
+  Draggable.create(template.firstNode, {
 
     // TODO: unbind keys
 
