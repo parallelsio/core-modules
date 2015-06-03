@@ -4,6 +4,11 @@ Template.sketchBit.onDestroyed(function(){
   // fails, because there's no template instance after the delete
   // BitEvents.hoverOutBit();
   Session.set('bitHoveringId', null);
-  ploma.clear();
-  ploma = null;
+
+  Mousetrap.unbind(['command+z', 'ctrl+z']);
+  Mousetrap.unbind('c');
+
+  // fails - doesnt exist anymore
+  // plomaInstance.clear();
+  // plomaInstance = null;
 });

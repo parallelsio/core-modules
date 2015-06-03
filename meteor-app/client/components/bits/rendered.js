@@ -9,6 +9,8 @@ Template.bit.onRendered(function (){
   // Track position changes for Bits.
   // SD: OQ: Why is this here? Doesnt a template automatically 
   // data bind and save/sync the x/y position already?
+
+  // SD: OQ/TODO: https://www.discovermeteor.com/blog/template-level-subscriptions?
   Tracker.autorun(function() {
     // OQ: this is failing after a bit:delete.
     var position = Bits.findOne(bitDatabaseId).position;

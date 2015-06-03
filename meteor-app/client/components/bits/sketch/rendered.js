@@ -29,7 +29,7 @@ var createPlomaCanvas = function(template){
     // Parallels.Audio.player.play('fx-cinq-drop');
 
     // disabled - need to make sure performance is snappy first
-    template.firstNode.style.cursor = 'none';
+    // template.firstNode.style.cursor = 'none';
   }
 
   // extend the stroke at the mouse move point
@@ -86,6 +86,26 @@ Template.sketchBit.onRendered(function (){
   // TODO: into a 'sketch-mode'
   // Parallels.AppModes['bit-sketch'].enter();
   var plomaInstance = createPlomaCanvas(template);
+
+  // draw canvas
+
+  // bind sketch key handlers
+
+  // Parallels.AppModes['bit-sketch'].enter()
+
+  
+  Mousetrap.bind(['command+z', 'ctrl+z'], function (){
+    // log.debug("bit:sketch:getStrokes: ", plomaInstance.getStrokes());
+    // log.debug("bit:sketch:curStroke: ", plomaInstance.curStroke());
+
+    // remove the most recent stroke
+    plomaInstance.setStrokes(
+      _.dropRight(
+        plomaInstance.getStrokes()
+      )
+    );
+
+  });
 
   Mousetrap.bind('c', function (){
     log.debug("pressed 'c' key");  
