@@ -27,7 +27,8 @@ var createPlomaCanvas = function(template){
     var point = getEventPoint(event, template, plugin);
     ploma.beginStroke(point.x, point.y, point.p);
     // Parallels.Audio.player.play('fx-cinq-drop');
-    // TODO: not working
+
+    // disabled - need to make sure performance is snappy first
     template.firstNode.style.cursor = 'none';
   }
 
@@ -44,8 +45,8 @@ var createPlomaCanvas = function(template){
     var point = getEventPoint(event, template, plugin);
     ploma.endStroke(point.x, point.y, point.p);
 
-    // TODO: not working
-    template.firstNode.style.cursor = 'crosshair';
+    // disabled - need to make sure performance is snappy first
+    // template.firstNode.style.cursor = 'crosshair';
 
     // SD: OQ: is this hurting performance?
     // Parallels.Audio.player.play('fx-ting3');
