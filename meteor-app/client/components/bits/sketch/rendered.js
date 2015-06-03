@@ -12,7 +12,7 @@
 */
 var createPlomaCanvas = function(template){
 
-  var canvas = $(template.firstNode).find("#sketch-bit")[0];
+  var canvas = $(template.firstNode).find(".sketch-bit")[0];
 
   // NAPAPI, necessary for interfacing with Wacom tablet
   var plugin = document.getElementById('wtPlugin'); 
@@ -93,7 +93,7 @@ Template.sketchBit.onRendered(function (){
 
   // Parallels.AppModes['bit-sketch'].enter()
 
-  
+
   Mousetrap.bind(['command+z', 'ctrl+z'], function (){
     // log.debug("bit:sketch:getStrokes: ", plomaInstance.getStrokes());
     // log.debug("bit:sketch:curStroke: ", plomaInstance.curStroke());

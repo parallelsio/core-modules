@@ -33,6 +33,17 @@ Parallels.Audio.Definition['fx-ffft'] = {
   }
 }
 
+Parallels.Audio.Definition['fx-temp-temp-subtle'] = {
+  synthDef: {   
+    id: "fx-temp-temp-subtle",  
+    ugen: "flock.ugen.playBuffer",
+    buffer: {
+        id: "fx-temp-temp-subtle",  
+        url: "/sounds/fx-temp-temp-subtle.wav"
+    }
+  }
+}
+
 Parallels.Audio.Definition['fx-ting3'] = {
   synthDef: {   
     id: "fx-ting3",  

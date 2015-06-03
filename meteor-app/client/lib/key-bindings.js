@@ -16,6 +16,7 @@ Parallels.KeyCommands = {
     log.debug("keyCommand:bindAll");
 
     this.bindDelete();
+    this.bindEditTextBit();
     this.bindCreateParallel();
     this.bindImagePreview();
     this.bindEsc();
@@ -32,6 +33,9 @@ Parallels.KeyCommands = {
     // delete bit
     Mousetrap.unbind('d');       
     
+    // edit text bit
+    Mousetrap.unbind('e');  
+
     // preview
     Mousetrap.unbind('space');    
     
@@ -79,6 +83,25 @@ Parallels.KeyCommands = {
 
       else {
         log.debug ('delete key ignored, not captured for a specific bit')
+      }
+
+    });
+  },
+
+
+  bindEditTextBit: function(){
+    log.debug("keyCommand:bindEditTextBit");
+
+    Mousetrap.bind("e", function() {
+      log.debug("pressed 'e' key");
+      var bitHoveringId = Session.get('bitHoveringId');
+
+      if (bitHoveringId) {
+        Parallels.AppModes['edit-bit'].enter(bitHoveringId);
+      }
+
+      else {
+        log.debug ('edit key ignored, not captured for a specific bit')
       }
 
     });
