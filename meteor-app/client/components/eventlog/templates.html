@@ -1,38 +1,33 @@
 <template name="eventlog">
-  <div class="eventlog">
-    <div class="bg-white shadow">
-      <div class="px2">
-        <div class="border-bottom">
-          <div class="p2 bold">Event Stream</div>
-        </div>
-        <div class="timeline">
-          <div class="py2">
-            {{ #each events }}
-              {{> event }}
-            {{/each }}
-          </div>
-        </div>
-      </div>
+  <div class="eventlog p-lr-1 bg-white">
+    <div class="activity--header p-1 bold border-b-solid">Activity Stream</div>
+    <div class="timeline">
+      {{ #each events }}
+        {{> event }}
+      {{/each }}
     </div>
   </div>
 </template>
 
 <template name="event">
-  <div class="clearfix p1">
-    <div>
-      <div class="left mr2 mt1 icon">
-        <i class="fa fa-circle"></i>
-      </div>
-      <div class="overflow-hidden">
-        <div class="activity-body">
-          <p class="clearfix mb0">
-            <span class="left bold">{{description}}</span>
-            <!-- <span class="right"><a class="fork-link" href="#">Fork</a></span> -->
-          </p>
-          <p class="mb0">{{meta}} </p>
-          <p class="mb0 h6">{{time}}</p>
-        </div>
-      </div>
+  <div class="activity--container border-b-dotted p-lr-075 p-tb-1">
+    <span class="icon
+                m-r-15 
+                m-t-025">
+      <i class="activity--dot fa fa-circle"></i>
+    </span>
+
+    <div class="activity-body inline-block">
+      <p class="activity--description
+                p-b-025
+                m-t-025 
+                ">{{ description }}</p>
+      
+      <p class="m-b-0 clear">{{ meta }}</p>
+      <p class="activity--time
+                m-b-0
+                m-t-025 
+                italic">{{ time }}</p>
     </div>
   </div>
 </template>

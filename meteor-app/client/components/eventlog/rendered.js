@@ -2,9 +2,11 @@ Template.eventlog.onRendered(function () {
   var $eventLog = $(this.firstNode);
   var timeline = new TimelineMax();
 
-  timeline.to($eventLog, 0.5, {
-    alpha: 1,
-    ease: Power2.easeInOut
+  timeline.to(
+    $eventLog, 0.20, { 
+      alpha: 1,
+      boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", 
+      ease: Expo.easeOut
   });
 
   $eventLog.bind('mousewheel DOMMouseScroll', function(e) {

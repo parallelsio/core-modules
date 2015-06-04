@@ -1,100 +1,43 @@
+ // **************************************************************
+    // TODO: extract to app wide level for reuse?
+
+  .bg-white           { background-color: #FFF; }
+  .inline-block       { display: inline-block; }
+  .left               { float:left; }
+  .right              { float:right; }
+  .clear-both         { clear:both; }
+
+  .p-1                { padding: 1rem; }
+  .p-lr-1             { padding-left: 1rem; padding-right: 1rem; }
+  .p-lr-075           { padding-left: 0.75em; padding-right: 0.75em; }
+  .p-tb-1             { padding-top: 1em; padding-bottom: 1em; }
+  .p-b-025            { padding-bottom: 0.25em; }
+  .p-l-2              { padding-left: 1rem; }
+
+  .m-t-025            { margin-top: 0.25em; }
+  .m-r-15             { margin-right: 1.5rem; }
+
+  .bold               { font-weight: bold; }
+  .uppercase          { text-transform: uppercase; }
+  .letter-wide        { letter-spacing: 0.05em;  }
+  .italic             { font-style: italic; }
+
+  .border-b-dotted    { border-bottom: 2px dotted #E7E7FF; }
+  .border-b-solid     { border-bottom: 1px solid #f3f4f5; }
+  // **************************************************************
+
+
 .eventlog {
   position: fixed;
   z-index: 10;
   top: 3em;
   right: 1em;
   opacity: 0;
-  width: 400px;
-  height: 600px;
+  width: 30vw;
+  height: 80vh;
   overflow: auto;
 
-  p {
-    margin-top: 0;
-  }
-
-  .icon {
-    font-size: .8em;
-  }
-
-  .shadow {
-    box-shadow: 0 0 0.25rem 0 rgba(0,0,0,0.05);
-  }
-
-  .bg-white {
-    background-color: #FFF;
-  }
-
-  .clearfix:after {
-    clear: both;
-  }
-
-  .overflow-hidden {
-    overflow: hidden;
-  }
-
-  .clearfix:before, .clearfix:after {
-    content: " ";
-    display: table;
-  }
-
-  .h6 {
-    font-size: 13px;
-    line-height: 18px;
-  }
-
-  .p1 {
-    padding: .65rem;
-  }
-
-  .p2 {
-    padding: 1rem;
-  }
-
-  .mr2 {
-    margin-right: 1rem;
-  }
-
-  .ml1 {
-    margin-left: 0.5rem;
-  }
-
-  .mt1 {
-    margin-top: 0.2rem;
-  }
-
-  .mb0 {
-    margin-bottom: 0;
-  }
-
-  .left {
-    float: left;
-  }
-
-  .right {
-    float: right;
-  }
-
-  .bold {
-    font-weight: bold;
-  }
-
-  .px2 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .py2 {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
-  .border-bottom {
-    border-bottom: 1px solid #f3f4f5;
-  }
-
-  .timeline {
-    position: relative;
-  }
+  .timeline { position: relative; }
 
   .timeline:before {
     content: "";
@@ -106,4 +49,28 @@
     background-color: #f3f4f5;
     z-index: 0;
   }
+
+  .icon               { font-size: .8em; }
+
+  // TODO: refactor to more general, HTML headers, mixins
+  .activity--description {
+    font-size: 0.85em;
+    color: #A3A3A3;
+  }  
+  
+  .activity--time {
+    color: #BEBEBE;
+    font-size: 0.85em;
+  }
+  
+  .activity--dot { color:#C5C5C5; font-size: 0.8em;  }
+
+  .activity--container:hover{
+    background: #F5F5F5;
+    
+    .activity--dot{ color: #8B8BF5;}
+  }
+
+  .activity--header{ padding:1em 3em; }
+
 }
