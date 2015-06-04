@@ -7,13 +7,6 @@
     data-upload-key="{{ uploadKey }}">
     
     <div class="content {{ color }}">
-        {{#if isEditingTextBit }}
-          <input  type="text" 
-                  class="editbit" 
-                  autofocus 
-                  value="{{ content }}">
-        {{/if}}
-
         {{#if isSketchBit }} 
           sketch bit
         {{/if}}
@@ -23,10 +16,20 @@
         {{/if}}
 
         {{#if isTextBit }} 
-          <!-- ensure no white space between these template variables,
-                or they will be incorrectly interpreted by 
-                Markdown -->
-          {{#markdown }}{{ content }}{{/markdown }}
+          {{#if isEditingTextBit }}
+            <input  type="text" 
+                    class="editbit" 
+                    autofocus 
+                    value="{{ content }}">
+
+          {{else }} <!-- isEditingTextBit is true -->
+            <!-- ensure no white space between these template variables,
+                  or they will be incorrectly interpreted by 
+                  Markdown -->
+            {{#markdown }}{{ content }}{{/markdown }}
+          {{/if}}
+
+
         {{/if}}
         
     </div>

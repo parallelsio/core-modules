@@ -9,6 +9,13 @@ Parallels.AppModes['sketch-bit'] = {
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'sketch-bit');
 
+    // retrieve data 
+
+    // get ploma instance
+    
+    // bind handler for ploma instance
+
+
     // move into a fixture?
     Session.set('sketchBit', { 
       canvasId: '1',
