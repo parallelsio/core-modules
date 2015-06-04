@@ -3,7 +3,7 @@ Template.eventlog.onRendered(function () {
   var timeline = new TimelineMax();
 
   timeline.to(
-    $eventLog, 0.20, { 
+    $eventLog, 0.05, { 
       alpha: 1,
       boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", 
       ease: Expo.easeOut
