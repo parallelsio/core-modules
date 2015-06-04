@@ -93,9 +93,6 @@ Transform = {
 
       // TODO: kill all running animations
 
-      // disable scrolling
-      $("body").css( "overflow", "hidden");
-
       // TODO: disable bit actions (drag, delete)
 
       if (options.direction === "expand") {
@@ -129,6 +126,8 @@ Transform = {
     {
       log.debug("expanding...");
 
+      $("body").css( "overflow", "hidden"); // disabling scrolling
+
       timeline
         .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
         .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
@@ -147,6 +146,8 @@ Transform = {
     else if (options.direction === "contract")
     {
       log.debug("contracting...");
+
+      $("body").css( "overflow", "visible"); // re-enabling scrolling
 
       timeline
 

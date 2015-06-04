@@ -131,7 +131,7 @@ Template.menu.rendered = function() {
     var menu = $(".menu");
     timeline
       .to(menu, 1, { top:"0px", ease:Elastic.easeOut})
-      .addCallback(shimmerDisplayBits, 1.5);
+      .addCallback(shimmerDisplayBits, 1.8);
 
     return timeline;
   }
