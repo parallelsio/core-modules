@@ -2,28 +2,31 @@ var
   $bit,
   bitTemplate,
   bitData,
-  bitPreviewingId;
+  bitPreviewingId,
+  bitHoveringId;
 
 Parallels.AppModes['preview-bit'] = {
 
   enter: function () {
     log.debug("mode:preview-bit:enter");
 
-    bitPreviewingId = Session.get('bitHoveringId');
+    bitHoveringId = Session.get('bitHoveringId');
 
-    $bit = $("[data-id='" + bitPreviewingId + "']");
+    $bit = $("[data-id='" + bitHoveringId + "']");
     bitTemplate = Blaze.getView($bit[0]);
     bitData = Blaze.getData(bitTemplate);
-    Session.set('currentMode', 'preview-bit');
-    Session.set('bitPreviewingId', bitPreviewingId);
-    
+
     // TODO: disable bitHover too
 
     // only supporting image preview currently
-    // webpage is currently represented on canvas an image
+    // webpage is currently represented on canvas as an image
     if ((bitData.type === "image") || (bitData.type === "webpage")){
-      log.debug("bit:image:preview: " + bitPreviewingId);
+      bitPreviewingId = bitHoveringId;
+      Session.set('currentMode', 'preview-bit');
+      Session.set('bitPreviewingId', bitPreviewingId);
 
+      log.debug("bit:image:preview: " + bitPreviewingId);
+      
       Parallels.KeyCommands.disableAll();
       Parallels.KeyCommands.bindEsc();
 
@@ -38,7 +41,7 @@ Parallels.AppModes['preview-bit'] = {
     }
 
     else {
-      log.debug("bit:preview:", bitPreviewingId, " is not an image. Do nothing." );
+      log.debug("bit:preview: is not an image. Do nothing." );
     }
   },
   

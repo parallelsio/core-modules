@@ -1,7 +1,15 @@
 Template.bit.helpers({
 
-  isEditingThisBit: function() {
+  isEditingTextBit: function() {
     return Session.equals('bitEditingId', this._id);
+  },
+
+  isSketchBit: function() {
+    return this.type === "sketch";
+  },
+
+  isTextBit: function() {
+    return this.type === "text";
   },
 
   imageSrc: function () {

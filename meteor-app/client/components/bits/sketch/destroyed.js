@@ -1,14 +1,19 @@
 Template.sketchBit.onDestroyed(function(){
+  unbindPlomaHandlers(canvas);
+
   log.debug("bit:sketch:destroy");  
 
   // fails, because there's no template instance after the delete
   // BitEvents.hoverOutBit();
   Session.set('bitHoveringId', null);
 
-  Mousetrap.unbind(['command+z', 'ctrl+z']);
+  Parallels.KeyCommands.bindUndo();
+  Mousetrap.unbind('a');
   Mousetrap.unbind('c');
+  Mousetrap.unbind('up');
+  Mousetrap.unbind('down');
 
   // fails - doesnt exist anymore
-  // plomaInstance.clear();
-  // plomaInstance = null;
+  // template.plomaInstance.clear();
+  // template.plomaInstance = null;
 });

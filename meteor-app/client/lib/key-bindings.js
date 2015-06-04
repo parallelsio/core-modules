@@ -1,9 +1,5 @@
 /*
 
-  OQ:
-    * would binding 2x cause 2 listeners?
-    * how to pass contextMessage properly
-
   TODO:
     * add a check before each bind function
       to ensure it doesnt already exist.
@@ -61,7 +57,6 @@ Parallels.KeyCommands = {
     Mousetrap.unbind('t');
   },
 
-
   bindDelete: function(){
     log.debug("keyCommand:bindDelete");
 
@@ -87,7 +82,6 @@ Parallels.KeyCommands = {
 
     });
   },
-
 
   bindEditTextBit: function(){
     log.debug("keyCommand:bindEditTextBit");
