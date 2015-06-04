@@ -75,14 +75,16 @@ Transform = {
     {
       toWidth = Session.get('bitThumbnailWidth');
       toHeight = Session.get('bitThumbnailHeight');
-      easeType = Elastic.easeOut.config(2, 0.4)
+      easeType = Power4.easeOut;
+
     }
 
     var animationOptions = {
       width: toWidth,
       height: toHeight,
       scale: 1,
-      ease: easeType
+      ease: easeType,
+      y: 0
     };
 
 
@@ -139,7 +141,6 @@ Transform = {
         // TODO: move/center viewport around the image
 
         // blow up image from thumbnail size up to fit the viewport height
-        .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
         .to($bitImg, 0.25, animationOptions );
     }
 
@@ -153,7 +154,8 @@ Transform = {
         .fromTo(maskRight, 0.25, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.12 )
 
         // contract image from viewport height down to original thumbnail size
-        .to($bitImg, 0.10, { scale: 1.1, ease:Quint.easeOut } )
+        // .to($bitImg, 0.10, { scale: 1.1, ease:Power4.easeOut }, "-=0.5")
+
         .to($bitImg, 0.25, animationOptions )
 
         .set(options.$bit, { zIndex: 1 })
