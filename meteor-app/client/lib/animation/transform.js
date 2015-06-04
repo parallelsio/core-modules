@@ -154,8 +154,6 @@ Transform = {
         .fromTo(maskRight, 0.25, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.12 )
 
         // contract image from viewport height down to original thumbnail size
-        // .to($bitImg, 0.10, { scale: 1.1, ease:Power4.easeOut }, "-=0.5")
-
         .to($bitImg, 0.25, animationOptions )
 
         .set(options.$bit, { zIndex: 1 })

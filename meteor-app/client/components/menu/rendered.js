@@ -2,7 +2,6 @@ MeteorSettings.setDefaults({
   public: { options: { displayIntroAnimation: true } }
 });
 
-
 Template.menu.rendered = function() {
 
   log.debug('menu rendered.');
@@ -54,7 +53,7 @@ Template.menu.rendered = function() {
       var newFreq = Math.random() * 1000 + 1060;
       newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
 
-      console.log("newFreq", newFreq);
+      console.log("newFreq: ", newFreq, " this bit's animation delay: ", delay);
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
       // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
 
@@ -86,9 +85,7 @@ Template.menu.rendered = function() {
 
   };
 
-  var timeline = new TimelineMax({
-    onComplete: shimmerDisplayBits
-  });
+  var timeline = new TimelineMax();
 
   function start () {
     var tlLoader     = setTimelineLoader();
@@ -128,11 +125,13 @@ Template.menu.rendered = function() {
     }
 
     else {
-      $('.wipe.load').hide();
+      $('.wipe. load').hide();
     }
 
     var menu = $(".menu");
-    timeline.to(menu, 1, { top:"0px", ease:Elastic.easeOut});
+    timeline
+      .to(menu, 1, { top:"0px", ease:Elastic.easeOut})
+      .addCallback(shimmerDisplayBits, 1.5);
 
     return timeline;
   }
