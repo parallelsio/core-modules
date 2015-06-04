@@ -41,7 +41,6 @@ Template.menu.rendered = function() {
       // for number values. Split the string into an array.
       var array = _.words(cssTransform.replace(pattern, ''));
 
-
       var offset = parseFloat(array[0]) + parseFloat(array[1]);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
