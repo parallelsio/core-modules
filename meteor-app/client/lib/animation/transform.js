@@ -46,8 +46,8 @@ Transform = {
 
     var bitThumbHeight  = $bitImg.height();
     var bitThumbWidth   = $bitImg.width();
-    var bitThumbX       = $bitImg.position().left;
-    var bitThumbY       = $bitImg.position().top;
+    var bitThumbX       = options.$bit.position().left;
+    var bitThumbY       = options.$bit.position().top;
 
     var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
     var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
@@ -179,15 +179,15 @@ Transform = {
 
       timeline
         .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
-        .fromTo(maskRight,  0.25, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
-        .fromTo(maskLeft,   0.25, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.12 )
+        .fromTo(maskRight,  0.20, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.15 )
+        .fromTo(maskLeft,   0.20, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.15 )
 
-        .set(options.$bit, { zIndex: 10, x: 0, y:0 })
+        .set(options.$bit, { zIndex: 10 })
 
         // blow up image from thumbnail size up to fit the viewport height
         // and move its container (and it) to position. Run simultaneously
-        .to($bitImg, 0.25, bitImgOptions )
-        .to(options.$bit, 0.25, bitContainerOptions, "-=0.25" );
+        .to($bitImg, 0.20, bitImgOptions )
+        .to(options.$bit, 0.20, bitContainerOptions, "-=0.20" );
     }
 
     else if (options.direction === "contract") {
@@ -196,13 +196,13 @@ Transform = {
       $("body").css( "overflow", "visible"); // re-enabling scrolling
 
       timeline
-        .fromTo(maskLeft,   0.25, { x: 0 }, { x: -documentWidth / 2, ease: Expo.easeOut }, 0.12 )
-        .fromTo(maskRight,  0.25, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.12 )
+        .fromTo(maskLeft,   0.20, { x: 0 }, { x: -documentWidth / 2, ease: Expo.easeOut }, 0.15 )
+        .fromTo(maskRight,  0.20, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.15 )
 
         // contract image from viewport height down to original thumbnail size
         // run at the same time
-        .to($bitImg, 0.25, bitImgOptions )
-        .to(options.$bit, 0.25, bitContainerOptions, "-=0.25" )
+        .to($bitImg, 0.20, bitImgOptions )
+        .to(options.$bit, 0.20, bitContainerOptions, "-=0.20" )
 
         .set(options.$bit, { zIndex: 1 })
         .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" });
