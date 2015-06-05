@@ -65,10 +65,35 @@ body { height: 100%; }
 }
 
 .menu {
-	position: absolute; 
-	width:100%;
+	position: fixed; 
+	width: 100%;
   top:-100px;
 	padding: 0.5em;
-	background: #ECECEC;
 	box-sizing: border-box;
+	border-bottom: 1px solid #D0D0D0;
+
+	h6 { display: inline-block; margin-right: 1em; }
+
+	i {   
+		font-size: 1.25em;
+ 		margin: 0 0.4em; 
+ 	}
+
+ 	.options { float:right; margin-right: 0.5em; }
 }
+
+
+.key {
+  display: inline-block;
+  background: #F3F2F9;
+  border-radius: 0.25em;
+  border-bottom-color: #CDD2D4;
+  cursor: default;
+  font-weight: 700;
+  margin: 0 0.25em;
+  padding: 0.4em 0.75em;
+  border: 1px solid #D6DADC;
+  border-bottom-color: #CDD2D4;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+

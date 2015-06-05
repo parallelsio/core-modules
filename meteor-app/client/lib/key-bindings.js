@@ -21,6 +21,7 @@ Parallels.KeyCommands = {
     this.bindRedo();
     this.bindCreateSketchBit();
     this.bindCreateTextBit();
+    this.bindShortcuts();
   },
 
   disableAll: function(){
@@ -55,6 +56,20 @@ Parallels.KeyCommands = {
 
     // create new text bit
     Mousetrap.unbind('t');
+
+    // shortcuts
+    Mousetrap.unbind('?');
+
+  },
+
+  bindShortcuts: function(){
+    log.debug("keyCommand:bindShortcuts");
+
+    Mousetrap.bind("?", function() {
+      log.debug("pressed '?' key");
+  
+      Blaze.render(Template.shortcutsModal, document.body);
+    });
   },
 
   bindDelete: function(){
