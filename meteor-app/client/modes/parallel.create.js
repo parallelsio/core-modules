@@ -100,8 +100,8 @@ Parallels.AppModes['create-parallel'] = {
       // OQ: should we use Meteor binding? 
       // https://stackoverflow.com/questions/21486667/meteor-js-how-should-i-bind-events-to-the-window-in-meteor
       $(window).on('mousemove', function(event){
-        mouse.x = window.pageXOffset + event.clientX;
-        mouse.y = window.pageYOffset + event.clientY
+        mouse.x = verge.scrollX() + event.clientX;
+        mouse.y = verge.scrollY() + event.clientY
       });    
 
       circle = two.makeCircle(

@@ -70,8 +70,8 @@ Utilities = {
 
   getViewportCenter: function(){
     return { 
-      x: document.documentElement.clientWidth / 2,
-      y: document.documentElement.clientHeight / 2
+      x: verge.viewportW() / 2,
+      y: verge.viewportH() / 2
     }
   }
 

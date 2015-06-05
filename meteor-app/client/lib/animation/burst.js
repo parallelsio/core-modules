@@ -15,8 +15,8 @@
 //   var repulsionBehaviour, crossZoneBehaviour;
   
 //   canvas = document.getElementById("create-parallel--proton");
-//   canvas.width = window.innerWidth;
-//   canvas.height = window.innerHeight;
+//   canvas.width = verge.viewportW();
+//   canvas.height = verge.viewportH();
 //   context = canvas.getContext('2d');
 
 //   createProton();
@@ -28,8 +28,8 @@
 //   canvas.addEventListener('mousemove', mousemoveHandler, false);
 
 //   window.onresize = function(e) {
-//     canvas.width = window.innerWidth;
-//     canvas.height = window.innerHeight;
+//     canvas.width = verge.viewportW();
+//     canvas.height = verge.viewportH();
 //     crossZoneBehaviour.reset(new Proton.RectZone(0, 0, canvas.width, canvas.height), 'cross');
 //   }
 

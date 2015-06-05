@@ -6,8 +6,8 @@ Template.menu.rendered = function() {
 
   log.debug('menu rendered.');
 
-  var screenWidth  = document.documentElement.clientWidth;
-  var screenHeight = document.documentElement.clientHeight;
+  var viewportWidth  = verge.viewportW();
+  var viewportHeight = verge.viewportH();
 
   // TODO: refactor all settings into Session obj
   log.debug("Meteor.settings.public.options.displayIntroAnimation: ",
@@ -110,15 +110,15 @@ Template.menu.rendered = function() {
 
       TweenMax.set($('.wipe.load.side-to-side'), { alpha: 0 });
 
-      timeline.fromTo(topToBottomLine, 0.4, { x: screenWidth }, { x: 0, ease: Circ.easeIn }, 0);
-      timeline.fromTo(maskTop, 0.4, { y: 0 }, { y: -screenHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
-      timeline.fromTo(maskBottom, 0.4, { y: 0 }, { y: screenHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
+      timeline.fromTo(topToBottomLine, 0.4, { x: viewportWidth }, { x: 0, ease: Circ.easeIn }, 0);
+      timeline.fromTo(maskTop, 0.4, { y: 0 }, { y: -viewportHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
+      timeline.fromTo(maskBottom, 0.4, { y: 0 }, { y: viewportHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
       timeline.set($('.wipe.load.top-to-bottom'), { alpha: 0, display: "none" });
 
       timeline.set($('.wipe.load.side-to-side'), { alpha: 1, display: "block"});
-      timeline.fromTo(sideToSideLine, 0.4, { y: -screenHeight}, {y: 0, ease: Circ.easeIn});
-      timeline.fromTo(maskRight, 0.4, { x: 0 }, {x: screenWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
-      timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -screenWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
+      timeline.fromTo(sideToSideLine, 0.4, { y: -viewportHeight}, {y: 0, ease: Circ.easeIn});
+      timeline.fromTo(maskRight, 0.4, { x: 0 }, {x: viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
+      timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
       timeline.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
 
     }

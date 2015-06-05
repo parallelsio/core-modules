@@ -67,8 +67,9 @@ var getEventPoint = function(event, template, plugin){
   // recalc mouse coordinates, accounting for combination of 2 things:
   // 1) where the bit sits, offset from 0,0 via the template instance 
   // 2) if person is scrolled away from default viewport, via the Window object
-  point.x = (window.pageXOffset + event.clientX) - $(template.firstNode).position().left;
-  point.y = (window.pageYOffset + event.clientY) - $(template.firstNode).position().top;
+  // use verge lib for cross-browser compatibility
+  point.x = (verge.scrollX() + event.clientX) - $(template.firstNode).position().left;
+  point.y = (verge.scrollY() + event.clientY) - $(template.firstNode).position().top;
 
   // fail gracefully if no pressure is detected (no tablet found)
   // tablet reports a range of 0 to 1

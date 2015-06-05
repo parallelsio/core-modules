@@ -108,8 +108,8 @@ Transform = {
           Move the container (and thus the previewed image),
           to the center of the viewport
         */
-        x: (document.documentElement.clientWidth / 2) - (previewWidth / 2),
-        y: (document.documentElement.clientHeight / 2) - (previewHeight / 2)
+        x: (verge.viewportW() / 2) - (previewWidth / 2),
+        y: (verge.viewportH() / 2) - (previewHeight / 2)
       };
     }
 
