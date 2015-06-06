@@ -6,6 +6,8 @@ $color-init: #F9D423;
 $color-first: #FE4365;
 $color-second: #C7F464;
 
+$blue:#8B8BF5;
+
 html { height: 100%; }
 body { height: 100%; }
 
@@ -71,7 +73,7 @@ body { height: 100%; }
   top:-100px;
 	padding: 0.5em;
 	box-sizing: border-box;
-	border-bottom: 1px solid #D0D0D0;
+  background-color: rgba(0, 0, 0, 0.05);
 
 	h6 { display: inline-block; margin-right: 1em; }
 
@@ -79,39 +81,51 @@ body { height: 100%; }
 		font-size: 1.25em;
  		margin: 0 0.4em; 
  	}
-
- 	.options { float:right; margin-right: 0.5em; }
 }
 
+.menu--links { float:right;  }
+.menu--link { color: $blue; margin: 0 0.5em; }
 
-.shortcuts{
-	display: inline-block;
-	p { 
-		display:inline-block;
-		font-size: 0.75em;
-  	margin: 0 0.5em 0 0;
-    
-    .hover-label{
-      display: block;
-      font-size: 1em;
-      margin: 0 auto 0.25em 0;
-      width: 100%;
-      clear: both
-    }
- 	}
+.shortcuts { 	
+
+  display: inline-block; 
 }
-
-.key {
+   
+.shortcut {
   display: inline-block;
+  position: relative;
+  font-size: 0.75em;
+  margin: 0 1.75em 0 0;
+}
+
+// positioned underneath + slightly off kilter of the .shortcuts-key
+// so it's visible 
+.shortcuts--hover-label {
+  display: block;
+  position: absolute;
+  clear: both;
+  top: -5px;
+  left: -3px;
+  width: 90%;
+  height: 2.5em;
+  z-index: 1;
+  font-size: 1em;
+  margin: 0 auto 0.25em 0;
+  border: 3px dotted #ADADAD;
+}
+
+
+.shortcuts--key {
+  display: inline-block;
+  position: relative;
+  z-index: 2;  // one higher so displays over/above the .shortcuts--hover-label layer 
+  cursor: default;
   background: #F3F2F9;
   border-radius: 0.25em;
-  border-bottom-color: #CDD2D4;
-  cursor: default;
-  font-weight: 700;
-  margin: 0 0.25em;
-  padding: 0.4em 0.75em;
   border: 1px solid #D6DADC;
   border-bottom-color: #CDD2D4;
+  margin: 0 0.25em;
+  padding: 0.4em 0.75em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 

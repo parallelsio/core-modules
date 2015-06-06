@@ -1,3 +1,5 @@
+$blue:#8B8BF5;
+
  // **************************************************************
     // TODO: extract to app wide level for reuse?
 
@@ -30,7 +32,7 @@
 .eventlog {
   position: fixed;
   z-index: 10;
-  top: 3em;
+  top: 5em;
   right: 1em;
   opacity: 0;
   width: 30vw;
@@ -68,7 +70,7 @@
   .activity--container:hover{
     background: #F5F5F5;
     
-    .activity--dot{ color: #8B8BF5;}
+    .activity--dot{ color: $blue;}
   }
 
   .activity--header{ padding:1em 3em; }
