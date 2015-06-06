@@ -25,14 +25,9 @@
 
     <span>
     	<i class="fa fa-keyboard-o"></i>
-    	<h6>What can I do now? <b>{{ currentMode }}</b></h6>
+    	<h6>What can I do right now? <b>{{ currentModeLabel }}</b></h6>
 
-      <span class="key">s</span>
-      <span class="key">?</span>
-      <span class="key">space</span>
-      <span class="key">h</span>
-      <span class="key">Control Z</span>
-
+    	{{> Template.dynamic template=currentModeShortcutTemplate }}
 		</span>
 
 		<div class="options">
@@ -40,9 +35,6 @@
     	<a href="#">about</a>
 			<i class="fa fa-volume-off"></i>
     </div>
-
-      
-
 	</div>
 
 </template>

@@ -1,0 +1,27 @@
+<template name="mode-shortcuts-sketch-bit">
+  <div class="shortcuts">
+    <p>
+      <span class="key">esc</span>
+    </p>
+
+    <p>
+      <span class="key">c</span>
+    </p>
+    
+    <p>
+      <span class="key"><i class="fa fa-arrow-up"></i> up</span>
+    </p>
+    
+    <p>
+      <span class="key"><i class="fa fa-arrow-up"></i> down</span>
+    </p>
+    
+    <p>
+      <span class="key">&#x2318; / Control Z</span>
+    </p>
+    
+    <p>
+      <span class="key">?</span>
+    </p>
+  </div>
+</template>

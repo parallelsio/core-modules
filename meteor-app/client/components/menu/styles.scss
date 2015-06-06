@@ -66,6 +66,7 @@ body { height: 100%; }
 
 .menu {
 	position: fixed; 
+	z-index:100;
 	width: 100%;
   top:-100px;
 	padding: 0.5em;
@@ -82,6 +83,15 @@ body { height: 100%; }
  	.options { float:right; margin-right: 0.5em; }
 }
 
+
+.shortcuts{
+	display: inline-block;
+	p { 
+		display:inline-block;
+		font-size: 0.75em;
+  	margin: 0 0.5em 0 0;
+ 	}
+}
 
 .key {
   display: inline-block;

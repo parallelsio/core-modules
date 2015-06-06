@@ -12,10 +12,14 @@ Template.menu.helpers({
     return Session.get('uploading');
   },
 
-  currentMode: function () {
+  currentModeLabel: function () {
     if (Session.get('currentMode')){
       return 'in ' + Session.get('currentMode') + ' mode';
     }
+  },
+
+  currentModeShortcutTemplate: function () {
+    return 'mode-shortcuts-' + ( Session.get('currentMode') || 'home' );
   },
 
   progress: function () {
