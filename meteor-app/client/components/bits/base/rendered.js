@@ -7,15 +7,16 @@ Template.bit.onRendered(function (){
   log.debug("bit:render: ", bitDatabaseId);
 
   // Track position changes for Bits.
-  // SD: OQ: Why is this here? Doesnt a template automatically 
+  // SD: OQ: Why is this here? Doesnt a template automatically
   // data bind and save/sync the x/y position already?
 
   // SD: OQ/TODO: https://www.discovermeteor.com/blog/template-level-subscriptions?
   Tracker.autorun(function() {
-    // OQ: this is failing after a bit:delete.
-    var position = Bits.findOne(bitDatabaseId).position;
-    var timeline = new TimelineMax();
-    timeline.to(bitHtmlElement, 0, { x: position.x, y: position.y });
+    var bit = Bits.findOne(bitDatabaseId);
+    if (bit) {
+      var timeline = new TimelineMax();
+      timeline.to(bitHtmlElement, 0, { x: bit.position.x, y: bit.position.y });
+    }
   });
 
   // Track upload status for new Bits
@@ -44,7 +45,7 @@ Template.bit.onRendered(function (){
     }
 
     if (bitUpload.status() === 'done') {
-      bitHtmlElement.find('.content')[0].classList.add('complete', 'success');
+      bitHtmlElement.find('.upload-status')[0].classList.add('complete', 'success');
       Meteor.call('changeState', {
         command: 'uploadImage',
         data: {
