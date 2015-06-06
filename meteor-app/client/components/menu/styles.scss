@@ -90,6 +90,14 @@ body { height: 100%; }
 		display:inline-block;
 		font-size: 0.75em;
   	margin: 0 0.5em 0 0;
+    
+    .hover-label{
+      display: block;
+      font-size: 1em;
+      margin: 0 auto 0.25em 0;
+      width: 100%;
+      clear: both
+    }
  	}
 }
 
