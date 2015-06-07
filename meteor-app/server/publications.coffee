@@ -5,4 +5,4 @@ Meteor.publish 'errors', ->
   return Errors.find()
 
 Meteor.publish 'events', ->
-  return Events.find()
+  return Eventlog.find()

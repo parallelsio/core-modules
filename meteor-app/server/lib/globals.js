@@ -13,3 +13,14 @@ Meteor.wrapAsync(function (cb) {
 })();
 
 CanvasRepo = new CanvasRepository();
+
+// todo: move findMostRecentUndoableEvent and findOldestReplayableEvent to the canvas model once that class has been cleaned up and refactored.
+findMostRecentUndoableEvent = Meteor.wrapAsync(function (canvasId, callback) {
+  var event = RollbackReplayStack.findOne({ canvasId: canvasId, rolledBack: null }, {sort: {version: -1}});
+  callback(null, event);
+});
+
+findOldestReplayableEvent = Meteor.wrapAsync(function (canvasId, callback) {
+  var event = RollbackReplayStack.findOne({ canvasId: canvasId, replayable: true }, {sort: {version: 1}});
+  callback(null, event);
+});

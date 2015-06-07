@@ -9,11 +9,7 @@ Canvas = function Canvas (snapshot, events) {
 };
 util.inherits(Canvas, Entity);
 
-
-/*
-Notes:
-  All events should preserve original data and a corresponding "undo_{eventName}" should be created
- */
+// todo: refactor this large class into sub-module "commands". Each command should live in a "canvas-commands" directory.
 _.extend(Canvas.prototype, {
   initialize: function (id, cb) {
     this.id = id;

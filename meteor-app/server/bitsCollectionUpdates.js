@@ -1,3 +1,6 @@
+// We use the Bits collection to enable reactive UI changes based on events
+// invoked on a canvas and initiated from our changeStateMethods.
+
 var BitsUI = {
   insertBit: Meteor.bindEnvironment(function (event) {
     var bit = event.data.bit;
