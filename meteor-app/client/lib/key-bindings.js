@@ -11,17 +11,17 @@ Parallels.KeyCommands = {
   bindAll: function(){
     log.debug("keyCommand:bindAll");
 
-    this.bindDelete();
+    this.bindDeleteBit();
+    this.bindCreateSketchBit();
+    this.bindCreateTextBit();
     this.bindEditTextBit();
     this.bindCreateParallel();
-    this.bindImagePreview();
-    this.bindEsc();
+    this.bindImageBitPreview();
     this.bindHistory();
     this.bindUndo();
     this.bindRedo();
-    this.bindCreateSketchBit();
-    this.bindCreateTextBit();
     this.bindShortcuts();
+    this.bindEsc();
   },
 
   disableAll: function(){
@@ -58,22 +58,22 @@ Parallels.KeyCommands = {
     Mousetrap.unbind('s');
 
     // shortcuts
-    Mousetrap.unbind('?');
+    Mousetrap.unbind('tab');
 
   },
 
   bindShortcuts: function(){
     log.debug("keyCommand:bindShortcuts");
 
-    Mousetrap.bind("?", function() {
-      log.debug("pressed '?' key");
+    Mousetrap.bind("tab", function() {
+      log.debug("pressed 'tab' key");
   
       Blaze.render(Template.shortcutsModal, document.body);
     });
   },
 
-  bindDelete: function(){
-    log.debug("keyCommand:bindDelete");
+  bindDeleteBit: function(){
+    log.debug("keyCommand:bindDeleteBit");
 
     Mousetrap.bind("d", function() {
       log.debug("pressed 'd' key");
@@ -116,8 +116,8 @@ Parallels.KeyCommands = {
     });
   },
 
-  bindImagePreview: function(){
-    log.debug("keyCommand:bindImagePreview");
+  bindImageBitPreview: function(){
+    log.debug("keyCommand:bindImageBitPreview");
 
     Mousetrap.bind('space', function (event) {
       log.debug("pressed 'Space' key");
