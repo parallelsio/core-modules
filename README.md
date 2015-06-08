@@ -327,16 +327,16 @@ npm ERR! not ok code 0
 
 > __Q__: I just finished adding some code and am trying to run `npm run e2e` to make sure I didn't break anything. THe terminal process hangs, and the browser never actually opens to run the end to end test. My hangs, after something like this: 
 
-```
-Running "bgShell:e2e" (bgShell) task
-Starting Selenium server...
-Starting Meteor App with DB: mongodb://localhost:27017/parallels_test
-```
+> ```
+> Running "bgShell:e2e" (bgShell) task
+> Starting Selenium server...
+> Starting Meteor App with DB: mongodb://localhost:27017/parallels_test
+> ```
 
 
 > __A__: `npm run server` or your Meteor server is running because you turned it on manually in another tab. You'll need to stop it to run your tests. Do: Control X, and Control C on the tab running `npm run server`, and try running your tests again with `npm run e2e`
 
-
+<br>
 
 > __Q__: I did `cd meteor-app` and then `meteor reset` to clear the Mongo db, but I'm getting an error:
 
@@ -360,7 +360,19 @@ This command does not work while Meteor is running your application. Exit the ru
 
 > `kill -s KILL 50136`
 
-Now try `meteor reset`
+> Now try `meteor reset`
+
+<br>
+
+> __Q__: I have a Wacom tablet plugged in, and am trying to create a sketch bit (using the S key command). I see the sketch bit created, but the system doesn't recognize my Wacom tablet?
+
+> __A__: You need to take several steps to allow your browser (and thus Parallels), to see your device:
+
+> * 1: If you have Chrome, enable the NPAPI plugin, which allows the browser to communicate with the tablet hardware: Go to custom settings by going to [chrome://flags/#enable-npapi](chrome://flags/#enable-npapi). 
+
+> * 2: After enabling, browser will prompt you for access to the plugin. Allow it, and then you should be able to use your Wacom's stylus, sketching on the bit, in Parallels
+
+<br>
 
 ---------
 
