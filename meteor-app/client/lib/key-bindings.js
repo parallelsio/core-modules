@@ -33,6 +33,9 @@ Parallels.KeyCommands = {
     // edit text bit
     Mousetrap.unbind('e');  
 
+    // create new text bit
+    Mousetrap.unbind('t');
+
     // preview
     Mousetrap.unbind('space');    
     
@@ -53,9 +56,6 @@ Parallels.KeyCommands = {
 
     // create new sketch bit
     Mousetrap.unbind('s');
-
-    // create new text bit
-    Mousetrap.unbind('t');
 
     // shortcuts
     Mousetrap.unbind('?');
@@ -135,7 +135,7 @@ Parallels.KeyCommands = {
       }
 
       if (bitPreviewingId) {
-        log.debug("already preview bit: ", bitPreviewingId);
+        log.debug("already previewing bit: ", bitPreviewingId);
         return false; // failcheck - end if we're somehow already previewing
       }
 
@@ -150,11 +150,15 @@ Parallels.KeyCommands = {
   },
 
   bindCreateParallel: function(){
-    // TODO: would be nice to log context of where this binding came from
     log.debug("keyCommand:bindCreateParallel");
 
     Mousetrap.bind('shift', function (){
-      Parallels.AppModes['create-parallel'].enter();
+      var bitHoveringId = Session.get('bitHoveringId');
+      var currentMode = Session.get('currentMode');
+
+      if (bitHoveringId && (!currentMode)) {
+        Parallels.AppModes['create-parallel'].enter();
+      }
     });
   },
 

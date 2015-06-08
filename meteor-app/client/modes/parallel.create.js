@@ -19,165 +19,156 @@ Parallels.AppModes['create-parallel'] = {
   enter: function () {
     log.debug("mode:create-parallel:enter");
 
-    // TODO: refactor: isCreatingParallel is grabage, 
-    // overlapping duties with currentMode Session var
     Session.set('currentMode', 'create-parallel');
 
     var bitHoveringId = Session.get('bitHoveringId');
-    var isCreatingParallel = Session.get('isCreatingParallel');
 
-    if(bitHoveringId && (!isCreatingParallel))
-    {
-      Parallels.KeyCommands.disableAll();
-      Parallels.KeyCommands.bindEsc();
+    Parallels.KeyCommands.disableAll();
+    Parallels.KeyCommands.bindEsc();
 
-      // re-binding Shift, so if person hits it again,
-      // we know they are have chosen a destination bit
-      // and ready to commit this to the db/UI.
-      
-      // OQ: we pass this context message to the handler, but getting the keyboard event?
-      Parallels.KeyCommands.bindCreateParallel();
-
-      // Mousetrap.bind('shift', function (contextMessage){
-      //   log.debug("pressed 'Shift' key for closing parallel");
-      
-
-      //   // if were hovering on a bit other than origin
-
-      //   // play spark animation
-
-      //   // save destination bit id to session
-      
-      //   // play yay sound
-
-      //   // call neo4j save
-
-      //   // show form, allow person to continue, escape rids form
-
-      //     // Session.set('isDrawingParallel', null);
-      //     // Session.set('bitParallelCreateOriginId', null);
-      // });
-
-      isCreatingParallel = true;
-      var bitParallelCreateOriginId = bitHoveringId;
-      $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
-      var bitData = Blaze.getData($bitOrigin[0]);
-      var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
-      var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
-  
-      Session.set('isCreatingParallel', isCreatingParallel);
-      Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
-
-      log.debug("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
-
-      // TODO: abstract out into reusable mode concept.
-      // here, it might be : enterMode.createParallel()
-      $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
-
-      // TODO: animate
-      $bitOrigin.addClass('create-parallel--origin');
-
-      // TODO:
-      // try bg overlay over other bits too?
-
-      // ****************** RENDER LINE *************
-      // set up an SVG container via two.js container to draw the line stroke
-      lineContainer = document.createElement('div');
-      $(lineContainer)
-        .addClass("create-parallel--line-container")
-        .height( 5000 )
-        .width( 5000)
-        .prependTo(".map");
-
-      params = { 
-        fullscreen: true,
-        autostart: true
-      };
-
-      two = new Two(params).appendTo(lineContainer);
-      mouse = new Two.Vector();
-
-      // OQ: should we use Meteor binding? 
-      // https://stackoverflow.com/questions/21486667/meteor-js-how-should-i-bind-events-to-the-window-in-meteor
-      $(window).on('mousemove', function(event){
-        mouse.x = verge.scrollX() + event.clientX;
-        mouse.y = verge.scrollY() + event.clientY
-      });    
-
-      circle = two.makeCircle(
-        bitCenterX,  
-        bitCenterY, 
-        2 // width
-      );
-
-      circle.noStroke().fill = 'blue';
-
-      // By passing the circle.translation into the origin 
-      // two.js automatically data binds the line (via Backbone
-      // underneath it's hood). Whenever the data properties for 
-      // circle updates in .bind below, the line destination data
-      // (as an anchor/vector), updates too
-      // https://github.com/jonobr1/two.js/issues/133
-      var line = new Two.Polygon([
-              circle.translation, // origin
-              new Two.Vector(bitCenterX, bitCenterY)
-          ]);
-
-      line.noFill().stroke = 'yellow';
-      line.linewidth = 7;
+    // re-binding Shift, so if person hits it again,
+    // we know they are have chosen a destination bit
+    // and ready to commit this to the db/UI.
     
-      two
-        .add(line)
-        .bind('update', function(frameCount) {
-          circle.translation.set(mouse.x, mouse.y);
+    // OQ: we pass this context message to the handler, but getting the keyboard event?
+    Parallels.KeyCommands.bindCreateParallel();
 
-          // TODO: the longer the distance, the thinner the linewidth
-          
-          // TODO: depending on direction on direction parallel is pointing,
-          // addClass(left);
+    Mousetrap.bind('shift', function (contextMessage){
+      log.debug("pressed 'Shift' key for closing parallel");
 
-          // TODO: stretch sound, bind to flocking
+      // if were hovering on a bit other than origin
+      if (1){
+        var bitParallelCreateDestId = "close";
+        Session.set('bitParallelCreateDestId', bitParallelCreateDestId);
+      }
 
-        });
-      // ****************** RENDER LINE *************
+      // play spark animation
 
+      // save destination bit id to session
+    
+      // play yay sound
 
-      // ****************** HEARTBEAT ANIMATION *************
-      var timelineStart = function () {
-        log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
-        // TODO: play sound indicating origin start, jeopardy jingle??
-      };
+      // call neo4j save
 
-      var timelineDone = function( bitOriginId ){
-        log.debug('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
-      };
+      // show form, allow person to continue, escape rids form
 
-      timeline = new TimelineMax({
-        onStart: timelineStart,
-        onComplete: timelineDone,
-        onCompleteParams:[ bitParallelCreateOriginId ],
-        repeat: -1
+        // Session.set('isDrawingParallel', null);
+        // Session.set('bitParallelCreateOriginId', null);
+    });
+
+    var bitParallelCreateOriginId = bitHoveringId;
+    $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
+    var bitData = Blaze.getData($bitOrigin[0]);
+    var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
+    var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
+
+    Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
+
+    log.debug("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
+
+    // TODO: abstract out into reusable mode concept.
+    // here, it might be : enterMode.createParallel()
+    $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
+
+    // TODO: animate
+    $bitOrigin.addClass('create-parallel--origin');
+
+    // TODO:
+    // try bg overlay over other bits too?
+
+    // ****************** RENDER LINE *************
+    // set up an SVG container via two.js container to draw the line stroke
+    lineContainer = document.createElement('div');
+    $(lineContainer)
+      .addClass("create-parallel--line-container")
+      .height( 5000 )
+      .width( 5000)
+      .prependTo(".map");
+
+    params = { 
+      fullscreen: true,
+      autostart: true
+    };
+
+    two = new Two(params).appendTo(lineContainer);
+    mouse = new Two.Vector();
+
+    // OQ: should we use Meteor binding? 
+    // https://stackoverflow.com/questions/21486667/meteor-js-how-should-i-bind-events-to-the-window-in-meteor
+    $(window).on('mousemove', function(event){
+      mouse.x = verge.scrollX() + event.clientX;
+      mouse.y = verge.scrollY() + event.clientY
+    });    
+
+    circle = two.makeCircle(
+      bitCenterX,  
+      bitCenterY, 
+      2 // width
+    );
+
+    circle.noStroke().fill = 'blue';
+
+    // By passing the circle.translation into the origin 
+    // two.js automatically data binds the line (via Backbone
+    // underneath it's hood). Whenever the data properties for 
+    // circle updates in .bind below, the line destination data
+    // (as an anchor/vector), updates too
+    // https://github.com/jonobr1/two.js/issues/133
+    var line = new Two.Polygon([
+            circle.translation, // origin
+            new Two.Vector(bitCenterX, bitCenterY)
+        ]);
+
+    line.noFill().stroke = 'yellow';
+    line.linewidth = 7;
+  
+    two
+      .add(line)
+      .bind('update', function(frameCount) {
+        circle.translation.set(mouse.x, mouse.y);
+
+        // TODO: the longer the distance, the thinner the linewidth
+        
+        // TODO: depending on direction on direction parallel is pointing,
+        // addClass(left);
+
+        // TODO: stretch sound, bind to flocking
+
       });
+    // ****************** RENDER LINE *************
 
-      timeline
-        .to($bitOrigin, 0.50, { scale: 1.05, ease:Expo.easeOut } )
-        .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
-      // ****************** HEARTBEAT ANIMATION *************
-    }
+
+    // ****************** HEARTBEAT ANIMATION *************
+    var timelineStart = function () {
+      log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
+      // TODO: play sound indicating origin start, jeopardy jingle??
+    };
+
+    var timelineDone = function( bitOriginId ){
+      log.debug('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
+    };
+
+    timeline = new TimelineMax({
+      onStart: timelineStart,
+      onComplete: timelineDone,
+      onCompleteParams:[ bitParallelCreateOriginId ],
+      repeat: -1
+    });
+
+    timeline
+      .to($bitOrigin, 0.50, { scale: 1.05, ease:Expo.easeOut } )
+      .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
+    // ****************** HEARTBEAT ANIMATION *************
 
   },
 
   exit: function () {
     log.debug("mode:create-parallel:exit");
     
-    Session.set('currentMode', null);
-
-    var isCreatingParallel = Session.get('isCreatingParallel');
-
-    if (isCreatingParallel)
-    {
-      Session.set('isCreatingParallel', null);
+    if (Session.get('currentMode')) {
+      Session.set('currentMode', null);
       Session.set('bitParallelCreateOriginId', null);
+      Session.set('bitParallelCreateDestId', null);
 
       $(".map").removeClass('mode--create-parallel');
       
