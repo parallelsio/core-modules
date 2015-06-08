@@ -196,6 +196,10 @@ Parallels.AppModes['create-parallel'] = {
 
       // TODO: remove the two instance. Very CPU drain as it drains on every re-init
 
+      // reenable scrolling
+      $("body").css( "overflow", "visible"); 
+      $("body").css( "position", "static"); 
+
       // put key commands back to normal
       Parallels.KeyCommands.bindAll();
     }
