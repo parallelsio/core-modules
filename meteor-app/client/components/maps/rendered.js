@@ -1,11 +1,10 @@
 Template.map.onRendered(function (){
-  
-  // TODO: why isnt this working here? is sample not yet loaded?
-  // Parallels.Audio.player.play('fx-welcome-v1');
 
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
   
+  mapTemplate.opening = Parallels.Audio.player.play('moogSeq');
+
   container._uihooks = {
 
     insertElement: function(node, next) {

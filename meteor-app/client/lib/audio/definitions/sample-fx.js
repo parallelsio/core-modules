@@ -96,8 +96,7 @@ Parallels.Audio.Definition['fx-cha-ching'] = {
       buffer: {
         id: "fx-cha-ching",  
         url: "/sounds/fx-cha-ching.wav"
-      },
-      mul: 0.1
+      }
     }
   }
 }
