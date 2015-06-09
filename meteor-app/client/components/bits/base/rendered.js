@@ -139,7 +139,8 @@ Template.bit.onRendered(function (){
 
     onDragEnd:function( event ) {
       log.debug("bit:drag:onDragEnd", bitDatabaseId);
-
+      
+     
       var x = this.endX;
       var y = this.endY;
 
@@ -157,7 +158,10 @@ Template.bit.onRendered(function (){
 
       Session.set("dragInstance", null);
 
-      Parallels.Audio.player.play('fx-ffft');
+      // Parallels.Audio.player.play('fx-ffft');
+
+      // a random tone, in the mid-range of the scale
+      Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
       function timelineDone(bitDatabaseId){
         log.debug("bit:drag:end", bitDatabaseId);

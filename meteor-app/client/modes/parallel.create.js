@@ -9,7 +9,7 @@
 
 // OQ: Are these global vars?
 // TODO: to move these into mode, as object properties?
-var timeline, $bitOrigin;
+var timeline, $originBit;
 var line, updatedLine, lineContainer, params, two, mouse, circle;
 
 Parallels.AppModes['create-parallel'] = {
@@ -19,12 +19,12 @@ Parallels.AppModes['create-parallel'] = {
 
     Session.set('currentMode', 'create-parallel');
 
-    var bitParallelCreateOriginId = Session.get('bitHoveringId');
-    Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
-    $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
-    var bitData = Blaze.getData($bitOrigin[0]);
-    var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
-    var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
+    var originBitId = Session.get('bitHoveringId');
+    Session.set('originBitId', originBitId);
+    $originBit = $("[data-id='" + originBitId + "']" );
+    var originBitData = Blaze.getData($originBit[0]);
+    var originBitCenterX = originBitData.position.x + ($originBit[0].clientWidth / 2)
+    var originBitCenterY = originBitData.position.y + ($originBit[0].clientHeight / 2)
 
     Parallels.KeyCommands.disableAll();
     Parallels.KeyCommands.bindEsc();
@@ -32,20 +32,21 @@ Parallels.AppModes['create-parallel'] = {
     // re-binding Shift, so if person hits it again,
     // we know they are have chosen a destination bit
     // and ready to commit this to the db/UI.
-    // Parallels.KeyCommands.bindCreateParallel();
-
     Mousetrap.bind('shift', function (){
-      log.debug("pressed 'Shift' key: closing parallel.");
+      log.debug("pressed 'Shift' key: looking to close parallel.");
+      
+      // get latest value of bit person is hovering over as destination bit.
+      // this is expected to happen now that the origin has already been chosen
+      var destBitId = Session.get('bitHoveringId'); 
 
-      // if were hovering on a bit other than origin
-      if (Session.get('bitHoveringId') != bitParallelCreateOriginId){
-        var bitParallelCreateDestId = Session.get('bitHoveringId');
-        Session.set('bitParallelCreateDestId', bitParallelCreateDestId);
+      if (destBitId && (destBitId != originBitId)) {
+        
+        Session.set('destBitId', destBitId);
         log.debug(
           'closing parallel: source:', 
-          bitParallelCreateOriginId, 
+          originBitId, 
           " -> dest:", 
-          bitParallelCreateDestId);
+          destBitId);
 
         // call neo4j save
 
@@ -70,21 +71,21 @@ Parallels.AppModes['create-parallel'] = {
         // not sure what this means yet
 
         // Session.set('isDrawingParallel', null);
-        // Session.set('bitParallelCreateOriginId', null);
+        // Session.set('originBitId', null);
 
       }
 
     });
 
 
-    log.debug("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
+    log.debug("ready for creating parallel. starting at bit: " + originBitId);
 
     // TODO: abstract out into reusable mode concept.
     // here, it might be : enterMode.createParallel()
     $(".map").addClass('mode--create-parallel'); // visually demonstrate we're in connecting mode
 
     // TODO: animate
-    $bitOrigin.addClass('create-parallel--origin');
+    $originBit.addClass('create-parallel--origin');
 
     // TODO:
     // try bg overlay over other bits too?
@@ -114,8 +115,8 @@ Parallels.AppModes['create-parallel'] = {
     });    
 
     circle = two.makeCircle(
-      bitCenterX,  
-      bitCenterY, 
+      originBitCenterX,  
+      originBitCenterY, 
       2 // width
     );
 
@@ -129,7 +130,7 @@ Parallels.AppModes['create-parallel'] = {
     // https://github.com/jonobr1/two.js/issues/133
     var line = new Two.Polygon([
             circle.translation, // origin
-            new Two.Vector(bitCenterX, bitCenterY)
+            new Two.Vector(originBitCenterX, originBitCenterY)
         ]);
 
     line.noFill().stroke = 'yellow';
@@ -153,7 +154,7 @@ Parallels.AppModes['create-parallel'] = {
 
     // ****************** HEARTBEAT ANIMATION *************
     var timelineStart = function () {
-      log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
+      log.debug('bit:parallel:create. Origin bit' + originBitId + ': selected-loop animation starting ...');
       // TODO: play sound indicating origin start, jeopardy jingle??
     };
 
@@ -164,13 +165,13 @@ Parallels.AppModes['create-parallel'] = {
     timeline = new TimelineMax({
       onStart: timelineStart,
       onComplete: timelineDone,
-      onCompleteParams:[ bitParallelCreateOriginId ],
+      onCompleteParams:[ originBitId ],
       repeat: -1
     });
 
     timeline
-      .to($bitOrigin, 0.50, { scale: 1.05, ease:Expo.easeOut } )
-      .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
+      .to($originBit, 0.50, { scale: 1.05, ease:Expo.easeOut } )
+      .to($originBit, 0.5, { scale: 1, ease:Expo.easeOut } );
     // ****************** HEARTBEAT ANIMATION *************
 
   },
@@ -180,12 +181,12 @@ Parallels.AppModes['create-parallel'] = {
     
     if (Session.get('currentMode')) {
       Session.set('currentMode', null);
-      Session.set('bitParallelCreateOriginId', null);
-      Session.set('bitParallelCreateDestId', null);
+      Session.set('originBitId', null);
+      Session.set('destBitId', null);
 
       $(".map").removeClass('mode--create-parallel');
       
-      $bitOrigin.removeClass('create-parallel--origin');
+      $originBit.removeClass('create-parallel--origin');
       $('.create-parallel--line-container').remove();
 
       // stop heartbeat animation

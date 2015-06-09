@@ -25,10 +25,6 @@ Template.bit.events({
 
   'mouseleave .bit': BitEvents.hoverOutBit,
 
-  // 'dblclick .bit': function () {
-  //   Parallels.AppModes['edit-bit'].enter(this._id);
-  // },
-
   'keyup .bit': function (event, template) {
 
     if(event.which === 13){
