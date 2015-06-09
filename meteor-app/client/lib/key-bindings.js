@@ -15,7 +15,7 @@ Parallels.KeyCommands = {
     this.bindCreateSketchBit();
     this.bindCreateTextBit();
     this.bindEditTextBit();
-    this.bindCreateParallel();
+    this.bindBeginCreateParallel();
     this.bindImageBitPreview();
     this.bindHistory();
     this.bindUndo();
@@ -48,11 +48,12 @@ Parallels.KeyCommands = {
     // history dialog, for undo/redo
     Mousetrap.unbind('h');   
 
-    // undo last action                                 
-    Mousetrap.unbind(['command+z', 'ctrl+z']);
+    // undo last action
+    // handles both command + control for Win/Mac/Linux                                 
+    Mousetrap.unbind('mod+z');
 
     // redo last action
-    Mousetrap.unbind(['command+shift+z', 'ctrl+shift+z']);
+    Mousetrap.unbind('mod+shift+z');
 
     // create new sketch bit
     Mousetrap.unbind('s');
@@ -149,16 +150,22 @@ Parallels.KeyCommands = {
     });
   },
 
-  bindCreateParallel: function(){
-    log.debug("keyCommand:bindCreateParallel");
+  bindBeginCreateParallel: function(){
+    log.debug("keyCommand:bindBeginCreateParallel");
 
     Mousetrap.bind('shift', function (){
       var bitHoveringId = Session.get('bitHoveringId');
       var currentMode = Session.get('currentMode');
 
+      // begin craete parallel, 
+      // bitHoveringId is the origin/source bit
       if (bitHoveringId && (!currentMode)) {
         Parallels.AppModes['create-parallel'].enter();
       }
+
+      // else if (bitHoveringId && (currentMode === 'create-parallel')) {
+      //   debug.log('closing parallel with ', bitHoveringId);
+      // }
     });
   },
 
@@ -202,7 +209,7 @@ Parallels.KeyCommands = {
   bindUndo: function () {
     log.debug("keyCommand:bindUndo");
 
-    Mousetrap.bind(['command+z', 'ctrl+z'], function () {
+    Mousetrap.bind('mod+z', function () {
       Meteor.call('undoState', { canvasId: '1'});
     });
   },
@@ -210,7 +217,7 @@ Parallels.KeyCommands = {
   bindRedo: function () {
     log.debug("keyCommand:bindRedo");
 
-    Mousetrap.bind(['command+shift+z', 'ctrl+shift+z'], function () {
+    Mousetrap.bind('mod+shift+z', function () {
       Meteor.call('redoState', { canvasId: '1'});
     });
   }

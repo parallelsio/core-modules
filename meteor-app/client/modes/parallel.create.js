@@ -1,6 +1,4 @@
 /*
-  TODO:
-    * syncronize multiple bits heartbeat animation
 
   OQ: 
     * is timeline.kill() the best way to gracefully end heartbeat animation on escape?
@@ -21,7 +19,12 @@ Parallels.AppModes['create-parallel'] = {
 
     Session.set('currentMode', 'create-parallel');
 
-    var bitHoveringId = Session.get('bitHoveringId');
+    var bitParallelCreateOriginId = Session.get('bitHoveringId');
+    Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
+    $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
+    var bitData = Blaze.getData($bitOrigin[0]);
+    var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
+    var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
 
     Parallels.KeyCommands.disableAll();
     Parallels.KeyCommands.bindEsc();
@@ -29,40 +32,50 @@ Parallels.AppModes['create-parallel'] = {
     // re-binding Shift, so if person hits it again,
     // we know they are have chosen a destination bit
     // and ready to commit this to the db/UI.
-    
-    // OQ: we pass this context message to the handler, but getting the keyboard event?
-    Parallels.KeyCommands.bindCreateParallel();
+    // Parallels.KeyCommands.bindCreateParallel();
 
-    Mousetrap.bind('shift', function (contextMessage){
-      log.debug("pressed 'Shift' key for closing parallel");
+    Mousetrap.bind('shift', function (){
+      log.debug("pressed 'Shift' key: closing parallel.");
 
       // if were hovering on a bit other than origin
-      if (1){
-        var bitParallelCreateDestId = "close";
+      if (Session.get('bitHoveringId') != bitParallelCreateOriginId){
+        var bitParallelCreateDestId = Session.get('bitHoveringId');
         Session.set('bitParallelCreateDestId', bitParallelCreateDestId);
-      }
+        log.debug(
+          'closing parallel: source:', 
+          bitParallelCreateOriginId, 
+          " -> dest:", 
+          bitParallelCreateDestId);
 
-      // play spark animation
+        // call neo4j save
 
-      // save destination bit id to session
-    
-      // play yay sound
+        // play 4 corner, spark animation, with sounds
+        // see 
+        /* 
+          DOCS: 
+          /private/docs/parallel-create-spark-animation-v1.png
 
-      // call neo4j save
+        */
 
-      // show form, allow person to continue, escape rids form
+        // query Neo4j for image bits that are connected, by X number of hops
+
+        // slice + dice images in collection
+        // use these slices to fast / cycle / shimmer across these pieces as a wave
+
+        // show form so person can define relationship
+        // -- bind escape rids form, create-parallel mode
+        // -- Later: autocomplete from collection of parallel types
+
+        // play yay sound, connection stamp/re-enforcing/"hardening" animation 
+        // not sure what this means yet
 
         // Session.set('isDrawingParallel', null);
         // Session.set('bitParallelCreateOriginId', null);
+
+      }
+
     });
 
-    var bitParallelCreateOriginId = bitHoveringId;
-    $bitOrigin = $("[data-id='" + bitParallelCreateOriginId + "']" );
-    var bitData = Blaze.getData($bitOrigin[0]);
-    var bitCenterX = bitData.position.x + ($bitOrigin[0].clientWidth / 2)
-    var bitCenterY = bitData.position.y + ($bitOrigin[0].clientHeight / 2)
-
-    Session.set('bitParallelCreateOriginId', bitParallelCreateOriginId);
 
     log.debug("ready for creating parallel. starting at bit: " + bitParallelCreateOriginId);
 

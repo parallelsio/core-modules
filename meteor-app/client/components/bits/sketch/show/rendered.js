@@ -105,14 +105,14 @@ Template.sketchBit.onRendered(function (){
   // Parallels.AppModes['bit-sketch'].enter()
 
   // for debugging - print the ploma instance arrays
-  Mousetrap.bind(['a'], function (){
+  Mousetrap.bind('a', function (){
     log.debug("pressed 'a' key");  
 
     log.debug("bit:sketch:getStrokes: ", template.plomaInstance.getStrokes());
     log.debug("bit:sketch:curStroke: ", template.plomaInstance.curStroke());
   });
 
-  Mousetrap.bind(['command+z', 'ctrl+z'], function (){
+  Mousetrap.bind('mod+z', function (){
     log.debug("pressed 'command/ctrl + z'");  
   
     // remove the most recent stroke
