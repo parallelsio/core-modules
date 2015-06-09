@@ -3,7 +3,7 @@ Template.map.onRendered(function (){
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
   
-  mapTemplate.opening = Parallels.Audio.player.play('moogSeq');
+  // mapTemplate.opening = Parallels.Audio.player.play('moogSeq');
 
   container._uihooks = {
 

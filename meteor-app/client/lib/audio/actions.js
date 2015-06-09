@@ -17,7 +17,9 @@ Parallels.Audio.player = {
   initAndStartEnv: function(){
     "use strict"
     if (Meteor.settings.public.options.isAudioEnabled) {
-      this._enviro = flock.init();
+      this._enviro = flock.init({
+        bufferSize: 4096
+      });
       this._enviro.start();
     } else {
       this._enviro = {
