@@ -340,11 +340,12 @@ npm ERR! not ok code 0
 
 > __Q__: I did `cd meteor-app` and then `meteor reset` to clear the Mongo db, but I'm getting an error:
 
-```
-reset: Meteor is running.
+> ```
+> reset: Meteor is running.
 
-This command does not work while Meteor is running your application. Exit the running Meteor development server.
-```
+> This command does not work while Meteor is running your application. Exit the running Meteor development server.
+> ```
+
 > __A__: You can't run this command while Meteor is running. Shut down your meteor server by closing all open terminal windows that are running `npm run server` (which runs the Meteor server under the hood). 
 
 > If there are none, there's probably an orphan lock and some Meteor process still running. Try

@@ -165,7 +165,7 @@ Parallels.KeyCommands = {
   bindCreateSketchBit: function(){
     log.debug("keyCommand:bindCreateSketchBit");
 
-    Mousetrap.bind('s', function (){
+    Mousetrap.bind('s', function (event){
       Parallels.AppModes['sketch-bit'].enter(event);
     });
   },
@@ -173,7 +173,7 @@ Parallels.KeyCommands = {
   bindCreateTextBit: function(){
     log.debug("keyCommand:bindCreateTextBit");
 
-    Mousetrap.bind('t', function(event) {
+    Mousetrap.bind('t', function (event) {
       Parallels.AppModes['create-bit'].enter(event);
     });
   },
