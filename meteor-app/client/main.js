@@ -3,7 +3,7 @@ Meteor.startup(function(){
   log.debug("Meteor.startup begin.");
 
   Parallels.KeyCommands.bindAll();
-  Parallels.Audio.player.init();
+  Parallels.Audio.player.initAndStartEnv();
 
   // TODO: make Session bootup/init?
   Session.set('createTextBit', null);

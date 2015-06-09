@@ -14,10 +14,11 @@ Parallels.Audio.player = {
   _enviro: false,
   _folderPath: "audio/",
 
-  init: function(){
+  initAndStartEnv: function(){
     "use strict"
     if (Meteor.settings.public.options.isAudioEnabled) {
       this._enviro = flock.init();
+      this._enviro.start();
     } else {
       this._enviro = {
         play: function () {},
@@ -30,7 +31,6 @@ Parallels.Audio.player = {
   play: function(definition){
     console.log("audio:play: trigger", definition);
     var synth = flock.synth(Parallels.Audio.Definition[definition]);
-    if (this._enviro) this._enviro.play();
 
     // we need a reference to this obj, so we can later change
     // the parameters of this synth, via the .set function
