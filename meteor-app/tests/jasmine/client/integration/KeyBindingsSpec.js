@@ -1,6 +1,6 @@
 describe('Key Bindings', function() {
 
-  describe('"ESC"', function () {
+  describe('"ESC" key press', function () {
 
     it('should call exit() on the currentMode and set currentMode to null', function (done) {
       var mockMode = { exit: function(){} };
@@ -15,7 +15,7 @@ describe('Key Bindings', function() {
       }, 600);
     });
 
-    it('should not error trying to call exit() if currentMode is not set', function (done) {
+    it('should *not give an error, trying to call exit(), if currentMode isnt set', function (done) {
       Session.set('currentMode', null);
 
       Meteor.setTimeout(function() {
@@ -25,5 +25,20 @@ describe('Key Bindings', function() {
         done();
       }, 600);
     });
+
   });
+
+
+  describe('"H" key press', function () {
+
+    xit("should display activity stream", function (done) {
+          Meteor.setTimeout(function(){
+            Mousetrap.trigger('h');
+
+            // TODO: expect activity stream container div to be in DOM 
+            done();
+          }, 600);
+    });
+  });
+   
 });
