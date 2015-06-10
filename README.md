@@ -169,22 +169,6 @@
 > Point the Chrome browser to the extension source code folder: `/extensions/chrome/source`
 > [Detailed directions](https://developer.chrome.com/extensions/getstarted#unpacked)
 
-### Development Workflow Scripts
-> There are several scripts available using `npm` that are designed to make the development process as painless as possible:
-
-> * `npm test`: Runs all tests in the project
-> * `npm run units`: Run only units tests for the extensions and meteor
-> * `npm run e2e`: Run only e2e tests
-> * `npm run local`: Build a version of the clipper to extensions/chrome/build that points to localhost
-> * `npm run ci`: Build a version of the clipper to extensions/chrome/build that points to parallels-ci.meteor.com
-> * `npm run prod`: Build a version of the clipper to extensions/chrome/build that points to parallels.meteor.com
-> * `npm run server`: Starts the meteor app and livereload for the clipper source
-> * `npm run resetdb`: Drops all data in meteor's mongo DB and the Neo4j DB
-> * `npm run exportlog`: Export your canvas's data to a json file. The data will be ouptut to `meteor-app/private/data-backups/canvas.events.json`. (IMPORTANT: the app must be running when you run this command)
-> * `npm run importlog`: Rebuild your canvas from scratch by importing a json file of canvas events to be replayed. The task will read events data from `meteor-app/private/data-backups/canvas.events.json`. (IMPORTANT: the app must be running when you run this command. However, you probably want to run the resetdb command above before running the import although it isn't necessary.)
-
-> You can see all these scripts (and maybe more) by running `npm run`.
-
 
 ### Start The Neo4j Server
 > We assume your Neo4j instance will be up and running at localhost:7474. If not, you'll need to update the meteor-app/settings.json with your environment's location.
@@ -219,6 +203,34 @@
 > This is only locally during dev, as Chrome places restrictions on SSL (https) content locally.
 
 > <img src="http://i.imgur.com/yMwBRaY.png" />
+
+
+
+### Development Workflow Scripts
+> There are several scripts available using `npm` that are designed to make the development process as painless as possible:
+
+> `npm run test`: Runs all tests in the project. Combines `npm run units` + `npm run e2e`
+<br>
+> `npm run units`: Run only the unit tests
+<br>
+> `npm run e2e`: Run only the end-to-end (e2e) tests
+<br>
+> `npm run local`: Build a version of the clipper to extensions/chrome/build that points to localhost
+<br>
+> `npm run ci`: Build a version of the clipper to extensions/chrome/build that points to parallels-ci.meteor.com
+<br>
+> `npm run prod`: Build a version of the clipper to extensions/chrome/build that points to makeparallels.herokuapp.com
+<br>
+> `npm run server`: Starts the meteor app and livereload for the clipper source
+<br>
+> `npm run resetdb`: Drops all data in meteor's mongo DB and the Neo4j DB
+<br>
+> `npm run exportlog`: Export your canvas's data to a json file. The data will be ouptut to `meteor-app/private/data-backups/canvas.events.json`. (IMPORTANT: the app must be running when you run this command)
+<br>
+> `npm run importlog`: Rebuild your canvas from scratch by importing a json file of canvas events to be replayed. The task will read events data from `meteor-app/private/data-backups/canvas.events.json`. (IMPORTANT: the app must be running when you run this command. However, you probably want to run the resetdb command above before running the import although it isn't necessary.)
+<br>
+> You can see a lists of all commands/scripts available by running `npm run`.
+
 
 
 ### Opening an issue
@@ -258,7 +270,7 @@
 <br>
 > __Q__: How do I run all the tests?
 
-> __A__: Run `$ npm test`
+> __A__: Run `$ npm run test`
 
 
 <br>
@@ -353,9 +365,9 @@ npm ERR! not ok code 0
 >`ps -x | grep meteor` , which should gives you some output like :
 
 > ```
-50136 ??         0:03.24 /Users/xxxxx/.meteor/packages/velocity_meteor-tool/.1.1.3_3.1ieennv++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/mongodb/bin/mongod --bind_ip 127.0.0.1 --smallfiles --port 3001 --dbpath /Users/thoughtworker/Code/code/parallels-core-modules/meteor-app/.meteor/local/db --oplogSize 8 --replSet meteor
-51804 ttys000    0:00.00 grep meteor
-```
+> 50136 ??         0:03.24 /Users/xxxxx/.meteor/packages/velocity_meteor-tool/.1.1.3_3.1ieennv++os.osx.x86_64+web.browser+web.cordova/mt-os.osx.x86_64/dev_bundle/mongodb/bin/mongod --bind_ip 127.0.0.1 --smallfiles --port 3001 --dbpath /Users/thoughtworker/Code/code/parallels-core-modules/meteor-app/.meteor/local/db --oplogSize 8 --replSet meteor
+> 51804 ttys000    0:00.00 grep meteor
+> ```
 
 > take the process ID for the Meteor entry, in this case `50136`, and run the kill command, like so:
 
@@ -375,6 +387,35 @@ npm ERR! not ok code 0
 
 <br>
 
+> __Q__: I've run my unit tests, either manually via with `npm run units`, or as part of the full testing suite run with `npm run tests`. It hangs, after this output:
+
+> ```
+> ^X^C[15:01][xxxx@xxxx:~/Code/code/parallels-core-modules(master)]$ npm run units
+
+> parallels@0.0.1 units /Users/thoughtworker/Code/code/parallels-core-modules
+> grunt unit-tests
+
+> Running "jshint:all" (jshint) task
+
+> ✔ No problems
+
+> Running "bgShell:meteorTests" (bgShell) task
+> => Using velocity:METEOR@1.1.0.2_2 as requested (overriding Meteor 1.1.0.2)
+
+> stream error Network error: ws://localhost:3000/websocket: connect ECONNREFUSED
+> I20150610-15:02:18.965(2)? Meteor is successfully connected to Neo4j on http://localhost:7474
+> I20150610-15:02:19.362(2)? [velocity] jasmine-client-integration is starting a mirror at http://localhost:58949/.
+> I20150610-15:02:19.367(2)? [velocity] jasmine-server-integration is starting a mirror at http://localhost:58950/.
+> I20150610-15:02:19.370(2)? [velocity] You can see the mirror logs at: tail -f /Users/thoughtworker/Code/code/parallels-core-modules/meteor-app/.meteor/local/log/jasmine-client-integration.log
+> I20150610-15:02:19.372(2)? [velocity] You can see the mirror logs at: tail -f /Users/thoughtworker/Code/code/parallels-core-modules/meteor-app/.meteor/local/log/jasmine-server-integration.log
+> ```
+
+> __A__: Velocity, the Meteor testing framework used, spins up in another thread to run the tests. Its error output is not piped back to your current terminal, so you'll need to look at the logs, as the error output instructs to see the error(s).
+
+<br>
+
+
+
 ---------
 
 
@@ -393,15 +434,15 @@ npm ERR! not ok code 0
 
 > #### Current challenges:
 
-> * A zoomable user interface (ZUI) with coordinate system for map-based layout/content
-> * Modeling documents in graph-based databases. Currently exploring neo4j
+> * Map-based coordinate system for layout/content
+> * Designing a realtime, multi-client environment that supports simoultaneous collaboration
+> * Storing, modeling documents in a combination of databases, used for different purposes
 > * Browser extensions for clipping web content
 > * Physics-based UI animations + transitions, via Greensock JS, SVG, CSS3, WebGL 
+> * Procedural audio, for dynamic, realtime sound synthesis, where UI input are used as parameters to shape sound
 > * Interactive documentation, think Bret Vector's definition of [reactive documents](http://worrydream.com/ExplorableExplanations/), to help prevent [this](https://i.imgur.com/Ssz6pjF.png)
-> * iOS / Android apps
-
-> #### Later:
-> * Decentralized (cloud-less) infrastructure / file storage
+> * mobile apps: iOS / Android / FireFoxOS
+> * Decentralized (cloud-less) infrastructure / file storage + blockchain explorations
 
 
 <br>
