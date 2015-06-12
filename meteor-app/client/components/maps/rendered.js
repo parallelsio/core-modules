@@ -3,9 +3,8 @@ Template.map.onRendered(function (){
   var mapTemplate = this;
   var container = mapTemplate.find('.map');
 
-  // TODO: not playing here  
-  // mapTemplate.opening = Parallels.Audio.player.play('fx-welcome-v1');
-  mapTemplate.opening = Parallels.Audio.player.play('moogSeq');
+  // TODO: craft this sound like fx-welcome.wav
+  // mapTemplate.opening = Parallels.Audio.player.play('moogSeq');
 
   container._uihooks = {
 

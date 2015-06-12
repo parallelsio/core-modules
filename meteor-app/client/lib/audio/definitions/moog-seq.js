@@ -1,3 +1,4 @@
+
 Parallels.Audio.Definition['moogSeq'] = {
 
   synthDef: {   
@@ -6,9 +7,9 @@ Parallels.Audio.Definition['moogSeq'] = {
     ugen: "flock.ugen.filter.moog",
       cutoff: {
       ugen: "flock.ugen.lfSaw",
-      freq:10,
-      mul: 300,
-      add: 2000,
+      freq:1000,
+      mul: 500,
+      add: 7000,
     },
     resonance: {
       ugen: "flock.ugen.sin",
@@ -23,12 +24,16 @@ Parallels.Audio.Definition['moogSeq'] = {
         freq: {
             ugen: "flock.ugen.sequence",
             freq: 2,
-            loop: 0,
+            loop: 1,
             list: [
               teoria.note('g3').fq(),
               teoria.note('d3').fq(),
               teoria.note('c3').fq(),
               teoria.note('g3').fq(),
+              teoria.note('g4').fq(),
+              teoria.note('b3').fq(),
+              teoria.note('a1').fq(),
+              teoria.note('g2').fq(),
               ],
             options: {
                 interpolation: "linear"
