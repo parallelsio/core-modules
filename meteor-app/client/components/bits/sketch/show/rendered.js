@@ -1,4 +1,4 @@
-/* 
+/*
   Ploma only does rendering
   doesnt care where location + pressure data come from
   Ploma can be used with any tablet
@@ -13,15 +13,13 @@
 
 
 var unbindPlomaHandlers = function(canvas){
-  canvas.onmousedown,
-  canvas.onmousemove, 
-  canvas.onmouseup = null;
-}; 
+  canvas.onmousedown = canvas.onmousemove = canvas.onmouseup = null;
+};
 
 var createPlomaCanvas = function(template, canvas){
 
   // NAPAPI, necessary for interfacing with Wacom tablet
-  var plugin = document.getElementById('wtPlugin'); 
+  var plugin = document.getElementById('wtPlugin');
   var isDrawing = false;
   var ploma = new Ploma(canvas);
 
@@ -58,14 +56,14 @@ var createPlomaCanvas = function(template, canvas){
   // Parallels.Audio.player.play('fx-ting3');
   return ploma;
 };
-  
+
 
 var getEventPoint = function(event, template, plugin){
 
   var point = {};
 
   // recalc mouse coordinates, accounting for combination of 2 things:
-  // 1) where the bit sits, offset from 0,0 via the template instance 
+  // 1) where the bit sits, offset from 0,0 via the template instance
   // 2) if person is scrolled away from default viewport, via the Window object
   // use verge lib for cross-browser compatibility
   point.x = (verge.scrollX() + event.clientX) - $(template.firstNode).position().left;
@@ -73,19 +71,19 @@ var getEventPoint = function(event, template, plugin){
 
   // fail gracefully if no pressure is detected (no tablet found)
   // tablet reports a range of 0 to 1
-  point.p = plugin.penAPI.pressure ? plugin.penAPI.pressure : 0.6;
+  point.p = plugin.penAPI && plugin.penAPI.pressure ? plugin.penAPI.pressure : 0.6;
   return point;
 }
 
 Template.sketchBit.onRendered(function (){
-  log.debug("bit:sketch:render");  
-  
+  log.debug("bit:sketch:render");
+
   var template = this;
   var canvas = $(template.firstNode).find(".sketch-bit")[0];
 
-  // save a reference to the plomaCanvas to the template instance 
+  // save a reference to the plomaCanvas to the template instance
   // as a property, so we can later access it and pull it down ,
-  // stop the handlers, when no longer in use 
+  // stop the handlers, when no longer in use
   template.plomaInstance = createPlomaCanvas(template, canvas);
 
    // TODO : reuse same drag init as bit.rendered (with effects, etc)
@@ -106,15 +104,15 @@ Template.sketchBit.onRendered(function (){
 
   // for debugging - print the ploma instance arrays
   Mousetrap.bind('a', function (){
-    log.debug("pressed 'a' key");  
+    log.debug("pressed 'a' key");
 
     log.debug("bit:sketch:getStrokes: ", template.plomaInstance.getStrokes());
     log.debug("bit:sketch:curStroke: ", template.plomaInstance.curStroke());
   });
 
   Mousetrap.bind('mod+z', function (){
-    log.debug("pressed 'command/ctrl + z'");  
-  
+    log.debug("pressed 'command/ctrl + z'");
+
     // remove the most recent stroke
     template.plomaInstance.setStrokes(
       _.dropRight(
@@ -125,7 +123,7 @@ Template.sketchBit.onRendered(function (){
   });
 
   Mousetrap.bind('c', function (){
-    log.debug("pressed 'c' key");  
+    log.debug("pressed 'c' key");
     var bitHoveringId = Session.get('bitHoveringId');
 
     // TODO: only if hovering over a bit, once this is moved from map to
@@ -138,12 +136,12 @@ Template.sketchBit.onRendered(function (){
   });
 
   Mousetrap.bind('up', function (){
-    log.debug("pressed 'up' key");  
+    log.debug("pressed 'up' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    log.debug("bit:sketch:opacity = ", opacity);  
+    log.debug("bit:sketch:opacity = ", opacity);
 
     if (opacity < 1){
       template.firstNode.style.opacity = (opacity + 0.10);
@@ -153,12 +151,12 @@ Template.sketchBit.onRendered(function (){
   });
 
   Mousetrap.bind('down', function (){
-    log.debug("pressed 'down' key");  
+    log.debug("pressed 'down' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    log.debug("bit:sketch:opacity = ", opacity);  
+    log.debug("bit:sketch:opacity = ", opacity);
 
     if (opacity > 0.10){
       template.firstNode.style.opacity = (opacity - 0.10);
