@@ -136,7 +136,8 @@ Parallels.Audio.Definition['fx-welcome-v1'] = {
       buffer: {
         id: "fx-welcome-v1",  
         url: "/sounds/fx-welcome-v1.wav"
-      }
+      },
+      mul: 0.3
     }
   }
 }

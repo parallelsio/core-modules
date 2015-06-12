@@ -23,8 +23,13 @@ Parallels.Audio.Definition['moogSeq'] = {
         freq: {
             ugen: "flock.ugen.sequence",
             freq: 2,
-            loop: 1,
-            list: [220, 220 * 5/4, 220, 220 * 3/2, 220 * 4/3, 220*3/2, 220*2, 220*4/3, 220*5/4, 220*3/4, 220, 220*7/8, 256],
+            loop: 0,
+            list: [
+              teoria.note('g3').fq(),
+              teoria.note('d3').fq(),
+              teoria.note('c3').fq(),
+              teoria.note('g3').fq(),
+              ],
             options: {
                 interpolation: "linear"
             }
