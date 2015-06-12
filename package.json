@@ -32,6 +32,7 @@
   },
   
   "scripts": {
+    "start": "JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server",
     "test": "grunt all-tests",
     "units": "grunt unit-tests",
     "e2e": "JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt e2e-tests",
