@@ -5,8 +5,7 @@ Parallels.AppModes['edit-bit'] = {
 
     Parallels.Audio.player.play('fx-temp-temp-subtle');
 
-    var $bit = $("[data-id='" + id + "']");
-    var bitTemplate = Blaze.getView($bit[0]);
+    var bitTemplate = Utilities.getBitTemplate(id);
     var bitData = Blaze.getData(bitTemplate);
 
     // currently, we're only supporting edit for text type

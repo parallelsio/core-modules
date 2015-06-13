@@ -39,7 +39,6 @@ Parallels.AppModes['sketch-bit'] = {
 
     // TODO: use data id, this will be unreliable when more than one sketch bit instance
     // is on the canvas. 
-    // $bit = $("[data-id='" + bitSketchingId + "']");
     $bit = $(".bit.sketch");
     bitTemplate = Blaze.getView($bit[0]);
     console.log("plomaInstance:", bitTemplate.templateInstance().plomaInstance.getStrokes());

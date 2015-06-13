@@ -21,7 +21,7 @@ Parallels.AppModes['create-parallel'] = {
 
     var originBitId = Session.get('bitHoveringId');
     Session.set('originBitId', originBitId);
-    $originBit = $("[data-id='" + originBitId + "']" );
+    $originBit = Utilities.getBitElement(originBitId);
     var originBitData = Blaze.getData($originBit[0]);
     var originBitCenterX = originBitData.position.x + ($originBit[0].clientWidth / 2)
     var originBitCenterY = originBitData.position.y + ($originBit[0].clientHeight / 2)
@@ -50,14 +50,13 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: call neo4j save
 
-        // play 4 corner, spark animation, with sounds
-        // see 
         /* 
+          Play 4 corner spark animation, with sounds
           DOCS: 
           /private/docs/parallel-create-spark-animation-v1.png
-
         */
 
+        $bit.position()
         // query Neo4j for image bits that are connected, by X number of hops
 
         // slice + dice images in collection

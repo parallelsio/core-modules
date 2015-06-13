@@ -4,24 +4,20 @@ _ = lodash;
 
 Utilities = {
 
-
-
   // *************** BIT ****************
-  // OQ: whats the diff between these 2?
-  // When would I use each?
-  getBitHtmlElement: function (bitDatabaseId){
-    return $("[data-id='" + bitDatabaseId + "']");
-  },
 
   getBitDataId: function (bitHtmlElement){
-    // TODO:
-    // Improve so either an HTML element/node, or a jQuery obj works.
+    // TODO: improve so either an HTML element/node, or a jQuery obj works.
     // Greensock does this, look at source
     return $(bitHtmlElement).data('id');
   },
 
+  getBitElement: function (bitDatabaseId){
+    return $("[data-id='" + bitDatabaseId + "']");
+  },
+
   getBitTemplate: function (bitId){
-    var $bit = $("[data-id='" + bitId + "']");
+    var $bit = this.getBitElement(bitId);
     return Blaze.getView( _.first($bit) );
   },
 
