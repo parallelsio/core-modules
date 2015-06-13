@@ -11,9 +11,7 @@ Parallels.AppModes['preview-bit'] = {
     log.debug("mode:preview-bit:enter");
 
     bitHoveringId = Session.get('bitHoveringId');
-
-    $bit = $("[data-id='" + bitHoveringId + "']");
-    bitTemplate = Blaze.getView($bit[0]);
+    bitTemplate = getBitTemplate(bitHoveringId);
     bitData = Blaze.getData(bitTemplate);
 
     // TODO: disable bitHover too

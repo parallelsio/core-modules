@@ -48,7 +48,7 @@ Parallels.AppModes['create-parallel'] = {
           " -> dest:", 
           destBitId);
 
-        // call neo4j save
+        // TODO: call neo4j save
 
         // play 4 corner, spark animation, with sounds
         // see 

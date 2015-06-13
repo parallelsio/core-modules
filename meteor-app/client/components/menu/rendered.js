@@ -27,37 +27,32 @@ Template.menu.rendered = function() {
 
     elements.each(function() {
 
-      // TODO: why arent we going right to the bit.position attribute in the data instead?
-      // Greensock applied transforms to position bits when OnRendered was called.
-      // "translate3d(132px, 89px, 0px)"
+      element = this;
 
-      // we need the x/y position to pass to the Timeline obj,
+      // Use the Greensock-applied transform values: 
+      // "translate3d(132px, 89px, 0px)", even though they are not currently visible
+      var position = Utilities.getTransformedPosition(element);
+
+      // We need the x/y coordinates to pass to the Timeline obj,
       // which will use the distance between the bits to calc a delay offset
       // this delay offset is what gives it a nice wipe/shimmering effect
-      var cssTransform = this.style["transform"];
-      var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
-
-      // slice + dice the string with a regexp to remove everything except
-      // for number values. Split the string into an array.
-      var array = _.words(cssTransform.replace(pattern, ''));
-
-      var offset = parseFloat(array[0]) + parseFloat(array[1]);
+      var offset = parseFloat(position.top) + parseFloat(position.left);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      log.debug("bit:shimmer:in: ", Utilities.getBitDataId(this), " : delay of ", delay );
+      log.debug("bit:shimmer:in: ", Utilities.getBitDataId(element), " : delay of ", delay );
 
       // calc a sound frequency to use as a parameter for the sound played
       // Using the delay param we used above for the animation will tie
       // the 2 together nicely
-      var newFreq = Math.random() * 1000 + 1060;
-      newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
+      // var newFreq = Math.random() * 1000 + 1060;
+      // newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
 
-      console.log("newFreq: ", newFreq, " this bit's animation delay: ", delay);
+      // log.debug("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
       // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
 
       shimmerTimeline.fromTo(
-        this,
+        element,
         duration,
         {
           // from

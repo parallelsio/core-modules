@@ -7,8 +7,9 @@ Utilities = {
 
 
   // *************** BIT ****************
+  // OQ: whats the diff between these 2?
+  // When would I use each?
   getBitHtmlElement: function (bitDatabaseId){
-    // log.debug("Utilities:getBitHtmlElement() call: ", bitDatabaseId);
     return $("[data-id='" + bitDatabaseId + "']");
   },
 
@@ -17,6 +18,28 @@ Utilities = {
     // Improve so either an HTML element/node, or a jQuery obj works.
     // Greensock does this, look at source
     return $(bitHtmlElement).data('id');
+  },
+
+  getBitTemplate: function (bitId){
+    var $bit = $("[data-id='" + bitId + "']");
+    return Blaze.getView( _.first($bit) );
+  },
+
+  // Usually, we'd just use jQuery's .position method.
+  // In situations where the element is display:none, we can use the transform 
+  // property, which is set, to get the position 
+  getTransformedPosition: function(element){
+    var cssTransform = element.style["transform"];
+    var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
+
+    // slice + dice the string with a regexp to remove everything except
+    // for number values. Split the string into an array.
+    var array = _.words(cssTransform.replace(pattern, ''));
+
+    return { 
+      top: array[0],
+      left: array[1]
+    };
   },
 
   /* 
