@@ -12,3 +12,5 @@ node_modules
 tmp
 .env
 meteor-app/private/data-backups/canvas.events.json
+desktop-app/cache
+desktop-app/resources
