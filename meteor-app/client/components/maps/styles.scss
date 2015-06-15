@@ -27,11 +27,13 @@ $map-width: 5000px;
   vertical-align:middle;
 }
 
-.create-parallel--burst-container {  
+#create-parallel--particles {  
   position: absolute;
+  height: $map-height;
+  width: $map-width;
 }
 
-.create-parallel--line-container {    
+.create-parallel--line {    
   position: absolute;
   svg { 
     // override insertion of position:fixed by two.js 'fullscreen' param

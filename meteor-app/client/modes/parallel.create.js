@@ -11,6 +11,7 @@
 // TODO: to move these into mode, as object properties?
 var timeline, $originBit;
 var line, updatedLine, lineContainer, params, two, mouse, circle;
+var emitter;
 
 Parallels.AppModes['create-parallel'] = {
 
@@ -40,23 +41,72 @@ Parallels.AppModes['create-parallel'] = {
       var destBitId = Session.get('bitHoveringId'); 
 
       if (destBitId && (destBitId != originBitId)) {
-        
+      
+        var $destBit = Utilities.getBitElement(destBitId);
+
+        // stop heartbeat animation
+        // TODO: after one cycle is done. reset to original size
+        timeline.kill();
+
+        $(window).off('mousemove');
+        // stop drawing parallel line
+        two.unbind('update');
+
         Session.set('destBitId', destBitId);
         log.debug(
           'closing parallel: source:', 
           originBitId, 
           " -> dest:", 
-          destBitId);
+          destBitId
+        );
+
+        $('.create-parallel--line').remove();
+        $originBit.removeClass('create-parallel--origin');
+        
+
+        /*  Play 4 corner spark animation, with sounds
+          
+            DOCS: 
+            /private/docs/parallel-create-spark-animation-v1.png
+        */
+
+        var corners = {
+          topLeft:      { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].left },
+          topRight:     { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].right },
+          bottomLeft:   { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].left },
+          bottomRight:  { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].right }
+        }
+
+        // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
+        var particles = document.createElement('div');
+        $(particles)
+          .attr( "id", "create-parallel--particles")
+          .height( 5000 )
+          .width( 5000)
+          .prependTo(".map");
+
+        emitter = new particleEmitter({
+          container: '#create-parallel--particles',
+          image: 'images/ui/particle.gif',
+          center: [ corners.topLeft.y, corners.topLeft.x ], 
+          offset: [0, 0], 
+          radius: 0,
+          size: 3, 
+          velocity: 700, 
+          decay: 400, 
+          rate: 500
+        });
+
+        emitter.start();
+
+        var handle = Meteor.setTimeout(function(){
+          emitter.stop();
+        },
+        120);
 
         // TODO: call neo4j save
 
-        /* 
-          Play 4 corner spark animation, with sounds
-          DOCS: 
-          /private/docs/parallel-create-spark-animation-v1.png
-        */
 
-        $bit.position()
         // query Neo4j for image bits that are connected, by X number of hops
 
         // slice + dice images in collection
@@ -93,7 +143,7 @@ Parallels.AppModes['create-parallel'] = {
     // set up an SVG container via two.js container to draw the line stroke
     lineContainer = document.createElement('div');
     $(lineContainer)
-      .addClass("create-parallel--line-container")
+      .addClass("create-parallel--line")
       .height( 5000 )
       .width( 5000)
       .prependTo(".map");
@@ -184,9 +234,12 @@ Parallels.AppModes['create-parallel'] = {
       Session.set('destBitId', null);
 
       $(".map").removeClass('mode--create-parallel');
-      
       $originBit.removeClass('create-parallel--origin');
-      $('.create-parallel--line-container').remove();
+
+      $('.create-parallel--line').remove();
+      $('#create-parallel--particles').remove();
+
+      emitter.stop();
 
       // stop heartbeat animation
       timeline.kill();
