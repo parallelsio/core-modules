@@ -70,12 +70,12 @@ Parallels.AppModes['create-parallel'] = {
             /private/docs/parallel-create-spark-animation-v1.png
         */
 
-        var corners = {
-          topLeft:      { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].left },
-          topRight:     { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].right },
-          bottomLeft:   { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].left },
-          bottomRight:  { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].right }
-        }
+        var corners = [
+          { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].left },
+          { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].right },
+          { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].left },
+          { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].right }
+        ];
 
         // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
         var particles = document.createElement('div');
@@ -85,24 +85,39 @@ Parallels.AppModes['create-parallel'] = {
           .width( 5000)
           .prependTo(".map");
 
-        emitter = new particleEmitter({
-          container: '#create-parallel--particles',
-          image: 'images/ui/particle.gif',
-          center: [ corners.topLeft.y, corners.topLeft.x ], 
-          offset: [0, 0], 
-          radius: 0,
-          size: 3, 
-          velocity: 700, 
-          decay: 400, 
-          rate: 500
+
+        var setupAndPlayCornerSpark = function(corner){
+          log.debug("setupAndPlayCornerSpark: ", corner);
+
+          var emitter = new particleEmitter({
+            container: '#create-parallel--particles',
+            image: 'images/ui/particle.gif',
+            center: [ corner.y, corner.x ], 
+            size: 4, 
+            velocity: 450, 
+            decay: 500, 
+            rate: 600
+          });
+
+          emitter.start()
+          var handle = Meteor.setTimeout(function(){
+            emitter.stop();
+          },
+          100);          
+        }
+
+        var tl = new TimelineMax({ paused:true });
+
+        _.each(corners, function(corner, i) {
+          var offsetDelay = i * 0.10;
+          // log.debug("count:", i, ":", corner, ", delayed: ", offsetDelay);
+          tl.call(setupAndPlayCornerSpark, [ corner ], this, offsetDelay );
         });
 
-        emitter.start();
 
-        var handle = Meteor.setTimeout(function(){
-          emitter.stop();
-        },
-        120);
+        tl.play();
+
+
 
         // TODO: call neo4j save
 
@@ -238,8 +253,6 @@ Parallels.AppModes['create-parallel'] = {
 
       $('.create-parallel--line').remove();
       $('#create-parallel--particles').remove();
-
-      emitter.stop();
 
       // stop heartbeat animation
       timeline.kill();
