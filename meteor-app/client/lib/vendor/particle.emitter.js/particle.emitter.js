@@ -1,29 +1,37 @@
 /*
 
-adapted from:
+  Adapted from:
 
-Particle Emitter JavaScript Library
-Version 0.3
-by Erik Friend
+  Particle Emitter JavaScript Library
+  Version 0.3
+  by Erik Friend
 
-http://erikfriend.com/jquery.particles/demo.html
+  http://erikfriend.com/jquery.particles/demo.html
 
-- Creates a circular particle emitter of specified 
-  radius centered and offset at specified screen location.  
-- Particles appear outside of emitter and travel outward at 
-  specified velocity while fading until disappearing in specified decay time. 
-- Particle size is specified in pixels.  
-- Particles reduce in size toward 1px as they decay.  
-- A custom image(s) may be used to represent particles. 
-- Multiple images will be cycled randomly to create a mix of particle types.
+  * Creates a circular particle emitter of specified 
+    radius centered and offset at specified screen location.  
+  * Particles appear outside of emitter and travel outward at 
+    specified velocity while fading until disappearing in specified decay time. 
+  * Particle size is specified in pixels.  
+  * Particles reduce in size toward 1px as they decay.  
+  * A custom image(s) may be used to represent particles. 
+  * Multiple images will be cycled randomly to create a mix of particle types.
 
-Example:
+  Example:
 
-var emitter = new particleEmitter({
-    image: ['resources/particle.white.gif', 'resources/particle.black.gif'],
-    center: ['50%', '50%'], offset: [0, 0], radius: 0,
-    size: 6, velocity: 40, decay: 1000, rate: 10
-}).start();
+  var emitter = new particleEmitter({
+      image: ['resources/particle.white.gif', 'resources/particle.black.gif'],
+      center: ['50%', '50%'], offset: [0, 0], radius: 0,
+      size: 6, velocity: 40, decay: 1000, rate: 10
+  }).start();
+
+  Modifications: 
+      * converted native SetTimeout and ClearTimeouts to Meteor equivalents
+      * == converted to ====
+      * renamed
+      * added target div to incoming options param
+      * commented chrome fix, no longer seems to be an issue
+      * adding start + end callback to options
 
 */
 
@@ -37,7 +45,9 @@ particleEmitter = function (opts) {
         size: 1,                            // particle diameter in pixels
         velocity: 10,                       // particle speed in pixels per second
         decay: 500,                         // evaporation rate in milliseconds
-        rate: 10                            // emission rate in particles per second
+        rate: 10,                           // emission rate in particles per second
+        onStartCallback: function(){},      // run this function when particleEmitter starts
+        onStopCallback: function(){}        // run this function when particleEmitter stops
     };
 
     var _options = $.extend({}, defaults, opts);
@@ -114,10 +124,12 @@ particleEmitter = function (opts) {
         start:function () {
             Meteor.clearTimeout(_timer);
             _timer = Meteor.setTimeout(function () { _sparkle(); }, 0);
+            _options.onStartCallback.call();
             return(this);
         },
         stop:function () {
             Meteor.clearTimeout(_timer);
+            _options.onStopCallback.call();
             return(this);            
         },
         centerTo:function (x, y) {

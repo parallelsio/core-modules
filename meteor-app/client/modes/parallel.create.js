@@ -70,11 +70,13 @@ Parallels.AppModes['create-parallel'] = {
             /private/docs/parallel-create-spark-animation-v1.png
         */
 
+        var destBitRect = $destBit[0].getClientRects()[0];
         var corners = [
-          { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].left },
-          { x: $destBit[0].getClientRects()[0].top,     y: $destBit[0].getClientRects()[0].right },
-          { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].left },
-          { x: $destBit[0].getClientRects()[0].bottom,  y: $destBit[0].getClientRects()[0].right }
+
+          { x: destBitRect.top,     y: destBitRect.left,  freq: teoria.note('g2').fq() },
+          { x: destBitRect.top,     y: destBitRect.right, freq: teoria.note('d2').fq() },
+          { x: destBitRect.bottom,  y: destBitRect.left,  freq: teoria.note('c2').fq() },
+          { x: destBitRect.bottom,  y: destBitRect.right, freq: teoria.note('a2').fq() }
         ];
 
         // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
@@ -85,11 +87,16 @@ Parallels.AppModes['create-parallel'] = {
           .width( 5000)
           .prependTo(".map");
 
-
         var setupAndPlayCornerSpark = function(corner){
           log.debug("setupAndPlayCornerSpark: ", corner);
 
           var emitter = new particleEmitter({
+            onStartCallback: function(){
+              log.debug("starting particleEmitter for corner: ", corner);
+            },
+            onStopCallback: function(){
+              log.debug("ending particleEmitter for corner: ", corner);
+            },
             container: '#create-parallel--particles',
             image: 'images/ui/particle.gif',
             center: [ corner.y, corner.x ], 
