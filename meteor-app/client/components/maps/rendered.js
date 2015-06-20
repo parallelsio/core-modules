@@ -1,10 +1,14 @@
 Template.map.onRendered(function (){
 
   var mapTemplate = this;
-  var container = mapTemplate.find('.map');
+  var mapContainer = mapTemplate.find('.map');
 
   // TODO: craft this sound like fx-welcome.wav
   // mapTemplate.opening = Parallels.Audio.player.play('moogSeq');
+
+
+
+
 
   /************ TODO: move all of this out to Animation class *********************************
    * Copyright (C) 2011 by Paul Lewis
@@ -31,8 +35,8 @@ Template.map.onRendered(function (){
    // adapted from: http://lab.aerotwist.com/webgl/surface/
 
   var AEROTWIST = AEROTWIST || {};
-  AEROTWIST.Surface = new function()
-  {
+  AEROTWIST.RemixSlices = new function(){
+
     // internal vars
     var camera,
       scene,
@@ -46,13 +50,13 @@ Template.map.onRendered(function (){
       testFilePath  = null,
       running       = true,
       
-      $container    = null,
+      $slicesContainer    = null,
       width         = null,
       height        = null,
 
       // core objects
-      surface       = null,
-      surfaceVerts  = [],
+      mesh       = null,
+      meshVerts  = [],
       
       // constants
       DAMPEN        = .9,
@@ -83,9 +87,9 @@ Template.map.onRendered(function (){
       // dont allow clicking
       document.onselectstart = function(){ return false; };
       
-      $container    = $('#create-parallel--remix-splices');
-      width         = $container.width();
-      height        = $container.height();
+      $slicesContainer    = $('#create-parallel--remix-splices');
+      width               = $slicesContainer.width();
+      height              = $slicesContainer.height();
 
       // set test image
       testFilePath = "images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg";
@@ -102,10 +106,9 @@ Template.map.onRendered(function (){
       
       if(createRenderer())
       {
-        log.debug("created renderer...");
 
-        createObjects();
         addLights();
+        createObjects();
       
         updatePlane();
 
@@ -145,12 +148,14 @@ Template.map.onRendered(function (){
      * scene. Only applies to the centres
      */
     function addLights() {
-      // point
-      pointLight = new THREE.PointLight( 0xFFFFFF );
+      pointLight = new THREE.PointLight( 0xFFFFFF, 0.4 );
       pointLight.position.x = 10;
       pointLight.position.y = 100;
       pointLight.position.z = 10;
       scene.addLight( pointLight );
+
+      ambientLight = new THREE.AmbientLight( 0xbbbbbb );
+      scene.addLight( ambientLight );
     }
     
 
@@ -158,31 +163,34 @@ Template.map.onRendered(function (){
 
       var planeMaterial = new THREE.MeshLambertMaterial({
           color: 0xFFFFFF, 
-          map: THREE.ImageUtils.loadTexture(testFilePath), 
-          shading: THREE.SmoothShading});
+          map: THREE.ImageUtils.loadTexture(testFilePath)
+          //, shading: THREE.SmoothShading
+      });
       
       var planeMaterialWire = new THREE.MeshLambertMaterial({ 
           color: 0xFFFFFF, 
           wireframe:true 
       });
       
-      surface = new THREE.Mesh(
+      mesh = new THREE.Mesh(
         new THREE.Plane(SURFACE_WIDTH, SURFACE_HEIGHT, X_RESOLUTION, Y_RESOLUTION), 
         [planeMaterial, planeMaterialWire]
       );
 
-      surface.rotation.x = -Math.PI * .5;
-      surface.overdraw = true;
-      scene.addChild(surface);
+      mesh.rotation.x = -Math.PI * .5;
+      mesh.overdraw = true;
+
+      // scene.addChild(mesh); // v37 API
+      scene.add(mesh);
       
       // go through each vertex
-      surfaceVerts = surface.geometry.vertices;
-      sCount = surfaceVerts.length;
+      meshVerts = mesh.geometry.vertices;
+      sCount = meshVerts.length;
       
       // three.js creates the verts for the
       // mesh in x,y,z order I think
       while(sCount--) {
-        var vertex    = surfaceVerts[sCount];
+        var vertex    = meshVerts[sCount];
         vertex.springs  = [];
         vertex.velocity = new THREE.Vector3();
         
@@ -217,6 +225,9 @@ Template.map.onRendered(function (){
       var ok = false;
       
       try {
+        // TODO: add a non-WebGl fallback with THREE.CanvasRenderer().
+        // THREE.CanvasRenderer() is not to be confused with the <canvas> DOM element which
+        // we use to display the WebGL scene.
         renderer          = new THREE.WebGLRenderer( { devicePixelRatio: window.devicePixelRatio || 1 } );
         camera            = new THREE.Camera(
           45, 
@@ -248,8 +259,9 @@ Template.map.onRendered(function (){
 
         // start the renderer
         renderer.setSize(width, height);
-        $container.append(renderer.domElement);
+        $slicesContainer.append(renderer.domElement);
 
+        log.debug("created renderer...");
         ok = true;
       }
 
@@ -277,7 +289,7 @@ Template.map.onRendered(function (){
       $(document.body).mouseup(callbacks.mouseUp);
       $(document.body).click(callbacks.mouseClick);
       
-      var container = $container[0];
+      var container = $slicesContainer[0];
       // container.addEventListener('dragover', cancel, false);
       // container.addEventListener('dragenter', cancel, false);
       // container.addEventListener('dragexit', cancel, false);
@@ -307,7 +319,7 @@ Template.map.onRendered(function (){
           shading: THREE.SmoothShading
         });
 
-      surface.materials[0]  = newPlaneMaterial;
+      mesh.materials[0]  = newPlaneMaterial;
     }
     
     /**
@@ -317,11 +329,11 @@ Template.map.onRendered(function (){
     function update()
     {
       
-      surface.materials[1].opacity = vars["wireframeOpacity"];
+      mesh.materials[1].opacity = vars["wireframeOpacity"];
       
-      var v = surfaceVerts.length;
+      var v = meshVerts.length;
       while(v--) {
-        var vertex      = surfaceVerts[v],
+        var vertex      = meshVerts[v],
           acceleration  = new THREE.Vector3(0, 0, -vertex.position.z * vars["elasticity"]),
           springs     = vertex.springs,
           s       = springs.length;
@@ -330,11 +342,11 @@ Template.map.onRendered(function (){
         
         while(s--) {
           var spring    = springs[s],
-            extension = surfaceVerts[spring.start].position.z - surfaceVerts[spring.end].position.z;
+            extension = meshVerts[spring.start].position.z - meshVerts[spring.end].position.z;
           
           acceleration  = new THREE.Vector3(0, 0, extension * vars["elasticity"] * 50);
-          surfaceVerts[spring.end].velocity.addSelf(acceleration);
-          surfaceVerts[spring.start].velocity.subSelf(acceleration);
+          meshVerts[spring.end].velocity.addSelf(acceleration);
+          meshVerts[spring.start].velocity.subSelf(acceleration);
         }
 
         vertex.position.addSelf(vertex.velocity);
@@ -342,11 +354,14 @@ Template.map.onRendered(function (){
         vertex.velocity.multiplyScalar(DAMPEN);
       }
       
-      surface.geometry.computeFaceNormals(true);
-      surface.geometry.__dirtyVertices = true;
-      surface.geometry.__dirtyNormals = true;
+      mesh.geometry.computeFaceNormals(true);
+      mesh.geometry.__dirtyVertices = true;
+      mesh.geometry.__dirtyNormals = true;
       
-      // set up a request for a render
+      // render the frame, with requestAnimationFrame(), a modern replacement for 
+      // setInterval() method, designed specifically for animating. Better than setInterval() because 
+      // browser can optimize the animation to make it smoother + can reduce the animation's frame rate
+      // if it's running in a background tab,  conserving battery life on laptops + mobile devices.
       requestAnimationFrame(render);
       // requestAnimationFrame(testLogger);
     }
@@ -381,8 +396,8 @@ Template.map.onRendered(function (){
         
         if(camera)
         {
-          width     = $container.width(),
-          height      = $container.height(),
+          width     = $slicesContainer.width(),
+          height      = $slicesContainer.height(),
           camera.aspect   = width / height,
           renderer.setSize(width, height);
         
@@ -393,12 +408,14 @@ Template.map.onRendered(function (){
     };
   };
 
-
   if(Modernizr.webgl) {
-    AEROTWIST.Surface.init();
+    AEROTWIST.RemixSlices.init();
   }
 
-  container._uihooks = {
+  // so we can access it later
+  mapTemplate.remixSlices = AEROTWIST.RemixSlices;
+
+  mapContainer._uihooks = {
 
     insertElement: function(node, next) {
       var bitDataContext = Blaze.getData(node) || Session.get('createTextBit') || Session.get('sketchBit');
