@@ -1,3 +1,4 @@
+// experimenting with React, only in this component
 var DebugErrors = ReactMeteor.createClass({
 
   templateName: "DebugErrors",
