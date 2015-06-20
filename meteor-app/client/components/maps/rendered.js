@@ -6,11 +6,6 @@ Template.map.onRendered(function (){
   // TODO: craft this sound like fx-welcome.wav
   // template.opening = Parallels.Audio.player.play('moogSeq');
 
-  if(Modernizr.webgl) { 
-    var testImagePath = "/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg"
-    template.remixInstance = Remix.initSlices(testImagePath);
-  }
-
   mapContainer._uihooks = {
 
     insertElement: function(node, next) {
