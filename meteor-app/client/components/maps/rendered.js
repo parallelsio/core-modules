@@ -34,6 +34,8 @@ Template.map.onRendered(function (){
 
    // adapted from: http://lab.aerotwist.com/webgl/surface/
 
+   // TODO: refactor away from new function() pattern
+   // https://stackoverflow.com/questions/2274695/new-function-with-lower-case-f-in-javascript
   var AEROTWIST = AEROTWIST || {};
   AEROTWIST.RemixSlices = new function(){
 
@@ -101,14 +103,10 @@ Template.map.onRendered(function (){
       vars["wireframeOpacity"]  = 1;
       vars["elasticity"]        = 0.001;
       
-      // add listeners
-      addEventListeners();
-      
-      if(createRenderer())
-      {
+      if( createRenderer() ) {
 
-        addLights();
         createObjects();
+        addLights();
       
         updatePlane();
 
@@ -152,10 +150,10 @@ Template.map.onRendered(function (){
       pointLight.position.x = 10;
       pointLight.position.y = 100;
       pointLight.position.z = 10;
-      scene.addLight( pointLight );
+      scene.add( pointLight );
 
       ambientLight = new THREE.AmbientLight( 0xbbbbbb );
-      scene.addLight( ambientLight );
+      scene.add( ambientLight );
     }
     
 
@@ -163,8 +161,8 @@ Template.map.onRendered(function (){
 
       var planeMaterial = new THREE.MeshLambertMaterial({
           color: 0xFFFFFF, 
-          map: THREE.ImageUtils.loadTexture(testFilePath)
-          //, shading: THREE.SmoothShading
+          map: THREE.ImageUtils.loadTexture(testFilePath),
+          shading: THREE.SmoothShading
       });
       
       var planeMaterialWire = new THREE.MeshLambertMaterial({ 
@@ -172,15 +170,14 @@ Template.map.onRendered(function (){
           wireframe:true 
       });
       
-      mesh = new THREE.Mesh(
-        new THREE.Plane(SURFACE_WIDTH, SURFACE_HEIGHT, X_RESOLUTION, Y_RESOLUTION), 
-        [planeMaterial, planeMaterialWire]
-      );
+      var geometry = new THREE.PlaneGeometry(SURFACE_WIDTH, SURFACE_HEIGHT, X_RESOLUTION, Y_RESOLUTION);
+      var materials = [planeMaterial, planeMaterialWire];
 
-      mesh.rotation.x = -Math.PI * .5;
+      mesh = new THREE.Mesh(geometry, materials);
+
+      // mesh.rotation.x = -Math.PI * .5;
       mesh.overdraw = true;
 
-      // scene.addChild(mesh); // v37 API
       scene.add(mesh);
       
       // go through each vertex
@@ -195,22 +192,22 @@ Template.map.onRendered(function (){
         vertex.velocity = new THREE.Vector3();
         
         // connect this vertex to the ones around it
-        if(vertex.position.x > (-SURFACE_WIDTH * .5)) {
+        if(vertex.x > (-SURFACE_WIDTH * .5)) {
           // connect to left
           vertex.springs.push({start:sCount, end:sCount-1});
         }
         
-        if(vertex.position.x < (SURFACE_WIDTH * .5)) {
+        if(vertex.x < (SURFACE_WIDTH * .5)) {
           // connect to right
           vertex.springs.push({start:sCount, end:sCount+1});
         }
         
-        if(vertex.position.y < (SURFACE_HEIGHT * .5)) {
+        if(vertex.y < (SURFACE_HEIGHT * .5)) {
           // connect above
           vertex.springs.push({start:sCount, end:sCount-(X_RESOLUTION+1)});
         }
 
-        if(vertex.position.y > (-SURFACE_HEIGHT * .5)) {
+        if(vertex.y > (-SURFACE_HEIGHT * .5)) {
           // connect below
           vertex.springs.push({start:sCount, end:sCount+(X_RESOLUTION+1)});
         }
@@ -274,27 +271,6 @@ Template.map.onRendered(function (){
       return ok;
     }
     
-    /**
-     * Sets up the event listeners for DnD, the GUI
-     * and window resize
-     */
-    function addEventListeners()
-    {
-      // window event
-      $(window).resize(callbacks.windowResize);
-      $(window).keydown(callbacks.keyDown);
-      
-      // click handler
-      $(document.body).mousedown(callbacks.mouseDown);
-      $(document.body).mouseup(callbacks.mouseUp);
-      $(document.body).click(callbacks.mouseClick);
-      
-      var container = $slicesContainer[0];
-      // container.addEventListener('dragover', cancel, false);
-      // container.addEventListener('dragenter', cancel, false);
-      // container.addEventListener('dragexit', cancel, false);
-      // container.addEventListener('drop', dropFile, false);
-    }
     
     function updatePlane()
     {
@@ -319,37 +295,36 @@ Template.map.onRendered(function (){
           shading: THREE.SmoothShading
         });
 
-      mesh.materials[0]  = newPlaneMaterial;
+      mesh.material[0]  = newPlaneMaterial;
     }
     
     /**
      * Updates the velocity and position
      * of the particles in the view
      */
-    function update()
-    {
+    function update() {
       
-      mesh.materials[1].opacity = vars["wireframeOpacity"];
+      mesh.material[1].opacity = vars["wireframeOpacity"];
       
       var v = meshVerts.length;
       while(v--) {
-        var vertex      = meshVerts[v],
-          acceleration  = new THREE.Vector3(0, 0, -vertex.position.z * vars["elasticity"]),
-          springs     = vertex.springs,
-          s       = springs.length;
+        var vertex        = meshVerts[v];
+        var acceleration  = new THREE.Vector3(0, 0, -vertex.z * vars["elasticity"]);
+        var springs       = vertex.springs;
+        var s             = springs.length;
         
-        vertex.velocity.addSelf(acceleration);
+        vertex.velocity.add(acceleration);
         
         while(s--) {
           var spring    = springs[s],
-            extension = meshVerts[spring.start].position.z - meshVerts[spring.end].position.z;
+            extension = meshVerts[spring.start].z - meshVerts[spring.end].z;
           
           acceleration  = new THREE.Vector3(0, 0, extension * vars["elasticity"] * 50);
-          meshVerts[spring.end].velocity.addSelf(acceleration);
-          meshVerts[spring.start].velocity.subSelf(acceleration);
+          meshVerts[spring.end].velocity.add(acceleration);
+          meshVerts[spring.start].velocity.sub(acceleration);
         }
 
-        vertex.position.addSelf(vertex.velocity);
+        vertex.add(vertex.velocity);
         
         vertex.velocity.multiplyScalar(DAMPEN);
       }
@@ -384,28 +359,7 @@ Template.map.onRendered(function (){
         update();
       }
     }
-    
-    /**
-     * Our internal callbacks object - a neat
-     * and tidy way to organise the various
-     * callbacks in operation.
-     */
-    callbacks = {
-     
-      windowResize: function() {
-        
-        if(camera)
-        {
-          width     = $slicesContainer.width(),
-          height      = $slicesContainer.height(),
-          camera.aspect   = width / height,
-          renderer.setSize(width, height);
-        
-          camera.updateProjectionMatrix();
-        }
-      }
-      
-    };
+  
   };
 
   if(Modernizr.webgl) {
@@ -413,7 +367,7 @@ Template.map.onRendered(function (){
   }
 
   // so we can access it later
-  mapTemplate.remixSlices = AEROTWIST.RemixSlices;
+  // mapTemplate.remixSlices = AEROTWIST.RemixSlices;
 
   mapContainer._uihooks = {
 
