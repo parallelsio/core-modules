@@ -38,6 +38,7 @@ Remix = {
   renderer           : null,
   canvas             : null,
   context            : null,
+  projector          : new THREE.Projector(),
   vars               : [],
 
   image              : null,
@@ -51,13 +52,15 @@ Remix = {
   meshVerts          : [],
   
   DAMPEN             : 0.9,
+  AGGRESSION         : 1000,
   DEPTH              : 500,
   NEAR               : 1,
   FAR                : 10000,
   X_RESOLUTION       : 20,
   Y_RESOLUTION       : 20,
-  SURFACE_WIDTH      : 400,
-  SURFACE_HEIGHT     : 400,
+  MESH_WIDTH      : 400,
+  MESH_HEIGHT     : 400,
+
 
 
   //  Only applies to the centres
@@ -66,11 +69,10 @@ Remix = {
     pointLight.position.x = 10;
     pointLight.position.y = 100;
     pointLight.position.z = 10;
-
     this.scene.add( pointLight );
 
-    // ambientLight = new THREE.AmbientLight( 0xbbbbbb );
-    // this.scene.add( ambientLight );
+    ambientLight = new THREE.AmbientLight( 0xbbbbbb );
+    this.scene.add( ambientLight );
   },
   
 
@@ -88,8 +90,8 @@ Remix = {
     });
     
     var geometry = new THREE.PlaneGeometry(
-      this.SURFACE_WIDTH, 
-      this.SURFACE_HEIGHT, 
+      this.MESH_WIDTH, 
+      this.MESH_HEIGHT, 
       this.X_RESOLUTION, 
       this.Y_RESOLUTION
     );
@@ -97,10 +99,7 @@ Remix = {
     var materials = [planeMaterial, planeMaterialWire];
 
     this.mesh = new THREE.Mesh(geometry, materials);
-
-    // this.mesh.rotation.x = -Math.PI * .5;
-    this.mesh.overdraw = true;
-
+    // this.mesh.overdraw = true;
     this.scene.add(this.mesh);
     
     // go through each vertex
@@ -115,24 +114,65 @@ Remix = {
       vertex.velocity = new THREE.Vector3();
       
       // connect this vertex to the ones around it
-      if(vertex.x > ( -this.SURFACE_WIDTH * 0.5)) {
+      if(vertex.x > ( -this.MESH_WIDTH * 0.25)) {
         vertex.springs.push({start:sCount, end:sCount - 1 }); // connect to left
       }
       
-      if(vertex.x < ( this.SURFACE_WIDTH * 0.5)) {
+      if(vertex.x < ( this.MESH_WIDTH * 0.25)) {
         vertex.springs.push({start:sCount, end:sCount + 1 });  // connect to right
       }
       
-      if(vertex.y < ( this.SURFACE_HEIGHT * 0.5)) {
+      if(vertex.y < ( this.MESH_HEIGHT * 0.25)) {
         vertex.springs.push({ start:sCount, end:sCount - (this.X_RESOLUTION + 1) }); // connect above
       }
 
-      if(vertex.y > ( -this.SURFACE_HEIGHT * 0.5)) {
+      if(vertex.y > ( -this.MESH_HEIGHT * 0.25)) {
         vertex.springs.push({start:sCount, end:sCount + (this.X_RESOLUTION + 1 ) }); // connect below
       }
     }
   },
   
+  disturbMesh: function(event, magnitude) {
+    if(this.running) {
+      // TODO: replace offsets + clients with verge(). functions
+      var mouseX  = event.offsetX || (event.clientX - 220);
+      var mouseY  = event.offsetY || event.clientY;
+      
+      var vector  = new THREE.Vector3(
+         (mouseX / this.width) * 2 - 1, 
+        -(mouseY / this.height) * 2 + 1, 
+        0.5
+      );
+
+      vector.unproject();
+      // this.projector.unprojectVector(vector, this.camera);
+      
+      var ray     = new THREE.Ray(
+                                this.camera.position, 
+                                vector.sub(this.camera.position).normalize()
+                                );
+
+      var intersects  = ray.intersectObject(mesh);
+      
+      // if the ray intersects with the surface, work out where
+      if(intersects.length) {
+        var iPoint  = intersects[0].point;
+        var xVal    = Math.floor((iPoint.x / this.MESH_WIDTH) * this.X_RESOLUTION);
+        var yVal    = Math.floor((iPoint.z / this.MESH_HEIGHT) * this.Y_RESOLUTION);
+        
+        xVal    += this.X_RESOLUTION * 0.5;
+        yVal    += this.Y_RESOLUTION * 0.5;
+        
+        // originally, no var. is there a reason for this?
+        // index   = (yVal * (this.X_RESOLUTION + 1)) + xVal;
+        var index   = (yVal * (this.X_RESOLUTION + 1)) + xVal;
+        
+        if(index >= 0 && index < this.meshVerts.length) {
+          this.meshVerts[index].velocity.z += magnitude;
+        }
+      }
+    }
+  },
 
   createWebGLRenderer: function() {
     var ok = false;
@@ -148,20 +188,21 @@ Remix = {
         this.NEAR, 
         this.FAR);
 
+    
+      this.camera.position.y      = 1;
+      this.camera.position.z      = this.DEPTH;
+
       this.scene                  = new THREE.Scene();
       this.canvas                 = document.createElement('canvas');
-      this.canvas.width           = this.SURFACE_WIDTH;
-      this.canvas.height          = this.SURFACE_HEIGHT;
+      this.canvas.width           = this.MESH_WIDTH;
+      this.canvas.height          = this.MESH_HEIGHT;
       this.context                = this.canvas.getContext('2d');
       
       this.context.fillStyle      = "#000000";
       this.context.beginPath();
-      this.context.fillRect( 0, 0, this.SURFACE_WIDTH, this.SURFACE_HEIGHT);
+      this.context.fillRect( 0, 0, this.MESH_WIDTH, this.MESH_HEIGHT);
       this.context.closePath();
       this.context.fill();
-    
-      this.camera.position.y      = 220;
-      this.camera.position.z      = this.DEPTH;
 
       // alternative:
       // We place it 15 units to the left of the origin, 
@@ -186,8 +227,8 @@ Remix = {
   },
   
   redrawPlane: function() {
-    var ratio           = 1 / Math.max( this.image.width / this.SURFACE_WIDTH, 
-                                        this.image.height/this.SURFACE_HEIGHT);
+    var ratio           = 1 / Math.max( this.image.width / this.MESH_WIDTH, 
+                                        this.image.height/this.MESH_HEIGHT);
     var scaledWidth     = this.image.width * ratio;
     var scaledHeight    = this.image.height * ratio;
 
@@ -197,8 +238,8 @@ Remix = {
               0,
               this.image.width,
               this.image.height,
-              (this.SURFACE_WIDTH - this.scaledWidth) * 0.5, 
-              (this.SURFACE_HEIGHT - this.scaledHeight) * 0.5, 
+              (this.MESH_WIDTH - this.scaledWidth) * 0.5, 
+              (this.MESH_HEIGHT - this.scaledHeight) * 0.5, 
               scaledWidth, 
               scaledHeight
     );
@@ -266,7 +307,31 @@ Remix = {
     }
   },
 
+  mouseDownCallback: function(){
+    document.addEventListener('mousemove', this.mouseMoveCallback, false);
+  },
+    
+  mouseMoveCallback: function(event){
+    // is there a better way to pass scope here?
+    Remix.disturbMesh(event, Remix.vars["magnitude"] * 0.2);
+  },
 
+  mouseClickCallback: function(event){
+    // is there a better way to pass scope here?
+    Remix.disturbMesh(event, Remix.vars["magnitude"] * 0.2);
+  },
+
+  windowResizeCallback: function(event){
+     if(this.camera) {
+        this.width      = this.$slicesContainer.width(),
+        this.height     = this.$slicesContainer.height(),
+        this.camera.aspect   = this.width / this.height,
+        this.renderer.setSize(this.width, this.height);
+      
+        this.camera.updateProjectionMatrix();
+      }
+  },
+   
   initSlices: function(path){
     
     this.$slicesContainer      = $('#create-parallel--remix-splices');
@@ -278,21 +343,21 @@ Remix = {
 
     // set up our initial this.vars
     this.vars["magnitude"]         = 30;
-    this.vars["wireframeOpacity"]  = 1;
+    this.vars["wireframeOpacity"]  = 0;
     this.vars["elasticity"]        = 0.001;
+
+    // add window listener
+    $(window).resize(this.windowResizeCallback);
     
+    // add click + move mouse handlers
+    $(document.body).mousedown(this.mouseDownCallback);
+    $(document.body).click(this.mouseClickCallback);
+
     if( this.createWebGLRenderer() ) {
 
       this.createAndAddObjects();
       this.createAndAddLights();
       this.redrawPlane();
-
-      // give the browser chance to
-      // create the image object
-      setTimeout(function(){
-        this.redrawPlane(); // split the image
-      }, 100);
-
       this.updateMesh();
     }
     
