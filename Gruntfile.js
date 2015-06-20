@@ -426,6 +426,7 @@ module.exports = function (grunt) {
   grunt.registerTask('server', 'Run server', function (target) {
     fs.exists('.env', function (exists) {
       if (exists) {
+        console.log("Found .env file")
         require('dotenv').load();
       }
     });
