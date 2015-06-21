@@ -5,14 +5,34 @@
 
     * is enter/exit for this mode intuitive? shouldnt it be three?
       1. enter   2. cancel  3.  complete?
+
+    * flow of this logic is awkward. Need to break into peices and refactor.
+      Current UX flow:
+      - person hovers over a source bit (the beginning part of the connection/"parallel")
+      - person presses Shift key to select hovered bit. Doing this enters Parallel Create mode
+      - person hovers over destination bit
+      - person presses Shift key, while hovering the destination bit, to choose it
+      - form is presented, prompting person for a relationship name, like tagging
+      - Enter key submits it, saves the connection, exiting Parallel Create mode, and returns person to the canvas "home"
+    
+    
+
  */
 
-// OQ: Are these global vars?
-// TODO: to move these into mode, as object properties?
-var timeline, $originBit; // for Greensock heartbeat animation
-var line, updatedLine, lineContainer, params, two, mouse, circle; // two.js vars, for parallel line drawing
-var spark; // for sparks animation
-var renderer, texture, stage, sprite, rafHandle; // pixi.js vars, for remix slices
+// TODO: to move these into mode, as private object properties?
+
+// for Greensock heartbeat animation
+var timeline, $originBit; 
+
+// two.js vars, for parallel line drawing
+var line, updatedLine, lineContainer, params, two, mouse, circle; 
+
+ // for sparks animation, on bit corners
+var spark;
+
+// pixi.js vars, for remix slices
+var renderer, texture, stage, sprite, rafHandle, canvasElement;
+
 
 Parallels.AppModes['create-parallel'] = {
 
@@ -125,29 +145,48 @@ Parallels.AppModes['create-parallel'] = {
 
         tl.play();
 
+        // TODO: show form
 
+        // TODO: on form submit, save connection to neo4j
 
-        // TODO: call neo4j save
+        // TODO: call Exit mode
 
-
-        // query Neo4j for image bits that are connected, by X number of hops
-
-        // slice + dice images in collection
-        // use these slices to fast / cycle / shimmer across these pieces as a wave
-
-        // adapted from: 
-
-
+        // prep pixi renderer for slice and dice fx
+        // TODO: move this to on bitOnHover during selectDest mode 
         if (!renderer){
 
-          var viewportWidth  = verge.viewportW();
-          var viewportHeight = verge.viewportH();
+          // set the canvas when pixi stage will sit in
+          // the same size as the thumbnail image
+
+          // we already calculated the bounding rectangle earlier,
+          // when we ran the spark animation
+
+          // lets reuse the coords to calc our bit dimensions
+          var bitWidth = destBitRect.right - destBitRect.left;
+          var bitHeight = destBitRect.bottom - destBitRect.top;
+
+          var viewportWidth  = bitWidth;
+          var viewportHeight = bitHeight;
+
+          // create the canvas element, position it, z-index
+          canvasElement = document.createElement('canvas');
+          canvasElement.id = "create-parallel--remix-slices";
+          canvasElement.height = bitHeight;
+          canvasElement.width = bitWidth;
+          
+          // TODO: replace with transform positioning
+          canvasElement.style.left = destBitRect.left
+          canvasElement.style.top = destBitRect.top
+
+          // TODO: set z-index, to move the canvas over on top of the DOM version
+          $(canvasElement).prependTo(".map");
+          $destBit.hide();
 
           renderer = PIXI.autoDetectRenderer(
             viewportWidth, 
             viewportHeight,
             { 
-              view: document.getElementById("create-parallel--remix-splices"),
+              view: document.getElementById("create-parallel--remix-slices"),
               transparent: true, 
               backgroundColor : 0x1099bb,
               antialias: true
@@ -157,28 +196,39 @@ Parallels.AppModes['create-parallel'] = {
           log.debug("created pixi renderer: ", renderer);
 
           stage = new PIXI.Container(); // create the root of the scene graph
-          texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
+
+          // texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
+          texture = PIXI.Texture.fromImage($destBit.find('img').attr('src'));
+          texture.crossOrigin = true;
           sprite = new PIXI.Sprite(texture);
 
           // // center the sprite's anchor point
-          sprite.anchor.x = 0.5;
-          sprite.anchor.y = 0.5;
-
-          // // move to center
-          sprite.position.x = viewportWidth / 2;
-          sprite.position.y = viewportHeight / 2;
+          sprite.anchor.x = 0;
+          sprite.anchor.y = 0;
 
           stage.addChild(sprite);
           renderer.render(stage);
 
           // https://stackoverflow.com/questions/22742239/accessing-texture-after-initial-loading-in-pixi-js        
           // start animating
+          // TODO: use assetloader to ensure image is loaded
+          // this really shhouldnt be necessary, as how would person have chosen a destination bit
+          // if it wasnt visible?
+          // var assetsToLoad = ["sprites.json"];
+          // var loader = new PIXI.AssetLoader(assetsToLoad);
           animate();
+
+          // TODO: query Neo4j for image bits that are connected, by X number of hops
+          // prepare image array for slicing
 
           function animate() {
               rafHandle = requestAnimationFrame(animate); // store handle for stopping it later
-              sprite.rotation += 0.1;
               renderer.render(stage);
+
+              // slice n dice here
+              // fast / cycle / shimmer across these pieces as a wave
+
+              // play sound?
           }
 
           // assign to map template so we can access for debugging, outside of this scope
@@ -199,12 +249,6 @@ Parallels.AppModes['create-parallel'] = {
         };
 
               
-        // TODO: line up renderer to overlap with image.
-
-        // hide DOM image
-
-        // animate 
-
 
 
         // show form so person can define relationship
@@ -346,14 +390,19 @@ Parallels.AppModes['create-parallel'] = {
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
       // stop pixi webgl loop
-      cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle);
+      if (Utilities.getMapTemplate().pixiInstance.rafHandle){ 
+        cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle) 
+      }
       
       // destroy all pixi.js objects + references
       // TODO: clear whatever is on the stage before destroying all references
       renderer.destroyTexture(texture);
       renderer.destroy();
       texture.destroy();
-      renderer, texture, sprite = null;
+      renderer, texture, sprite, rafHandle, Utilities.getMapTemplate.pixiInstance = null;
+
+      $destBit.show();
+      $(canvasElement).remove();
 
       // reenable scrolling
       $("body").css( "overflow", "visible"); 
