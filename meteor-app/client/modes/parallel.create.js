@@ -11,7 +11,7 @@
 // TODO: to move these into mode, as object properties?
 var timeline, $originBit; // for Greensock heartbeat animation
 var line, updatedLine, lineContainer, params, two, mouse, circle; // two.js vars, for parallel line drawing
-var emitter; // for sparks animation
+var spark; // for sparks animation
 var renderer, texture, stage, sprite, rafHandle; // pixi.js vars, for remix slices
 
 Parallels.AppModes['create-parallel'] = {
@@ -91,7 +91,7 @@ Parallels.AppModes['create-parallel'] = {
         var setupAndPlayCornerSpark = function(corner){
           log.debug("setupAndPlayCornerSpark: ", corner);
 
-          var emitter = new particleEmitter({
+          var spark = new particleEmitter({
             onStartCallback: function(){
               log.debug("starting particleEmitter for corner: ", corner);
             },
@@ -107,9 +107,9 @@ Parallels.AppModes['create-parallel'] = {
             rate: 600
           });
 
-          emitter.start()
+          spark.start()
           var handle = Meteor.setTimeout(function(){
-            emitter.stop();
+            spark.stop();
           },
           100);          
         }
@@ -176,7 +176,7 @@ Parallels.AppModes['create-parallel'] = {
           animate();
 
           function animate() {
-              rafHandle = requestAnimationFrame(animate); // recursively calls itself?
+              rafHandle = requestAnimationFrame(animate); // store handle for stopping it later
               sprite.rotation += 0.1;
               renderer.render(stage);
           }
