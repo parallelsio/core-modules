@@ -4,8 +4,6 @@ _ = lodash;
 
 Utilities = {
 
-  // *************** BIT ****************
-
   getBitDataId: function (bitHtmlElement){
     // TODO: improve so either an HTML element/node, or a jQuery obj works.
     // Greensock does this, look at source
@@ -21,9 +19,16 @@ Utilities = {
     return Blaze.getView( _.first($bit) );
   },
 
+  // person interacts with only one map at a time, ie singleton obj 
+  getMapTemplate: function (){
+    var mapElement = _.first( $(".map") );
+    var mapView = Blaze.getView( mapElement );
+    return mapView.templateInstance();
+  },
+
   // Usually, we'd just use jQuery's .position method.
   // In situations where the element is display:none, we can use the transform 
-  // property, which is set, to get the position 
+  // property, if it's set, to get the position 
   getTransformedPosition: function(element){
     var cssTransform = element.style["transform"];
     var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
@@ -38,9 +43,7 @@ Utilities = {
     };
   },
 
-  /* 
-      GENERAL 
-  */ 
+
   getClass: function(object){
     // http://phpjs.org/functions/getClass
     // http://kevin.vanzonneveld.net

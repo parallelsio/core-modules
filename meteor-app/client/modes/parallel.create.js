@@ -9,9 +9,10 @@
 
 // OQ: Are these global vars?
 // TODO: to move these into mode, as object properties?
-var timeline, $originBit;
-var line, updatedLine, lineContainer, params, two, mouse, circle;
-var emitter;
+var timeline, $originBit; // for Greensock heartbeat animation
+var line, updatedLine, lineContainer, params, two, mouse, circle; // two.js vars, for parallel line drawing
+var emitter; // for sparks animation
+var renderer, texture, stage, sprite, rafHandle; // pixi.js vars, for remix slices
 
 Parallels.AppModes['create-parallel'] = {
 
@@ -133,6 +134,78 @@ Parallels.AppModes['create-parallel'] = {
 
         // slice + dice images in collection
         // use these slices to fast / cycle / shimmer across these pieces as a wave
+
+        // adapted from: 
+
+
+        if (!renderer){
+
+          var viewportWidth  = verge.viewportW();
+          var viewportHeight = verge.viewportH();
+
+          renderer = PIXI.autoDetectRenderer(
+            viewportWidth, 
+            viewportHeight,
+            { 
+              view: document.getElementById("create-parallel--remix-splices"),
+              transparent: true, 
+              backgroundColor : 0x1099bb,
+              antialias: true
+            }
+          );
+
+          log.debug("created pixi renderer: ", renderer);
+
+          stage = new PIXI.Container(); // create the root of the scene graph
+          texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
+          sprite = new PIXI.Sprite(texture);
+
+          // // center the sprite's anchor point
+          sprite.anchor.x = 0.5;
+          sprite.anchor.y = 0.5;
+
+          // // move to center
+          sprite.position.x = viewportWidth / 2;
+          sprite.position.y = viewportHeight / 2;
+
+          stage.addChild(sprite);
+          renderer.render(stage);
+
+          // https://stackoverflow.com/questions/22742239/accessing-texture-after-initial-loading-in-pixi-js        
+          // start animating
+          animate();
+
+          function animate() {
+              rafHandle = requestAnimationFrame(animate); // recursively calls itself?
+              sprite.rotation += 0.1;
+              renderer.render(stage);
+          }
+
+          // assign to map template so we can access for debugging, outside of this scope
+          // TODO: is this assigning a reference, or actually making a full copy of this object?
+          Utilities.getMapTemplate().pixiInstance = {
+            stage: stage,
+            renderer: renderer,
+            texture: texture,
+            sprite: sprite,
+            rafHandle: rafHandle
+          };
+
+
+        }
+
+        else {
+          log.debug("pixi renderer already exists: ", renderer);
+        };
+
+              
+        // TODO: line up renderer to overlap with image.
+
+        // hide DOM image
+
+        // animate 
+
+
 
         // show form so person can define relationship
         // -- bind escape rids form, create-parallel mode
@@ -268,10 +341,19 @@ Parallels.AppModes['create-parallel'] = {
       // stop drawing parallel line
       two.unbind('update');
 
+      // TODO: properly garbage collect these objects
       // reset vars for next create-parallel use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
-      // TODO: remove the two instance. Very CPU drain as it drains on every re-init
+      // stop pixi webgl loop
+      cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle);
+      
+      // destroy all pixi.js objects + references
+      // TODO: clear whatever is on the stage before destroying all references
+      renderer.destroyTexture(texture);
+      renderer.destroy();
+      texture.destroy();
+      renderer, texture, sprite = null;
 
       // reenable scrolling
       $("body").css( "overflow", "visible"); 
