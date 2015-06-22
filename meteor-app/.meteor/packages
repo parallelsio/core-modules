@@ -38,7 +38,6 @@ momentjs:moment
 cosmos:browserify
 lifeinchords:teoria
 meteorhacks:kadira-debug
-yagni:request-animation-frame
 cwaring:modernizr
 fds:pixijs
 angelcabo:canvas-manager

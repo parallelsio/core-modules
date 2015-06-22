@@ -33,6 +33,7 @@ var spark;
 // pixi.js vars, for remix slices
 var renderer, texture, stage, sprite, rafHandle, canvasElement;
 
+var $destBit;
 
 Parallels.AppModes['create-parallel'] = {
 
@@ -59,11 +60,11 @@ Parallels.AppModes['create-parallel'] = {
       
       // get latest value of bit person is hovering over as destination bit.
       // this is expected to happen now that the origin has already been chosen
-      var destBitId = Session.get('bitHoveringId'); 
+      destBitId = Session.get('bitHoveringId'); 
 
       if (destBitId && (destBitId != originBitId)) {
       
-        var $destBit = Utilities.getBitElement(destBitId);
+        $destBit = Utilities.getBitElement(destBitId);
 
         // stop heartbeat animation
         // TODO: after one cycle is done. reset to original size
@@ -101,6 +102,7 @@ Parallels.AppModes['create-parallel'] = {
         ];
 
         // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
+        // TODO: convert to RAF
         var particles = document.createElement('div');
         $(particles)
           .attr( "id", "create-parallel--particles")
@@ -197,9 +199,10 @@ Parallels.AppModes['create-parallel'] = {
 
           stage = new PIXI.Container(); // create the root of the scene graph
 
-          // texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
-          texture = PIXI.Texture.fromImage($destBit.find('img').attr('src'));
-          texture.crossOrigin = true;
+          texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
+          // TODO: wire up loaded photo, figure out cross origin issues
+          // texture = PIXI.Texture.fromImage($destBit.find('img').attr('src'));
+          
           sprite = new PIXI.Sprite(texture);
 
           // // center the sprite's anchor point
@@ -207,7 +210,7 @@ Parallels.AppModes['create-parallel'] = {
           sprite.anchor.y = 0;
 
           stage.addChild(sprite);
-          renderer.render(stage);
+          // renderer.render(stage);
 
           // https://stackoverflow.com/questions/22742239/accessing-texture-after-initial-loading-in-pixi-js        
           // start animating
@@ -217,18 +220,38 @@ Parallels.AppModes['create-parallel'] = {
           // var assetsToLoad = ["sprites.json"];
           // var loader = new PIXI.AssetLoader(assetsToLoad);
           animate();
+          var counter = 0;
 
           // TODO: query Neo4j for image bits that are connected, by X number of hops
+          // also, spatially: K-nearest algo?
+          // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
+
           // prepare image array for slicing
 
           function animate() {
-              rafHandle = requestAnimationFrame(animate); // store handle for stopping it later
+
+
+              if (counter % 60 === 0){
+                log.debug("pixi RAF running: ", counter/60);
+              }
+
+              // TODO: slice n dice here: simmer pieces as a wave
+
+              // TODO: play sound
+
               renderer.render(stage);
+              counter++;
 
-              // slice n dice here
-              // fast / cycle / shimmer across these pieces as a wave
+              // we only need to save the very first handle, that we'll use later to stop the RAF
+              if (!rafHandle) { 
+                rafHandle = requestAnimationFrame(animate);
+                log.debug("pixi saving rafHandle:", rafHandle);
 
-              // play sound?
+              }
+
+              else{
+                requestAnimationFrame(animate); 
+              }
           }
 
           // assign to map template so we can access for debugging, outside of this scope
@@ -240,8 +263,6 @@ Parallels.AppModes['create-parallel'] = {
             sprite: sprite,
             rafHandle: rafHandle
           };
-
-
         }
 
         else {
@@ -390,19 +411,23 @@ Parallels.AppModes['create-parallel'] = {
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
       // stop pixi webgl loop
-      if (Utilities.getMapTemplate().pixiInstance.rafHandle){ 
-        cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle) 
+      if (rafHandle){ 
+        log.debug("about to cancelAnimationFrame on ", rafHandle);
+        cancelAnimationFrame(rafHandle); 
       }
       
       // destroy all pixi.js objects + references
       // TODO: clear whatever is on the stage before destroying all references
       renderer.destroyTexture(texture);
-      renderer.destroy();
       texture.destroy();
-      renderer, texture, sprite, rafHandle, Utilities.getMapTemplate.pixiInstance = null;
+      renderer.destroy(true); // remove the canvas element
+      renderer = null;
+      texture= null;
+      sprite= null;
+      rafHandle= null;
+      Utilities.getMapTemplate().pixiInstance = null;
 
       $destBit.show();
-      $(canvasElement).remove();
 
       // reenable scrolling
       $("body").css( "overflow", "visible"); 
