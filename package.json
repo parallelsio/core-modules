@@ -52,6 +52,7 @@
     "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json",
     "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\"",
     "test-packages": "./end2end-tests/bin/test-all.sh",
-    "test-package": "./end2end-tests/bin/test-package.sh"
+    "test-package": "./end2end-tests/bin/test-package.sh",
+    "test-server": "cd meteor-app && meteor test-packages -p 3030"
   }
 }

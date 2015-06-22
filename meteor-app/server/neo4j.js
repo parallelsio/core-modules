@@ -1,8 +1,8 @@
 var N4JDB = new Meteor.Neo4j(process.env.GRAPHENEDB_URL);
 
 // todo: we should be listening for undo logic here as well:
-StateChangeEvents.on('canvas.bit.created', function (event) {
-  var bit = event.data.bit;
+InfiniteUndo.EventStream.on('entity.bit.created', function (event) {
+  var bit = event.data.payload;
   log.debug('Neo4j addBitToGraph starting ', bit._id);
 
   // TODO: how do we know if this was successful? is there no return value?
@@ -14,8 +14,8 @@ StateChangeEvents.on('canvas.bit.created', function (event) {
     });
 });
 
-StateChangeEvents.on('canvas.bit.deleted', function (event) {
-  var bit = event.data.bit;
+InfiniteUndo.EventStream.on('entity.bit.deleted', function (event) {
+  var bit = event.data.payload;
   log.debug('Neo4j removeBitFromGraph starting ', bit._id);
 
   N4JDB.query(

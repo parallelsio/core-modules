@@ -1,6 +1,6 @@
 aldeed:template-extension@3.4.3
 amplify@1.0.0
-angelcabo:canvas-manager@0.0.1
+angelcabo:infinite-undo@0.0.1
 autoupdate@1.2.1
 awatson1978:mousetrap@1.5.2
 babrahams:editable-json@0.4.3
@@ -74,6 +74,7 @@ ogourment:settings@1.0.1
 ordered-dict@1.0.3
 ostrio:neo4jdriver@0.2.13
 package-version-parser@3.0.3
+parallels-canvas-manager@0.0.1
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.2.0_1
 raix:ui-dropped-event@0.0.7

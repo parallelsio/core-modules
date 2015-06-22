@@ -4,5 +4,5 @@ Meteor.publish 'bits', ->
 Meteor.publish 'errors', ->
   return Errors.find()
 
-Meteor.publish 'events', ->
-  return Eventlog.find()
+Meteor.publish 'Canvas.events', ->
+  return CanvasEvents.find()

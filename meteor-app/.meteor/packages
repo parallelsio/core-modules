@@ -39,4 +39,6 @@ cosmos:browserify
 lifeinchords:teoria
 meteorhacks:kadira-debug
 cwaring:modernizr
-angelcabo:canvas-manager
+fds:pixijs
+angelcabo:infinite-undo
+parallels-canvas-manager

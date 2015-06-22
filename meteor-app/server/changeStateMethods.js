@@ -10,8 +10,8 @@
 
 var _changeState = function (msg) {
   if (msg.data.canvasId) {
-    var getCanvas = Meteor.wrapAsync(CanvasRepo.get, CanvasRepo);
-    var commitRepo = Meteor.wrapAsync(CanvasRepo.commit, CanvasRepo);
+    var getCanvas = Meteor.wrapAsync(canvasRepository.get, canvasRepository);
+    var commitRepo = Meteor.wrapAsync(canvasRepository.commit, canvasRepository);
 
     var canvas = getCanvas(msg.data.canvasId);
     var canvasAction = canvas[msg.command];
@@ -20,10 +20,9 @@ var _changeState = function (msg) {
       var action = Meteor.wrapAsync(canvasAction, canvas);
       var response = action(msg.data);
       commitRepo(canvas, {/* forceSnapshot: true */});
-      console.log("changeState: complete: canvas (%s) v%s", canvas.id, canvas.version);
       return response;
     } else {
-      log.error("changeState: Command not recognized : ", canvasAction);
+      log.error("changeState: Command not recognized : ", msg.command);
     }
   }
 };
@@ -33,7 +32,7 @@ var _changeState = function (msg) {
 // events.
 
 var _findEventDetails = Meteor.wrapAsync(function (canvasId, version, callback) {
-  CanvasRepo.events
+  canvasRepository.events
     .find({ id: canvasId, version: version })
     .toArray(function (err, events) {
       if (err) callback(err);
@@ -41,14 +40,15 @@ var _findEventDetails = Meteor.wrapAsync(function (canvasId, version, callback) 
     });
 });
 
+// todo: it is confusing to have canvasId and entityId be references to the same thing. Normalize the identifier naming.
 Meteor.methods({
 
   changeState: _changeState,
 
   undoState: function (data) {
-    var event = findMostRecentUndoableEvent(data.canvasId);
+    var event = InfiniteUndo.findMostRecentUndoableEvent(data.canvasId);
     if (event) {
-      var eventDetails = _findEventDetails(event.canvasId, event.version);
+      var eventDetails = _findEventDetails(event.entityId, event.version);
       var undoEvent = 'undo_' + eventDetails.method.replace(/undo_|redo_/, "");
 
       _changeState({command: undoEvent, data: eventDetails.data.original});
@@ -56,9 +56,9 @@ Meteor.methods({
   },
 
   redoState: function (data) {
-    var event = findOldestReplayableEvent(data.canvasId);
+    var event = InfiniteUndo.findOldestReplayableEvent(data.canvasId);
     if (event) {
-      var eventDetails = _findEventDetails(event.canvasId, event.version);
+      var eventDetails = _findEventDetails(event.entityId, event.version);
       var redoEvent = 'redo_' + eventDetails.method.replace(/undo_|redo_/, "");
 
       _changeState({command: redoEvent, data: eventDetails.data});
