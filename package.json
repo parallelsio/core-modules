@@ -50,6 +50,8 @@
     "dropneo": "neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start",
     "resetdb": "grunt bgShell:resetMeteorDb && neo4j restart && grunt bgShell:resetNeo4jDb",
     "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json",
-    "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\""
+    "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\"",
+    "test-packages": "./end2end-tests/bin/test-all.sh",
+    "test-package": "./end2end-tests/bin/test-package.sh"
   }
 }
