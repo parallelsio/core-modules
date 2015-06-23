@@ -167,26 +167,29 @@ Parallels.AppModes['create-parallel'] = {
           var bitWidth = destBitRect.right - destBitRect.left;
           var bitHeight = destBitRect.bottom - destBitRect.top;
 
-          var viewportWidth  = bitWidth;
-          var viewportHeight = bitHeight;
-
           // create the canvas element, position it, z-index
           canvasElement = document.createElement('canvas');
           canvasElement.id = "create-parallel--remix-slices";
           canvasElement.height = bitHeight;
           canvasElement.width = bitWidth;
-          
+
+          $(canvasElement)
+            .prependTo(".map")
+            .css({
+              left: destBitRect.left, // TODO: replace with transform positioning
+              top: destBitRect.top,
+              position: 'absolute',
+              zIndex: 10
+            });
+           
           // TODO: replace with transform positioning
-          canvasElement.style.left = destBitRect.left
-          canvasElement.style.top = destBitRect.top
 
           // TODO: set z-index, to move the canvas over on top of the DOM version
-          $(canvasElement).prependTo(".map");
           $destBit.hide();
 
           renderer = PIXI.autoDetectRenderer(
-            viewportWidth, 
-            viewportHeight,
+            bitWidth, 
+            bitHeight,
             { 
               view: document.getElementById("create-parallel--remix-slices"),
               transparent: true, 
@@ -209,8 +212,11 @@ Parallels.AppModes['create-parallel'] = {
           sprite.anchor.x = 0;
           sprite.anchor.y = 0;
 
+          // match bit height/width
+          sprite.width = bitWidth;
+          sprite.height = bitHeight;
+
           stage.addChild(sprite);
-          // renderer.render(stage);
 
           // https://stackoverflow.com/questions/22742239/accessing-texture-after-initial-loading-in-pixi-js        
           // start animating
@@ -230,10 +236,10 @@ Parallels.AppModes['create-parallel'] = {
 
           function animate() {
 
-
-              if (counter % 60 === 0){
-                log.debug("pixi RAF running: ", counter/60);
-              }
+              // debugging
+              // if (counter % 60 === 0){
+              //   log.debug("pixi RAF running: ", counter/60);
+              // }
 
               // TODO: slice n dice here: simmer pieces as a wave
 
@@ -246,7 +252,6 @@ Parallels.AppModes['create-parallel'] = {
               if (!rafHandle) { 
                 rafHandle = requestAnimationFrame(animate);
                 log.debug("pixi saving rafHandle:", rafHandle);
-
               }
 
               else{
@@ -389,6 +394,7 @@ Parallels.AppModes['create-parallel'] = {
     log.debug("mode:create-parallel:exit");
     
     if (Session.get('currentMode')) {
+      
       Session.set('currentMode', null);
       Session.set('originBitId', null);
       Session.set('destBitId', null);
@@ -402,18 +408,20 @@ Parallels.AppModes['create-parallel'] = {
       // stop heartbeat animation
       timeline.kill();
 
-      $(window).off('mousemove');
       // stop drawing parallel line
       two.unbind('update');
+      $(window).off('mousemove');
 
       // TODO: properly garbage collect these objects
       // reset vars for next create-parallel use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
       // stop pixi webgl loop
-      if (rafHandle){ 
-        log.debug("about to cancelAnimationFrame on ", rafHandle);
-        cancelAnimationFrame(rafHandle); 
+
+      if (Utilities.getMapTemplate().pixiInstance.rafHandle){ 
+        // log.debug("about to cancelAnimationFrame on rafHandle:", rafHandle);
+        log.debug("about to cancelAnimationFrame on Utilities.getMapTemplate().pixiInstance.rafHandle", rafHandle);
+        cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle); 
       }
       
       // destroy all pixi.js objects + references
@@ -426,7 +434,7 @@ Parallels.AppModes['create-parallel'] = {
       sprite= null;
       rafHandle= null;
       Utilities.getMapTemplate().pixiInstance = null;
-
+      $(canvasElement).remove();
       $destBit.show();
 
       // reenable scrolling
