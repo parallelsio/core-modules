@@ -31,6 +31,8 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
 var spark;
 
 var canvasElement;
+var isSlicingDicing = false;
+var rafHandle;
 
 var $destBit;
 
@@ -152,9 +154,11 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: call Exit mode
 
-        // prep slice rendere
+        // prep slicer
         // TODO: move this to on bitOnHover during selectDest mode 
-        if (!renderer){
+        if (!isSlicingDicing){
+
+          isSlicingDicing = true;
 
           // set the canvas when pixi stage will sit in
           // the same size as the thumbnail image
@@ -180,39 +184,71 @@ Parallels.AppModes['create-parallel'] = {
               position: 'absolute',
               zIndex: 10
             });
-           
-          // TODO: replace with transform positioning
 
-          // TODO: set z-index, to move the canvas over on top of the DOM version
-          $destBit.hide();
+          var ctx = canvasElement.getContext('2d');
+          ctx.width = bitWidth;
+          ctx.height = bitHeight;
 
-          // texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
+          var frame = document.createElement('canvas');
+          frame.width = bitWidth;
+          frame.height = bitHeight;
 
-          // match bit height/width
-          sprite.width = bitWidth;
-          sprite.height = bitHeight;
-
-          
-          // start animating
-          // TODO: use assetloader to ensure image is loaded
-          // this really shhouldnt be necessary, as how would person have chosen a destination bit
-          // if it wasnt visible?
-          // var assetsToLoad = ["sprites.json"];
-          // var loader = new PIXI.AssetLoader(assetsToLoad);
-       
+          var frameCtx = frame.getContext('2d');
+          frameCtx.drawImage(
+            $destBit.find('img')[0],
+            0,
+            0,
+            bitHeight,
+            bitWidth
+          );
+          // img.crossOrigin = '';
 
           // TODO: query Neo4j for image bits that are connected, by X number of hops
           // also, spatially: K-nearest algo?
           // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
-          // prepare image array for slicing
 
-          // save instance tilities.getMapTemplate()
+          var sw = 32;
+          sliceAndDice();
+
+          function sliceAndDice() {
+            // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
+            // cancel when the rollage is done
+            // if(){
+            //   isSlicingDicing = false;
+            //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+            // }
+
+            // some misc slicing
+            for(var x = 0; x < frame.width; x += sw) {
+
+                var y = Math.sin(x*1.5) * sw + 20;
+                ctx.drawImage(frame, x, 0, sw, frame.height,          // source slice
+                               x * 1.1, y, sw, frame.height);   // dest. slice
+            }
+
+            // we only need to save the very first handle, that we'll use later to stop the RAF
+            if (!rafHandle) { 
+              rafHandle = requestAnimationFrame(sliceAndDice);
+            // TODO: save instance tilities.getMapTemplate()
+              log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+            }
+
+            else{
+              requestAnimationFrame(sliceAndDice); 
+            }
+          }
+
+
+          // TODO: replace with transform positioning
+
+          // TODO: set z-index, to move the canvas over on top of the DOM version
+          $destBit.hide();
 
         }
 
         else {
-          log.debug("pixi renderer already exists: ", renderer);
+          log.debug("canvas slice+dice: exists");
         };
 
               
@@ -357,8 +393,21 @@ Parallels.AppModes['create-parallel'] = {
       // reset vars for next create-parallel use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
+      // TODO: move handle to mapInstance
+      // if (Utilities.getMapTemplate().pixiInstance.rafHandle){ 
+      if (rafHandle){ 
+        // log.debug("about to cancelAnimationFrame on Utilities.getMapTemplate().pixiInstance.rafHandle", rafHandle);
+        log.debug("about to cancelAnimationFrame on rafHandle:", rafHandle);
+
+        // cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle); 
+        cancelAnimationFrame(rafHandle); 
+        isSlicingDicing = false;
+      }
+
+      // erase the canvas by setting re-setting it's width [to anything]
+      $(canvasElement).width = 0;
       $(canvasElement).remove();
-      $destBit.show();
+      if ($destBit) { $destBit.show() } ;
 
       // reenable scrolling
       $("body").css( "overflow", "visible"); 
