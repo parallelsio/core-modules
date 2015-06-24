@@ -30,8 +30,7 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
  // for sparks animation, on bit corners
 var spark;
 
-// pixi.js vars, for remix slices
-var renderer, texture, stage, sprite, rafHandle, canvasElement;
+var canvasElement;
 
 var $destBit;
 
@@ -153,7 +152,7 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: call Exit mode
 
-        // prep pixi renderer for slice and dice fx
+        // prep slice rendere
         // TODO: move this to on bitOnHover during selectDest mode 
         if (!renderer){
 
@@ -187,46 +186,20 @@ Parallels.AppModes['create-parallel'] = {
           // TODO: set z-index, to move the canvas over on top of the DOM version
           $destBit.hide();
 
-          renderer = PIXI.autoDetectRenderer(
-            bitWidth, 
-            bitHeight,
-            { 
-              view: document.getElementById("create-parallel--remix-slices"),
-              transparent: true, 
-              backgroundColor : 0x1099bb,
-              antialias: true
-            }
-          );
-
-          log.debug("created pixi renderer: ", renderer);
-
-          stage = new PIXI.Container(); // create the root of the scene graph
-
-          texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
-          // TODO: wire up loaded photo, figure out cross origin issues
-          // texture = PIXI.Texture.fromImage($destBit.find('img').attr('src'));
-          
-          sprite = new PIXI.Sprite(texture);
-
-          // // center the sprite's anchor point
-          sprite.anchor.x = 0;
-          sprite.anchor.y = 0;
+          // texture = PIXI.Texture.fromImage('/images/1000/mine_williamsburg_lampost_highway_dusk_dawn_sky_meloncholy_5077-cropped.jpg');
 
           // match bit height/width
           sprite.width = bitWidth;
           sprite.height = bitHeight;
 
-          stage.addChild(sprite);
-
-          // https://stackoverflow.com/questions/22742239/accessing-texture-after-initial-loading-in-pixi-js        
+          
           // start animating
           // TODO: use assetloader to ensure image is loaded
           // this really shhouldnt be necessary, as how would person have chosen a destination bit
           // if it wasnt visible?
           // var assetsToLoad = ["sprites.json"];
           // var loader = new PIXI.AssetLoader(assetsToLoad);
-          animate();
-          var counter = 0;
+       
 
           // TODO: query Neo4j for image bits that are connected, by X number of hops
           // also, spatially: K-nearest algo?
@@ -234,40 +207,8 @@ Parallels.AppModes['create-parallel'] = {
 
           // prepare image array for slicing
 
-          function animate() {
+          // save instance tilities.getMapTemplate()
 
-              // debugging
-              // if (counter % 60 === 0){
-              //   log.debug("pixi RAF running: ", counter/60);
-              // }
-
-              // TODO: slice n dice here: simmer pieces as a wave
-
-              // TODO: play sound
-
-              renderer.render(stage);
-              counter++;
-
-              // we only need to save the very first handle, that we'll use later to stop the RAF
-              if (!rafHandle) { 
-                rafHandle = requestAnimationFrame(animate);
-                log.debug("pixi saving rafHandle:", rafHandle);
-              }
-
-              else{
-                requestAnimationFrame(animate); 
-              }
-          }
-
-          // assign to map template so we can access for debugging, outside of this scope
-          // TODO: is this assigning a reference, or actually making a full copy of this object?
-          Utilities.getMapTemplate().pixiInstance = {
-            stage: stage,
-            renderer: renderer,
-            texture: texture,
-            sprite: sprite,
-            rafHandle: rafHandle
-          };
         }
 
         else {
@@ -416,24 +357,6 @@ Parallels.AppModes['create-parallel'] = {
       // reset vars for next create-parallel use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
-      // stop pixi webgl loop
-
-      if (Utilities.getMapTemplate().pixiInstance.rafHandle){ 
-        // log.debug("about to cancelAnimationFrame on rafHandle:", rafHandle);
-        log.debug("about to cancelAnimationFrame on Utilities.getMapTemplate().pixiInstance.rafHandle", rafHandle);
-        cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle); 
-      }
-      
-      // destroy all pixi.js objects + references
-      // TODO: clear whatever is on the stage before destroying all references
-      renderer.destroyTexture(texture);
-      texture.destroy();
-      renderer.destroy(true); // remove the canvas element
-      renderer = null;
-      texture= null;
-      sprite= null;
-      rafHandle= null;
-      Utilities.getMapTemplate().pixiInstance = null;
       $(canvasElement).remove();
       $destBit.show();
 
