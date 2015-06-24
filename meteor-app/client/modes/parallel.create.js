@@ -112,14 +112,14 @@ Parallels.AppModes['create-parallel'] = {
           .prependTo(".map");
 
         var setupAndPlayCornerSpark = function(corner){
-          log.debug("setupAndPlayCornerSpark: ", corner);
+          // log.debug("setupAndPlayCornerSpark: ", corner);
 
           var spark = new particleEmitter({
             onStartCallback: function(){
-              log.debug("starting particleEmitter for corner: ", corner);
+              // log.debug("starting particleEmitter for corner: ", corner);
             },
             onStopCallback: function(){
-              log.debug("ending particleEmitter for corner: ", corner);
+              // log.debug("ending particleEmitter for corner: ", corner);
             },
             container: '#create-parallel--particles',
             image: 'images/ui/particle.gif',
@@ -209,6 +209,8 @@ Parallels.AppModes['create-parallel'] = {
 
 
           var sw = 32;
+          var dlt = 0;
+          
           sliceAndDice();
 
           function sliceAndDice() {
@@ -223,9 +225,11 @@ Parallels.AppModes['create-parallel'] = {
             for(var x = 0; x < frame.width; x += sw) {
 
                 var y = Math.sin(x*1.5) * sw + 20;
-                ctx.drawImage(frame, x, 0, sw, frame.height,          // source slice
+                 y = Math.sin(x*32+dlt) * 3 + 10;               // "random" y pos.
+                ctx.drawImage(frame, x, 0, sw, frame.height,    // source slice
                                x * 1.1, y, sw, frame.height);   // dest. slice
             }
+            dlt += 0.2;
 
             // we only need to save the very first handle, that we'll use later to stop the RAF
             if (!rafHandle) { 
