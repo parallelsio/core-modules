@@ -26,12 +26,12 @@ body {
 .bit {
   position: absolute;
   -webkit-font-smoothing: antialiased;
-  border: 4px solid gray;
+  /*border: 4px solid gray;*/
   
 }
 
 .content { 
-  opacity: 0.25;
+  /*opacity: 0.25;*/
   z-index: -1
 
 }
@@ -111,12 +111,11 @@ img {
   canvas.width = bitWidth + spillover;
   canvas.style.border = "1px dotted green";
   canvas.style.position = "absolute";
-  canvas.style.left = (parseInt(destBitRect.left) - spillover) + "px";
-  canvas.style.top =  (parseInt(destBitRect.top) - spillover) + "px";
+  canvas.style.left = ((parseInt(destBitRect.left) - spillover) )  + "px";
+  canvas.style.top =  ((parseInt(destBitRect.top) - spillover) + bitHeight + 50) + "px";
   canvas.style.zIndex =  1;
 
   $(canvas).prependTo(".map");
-
 
   var ctx = canvas.getContext('2d');
   ctx.width = bitWidth;
@@ -139,7 +138,7 @@ img {
 
   // var w = bitWidth+16;                // Width of entire wave
   var numSlices = bitWidth / sliceWidth;
-  var yvalues = new Float32Array();   // Using an array to store height values for the wave
+  var yvalues = new Float32Array(numSlices);   // Using an array to store height values for the wave
 
 
   var theta = 0.0;        // Start angle at 0
@@ -155,8 +154,8 @@ img {
     // For every x value, calculate a y value with sine function
     var x = theta;
 
-    for (var i = 0; i < numSlices; i++) {
-      yvalues[i] = Math.sin(x) * amplitude;
+    for (var c = 0; c < numSlices; c++) {
+      yvalues[c] = Math.sin(x) * amplitude;
       x += dx;
     }
 
@@ -165,8 +164,10 @@ img {
 
   makeWaveSlices();
 
+  var firstFrame = true;
 
   function makeWaveSlices() {
+    
     
     calcWavePoints();
     var pointArray = [];
@@ -176,7 +177,7 @@ img {
         x: count * sliceWidth,
         y: (bitHeight / 2) + yvalues[count]
       };
-      // log.debug("point: ", point);
+      // console.log("point: ", point);
       pointArray.push(point);
     }
 
@@ -187,14 +188,20 @@ img {
     ctx.imageSmoothingEnabled = true;
 
       // loop through the slices
-      for(var x = 0; x < frame.width; x += sliceWidth) {
-          var y = Math.sin(x*1.5) * sliceWidth + 20;
+      for(var x = 0; x < numSlices; x++) {
+          // var y = Math.sin((x * sliceWidth)*1.5) * sliceWidth + 20;
           ctx.drawImage(frame, 
-                        x, 0, sliceWidth, frame.height,   // source slice
-                        x , y, sliceWidth, bitHeight);    // dest. slice
-                        // pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
+                        (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
+                        // x , y, sliceWidth, bitHeight);    // dest. slice
+                        pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
                         // x * 1.2, y, sliceWidth, frame.height);  // dest. slice
+          // if (firstFrame) { 
+          //   console.log("pointArray[x]: ", pointArray[x]);
+          //   console.log("x: ", x);
+          // }
       }
+
+      // frameCounter = false;
       
       // we only need to save the very first handle, that we'll use later to stop the RAF
       if (!window.rafHandle) { 
