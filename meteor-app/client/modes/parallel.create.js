@@ -30,10 +30,11 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
  // for sparks animation, on bit corners
 var spark;
 
+// for wave slices
 var canvas;
 var isSlicingDicing = false;
 var rafHandle = -1;
-var spillover = 0;
+var spillover = 200;
 
 var $destBit;
 
@@ -173,13 +174,13 @@ Parallels.AppModes['create-parallel'] = {
           canvas = document.createElement('canvas');
           // canvas.id = "create-parallel--remix-slices";
           canvas.height = bitHeight + spillover;
-          canvas.width = bitWidth + spillover;
+          canvas.width = bitWidth;
           canvas.style.border = "1px dotted green";
           canvas.style.position = "absolute";
 
           // TODO: replace with transform positioning
-          canvas.style.left = (parseInt(destBitRect.left) - spillover) + "px";
-          canvas.style.top =  (parseInt(destBitRect.top) - spillover) + "px";
+          canvas.style.left = parseInt(destBitRect.left)  + "px";
+          canvas.style.top =  (parseInt(destBitRect.top) - (spillover / 2)) + "px";
           canvas.style.zIndex =  1;
 
           $(canvas).prependTo(".map");
@@ -188,12 +189,11 @@ Parallels.AppModes['create-parallel'] = {
           ctx.width = bitWidth;
           ctx.height = bitHeight;
 
-          var sw = 32;
-          // var numSlices = parseInt(bitWidth / sw);
-          // var dlt = 0;
+          var sliceWidth = 20;
 
           var frame = document.createElement("canvas"); // "frame buffer"
           var fctx = frame.getContext("2d");
+
           frame.width = bitWidth;
           frame.height = bitHeight;
 
@@ -201,44 +201,102 @@ Parallels.AppModes['create-parallel'] = {
           // also, spatially: K-nearest algo?
           // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
-          sliceAndDice();
+          /* 
+            TWO_PI is a mathematical constant with the value 6.28318530717958647693. It is twice the ratio of the circumference of a circle to its diameter. It is useful in combination with the trigonometric functions sin() and cos().
+          */
+          var TWO_PI = 6.28318530717958647693;
 
-          // TODO: pref improvement if we move to web workers?
-          // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
-          function sliceAndDice() {
-            // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
+          // Maths adapted from: https://processing.org/examples/sinewave.html
+
+          // var w = bitWidth+16;                // Width of entire wave
+          var numSlices = bitWidth / sliceWidth;
+          var yvalues = new Float32Array(numSlices);   // Using an array to store height values for the wave
+
+
+          var theta = 0.0;        // Start angle at 0
+          var amplitude = 35.0;   // Height of wave
+          var period = 1000.0;     // How many pixels before the wave repeats
+          var dx = (TWO_PI / period) * sliceWidth;   // Value for incrementing X, a function of period and sliceWidth
+                  
+
+          function calcWavePoints() {
+            // Increment theta (try different values for 'angular velocity' here
+            theta += 0.05;
+
+            // For every x value, calculate a y value with sine function
+            var x = theta;
+
+            for (var c = 0; c < numSlices; c++) {
+              yvalues[c] = Math.sin(x) * amplitude;
+              x += dx;
+            }
+
+            // console.log("yvalues: ", yvalues);
+          }
+
+
+          makeWaveSlices();
+
+          function clearOldAreas(){
+            // make them transparent, so if this bit is sitting on top 
+            // of anything, what's behind will show through the edges
+            return true;
+          };
+
+          // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
             // cancel when the rollage is done
             // if(){
             //   isSlicingDicing = false;
             //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
             // }
 
-            fctx.drawImage($destBit.find('img')[0], 0, 0, bitWidth, bitHeight); // video to "frame buffer" to make it more smooth
+          // TODO: pref improvement if we move to web workers?
+          // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
+          function makeWaveSlices() {
 
-            for(var x = 0; x < frame.width; x += sw) {
-                var y = Math.sin(x*1.5) * sw + 20;
-                // y = Math.sin(x*32+dlt) * 3 + 10; // wave it
+            calcWavePoints();
+            var pointArray = [];
 
-                ctx.drawImage(frame, 
-                              x, 0, sw, frame.height,   // source slice
-                              x , y, sw, bitHeight);  // dest. slice
-                                     // x * 1.2, y, sw, frame.height);  // dest. slice
+            for (var sliceCount = 0; sliceCount < numSlices; sliceCount++) {
+              var point = {
+                x: sliceCount * sliceWidth,
+                y: (bitHeight / 2) + yvalues[sliceCount]
+              };
+              // console.log("point: ", point);
+              pointArray.push(point);
             }
-             // dlt += 0.2;
-  
+
+            // console.log("pointArray: ", pointArray);
+
+            fctx.drawImage($destBit.find('img')[0], 0, 0, bitWidth, bitHeight); 
+            ctx.imageSmoothingEnabled = true;
+
+            // loop through the slices
+            for(var x = 0; x < numSlices; x++) {
+
+              // fill in what's new
+              // var y = Math.sin((x * sliceWidth)*1.5) * sliceWidth + 20;
+              ctx.drawImage(frame, 
+                            (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
+                            // x , y, sliceWidth, bitHeight);    // dest. slice
+                            pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
+                            // x * 1.2, y, sliceWidth, frame.height);  // dest. slice
+            
+              // TODO: clear what's in this lane, that's old
+              // ctx.clearRect(0, 0, frameCtx.width, frameCtx.height);
+              clearOldAreas();
+
+            }
 
             // we only need to save the very first handle, that we'll use later to stop the RAF
-            // if (!window.rafHandle) { 
             if (!rafHandle) { 
-              rafHandle = requestAnimationFrame(sliceAndDice);
-              // window.rafHandle = requestAnimationFrame(sliceAndDice);
-
-              // TODO: save instance tilities.getMapTemplate()
-              log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+              rafHandle = requestAnimationFrame(makeWaveSlices);
+              // TODO: save instance Utilities.getMapTemplate()
+              console.log("canvas slice+dice: saving rafHandle:", rafHandle);
             }
 
             else{
-              requestAnimationFrame(sliceAndDice); 
+              requestAnimationFrame(makeWaveSlices); 
             }
           }
 
