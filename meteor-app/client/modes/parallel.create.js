@@ -35,6 +35,7 @@ var canvas;
 var isSlicingDicing = false;
 var rafHandle = -1;
 var spillover = 200;
+var sliceWidth = 20;
 
 var $destBit;
 
@@ -156,11 +157,15 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: call Exit mode
 
-        // prep slicer
         // TODO: move this to on bitOnHover during selectDest mode 
         if (!isSlicingDicing){
 
           isSlicingDicing = true;
+
+          // TODO: prep images for slicing
+          // query Neo4j for image bits that are connected, by X number of hops
+          // also, spatially: K-nearest algo?
+          // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
           // we already calculated the bounding rectangle earlier,
           // when we ran the spark animation
@@ -168,17 +173,15 @@ Parallels.AppModes['create-parallel'] = {
           // the same size as the thumbnail image
           var bitWidth = parseInt(destBitRect.right) - parseInt(destBitRect.left);
           var bitHeight = parseInt(destBitRect.bottom) - parseInt(destBitRect.top);
-          // log.debug("bitWidth: ", bitWidth, ". bitHeight:", bitHeight);
 
-          // create the canvas element, position it, z-index
           canvas = document.createElement('canvas');
-          // canvas.id = "create-parallel--remix-slices";
+          canvas.id = "create-parallel--remix-slices";
           canvas.height = bitHeight + spillover;
           canvas.width = bitWidth;
           canvas.style.border = "1px dotted green";
           canvas.style.position = "absolute";
 
-          // TODO: replace with transform positioning
+          // TODO: replace with transform positioning for better perf
           canvas.style.left = parseInt(destBitRect.left)  + "px";
           canvas.style.top =  (parseInt(destBitRect.top) - (spillover / 2)) + "px";
           canvas.style.zIndex =  1;
@@ -188,49 +191,45 @@ Parallels.AppModes['create-parallel'] = {
           var ctx = canvas.getContext('2d');
           ctx.width = bitWidth;
           ctx.height = bitHeight;
-
-          var sliceWidth = 20;
-
           var frame = document.createElement("canvas"); // "frame buffer"
           var fctx = frame.getContext("2d");
-
           frame.width = bitWidth;
           frame.height = bitHeight;
 
-          // TODO: query Neo4j for image bits that are connected, by X number of hops
-          // also, spatially: K-nearest algo?
-          // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
+          // Wave rollage technique a mashup of
+          // A: sine wave oscillation, maths adapted from: https://processing.org/examples/sinewave.html
+          // B: a sliceAndDice demo from 
+          // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
+          // TODO: C: interplation of 2 images, like jiri kollar rollages 
 
-          /* 
-            TWO_PI is a mathematical constant with the value 6.28318530717958647693. It is twice the ratio of the circumference of a circle to its diameter. It is useful in combination with the trigonometric functions sin() and cos().
-          */
+          // The mathematical constant with the value 6.28318530717958647693. 
+          // Twice the ratio of the circumference of a circle to its diameter (pi)
+          // useful in combination with trig functions sin() and cos()
           var TWO_PI = 6.28318530717958647693;
-
-          // Maths adapted from: https://processing.org/examples/sinewave.html
-
-          // var w = bitWidth+16;                // Width of entire wave
           var numSlices = bitWidth / sliceWidth;
-          var yvalues = new Float32Array(numSlices);   // Using an array to store height values for the wave
 
+           // Using an array to store height values for each slice of the wave
+           // since it's all floats, we benefit from a typed array:
+           // slighlty longer to init/load than a regular array
+           // but faster across the rest of the operations.
+           // well be accessing it many times a second, inside of the RequestAnimationLoop
+          var yvalues = new Float32Array(numSlices);  
 
           var theta = 0.0;        // Start angle at 0
           var amplitude = 35.0;   // Height of wave
-          var period = 1000.0;     // How many pixels before the wave repeats
+          var period = 1000.0;    // How many pixels before the wave repeats
           var dx = (TWO_PI / period) * sliceWidth;   // Value for incrementing X, a function of period and sliceWidth
-                  
 
           function calcWavePoints() {
-            // Increment theta (try different values for 'angular velocity' here
+            // the speed the wave rocks. Increase for faster.
             theta += 0.05;
 
             // For every x value, calculate a y value with sine function
             var x = theta;
-
             for (var c = 0; c < numSlices; c++) {
               yvalues[c] = Math.sin(x) * amplitude;
               x += dx;
             }
-
             // console.log("yvalues: ", yvalues);
           }
 
@@ -243,12 +242,11 @@ Parallels.AppModes['create-parallel'] = {
             return true;
           };
 
-          // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
-            // cancel when the rollage is done
-            // if(){
-            //   isSlicingDicing = false;
-            //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
-            // }
+          // cancel when the rollage is done
+          // if(){
+          //   isSlicingDicing = false;
+          //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+          // }
 
           // TODO: pref improvement if we move to web workers?
           // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
@@ -275,7 +273,6 @@ Parallels.AppModes['create-parallel'] = {
             for(var x = 0; x < numSlices; x++) {
 
               // fill in what's new
-              // var y = Math.sin((x * sliceWidth)*1.5) * sliceWidth + 20;
               ctx.drawImage(frame, 
                             (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
                             // x , y, sliceWidth, bitHeight);    // dest. slice
