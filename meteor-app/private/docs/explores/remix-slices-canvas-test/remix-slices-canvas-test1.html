@@ -37,7 +37,7 @@ body {
 }
 
 .bit.image img {
-  width: 500px;
+  width: 400px;
 }
 
 img {
@@ -91,7 +91,6 @@ img {
     { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.right), freq: 0 }
   ];
 
-
   // set the canvas when pixi stage will sit in
   // the same size as the thumbnail image
 
@@ -101,15 +100,11 @@ img {
   // lets reuse the coords to calc our bit dimensions
   var bitWidth = parseInt(destBitRect.right) - parseInt(destBitRect.left);
   var bitHeight = parseInt(destBitRect.bottom) - parseInt(destBitRect.top);
-
   console.log("bitWidth: ", bitWidth, ". bitHeight:", bitHeight);
 
   // create the canvas element, position it, z-index
   // TODO: replace positioning with transform()
   canvas = document.createElement('canvas');
-
-// <!-- <canvas id="canvas" width=560 height=320></canvas> -->
-
 
   // canvas.id = "create-parallel--remix-slices";
   canvas.height = bitHeight + spillover;
@@ -123,44 +118,98 @@ img {
   $(canvas).prependTo(".map");
 
 
-var ctx = canvas.getContext('2d');
- ctx.width = bitWidth;
+  var ctx = canvas.getContext('2d');
+  ctx.width = bitWidth;
   ctx.height = bitHeight;
 
-  var sw = 32;
-  // var numSlices = parseInt(bitWidth / sw);
+  var sliceWidth = 20;
 
-var frame = document.createElement("canvas"); // "frame buffer"
-var fctx = frame.getContext("2d");
+  var frame = document.createElement("canvas"); // "frame buffer"
+  var fctx = frame.getContext("2d");
+
+  frame.width = bitWidth;
+  frame.height = bitHeight;
+
+  /* 
+    TWO_PI is a mathematical constant with the value 6.28318530717958647693. It is twice the ratio of the circumference of a circle to its diameter. It is useful in combination with the trigonometric functions sin() and cos().
+  */
+  var TWO_PI = 6.28318530717958647693;
+
+  // Maths adapted from: https://processing.org/examples/sinewave.html
+
+  // var sliceWidth = 16;      // How far apart should each horizontal location be spaced
+  var sliceWidth  = sliceWidth;
+
+  var numSlices = w / sliceWidth;
+  var w = bitWidth+16;                // Width of entire wave
+  var yvalues = new Float32Array();   // Using an array to store height values for the wave
 
 
-frame.width = bitWidth;
-frame.height = bitHeight;
+  var theta = 0.0;        // Start angle at 0
+  var amplitude = 75.0;   // Height of wave
+  var period = 500.0;     // How many pixels before the wave repeats
+  var dx = (TWO_PI / period) * sliceWidth;   // Value for incrementing X, a function of period and sliceWidth
+          
 
-sliceAndDice()
+  function calcWavePoints() {
+    // Increment theta (try different values for 'angular velocity' here
+    theta += 0.02;
 
-function sliceAndDice() {
+    // For every x value, calculate a y value with sine function
+    var x = theta;
 
-  fctx.drawImage(document.getElementById('bi'), 0, 0, bitWidth, bitHeight); // video to "frame buffer" to make it more smooth
-  
-    for(var x = 0; x < frame.width; x += sw) {
-        var y = Math.sin(x*1.5) * sw + 20;
-        ctx.drawImage(frame, x      , 0, sw, frame.height,   // source slice
-                             x , y, sw, bitHeight);  // dest. slice
-                             // x * 1.2, y, sw, frame.height);  // dest. slice
+    for (var i = 0; i < numSlices; i++) {
+      yvalues[i] = Math.sin(x) * amplitude;
+      x += dx;
     }
+
+    // console.log("yvalues: ", yvalues);
+  }
+
+  makeSliceWaves();
+
+
+  function makeSliceWaves() {
     
-    // we only need to save the very first handle, that we'll use later to stop the RAF
-    if (!window.rafHandle) { 
-      window.rafHandle = requestAnimationFrame(sliceAndDice);
-      // TODO: save instance tilities.getMapTemplate()
-      console.log("canvas slice+dice: saving rafHandle:", rafHandle);
+    calcWavePoints();
+    var pointArray = [];
+
+    for (var count = 0; count < numSlices; count++) {
+      var point = {
+        x: count * sliceWidth,
+        y: (bitHeight / 2) + yvalues[count]
+      };
+      // log.debug("point: ", point);
+      pointArray.push(point);
     }
 
-    else{
-      requestAnimationFrame(sliceAndDice); 
-    }
-}
+    // console.log("pointArray: ", pointArray);
+
+    // video to "frame buffer" to make it more smooth
+    fctx.drawImage(document.getElementById('bi'), 0, 0, bitWidth, bitHeight); 
+    ctx.imageSmoothingEnabled = true;
+
+      // loop through the slices
+      for(var x = 0; x < frame.width; x += sliceWidth) {
+          var y = Math.sin(x*1.5) * sliceWidth + 20;
+          ctx.drawImage(frame, 
+                        x, 0, sliceWidth, frame.height,   // source slice
+                        x , y, sliceWidth, bitHeight);    // dest. slice
+                        // pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
+                        // x * 1.2, y, sliceWidth, frame.height);  // dest. slice
+      }
+      
+      // we only need to save the very first handle, that we'll use later to stop the RAF
+      if (!window.rafHandle) { 
+        window.rafHandle = requestAnimationFrame(makeSliceWaves);
+        // TODO: save instance Utilities.getMapTemplate()
+        console.log("canvas slice+dice: saving rafHandle:", rafHandle);
+      }
+
+      else{
+        requestAnimationFrame(makeSliceWaves); 
+      }
+  }
 
 
 /*
@@ -177,10 +226,10 @@ function sliceAndDice() {
     
     ctx.clearRect(0, 0, frameCtx.width, frameCtx.height);
     
-     for(var x = 0; x < frame.width; x += sw) {
-          var y = Math.sin(x*1.5) * sw + 20;
-          ctx.drawImage(frame, x      , 0, sw, frame.height,   // source slice
-                               x * 1.1, y, sw, frame.height);  // dest. slice
+     for(var x = 0; x < frame.width; x += sliceWidth) {
+          var y = Math.sin(x*1.5) * sliceWidth + 20;
+          ctx.drawImage(frame, x      , 0, sliceWidth, frame.height,   // source slice
+                               x * 1.1, y, sliceWidth, frame.height);  // dest. slice
       }
 
     // dlt += 0.2;
