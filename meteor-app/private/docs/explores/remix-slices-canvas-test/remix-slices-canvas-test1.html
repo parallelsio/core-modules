@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate">
+    
+        <style>
+      * {
+          box-sizing: border-box;
+          font-family: 'Lato', sans-serif;
+          font-size: 15px;
+          font-weight: 400;
+          color: gray;
+          margin: 0;
+          padding: 0;
+}
+
+body {
+  background: #e7e4e4;
+}
+
+.map {
+  height: 100vh;
+  width: 100vw;
+}
+
+.bit {
+  position: absolute;
+  -webkit-font-smoothing: antialiased;
+  border: 4px solid gray;
+  
+}
+
+.content { 
+  opacity: 0.25;
+  z-index: -1
+
+}
+
+.bit.image img {
+  width: 500px;
+}
+
+img {
+  border: 0;
+}
+    </style>
+
+    
+</head>
+
+  <body>
+
+    <div class="map">
+  
+  <div class="bit image" data-id="Saj5F26f99QtGCFwT" data-filename="" style="left: 130px; top:70px; display: block; opacity: 1; ">
+
+    <div class="content">
+
+      <img class="bit-image" id="bi" src="./remix-slices-canvas-test1_files/Screen Shot 2015-06-16 at 7.24.07 PM.png" alt="Screen Shot 2015-06-16 at 7.24.07 PM.png">
+
+    </div>
+
+
+
+  <!--
+    <p class="ui-widget-header"></p>-->
+
+    </div>
+
+
+
+
+</div>
+    
+<script src="./remix-slices-canvas-test1_files/jquery.min.js"></script>
+<script src="./remix-slices-canvas-test1_files/TweenMax.min.js"></script>
+
+<script>
+  var bitDatabaseId = "Saj5F26f99QtGCFwT";
+  var $destBit = $("[data-id='" + bitDatabaseId + "']");
+  window.rafHandle = -1;
+  var spillover = 0;
+
+  var destBitRect = $destBit.find('img')[0].getClientRects()[0];
+  // var destBitRect = $destBit[0].getClientRects()[0];
+  var corners = [
+
+    { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.left),  freq: 0 },
+    { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.right), freq: 0 },
+    { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.left),  freq: 0 },
+    { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.right), freq: 0 }
+  ];
+
+
+  // set the canvas when pixi stage will sit in
+  // the same size as the thumbnail image
+
+  // we already calculated the bounding rectangle earlier,
+  // when we ran the spark animation
+
+  // lets reuse the coords to calc our bit dimensions
+  var bitWidth = parseInt(destBitRect.right) - parseInt(destBitRect.left);
+  var bitHeight = parseInt(destBitRect.bottom) - parseInt(destBitRect.top);
+
+  console.log("bitWidth: ", bitWidth, ". bitHeight:", bitHeight);
+
+  // create the canvas element, position it, z-index
+  // TODO: replace positioning with transform()
+  canvas = document.createElement('canvas');
+
+// <!-- <canvas id="canvas" width=560 height=320></canvas> -->
+
+
+  // canvas.id = "create-parallel--remix-slices";
+  canvas.height = bitHeight + spillover;
+  canvas.width = bitWidth + spillover;
+  canvas.style.border = "1px dotted green";
+  canvas.style.position = "absolute";
+  canvas.style.left = (parseInt(destBitRect.left) - spillover) + "px";
+  canvas.style.top =  (parseInt(destBitRect.top) - spillover) + "px";
+  canvas.style.zIndex =  1;
+
+  $(canvas).prependTo(".map");
+
+
+var ctx = canvas.getContext('2d');
+ ctx.width = bitWidth;
+  ctx.height = bitHeight;
+
+  var sw = 32;
+  // var numSlices = parseInt(bitWidth / sw);
+
+var frame = document.createElement("canvas"); // "frame buffer"
+var fctx = frame.getContext("2d");
+
+
+frame.width = bitWidth;
+frame.height = bitHeight;
+
+sliceAndDice()
+
+function sliceAndDice() {
+
+  fctx.drawImage(document.getElementById('bi'), 0, 0, bitWidth, bitHeight); // video to "frame buffer" to make it more smooth
+  
+    for(var x = 0; x < frame.width; x += sw) {
+        var y = Math.sin(x*1.5) * sw + 20;
+        ctx.drawImage(frame, x      , 0, sw, frame.height,   // source slice
+                             x , y, sw, bitHeight);  // dest. slice
+                             // x * 1.2, y, sw, frame.height);  // dest. slice
+    }
+    
+    // we only need to save the very first handle, that we'll use later to stop the RAF
+    if (!window.rafHandle) { 
+      window.rafHandle = requestAnimationFrame(sliceAndDice);
+      // TODO: save instance tilities.getMapTemplate()
+      console.log("canvas slice+dice: saving rafHandle:", rafHandle);
+    }
+
+    else{
+      requestAnimationFrame(sliceAndDice); 
+    }
+}
+
+
+/*
+
+  // TODO: pref improvement if we move to web workers?
+  // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
+  function sliceAndDice() {
+    // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
+    // cancel when the rollage is done
+    // if(){
+    //   isSlicingDicing = false;
+    //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+    // }
+    
+    ctx.clearRect(0, 0, frameCtx.width, frameCtx.height);
+    
+     for(var x = 0; x < frame.width; x += sw) {
+          var y = Math.sin(x*1.5) * sw + 20;
+          ctx.drawImage(frame, x      , 0, sw, frame.height,   // source slice
+                               x * 1.1, y, sw, frame.height);  // dest. slice
+      }
+
+    // dlt += 0.2;
+    // dlt = 1;
+    
+    // we only need to save the very first handle, that we'll use later to stop the RAF
+    if (!window.rafHandle) { 
+      window.rafHandle = requestAnimationFrame(sliceAndDice);
+      // TODO: save instance tilities.getMapTemplate()
+      console.log("canvas slice+dice: saving rafHandle:", rafHandle);
+    }
+
+    else{
+      requestAnimationFrame(sliceAndDice); 
+    }
+  }
+        //@ sourceURL=pen.js
+
+        */
+
+</script>
+
+</div></body></html>

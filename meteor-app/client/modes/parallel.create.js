@@ -30,9 +30,10 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
  // for sparks animation, on bit corners
 var spark;
 
-var canvasElement;
+var canvas;
 var isSlicingDicing = false;
-var rafHandle;
+var rafHandle = -1;
+var spillover = 0;
 
 var $destBit;
 
@@ -96,10 +97,10 @@ Parallels.AppModes['create-parallel'] = {
         var destBitRect = $destBit[0].getClientRects()[0];
         var corners = [
 
-          { x: destBitRect.top,     y: destBitRect.left,  freq: teoria.note('g2').fq() },
-          { x: destBitRect.top,     y: destBitRect.right, freq: teoria.note('d2').fq() },
-          { x: destBitRect.bottom,  y: destBitRect.left,  freq: teoria.note('c2').fq() },
-          { x: destBitRect.bottom,  y: destBitRect.right, freq: teoria.note('a2').fq() }
+          { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.left),  freq: teoria.note('g2').fq() },
+          { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.right), freq: teoria.note('d2').fq() },
+          { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.left),  freq: teoria.note('c2').fq() },
+          { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.right), freq: teoria.note('a2').fq() }
         ];
 
         // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
@@ -160,59 +161,50 @@ Parallels.AppModes['create-parallel'] = {
 
           isSlicingDicing = true;
 
-          // set the canvas when pixi stage will sit in
-          // the same size as the thumbnail image
-
           // we already calculated the bounding rectangle earlier,
           // when we ran the spark animation
-
           // lets reuse the coords to calc our bit dimensions
-          var bitWidth = destBitRect.right - destBitRect.left;
-          var bitHeight = destBitRect.bottom - destBitRect.top;
+          // the same size as the thumbnail image
+          var bitWidth = parseInt(destBitRect.right) - parseInt(destBitRect.left);
+          var bitHeight = parseInt(destBitRect.bottom) - parseInt(destBitRect.top);
+          // log.debug("bitWidth: ", bitWidth, ". bitHeight:", bitHeight);
 
           // create the canvas element, position it, z-index
-          canvasElement = document.createElement('canvas');
-          canvasElement.id = "create-parallel--remix-slices";
-          canvasElement.height = bitHeight;
-          canvasElement.width = bitWidth;
+          canvas = document.createElement('canvas');
+          // canvas.id = "create-parallel--remix-slices";
+          canvas.height = bitHeight + spillover;
+          canvas.width = bitWidth + spillover;
+          canvas.style.border = "1px dotted green";
+          canvas.style.position = "absolute";
 
-          $(canvasElement)
-            .prependTo(".map")
-            .css({
-              left: destBitRect.left, // TODO: replace with transform positioning
-              top: destBitRect.top,
-              position: 'absolute',
-              zIndex: 10
-            });
+          // TODO: replace with transform positioning
+          canvas.style.left = (parseInt(destBitRect.left) - spillover) + "px";
+          canvas.style.top =  (parseInt(destBitRect.top) - spillover) + "px";
+          canvas.style.zIndex =  1;
 
-          var ctx = canvasElement.getContext('2d');
+          $(canvas).prependTo(".map");
+
+          var ctx = canvas.getContext('2d');
           ctx.width = bitWidth;
           ctx.height = bitHeight;
 
-          var frame = document.createElement('canvas');
+          var sw = 32;
+          // var numSlices = parseInt(bitWidth / sw);
+          // var dlt = 0;
+
+          var frame = document.createElement("canvas"); // "frame buffer"
+          var fctx = frame.getContext("2d");
           frame.width = bitWidth;
           frame.height = bitHeight;
-
-          var frameCtx = frame.getContext('2d');
-          frameCtx.drawImage(
-            $destBit.find('img')[0],
-            0,
-            0,
-            bitHeight,
-            bitWidth
-          );
-          // img.crossOrigin = '';
 
           // TODO: query Neo4j for image bits that are connected, by X number of hops
           // also, spatially: K-nearest algo?
           // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
-
-          var sw = 32;
-          var dlt = 0;
-          
           sliceAndDice();
 
+          // TODO: pref improvement if we move to web workers?
+          // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
           function sliceAndDice() {
             // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
             // cancel when the rollage is done
@@ -221,20 +213,27 @@ Parallels.AppModes['create-parallel'] = {
             //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
             // }
 
-            // some misc slicing
-            for(var x = 0; x < frame.width; x += sw) {
+            fctx.drawImage($destBit.find('img')[0], 0, 0, bitWidth, bitHeight); // video to "frame buffer" to make it more smooth
 
+            for(var x = 0; x < frame.width; x += sw) {
                 var y = Math.sin(x*1.5) * sw + 20;
-                 y = Math.sin(x*32+dlt) * 3 + 10;               // "random" y pos.
-                ctx.drawImage(frame, x, 0, sw, frame.height,    // source slice
-                               x * 1.1, y, sw, frame.height);   // dest. slice
+                // y = Math.sin(x*32+dlt) * 3 + 10; // wave it
+
+                ctx.drawImage(frame, 
+                              x, 0, sw, frame.height,   // source slice
+                              x , y, sw, bitHeight);  // dest. slice
+                                     // x * 1.2, y, sw, frame.height);  // dest. slice
             }
-            dlt += 0.2;
+             // dlt += 0.2;
+  
 
             // we only need to save the very first handle, that we'll use later to stop the RAF
+            // if (!window.rafHandle) { 
             if (!rafHandle) { 
               rafHandle = requestAnimationFrame(sliceAndDice);
-            // TODO: save instance tilities.getMapTemplate()
+              // window.rafHandle = requestAnimationFrame(sliceAndDice);
+
+              // TODO: save instance tilities.getMapTemplate()
               log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
             }
 
@@ -242,9 +241,6 @@ Parallels.AppModes['create-parallel'] = {
               requestAnimationFrame(sliceAndDice); 
             }
           }
-
-
-          // TODO: replace with transform positioning
 
           // TODO: set z-index, to move the canvas over on top of the DOM version
           $destBit.hide();
@@ -409,8 +405,8 @@ Parallels.AppModes['create-parallel'] = {
       }
 
       // erase the canvas by setting re-setting it's width [to anything]
-      $(canvasElement).width = 0;
-      $(canvasElement).remove();
+      $(canvas).width = 0;
+      $(canvas).remove();
       if ($destBit) { $destBit.show() } ;
 
       // reenable scrolling
