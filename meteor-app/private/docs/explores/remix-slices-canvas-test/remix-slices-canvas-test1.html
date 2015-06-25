@@ -137,11 +137,8 @@ img {
 
   // Maths adapted from: https://processing.org/examples/sinewave.html
 
-  // var sliceWidth = 16;      // How far apart should each horizontal location be spaced
-  var sliceWidth  = sliceWidth;
-
-  var numSlices = w / sliceWidth;
-  var w = bitWidth+16;                // Width of entire wave
+  // var w = bitWidth+16;                // Width of entire wave
+  var numSlices = bitWidth / sliceWidth;
   var yvalues = new Float32Array();   // Using an array to store height values for the wave
 
 
@@ -166,10 +163,10 @@ img {
     // console.log("yvalues: ", yvalues);
   }
 
-  makeSliceWaves();
+  makeWaveSlices();
 
 
-  function makeSliceWaves() {
+  function makeWaveSlices() {
     
     calcWavePoints();
     var pointArray = [];
@@ -201,13 +198,13 @@ img {
       
       // we only need to save the very first handle, that we'll use later to stop the RAF
       if (!window.rafHandle) { 
-        window.rafHandle = requestAnimationFrame(makeSliceWaves);
+        window.rafHandle = requestAnimationFrame(makeWaveSlices);
         // TODO: save instance Utilities.getMapTemplate()
         console.log("canvas slice+dice: saving rafHandle:", rafHandle);
       }
 
       else{
-        requestAnimationFrame(makeSliceWaves); 
+        requestAnimationFrame(makeWaveSlices); 
       }
   }
 
