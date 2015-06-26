@@ -233,16 +233,14 @@ Parallels.AppModes['create-parallel'] = {
 
             // For every x value, calculate a y value with sine function
             var x = theta;
-            for (var c = 0; c < numSlices; c++) {
-              yvalues[c] = Math.sin(x) * amplitude;
+
+            _.each(yvalues, function(key, count) {
+              yvalues[count] = Math.sin(x) * amplitude;
               x += dx;
-            }
-            // console.log("yvalues: ", yvalues);
+            });
           }
 
-
           makeWaveSlices();
-
 
           // cancel when the rollage is done
           // if(){
@@ -293,8 +291,6 @@ Parallels.AppModes['create-parallel'] = {
         else {
           log.debug("canvas slice+dice: exists");
         };
-
-              
 
 
         // show form so person can define relationship
