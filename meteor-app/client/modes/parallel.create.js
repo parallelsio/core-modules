@@ -34,7 +34,10 @@ var spark;
 var canvas;
 var isSlicingDicing = false;
 var rafHandle = -1;
+
+ // TODO: needs to be somehow related to thumbnail size. Only want just enough to prevent clipping of the wave, but no more
 var spillover = 200;
+
 var sliceWidth = 20;
 
 var $destBit;
@@ -216,7 +219,11 @@ Parallels.AppModes['create-parallel'] = {
           var yvalues = new Float32Array(numSlices);  
 
           var theta = 0.0;        // Start angle at 0
-          var amplitude = 35.0;   // Height of wave
+
+          // Height of wave 
+          // TODO: dependent on image size
+          var amplitude = 35.0;
+
           var period = 1000.0;    // How many pixels before the wave repeats
           var dx = (TWO_PI / period) * sliceWidth;   // Value for incrementing X, a function of period and sliceWidth
 
@@ -252,6 +259,7 @@ Parallels.AppModes['create-parallel'] = {
           // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
           function makeWaveSlices() {
 
+
             calcWavePoints();
             var pointArray = [];
 
@@ -268,6 +276,7 @@ Parallels.AppModes['create-parallel'] = {
 
             fctx.drawImage($destBit.find('img')[0], 0, 0, bitWidth, bitHeight); 
             ctx.imageSmoothingEnabled = true;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // loop through the slices
             for(var x = 0; x < numSlices; x++) {
