@@ -90,7 +90,7 @@ Template.bit.onRendered(function (){
     zIndexBoost:false,
 
     onDragStart:function(event){
-      log.debug("bit:drag:onDragStart", bitDatabaseId);
+      // log.debug("bit:drag:onDragStart", bitDatabaseId);
 
       var x = this.endX;
       var y = this.endY;
@@ -104,7 +104,7 @@ Template.bit.onRendered(function (){
 
     onPress: function(event){
       function timelineDone(bitDatabaseId){
-        log.debug("bit:drag:onPress", bitDatabaseId);
+        // log.debug("bit:drag:onPress", bitDatabaseId);
       }
 
       var timeline = new TimelineMax({
@@ -122,7 +122,7 @@ Template.bit.onRendered(function (){
     },
 
     onRelease: function(event){
-      log.debug("bit:drag:onrelease", bitDatabaseId);
+      // log.debug("bit:drag:onrelease", bitDatabaseId);
       resetBitSize("bit:drag:onRelease: animation end");
     },
 
@@ -131,21 +131,21 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: only display if changed from last reading's value
-      console.log("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
+      // log.debug("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
       // bitDragAudioInstance.set("elasticStretch.source.freq", x)
 
     },
 
     onDragEnd:function( event ) {
-      log.debug("bit:drag:onDragEnd", bitDatabaseId);
+      // log.debug("bit:drag:onDragEnd", bitDatabaseId);
       
      
       var x = this.endX;
       var y = this.endY;
 
       var mongoId = this.target.dataset.id;
-      log.debug(event.type + ": " + mongoId + " : " + x + " : " + y);
+      // log.debug(event.type + ": " + mongoId + " : " + x + " : " + y);
 
       Meteor.call('changeState', {
         command: 'updateBitPosition',

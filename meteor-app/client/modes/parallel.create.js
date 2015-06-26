@@ -243,11 +243,6 @@ Parallels.AppModes['create-parallel'] = {
 
           makeWaveSlices();
 
-          function clearOldAreas(){
-            // make them transparent, so if this bit is sitting on top 
-            // of anything, what's behind will show through the edges
-            return true;
-          };
 
           // cancel when the rollage is done
           // if(){
@@ -259,7 +254,6 @@ Parallels.AppModes['create-parallel'] = {
           // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
           function makeWaveSlices() {
 
-
             calcWavePoints();
             var pointArray = [];
 
@@ -268,30 +262,24 @@ Parallels.AppModes['create-parallel'] = {
                 x: sliceCount * sliceWidth,
                 y: (bitHeight / 2) + yvalues[sliceCount]
               };
-              // console.log("point: ", point);
               pointArray.push(point);
             }
 
-            // console.log("pointArray: ", pointArray);
-
             fctx.drawImage($destBit.find('img')[0], 0, 0, bitWidth, bitHeight); 
             ctx.imageSmoothingEnabled = true;
+
+            // TODO: better perf if we kept track of last frame,
+            // compared, and only cleared dirty areas using :
+            // https://stackoverflow.com/questions/10019003/html5-how-to-draw-transparent-pixel-image-in-canvas#10021707
+            // ?
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // loop through the slices
             for(var x = 0; x < numSlices; x++) {
 
               // fill in what's new
               ctx.drawImage(frame, 
                             (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
-                            // x , y, sliceWidth, bitHeight);    // dest. slice
                             pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
-                            // x * 1.2, y, sliceWidth, frame.height);  // dest. slice
-            
-              // TODO: clear what's in this lane, that's old
-              // ctx.clearRect(0, 0, frameCtx.width, frameCtx.height);
-              clearOldAreas();
-
             }
 
             rafHandle = requestAnimationFrame(makeWaveSlices);

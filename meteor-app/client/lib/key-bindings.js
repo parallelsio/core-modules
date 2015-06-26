@@ -164,7 +164,7 @@ Parallels.KeyCommands = {
       }
 
       // else if (bitHoveringId && (currentMode === 'create-parallel')) {
-      //   debug.log('closing parallel with ', bitHoveringId);
+      //   log.debug('closing parallel with ', bitHoveringId);
       // }
     });
   },

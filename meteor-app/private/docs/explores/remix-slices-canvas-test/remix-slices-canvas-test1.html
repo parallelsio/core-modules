@@ -139,6 +139,7 @@ img {
   // var w = bitWidth+16;                // Width of entire wave
   var numSlices = bitWidth / sliceWidth;
   var yvalues = new Float32Array(numSlices);   // Using an array to store height values for the wave
+  // var yvaluesLastFrame = new Float32Array(numSlices);   
 
 
   var theta = 0.0;        // Start angle at 0
@@ -181,6 +182,10 @@ img {
   // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
   function makeWaveSlices() {
     
+    // save the last frame's y values,
+    // well need it to compare this frame's values
+    // to know what dirty stuff we need to clear in this frame
+    // yvaluesLastFrame = yvalues;
     calcWavePoints();
     var pointArray = [];
 
@@ -193,15 +198,14 @@ img {
       pointArray.push(point);
     }
 
-    // console.log("pointArray: ", pointArray);
-
     // video to "frame buffer" to make it more smooth
     fctx.drawImage(document.getElementById('bi'), 0, 0, bitWidth, bitHeight); 
     ctx.imageSmoothingEnabled = true;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
 
       // loop through the slices
       for(var x = 0; x < numSlices; x++) {
-
 
           // fill in what's new
           // var y = Math.sin((x * sliceWidth)*1.5) * sliceWidth + 20;
@@ -211,9 +215,13 @@ img {
                         pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
                         // x * 1.2, y, sliceWidth, frame.height);  // dest. slice
         
-          // TODO: clear what's in this lane, that's old
-          // ctx.clearRect(0, 0, frameCtx.width, frameCtx.height);
-          clearOldAreas();
+          // clearOldAreas();
+          // ctx.drawImage(frame, 
+          //               (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
+          //               // x , y, sliceWidth, bitHeight);    // dest. slice
+          //               pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
+          //               // x * 1.2, y, sliceWidth, frame.height);  // dest. slice
+        
 
       }
 

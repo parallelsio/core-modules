@@ -36,7 +36,7 @@ Parallels.AppModes['preview-bit'] = {
         direction: "expand"
       };
 
-      Transform.scaleImage(options);
+      Parallels.Animation.scaleImage(options);
     }
 
     else {
@@ -56,7 +56,7 @@ Parallels.AppModes['preview-bit'] = {
     if (bitPreviewingId)
     {
       // TODO: pass the assignment/resetting of these 
-      // into Transform.scale,
+      // into Animation.scale,
       // which will then reset it once the animation complete callback is triggered
       // this will avoid potential edge cases where person takes
       // action in between animations 
@@ -70,7 +70,7 @@ Parallels.AppModes['preview-bit'] = {
         direction: "contract"
       };
 
-      Transform.scaleImage(options);
+      Parallels.Animation.scaleImage(options);
 
       Parallels.KeyCommands.bindAll();
     }

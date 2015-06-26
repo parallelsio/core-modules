@@ -4,6 +4,7 @@ Meteor.subscribe('events');
 
 Parallels = {
   AppModes: {},
+  Animation: {},
   Audio: {
     Definition: {}
   },

@@ -8,7 +8,7 @@
       TODO: refactor, break up into mode/enter + mode/exit?
   */
 
-Transform = {
+Parallels.Animation = {
   
   /* 
     DOCS: 
