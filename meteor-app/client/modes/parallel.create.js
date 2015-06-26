@@ -285,16 +285,7 @@ Parallels.AppModes['create-parallel'] = {
 
             }
 
-            // we only need to save the very first handle, that we'll use later to stop the RAF
-            if (!rafHandle) { 
-              rafHandle = requestAnimationFrame(makeWaveSlices);
-              // TODO: save instance Utilities.getMapTemplate()
-              console.log("canvas slice+dice: saving rafHandle:", rafHandle);
-            }
-
-            else{
-              requestAnimationFrame(makeWaveSlices); 
-            }
+            rafHandle = requestAnimationFrame(makeWaveSlices);
           }
 
           // TODO: set z-index, to move the canvas over on top of the DOM version

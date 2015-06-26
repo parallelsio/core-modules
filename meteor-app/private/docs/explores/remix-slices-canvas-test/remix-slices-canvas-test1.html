@@ -219,15 +219,11 @@ img {
 
       
       // we only need to save the very first handle, that we'll use later to stop the RAF
-      if (!window.rafHandle) { 
+      
         window.rafHandle = requestAnimationFrame(makeWaveSlices);
         // TODO: save instance Utilities.getMapTemplate()
-        console.log("canvas slice+dice: saving rafHandle:", rafHandle);
-      }
-
-      else{
-        requestAnimationFrame(makeWaveSlices); 
-      }
+        // console.log("canvas slice+dice: saving rafHandle:", rafHandle);
+     
   }
 
 
