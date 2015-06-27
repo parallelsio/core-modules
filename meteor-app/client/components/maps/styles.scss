@@ -12,9 +12,6 @@ $map-width: 5000px;
   width:100%;
 }
 
-#create-parallel--remix-slices{
-   position: absolute;
-}
 
 .mode--create-parallel{
   background: #7B7B7B;
@@ -31,11 +28,12 @@ $map-width: 5000px;
   vertical-align: middle;
 }
 
-#create-parallel--particles {  
+#corner-sparks--particles {  
   position: absolute;
   height: $map-height;
   width: $map-width;
 }
+
 
 .create-parallel--line {    
   position: absolute;

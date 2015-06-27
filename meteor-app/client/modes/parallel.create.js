@@ -14,18 +14,19 @@
       - person presses Shift key, while hovering the destination bit, to choose it
       - form is presented, prompting person for a relationship name, like tagging
       - Enter key submits it, saves the connection, exiting Parallel Create mode, and returns person to the canvas "home"
- */
+ 
 
-// TODO: to move these into mode, as private object properties?
+  TODO: 
+    * to move these into mode, as private object properties?
+    
+    * make DOM classes consistent namespacing
 
+*/
 // for Greensock heartbeat animation
 var timeline, $originBit; 
 
 // two.js vars, for parallel line drawing
 var line, updatedLine, lineContainer, params, two, mouse, circle; 
-
- // for sparks animation, on bit corners
-var spark;
 
 // the return object, from the wave animation function
 // for passing the image from the enter to the exit
@@ -40,12 +41,12 @@ Parallels.AppModes['create-parallel'] = {
 
     Session.set('currentMode', 'create-parallel');
 
-    var originBitId = Session.get('bitHoveringId');
+    var originBitId       = Session.get('bitHoveringId');
     Session.set('originBitId', originBitId);
-    $originBit = Utilities.getBitElement(originBitId);
-    var originBitData = Blaze.getData($originBit[0]);
-    var originBitCenterX = originBitData.position.x + ($originBit[0].clientWidth / 2)
-    var originBitCenterY = originBitData.position.y + ($originBit[0].clientHeight / 2)
+    $originBit            = Utilities.getBitElement(originBitId);
+    var originBitData     = Blaze.getData($originBit[0]);
+    var originBitCenterX  = originBitData.position.x + ($originBit[0].clientWidth / 2)
+    var originBitCenterY  = originBitData.position.y + ($originBit[0].clientHeight / 2)
 
     Parallels.KeyCommands.disableAll();
     Parallels.KeyCommands.bindEsc();
@@ -83,93 +84,29 @@ Parallels.AppModes['create-parallel'] = {
         $('.create-parallel--line').remove();
         $originBit.removeClass('create-parallel--origin');
         
-
-        /*  Play 4 corner spark animation, with sounds
-          
-            DOCS: 
-            /private/docs/parallel-create-spark-animation-v1.png
-        */
-
-        var destBitRect = $destBit[0].getClientRects()[0];
-        var corners = [
-
-          { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.left),  freq: teoria.note('g2').fq() },
-          { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.right), freq: teoria.note('d2').fq() },
-          { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.left),  freq: teoria.note('c2').fq() },
-          { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.right), freq: teoria.note('a2').fq() }
-        ];
-
-/*
-        // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
-        // TODO: convert to RAF
-        var particles = document.createElement('div');
-        $(particles)
-          .attr( "id", "create-parallel--particles")
-          .height( 5000 )
-          .width( 5000)
-          .prependTo(".map");
-
-        var setupAndPlayCornerSpark = function(corner){
-          // log.debug("setupAndPlayCornerSpark: ", corner);
-
-          var spark = new particleEmitter({
-            onStartCallback: function(){
-              // log.debug("starting particleEmitter for corner: ", corner);
-            },
-            onStopCallback: function(){
-              // log.debug("ending particleEmitter for corner: ", corner);
-            },
-            container: '#create-parallel--particles',
-            image: 'images/ui/particle.gif',
-            center: [ corner.y, corner.x ], 
-            size: 4, 
-            velocity: 450, 
-            decay: 500, 
-            rate: 600
-          });
-
-          spark.start()
-          var handle = Meteor.setTimeout(function(){
-            spark.stop();
-          },
-          100);          
-        }
-
-        var tl = new TimelineMax({ paused:true });
-
-        _.each(corners, function(corner, i) {
-          var offsetDelay = i * 0.10;
-          // log.debug("count:", i, ":", corner, ", delayed: ", offsetDelay);
-          tl.call(setupAndPlayCornerSpark, [ corner ], this, offsetDelay );
+        Parallels.Animation.General.cornerSparks({
+          $element: $destBit,
+          prependTo: ".map"
         });
-
-
-        tl.play();
-*/
-
-        // TODO: show form
-
-        // TODO: on form submit, save connection to neo4j
-
-        // TODO: call Exit mode
-
-        // TODO: shift wave down to lay over bit 1:1
 
         // TODO: prep images for slicing
         // query Neo4j for image bits that are connected, by X number of hops
         // also, spatially: K-nearest algo?
         // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
-        var options = {
+        wave = Parallels.Animation.Image.waveSlice({
           $img: $destBit.find('img'),
           prependTo: ".map"
-        }
-
-        wave = Parallels.Animation.Image.waveSlice(options);
+        });
 
         // TODO: set z-index, to move the canvas over on top of the DOM version
         $destBit.hide();
 
+        // TODO: show form
+
+        // TODO: on form submit, save connection to neo4j
+
+        // TODO: call Exit mode
 
         // cancel when the rollage is done
         // if(){
@@ -303,7 +240,7 @@ Parallels.AppModes['create-parallel'] = {
       $originBit.removeClass('create-parallel--origin');
 
       $('.create-parallel--line').remove();
-      $('#create-parallel--particles').remove();
+      $('corner-sparks--particles').remove();
 
       // stop heartbeat animation
       timeline.kill();

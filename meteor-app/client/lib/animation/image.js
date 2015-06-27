@@ -41,10 +41,14 @@ Parallels.Animation.Image = {
       * pass one bit object, get the other things from it, 
         versus passing 3 diff parts of similar objects
     
-      * refactor: combine bit references, 
-        and dont go to Session store for original height/width
+      * dont go to Session store for original height/width
 
-      * refactor, break up into mode/enter + mode/exit?
+      * make generic: remove references to bit
+
+      * break up into mode/enter + mode/exit?
+
+      * shift wave down to lay over bit 1:1
+
     -----------------------------------------------------------
   */
 
@@ -263,13 +267,15 @@ Parallels.Animation.Image = {
      // Using an array to store height values for each slice of the wave
      // since it's all floats, we benefit from a typed array:
      // slighlty longer to init/load than a regular array
-     // but faster across the rest of the operations.
+     // but faster across the rest of the operations, as
      // well be accessing it many times a second, inside of the RequestAnimationLoop
     var yvalues = new Float32Array(numSlices);  
 
-    // since wave oscillates up+down, therendered slices will exceed the boounds
+    // since wave oscillates up+down, the rendered slices will exceed the boounds
     // of the original image. We add extra margin top+bottom to the canvas to
     // avoid clipping
+    // TODO: align canvas tighter/closer to original image 
+    // for seamless transition in/out animation
     var spillover = Math.round(imgHeight * 1.5);
 
     // Start angle 
@@ -288,28 +294,28 @@ Parallels.Animation.Image = {
 
     // ************************** PREP CANVASES *****************************
 
-    canvas = document.createElement('canvas');
-    canvas.height = imgHeight + spillover;
-    canvas.width = imgWidth;
-    canvas.style.border = "1px dotted green";
+    canvas                = document.createElement('canvas');
+    canvas.height         = imgHeight + spillover;
+    canvas.width          = imgWidth;
+    canvas.style.border   = "1px dotted green";
     canvas.style.position = "absolute";
 
     // TODO: replace with transform positioning for better perf
-    canvas.style.left = parseInt(rect.left)  + "px";
-    canvas.style.top =  (parseInt(rect.top) - (spillover / 2)) + "px";
-    canvas.style.zIndex =  1;
+    canvas.style.left     = parseInt(rect.left)  + "px";
+    canvas.style.top      = (parseInt(rect.top) - (spillover / 2)) + "px";
+    canvas.style.zIndex   = 1;
 
     $(canvas).prependTo(options.prependTo);
 
-    var ctx = canvas.getContext('2d');
-    ctx.width = imgWidth;
-    ctx.height = imgHeight;
+    var ctx               = canvas.getContext('2d');
+    ctx.width             = imgWidth;
+    ctx.height            = imgHeight;
 
     // OQ: do we need this?
-    var frame = document.createElement("canvas"); // "frame buffer"
-    var fctx = frame.getContext("2d");
-    frame.width = imgWidth;
-    frame.height = imgHeight;
+    var frame             = document.createElement("canvas"); // "frame buffer"
+    var fctx              = frame.getContext("2d");
+    frame.width           = imgWidth;
+    frame.height          = imgHeight;
 
     renderWaveSlices();
 
@@ -319,7 +325,8 @@ Parallels.Animation.Image = {
     };
 
     function calcWavePoints() {
-      // the speed the wave rocks. Increase for faster.
+
+      // increase value for faster wave surge/fall
       theta += 0.2;
 
       // For every x value, calculate a y value with sine function
@@ -332,7 +339,7 @@ Parallels.Animation.Image = {
       });
     }
 
-    // TODO: pref improvement if we move to web workers?
+    // TODO: pref improvement, if we move to web workers?
     // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
     function renderWaveSlices() {
 
@@ -361,15 +368,17 @@ Parallels.Animation.Image = {
         // fill in what's new
         // TODO: how to add opacity to slices, to feel more like 
         // a trail?
-        ctx.drawImage(frame, 
-                      (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
-                      pointArray[x].x , pointArray[x].y, sliceWidth, imgHeight);    // dest. slice
+        ctx.drawImage(
+          frame, 
+
+          // source slice
+          (x * sliceWidth), 0, sliceWidth, frame.height,   
+
+          // dest. slice
+          pointArray[x].x , pointArray[x].y, sliceWidth, imgHeight);    
       }
 
       rafHandle = requestAnimationFrame(renderWaveSlices);
     }
-  
-
   }
-
 };
