@@ -1,47 +1,52 @@
-/*
-      TODO: pass one bit object, get the other things from it, 
-      versus passing 3 diff parts of similar objects
-      
-      TODO: refactor: combine bit references, 
-      and dont go to Session store for original H/W
-
-      TODO: refactor, break up into mode/enter + mode/exit?
-  */
 
 Parallels.Animation = {
   
+  scaleImage: function(options){
 
   /* 
+    PURPOSE:
+      Morph an image in place, rather than loading a separate file,
+      which would display a disjointed, jarring experience
+
+      The same image asset is being used on the canvas for both:
+      -- the thumbnail on the canvas, the before/contracted state
+      -- the full viewport, in the previewed/expanded state
+    -----------------------------------------------------------
+
     DOCS: 
-    /private/docs/bit-preview-animation-coordinates-v1.jpg
+      /private/docs/bit-preview-animation-coordinates-v1.jpg
 
-    The same image asset is being used on the canvas for both:
-    -- the thumbnail, on the canvas, the before/contracted state
-    -- the full viewport, the previewed/expanded state
+      Example diagram of both states, and some arbitrary dimensions.
+      Shows the order of solving, via the circled numbers 1, 2, 3, 4, 5. 
 
-    Example diagram of both states, and some arbitrary dimensions.
-    Shows the order of solving, via the circled numbers 1, 2, 3, 4, 5. 
+      Once the values are calculated, note which attributes are animated
+      where:
 
-    Once the values are calculated, note which attributes are animated
-    where:
+          +------ Bit Container Element   ( animates X, Y positions)
+            \ ------ Img Element          ( animates height, width)
 
-        +------ Bit Container Element   ( animates X, Y positions)
-        \ ----- Img Element             ( animates height, width)
 
-    This is to give the appearance that the image is expanding/contracting
-    in place, rather than loading a separate, view which would
-    give a disjointed appearance.
+      All numbers/dimensions/units are in pixels
+    -----------------------------------------------------------
 
-    All numbers/dimensions/units are in pixels.
+    OPTIONS/PARAMS:
+
+      bitData: bitData,
+      $bit: $bit,
+      bitTemplate: bitTemplate,
+      direction: "expand" | "contract"
+    -----------------------------------------------------------
+    
+    TODO: 
+      * pass one bit object, get the other things from it, 
+        versus passing 3 diff parts of similar objects
+    
+      * refactor: combine bit references, 
+        and dont go to Session store for original height/width
+
+      * refactor, break up into mode/enter + mode/exit?
+    -----------------------------------------------------------
   */
-
-  scaleImage: function(options){
-    /*
-        bitData: bitData,
-        $bit: $bit,
-        bitTemplate: bitTemplate,
-        direction: "expand" | "contract"
-    */
 
     var $bitImg = $(options.bitTemplate.templateInstance().$('img'));
 
@@ -167,9 +172,9 @@ Parallels.Animation = {
     });
 
     /*  
-        Run the animations
-        Settings + sequencing inspired by the Zelda 'wipes'
-        https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
+      Run the animations
+      Settings + sequencing inspired by the Zelda 'wipes'
+      https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
     */
     if (options.direction === "expand") {
       log.debug("expanding...");
@@ -211,19 +216,36 @@ Parallels.Animation = {
   },
 
 
-  // Wave rollage technique a mashup of
-  // A: sine wave oscillation, maths adapted from: https://processing.org/examples/sinewave.html
-  // B: a sliceAndDice demo from 
-  // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
-  // TODO: C: interplation of 2 images, like jiri kollar rollages 
 
   waveSlice: function(options){
 
-    /*
-        destBitRect: destBitRect // object with .top, .left, etc
-        prependToString: ".map" // a jquery selector string
-        imgElementToSlice:  $destBit.find('img')[0]
-    */
+/* 
+    PURPOSE:
+      Split an image into slices, and animate them as a wave
+
+      Technique is a mashup of:
+        * A: sine wave oscillation, maths adapted from: https://processing.org/examples/sinewave.html
+        * B: a sliceAndDice demo adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
+        * C: interpolation of 2 images, like jiri kollar rollages 
+    -----------------------------------------------------------
+
+    DOCS: 
+      /private/docs/wave-fx-wave-jiri-media-20150201.jpg
+  
+      https://trello.com/c/qmOaMksw/54-wave-rollage-animations-transitions-explores
+
+    -----------------------------------------------------------
+
+    OPTIONS/PARAMS:
+      destBitRect: destBitRect // object with .top, .left, etc
+      prependToString: ".map" // a jquery selector string
+      imgElementToSlice:  $destBit.find('img')[0]
+    -----------------------------------------------------------
+    
+    TODO: 
+      * 
+    -----------------------------------------------------------
+  */
 
     // ************************** INIT VARS *****************************
 
@@ -235,7 +257,7 @@ Parallels.Animation = {
     // in pixels
     // TODO: make more robust for HiDi displays, Retina
     var sliceWidth = 15; 
-    
+
     // we already calculated the bounding rectangle earlier,
     // when we ran the spark animation
     // lets reuse the coords to calc our bit dimensions
@@ -267,9 +289,7 @@ Parallels.Animation = {
     // The delta (change) of x, the height, of each slice:
     // a function of period and sliceWidth
     var dx = (TWO_PI / period) * sliceWidth;   
-
     var canvas;
-
     var rafHandle = -1;
 
     // ************************** PREP CANVASES *****************************
