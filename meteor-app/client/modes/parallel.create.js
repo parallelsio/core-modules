@@ -14,9 +14,6 @@
       - person presses Shift key, while hovering the destination bit, to choose it
       - form is presented, prompting person for a relationship name, like tagging
       - Enter key submits it, saves the connection, exiting Parallel Create mode, and returns person to the canvas "home"
-    
-    
-
  */
 
 // TODO: to move these into mode, as private object properties?
@@ -30,14 +27,7 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
  // for sparks animation, on bit corners
 var spark;
 
-// for wave slices
-var canvas;
-var isSlicingDicing = false;
 var rafHandle = -1;
-
-var spillover;
-
-var sliceWidth = 15;
 
 var $destBit;
 
@@ -107,6 +97,7 @@ Parallels.AppModes['create-parallel'] = {
           { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.right), freq: teoria.note('a2').fq() }
         ];
 
+/*
         // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
         // TODO: convert to RAF
         var particles = document.createElement('div');
@@ -152,6 +143,7 @@ Parallels.AppModes['create-parallel'] = {
 
 
         tl.play();
+*/
 
         // TODO: show form
 
@@ -161,143 +153,28 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: shift wave down to lay over bit 1:1
 
-        // TODO: move this to on bitOnHover during selectDest mode 
-        if (!isSlicingDicing){
+        // TODO: prep images for slicing
+        // query Neo4j for image bits that are connected, by X number of hops
+        // also, spatially: K-nearest algo?
+        // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
-          isSlicingDicing = true;
 
-          // TODO: prep images for slicing
-          // query Neo4j for image bits that are connected, by X number of hops
-          // also, spatially: K-nearest algo?
-          // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
-
-          // we already calculated the bounding rectangle earlier,
-          // when we ran the spark animation
-          // lets reuse the coords to calc our bit dimensions
-          // the same size as the thumbnail image
-          var bitWidth = parseInt(destBitRect.right) - parseInt(destBitRect.left);
-          var bitHeight = parseInt(destBitRect.bottom) - parseInt(destBitRect.top);
-          var spillover = Math.round(bitHeight * 1.5);
-
-          canvas = document.createElement('canvas');
-          canvas.id = "create-parallel--remix-slices";
-          canvas.height = bitHeight + spillover;
-          canvas.width = bitWidth;
-          canvas.style.border = "1px dotted green";
-          canvas.style.position = "absolute";
-
-          // TODO: replace with transform positioning for better perf
-          canvas.style.left = parseInt(destBitRect.left)  + "px";
-          canvas.style.top =  (parseInt(destBitRect.top) - (spillover / 2)) + "px";
-          canvas.style.zIndex =  1;
-
-          $(canvas).prependTo(".map");
-
-          var ctx = canvas.getContext('2d');
-          ctx.width = bitWidth;
-          ctx.height = bitHeight;
-          var frame = document.createElement("canvas"); // "frame buffer"
-          var fctx = frame.getContext("2d");
-          frame.width = bitWidth;
-          frame.height = bitHeight;
-
-          // Wave rollage technique a mashup of
-          // A: sine wave oscillation, maths adapted from: https://processing.org/examples/sinewave.html
-          // B: a sliceAndDice demo from 
-          // adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
-          // TODO: C: interplation of 2 images, like jiri kollar rollages 
-
-          // The mathematical constant with the value 6.28318530717958647693. 
-          // Twice the ratio of the circumference of a circle to its diameter (pi)
-          // useful in combination with trig functions sin() and cos()
-          var TWO_PI = 6.28318530717958647693;
-          var numSlices = Math.round(bitWidth / sliceWidth);
-
-           // Using an array to store height values for each slice of the wave
-           // since it's all floats, we benefit from a typed array:
-           // slighlty longer to init/load than a regular array
-           // but faster across the rest of the operations.
-           // well be accessing it many times a second, inside of the RequestAnimationLoop
-          var yvalues = new Float32Array(numSlices);  
-
-          var theta = 0;        // Start angle 
-
-          // Use a proportion of the bitWidth to 
-          // make the feeling consistent across diff bit sizes
-          var amplitude = Math.round(bitHeight * 0.1)  // Height of the wave: 
-          var period = Math.round(bitWidth * 0.8);    // How many pixels before the wave repeats
-
-          // Value for incrementing X, a function of period and sliceWidth
-          var dx = (TWO_PI / period) * sliceWidth;   
-
-          function calcWavePoints() {
-            // the speed the wave rocks. Increase for faster.
-            theta += 0.2;
-
-            // For every x value, calculate a y value with sine function
-            var x = theta;
-
-            _.each(yvalues, function(key, count) {
-              // TODO: repeat, with less intensity, until stops
-              yvalues[count] = Math.sin(x) * amplitude;
-              x += dx;
-            });
-          }
-
-          makeWaveSlices();
-
-          // cancel when the rollage is done
-          // if(){
-          //   isSlicingDicing = false;
-          //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
-          // }
-
-          // TODO: pref improvement if we move to web workers?
-          // https://stackoverflow.com/questions/18987352/how-can-i-speed-up-this-slow-canvas-drawimage-operation-webgl-webworkers?rq=1
-          function makeWaveSlices() {
-
-            calcWavePoints();
-            var pointArray = [];
-
-            for (var sliceCount = 0; sliceCount < numSlices; sliceCount++) {
-              var point = {
-                x: sliceCount * sliceWidth,
-                y: (bitHeight / 2) + yvalues[sliceCount]
-              };
-              pointArray.push(point);
-            }
-
-            fctx.drawImage($destBit.find('img')[0], 0, 0, bitWidth, bitHeight); 
-            ctx.imageSmoothingEnabled = true;
-
-            // TODO: better perf if we kept track of last frame,
-            // compared, and only cleared dirty areas using :
-            // https://stackoverflow.com/questions/10019003/html5-how-to-draw-transparent-pixel-image-in-canvas#10021707
-            // ?
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for(var x = 0; x < numSlices; x++) {
-
-              // fill in what's new
-              // TODO: how to add opacity to slices, to feel more like 
-              // a trail?
-              ctx.drawImage(frame, 
-                            (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
-                            pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
-            }
-
-            rafHandle = requestAnimationFrame(makeWaveSlices);
-          }
-
-          // TODO: set z-index, to move the canvas over on top of the DOM version
-          $destBit.hide();
-
+        var options = {
+          destBitRect: destBitRect,
+          prependToString: ".map",
+          imgElementToSlice: $destBit.find('img')[0]
         }
 
-        else {
-          log.debug("canvas slice+dice: exists");
-        };
+        rafHandle = Parallels.Animation.waveSlice(options);
 
+        // TODO: set z-index, to move the canvas over on top of the DOM version
+        $destBit.hide();
+
+        // cancel when the rollage is done
+        // if(){
+        //   isSlicingDicing = false;
+        //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+        // }
 
         // show form so person can define relationship
         // -- bind escape rids form, create-parallel mode
