@@ -35,10 +35,9 @@ var canvas;
 var isSlicingDicing = false;
 var rafHandle = -1;
 
- // TODO: needs to be somehow related to thumbnail size. Only want just enough to prevent clipping of the wave, but no more
-var spillover = 200;
+var spillover;
 
-var sliceWidth = 20;
+var sliceWidth = 15;
 
 var $destBit;
 
@@ -160,6 +159,8 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: call Exit mode
 
+        // TODO: shift wave down to lay over bit 1:1
+
         // TODO: move this to on bitOnHover during selectDest mode 
         if (!isSlicingDicing){
 
@@ -176,6 +177,7 @@ Parallels.AppModes['create-parallel'] = {
           // the same size as the thumbnail image
           var bitWidth = parseInt(destBitRect.right) - parseInt(destBitRect.left);
           var bitHeight = parseInt(destBitRect.bottom) - parseInt(destBitRect.top);
+          var spillover = Math.round(bitHeight * 1.5);
 
           canvas = document.createElement('canvas');
           canvas.id = "create-parallel--remix-slices";
@@ -209,7 +211,7 @@ Parallels.AppModes['create-parallel'] = {
           // Twice the ratio of the circumference of a circle to its diameter (pi)
           // useful in combination with trig functions sin() and cos()
           var TWO_PI = 6.28318530717958647693;
-          var numSlices = bitWidth / sliceWidth;
+          var numSlices = Math.round(bitWidth / sliceWidth);
 
            // Using an array to store height values for each slice of the wave
            // since it's all floats, we benefit from a typed array:
@@ -218,23 +220,25 @@ Parallels.AppModes['create-parallel'] = {
            // well be accessing it many times a second, inside of the RequestAnimationLoop
           var yvalues = new Float32Array(numSlices);  
 
-          var theta = 0.0;        // Start angle at 0
+          var theta = 0;        // Start angle 
 
-          // Height of wave 
-          // TODO: dependent on image size
-          var amplitude = 35.0;
+          // Use a proportion of the bitWidth to 
+          // make the feeling consistent across diff bit sizes
+          var amplitude = Math.round(bitHeight * 0.1)  // Height of the wave: 
+          var period = Math.round(bitWidth * 0.8);    // How many pixels before the wave repeats
 
-          var period = 1000.0;    // How many pixels before the wave repeats
-          var dx = (TWO_PI / period) * sliceWidth;   // Value for incrementing X, a function of period and sliceWidth
+          // Value for incrementing X, a function of period and sliceWidth
+          var dx = (TWO_PI / period) * sliceWidth;   
 
           function calcWavePoints() {
             // the speed the wave rocks. Increase for faster.
-            theta += 0.05;
+            theta += 0.2;
 
             // For every x value, calculate a y value with sine function
             var x = theta;
 
             _.each(yvalues, function(key, count) {
+              // TODO: repeat, with less intensity, until stops
               yvalues[count] = Math.sin(x) * amplitude;
               x += dx;
             });
@@ -275,6 +279,8 @@ Parallels.AppModes['create-parallel'] = {
             for(var x = 0; x < numSlices; x++) {
 
               // fill in what's new
+              // TODO: how to add opacity to slices, to feel more like 
+              // a trail?
               ctx.drawImage(frame, 
                             (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
                             pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice

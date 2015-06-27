@@ -79,7 +79,7 @@ img {
   var bitDatabaseId = "Saj5F26f99QtGCFwT";
   var $destBit = $("[data-id='" + bitDatabaseId + "']");
   window.rafHandle = -1;
-  var spillover = 200;
+  var spillover = 230;
 
   var destBitRect = $destBit.find('img')[0].getClientRects()[0];
   // var destBitRect = $destBit[0].getClientRects()[0];
@@ -121,7 +121,7 @@ img {
   ctx.width = bitWidth;
   ctx.height = bitHeight;
 
-  var sliceWidth = 20;
+  var sliceWidth = 15;
 
   var frame = document.createElement("canvas"); // "frame buffer"
   var fctx = frame.getContext("2d");
@@ -142,9 +142,9 @@ img {
   // var yvaluesLastFrame = new Float32Array(numSlices);   
 
 
-  var theta = 0.0;        // Start angle at 0
-  var amplitude = 55.0;   // Height of wave
-  var period = 1000.0;     // How many pixels before the wave repeats
+  var theta = 0;        // Start angle at 0
+  var amplitude = 25.0;   // Height of wave
+  var period = 200.0;     // How many pixels before the wave repeats
   var dx = (TWO_PI / period) * sliceWidth;   // Value for incrementing X, a function of period and sliceWidth
           
 
@@ -202,7 +202,7 @@ img {
     fctx.drawImage(document.getElementById('bi'), 0, 0, bitWidth, bitHeight); 
     ctx.imageSmoothingEnabled = true;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
 
       // loop through the slices
       for(var x = 0; x < numSlices; x++) {
