@@ -36,7 +36,7 @@ Parallels.AppModes['preview-bit'] = {
         direction: "expand"
       };
 
-      Parallels.Animation.scaleImage(options);
+      Parallels.Animation.Image.morph(options);
     }
 
     else {
@@ -70,7 +70,7 @@ Parallels.AppModes['preview-bit'] = {
         direction: "contract"
       };
 
-      Parallels.Animation.scaleImage(options);
+      Parallels.Animation.Image.morph(options);
 
       Parallels.KeyCommands.bindAll();
     }

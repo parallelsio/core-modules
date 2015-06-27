@@ -1,7 +1,7 @@
 
-Parallels.Animation = {
+Parallels.Animation.Image = {
   
-  scaleImage: function(options){
+  morph: function(options){
 
   /* 
     PURPOSE:
@@ -219,7 +219,7 @@ Parallels.Animation = {
 
   waveSlice: function(options){
 
-/* 
+  /* 
     PURPOSE:
       Split an image into slices, and animate them as a wave
 
@@ -233,13 +233,11 @@ Parallels.Animation = {
       /private/docs/wave-fx-wave-jiri-media-20150201.jpg
   
       https://trello.com/c/qmOaMksw/54-wave-rollage-animations-transitions-explores
-
     -----------------------------------------------------------
 
     OPTIONS/PARAMS:
-      destBitRect: destBitRect // object with .top, .left, etc
-      prependToString: ".map" // a jquery selector string
-      imgElementToSlice:  $destBit.find('img')[0]
+      $img: a jquery obj of the img element to slice + animate
+      prependTo: a jquery selector *string, of where to prepend canvas to
     -----------------------------------------------------------
     
     TODO: 
@@ -247,7 +245,7 @@ Parallels.Animation = {
     -----------------------------------------------------------
   */
 
-    // ************************** INIT VARS *****************************
+    var rect = options.$img[0].getClientRects()[0];
 
     // The mathematical constant with the value 6.28318530717958647693. 
     // Twice the ratio of the circumference of a circle to its diameter (pi)
@@ -258,13 +256,9 @@ Parallels.Animation = {
     // TODO: make more robust for HiDi displays, Retina
     var sliceWidth = 15; 
 
-    // we already calculated the bounding rectangle earlier,
-    // when we ran the spark animation
-    // lets reuse the coords to calc our bit dimensions
-    // the same size as the thumbnail image
-    var bitWidth = parseInt(options.destBitRect.width);
-    var bitHeight = parseInt(options.destBitRect.height);
-    var numSlices = Math.round(bitWidth / sliceWidth);
+    var imgWidth = parseInt(rect.width);
+    var imgHeight = parseInt(rect.height);
+    var numSlices = Math.round(imgWidth / sliceWidth);
 
      // Using an array to store height values for each slice of the wave
      // since it's all floats, we benefit from a typed array:
@@ -276,15 +270,15 @@ Parallels.Animation = {
     // since wave oscillates up+down, therendered slices will exceed the boounds
     // of the original image. We add extra margin top+bottom to the canvas to
     // avoid clipping
-    var spillover = Math.round(bitHeight * 1.5);
+    var spillover = Math.round(imgHeight * 1.5);
 
     // Start angle 
     var theta = 0;        
 
-    // Use a proportion of the bitWidth to 
-    // make the feeling consistent across diff bit sizes
-    var amplitude = Math.round(bitHeight * 0.1)   // Height of the wave
-    var period = Math.round(bitWidth * 0.8);      // How many pixels before the wave repeats
+    // Use a proportion of the imgWidth to 
+    // make the feeling consistent across diff image sizes
+    var amplitude = Math.round(imgHeight * 0.1)   // Height of the wave
+    var period = Math.round(imgWidth * 0.8);      // How many pixels before the wave repeats
     
     // The delta (change) of x, the height, of each slice:
     // a function of period and sliceWidth
@@ -295,31 +289,34 @@ Parallels.Animation = {
     // ************************** PREP CANVASES *****************************
 
     canvas = document.createElement('canvas');
-    canvas.height = bitHeight + spillover;
-    canvas.width = bitWidth;
+    canvas.height = imgHeight + spillover;
+    canvas.width = imgWidth;
     canvas.style.border = "1px dotted green";
     canvas.style.position = "absolute";
 
     // TODO: replace with transform positioning for better perf
-    canvas.style.left = parseInt(options.destBitRect.left)  + "px";
-    canvas.style.top =  (parseInt(options.destBitRect.top) - (spillover / 2)) + "px";
+    canvas.style.left = parseInt(rect.left)  + "px";
+    canvas.style.top =  (parseInt(rect.top) - (spillover / 2)) + "px";
     canvas.style.zIndex =  1;
 
-    $(canvas).prependTo(options.prependToString);
+    $(canvas).prependTo(options.prependTo);
 
     var ctx = canvas.getContext('2d');
-    ctx.width = bitWidth;
-    ctx.height = bitHeight;
+    ctx.width = imgWidth;
+    ctx.height = imgHeight;
 
     // OQ: do we need this?
     var frame = document.createElement("canvas"); // "frame buffer"
     var fctx = frame.getContext("2d");
-    frame.width = bitWidth;
-    frame.height = bitHeight;
+    frame.width = imgWidth;
+    frame.height = imgHeight;
 
     renderWaveSlices();
-    
-    return rafHandle;
+
+    return {
+      rafHandle: rafHandle,
+      canvas: canvas
+    };
 
     function calcWavePoints() {
       // the speed the wave rocks. Increase for faster.
@@ -345,12 +342,12 @@ Parallels.Animation = {
       for (var sliceCount = 0; sliceCount < numSlices; sliceCount++) {
         var point = {
           x: sliceCount * sliceWidth,
-          y: (bitHeight / 2) + yvalues[sliceCount]
+          y: (imgHeight / 2) + yvalues[sliceCount]
         };
         pointArray.push(point);
       }
 
-      fctx.drawImage(options.imgElementToSlice, 0, 0, bitWidth, bitHeight); 
+      fctx.drawImage(options.$img[0], 0, 0, imgWidth, imgHeight); 
       ctx.imageSmoothingEnabled = true;
 
       // TODO: better perf if we kept track of last frame,
@@ -366,7 +363,7 @@ Parallels.Animation = {
         // a trail?
         ctx.drawImage(frame, 
                       (x * sliceWidth), 0, sliceWidth, frame.height,   // source slice
-                      pointArray[x].x , pointArray[x].y, sliceWidth, bitHeight);    // dest. slice
+                      pointArray[x].x , pointArray[x].y, sliceWidth, imgHeight);    // dest. slice
       }
 
       rafHandle = requestAnimationFrame(renderWaveSlices);

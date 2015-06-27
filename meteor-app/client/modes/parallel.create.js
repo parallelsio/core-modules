@@ -27,7 +27,9 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
  // for sparks animation, on bit corners
 var spark;
 
-var rafHandle = -1;
+// the return object, from the wave animation function
+// for passing the image from the enter to the exit
+var wave;
 
 var $destBit;
 
@@ -158,17 +160,16 @@ Parallels.AppModes['create-parallel'] = {
         // also, spatially: K-nearest algo?
         // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
-
         var options = {
-          destBitRect: destBitRect,
-          prependToString: ".map",
-          imgElementToSlice: $destBit.find('img')[0]
+          $img: $destBit.find('img'),
+          prependTo: ".map"
         }
 
-        rafHandle = Parallels.Animation.waveSlice(options);
+        wave = Parallels.Animation.Image.waveSlice(options);
 
         // TODO: set z-index, to move the canvas over on top of the DOM version
         $destBit.hide();
+
 
         // cancel when the rollage is done
         // if(){
@@ -317,18 +318,14 @@ Parallels.AppModes['create-parallel'] = {
 
       // TODO: move handle to mapInstance
       // if (Utilities.getMapTemplate().pixiInstance.rafHandle){ 
-      if (rafHandle){ 
-        // log.debug("about to cancelAnimationFrame on Utilities.getMapTemplate().pixiInstance.rafHandle", rafHandle);
-        log.debug("about to cancelAnimationFrame on rafHandle:", rafHandle);
-
-        // cancelAnimationFrame(Utilities.getMapTemplate().pixiInstance.rafHandle); 
-        cancelAnimationFrame(rafHandle); 
-        isSlicingDicing = false;
+      if (wave.rafHandle){ 
+        log.debug("about to cancelAnimationFrame on rafHandle:", wave.rafHandle);
+        cancelAnimationFrame(wave.rafHandle); 
       }
 
       // erase the canvas by setting re-setting it's width [to anything]
-      $(canvas).width = 0;
-      $(canvas).remove();
+      $(wave.canvas).width = 0;
+      $(wave.canvas).remove();
       if ($destBit) { $destBit.show() } ;
 
       // reenable scrolling
