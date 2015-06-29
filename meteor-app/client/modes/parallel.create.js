@@ -84,16 +84,19 @@ Parallels.AppModes['create-parallel'] = {
         $('.create-parallel--line').remove();
         $originBit.removeClass('create-parallel--origin');
         
+        /*
         Parallels.Animation.General.cornerSparks({
           $element: $destBit,
           prependTo: ".map"
         });
+        */
 
         // TODO: prep images for slicing
         // query Neo4j for image bits that are connected, by X number of hops
         // also, spatially: K-nearest algo?
         // http://burakkanber.com/blog/machine-learning-in-js-k-nearest-neighbor-part-1/
 
+        /*
         wave = Parallels.Animation.Image.waveSlice({
           $img: $destBit.find('img'),
           prependTo: ".map"
@@ -101,6 +104,14 @@ Parallels.AppModes['create-parallel'] = {
 
         // TODO: set z-index, to move the canvas over on top of the DOM version
         $destBit.hide();
+        */
+
+        // TODO: show menu
+
+        // TODO: show thumbnail
+
+        // TODO: add bit click handlers to add
+        // TODO: wire up cancel button? 
 
         // TODO: show form
 
@@ -142,6 +153,7 @@ Parallels.AppModes['create-parallel'] = {
     // try bg overlay over other bits too?
 
     // ****************** RENDER LINE *************
+    /*
     // set up an SVG container via two.js container to draw the line stroke
     lineContainer = document.createElement('div');
     $(lineContainer)
@@ -200,8 +212,9 @@ Parallels.AppModes['create-parallel'] = {
         // TODO: stretch sound, bind to flocking
 
       });
-    // ****************** RENDER LINE *************
 
+    // ****************** RENDER LINE *************
+    */
 
     // ****************** HEARTBEAT ANIMATION *************
     var timelineStart = function () {

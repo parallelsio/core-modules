@@ -6,22 +6,6 @@ Template.map.helpers({
     return Bits.find();
   },
 
-  // textBits: function() {
-  //   return Bits.find({type: "text"});
-  // },
-
-  // sketchBits: function() {
-  //   return Bits.find({type: "sketch"});
-  // },
-
-  // imageBits: function(){
-  //   return Bits.find({type: "image"});
-  // },
-
-  // webPageBits: function(){
-  //   return Bits.find({type: "webpage"});
-  // },
-
   isCreatingTextBit: function () {
     return Session.get('createTextBit');
   },

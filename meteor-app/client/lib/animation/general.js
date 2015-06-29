@@ -1,5 +1,95 @@
 Parallels.Animation.General = {
   
+  shimmer: function(options){
+  /* 
+      PURPOSE:
+        Set up a timeline for revealing a collection of DOM elements, 
+        in a choreographed sequence, slightly staggered.
+
+        Adapted from: http://codepen.io/GreenSock/pen/ramJGv
+      -----------------------------------------------------------
+
+      PARAMS:
+        $elements: a collection of DOM elements to shimmer, $(".map .bit")
+        paused: true | false 
+      -----------------------------------------------------------
+
+      RETURNS: reference to Greensock timeline, for chaining or later play
+      -----------------------------------------------------------
+      
+      TODO: only shimmer + play sounds for what is in the viewport
+      -----------------------------------------------------------
+    */
+
+    var delayMultiplier = 0.0005;
+    var duration = 0.4;
+    var timeline = new TimelineMax({
+      paused: false || options.paused
+    });
+
+    options.$elements.each(function() {
+
+      $element = this;
+
+      // Use the Greensock-applied transform values via "translate3d(132px, 89px, 0px)"
+      // Use utility function to get position, as jQuery position wont work, 
+      // bc elements are currently not visible
+      var position = Utilities.getTransformedPosition($element);
+
+      // We need the x/y coordinates to pass to the Timeline obj,
+      // which will use the distance between the bits to calc a delay offset
+      // this delay offset is what gives it a nice wipe/shimmering effect
+      var offset = parseFloat(position.top) + parseFloat(position.left);
+      var delay = parseFloat(offset * delayMultiplier).toFixed(2);
+
+      log.debug("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay );
+
+      /* TODO:
+          calc a sound frequency to use as a parameter for the sound played
+          Using the delay param we used above for the animation will tie
+          the 2 together nicely
+          var newFreq = Math.random() * 1000 + 1060;
+          newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
+      */
+
+      // log.debug("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
+      // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
+      // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
+
+      timeline.fromTo(
+        $element,
+        duration,
+        {
+          // from
+          scale: 0.95,
+          opacity: 0,
+          ease: Expo.easeIn,
+          display: 'block'
+        },
+        {
+          // to
+          scale: 1,
+          opacity: 1,
+          ease: Expo.easeIn,
+          display: 'block',
+
+          onComplete: function() {
+            // TODO: vary this sound (pitch up?) after each iteration
+            Parallels.Audio.player.play('fx-ting3');
+          }
+        },
+        delay
+      );
+
+    });
+
+    if (!options.paused){
+      timeline.play();
+    }
+
+    return timeline;
+  },
+
   cornerSparks: function(options){
 
   /* 

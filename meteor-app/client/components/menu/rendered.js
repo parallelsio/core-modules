@@ -1,3 +1,4 @@
+// TODO: refactor all settings into Session obj
 MeteorSettings.setDefaults({
   public: { options: { displayIntroAnimation: true } }
 });
@@ -6,94 +7,28 @@ Template.menu.rendered = function() {
 
   log.debug('menu rendered.');
 
-  var viewportWidth  = verge.viewportW();
-  var viewportHeight = verge.viewportH();
+  if (Meteor.settings.public.options.displayIntroAnimation) {
 
-  // TODO: refactor all settings into Session obj
-  log.debug("Meteor.settings.public.options.displayIntroAnimation: ",
-              Meteor.settings.public.options.displayIntroAnimation);
+    var timelineSequence = new TimelineMax({ paused: true });
 
-  // adapted from: http://codepen.io/GreenSock/pen/ramJGv
-  // TODO:
-  // 1) pull out into Animation class
-  // 2) instead of making this part of the callback, can we have menu emit an event?
-  var shimmerDisplayBits = function(){
+    // Greensock .call is similar to its .add, 
+    // except .call lets us pass params to our function
+    timelineSequence
+      .add(timelineMenu())
+      .call(
+        Parallels.Animation.General.shimmer,
+        [
+          { $elements: $(".map .bit") }
+        ])
+      .play();
 
-    var delayMultiplier = 0.0005;
-    var duration = 0.4;
-    var shimmerTimeline = new TimelineMax();
+    // adapted code from   : http://codepen.io/vdaguenet/pen/raXBKp
+    function timelineMenu () {
 
-    var elements = $(".map .bit");
-
-    elements.each(function() {
-
-      element = this;
-
-      // Use the Greensock-applied transform values: 
-      // "translate3d(132px, 89px, 0px)", even though they are not currently visible
-      var position = Utilities.getTransformedPosition(element);
-
-      // We need the x/y coordinates to pass to the Timeline obj,
-      // which will use the distance between the bits to calc a delay offset
-      // this delay offset is what gives it a nice wipe/shimmering effect
-      var offset = parseFloat(position.top) + parseFloat(position.left);
-      var delay = parseFloat(offset * delayMultiplier).toFixed(2);
-
-      log.debug("bit:shimmer:in: ", Utilities.getBitDataId(element), " : delay of ", delay );
-
-      // calc a sound frequency to use as a parameter for the sound played
-      // Using the delay param we used above for the animation will tie
-      // the 2 together nicely
-      // var newFreq = Math.random() * 1000 + 1060;
-      // newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
-
-      // log.debug("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
-      // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
-      // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
-
-      shimmerTimeline.fromTo(
-        element,
-        duration,
-        {
-          // from
-          scale:0.95,
-          ease:Expo.easeIn,
-          opacity: 0,
-          display:'block'
-        },
-        {
-          // to
-          scale:1,
-          ease:Expo.easeIn,
-          opacity: 1,
-          display:'block',
-          onComplete: function() {
-            // TODO: vary this sound (pitch up?) after each iteration
-            Parallels.Audio.player.play('fx-ting3');
-          }
-        },
-        delay
-      );
-
-    });
-
-  };
-
-  var timeline = new TimelineMax();
-
-  function start () {
-    var tlLoader     = setTimelineLoader();
-    var tlGlobal     = new TimelineMax();
-
-    tlGlobal.add(tlLoader);
-    tlGlobal.play();
-  }
-
-
-  // adapted code from   : http://codepen.io/vdaguenet/pen/raXBKp
-  function setTimelineLoader () {
-
-    if (Meteor.settings.public.options.displayIntroAnimation) {
+      var menu = $(".menu");
+      var viewportWidth  = verge.viewportW();
+      var viewportHeight = verge.viewportH();
+      var timeline = new TimelineMax();
 
       var topToBottomLine  = $('.wipe.top-to-bottom .line');
       var maskTop          = $('.wipe.top-to-bottom .mask.top');
@@ -116,21 +51,17 @@ Template.menu.rendered = function() {
       timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
       timeline.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
 
+      timeline.to(menu, 1, { top: "0px", ease:Elastic.easeOut });
+
+      return timeline;
     }
 
-    else {
-      $('.wipe. load').hide();
-    }
-
-    var menu = $(".menu");
-    timeline
-      .to(menu, 1, { top:"0px", ease:Elastic.easeOut})
-      .addCallback(shimmerDisplayBits, 1.8);
-
-    return timeline;
   }
 
-  start();
+  else {
+    $('.wipe. load').hide();
+  }
+
 
 };
 
