@@ -1,0 +1,77 @@
+
+.shortcuts {
+  position: fixed; 
+  z-index:100;
+  width: 15em;
+  left: -15em; // hide off screen, onRender animates it into view
+  height: 100%;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.shortcuts__header{
+  margin: 0.5em 0.25em 1.25em 0.25em;
+
+  i {   
+    font-size: 1.25em;
+    margin: 0 0.4em; 
+  }
+  h6 { 
+    display: inline-block; margin-right: 1em; 
+  }
+} 
+
+
+   
+.shortcut {
+  position: relative;
+  padding: 0.25em 0.6em 0.25em 0.25em;
+}
+
+.shortcut:hover{
+  background-color: #FFF;
+}
+
+/*  positioned underneath + slightly off kilter of 
+    the .shortcuts-key so it's visible 
+*/
+.shortcut__bit {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  width: 2.7em;
+  height: 1.8em;
+  top: 0.5em;
+  background: #C6C6C6;
+  border-top: 0.3em solid #8B8BF5;
+}
+
+.shortcut__flyout{
+  position: relative;
+  width:50vh;
+  height:80vh;
+  background: white;
+}
+
+.shortcut__key {
+  display: inline-block;
+  position: relative;
+  z-index: 2;  // one higher so displays over/above the .shortcuts--hover-label layer 
+  cursor: default;
+  background: #F3F2F9;
+  border-radius: 0.25em;
+  border: 1px solid #D6DADC;
+  border-bottom-color: #CDD2D4;
+  margin: 0 0.25em;
+  padding: 0.4em 0.75em;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.shortcut__key--sequence{
+
+}
+
+.shortcut__key--solo{
+  left: 3em;
+
+ }

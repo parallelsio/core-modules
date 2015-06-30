@@ -3,9 +3,7 @@ MeteorSettings.setDefaults({
   public: { options: { displayIntroAnimation: true } }
 });
 
-Template.menu.rendered = function() {
-
-  log.debug('menu rendered.');
+Template.infoMenu.rendered = function() {
 
   if (Meteor.settings.public.options.displayIntroAnimation) {
 
@@ -25,7 +23,7 @@ Template.menu.rendered = function() {
     // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
     function timelineMenu () {
 
-      var menu = $(".menu");
+      var menu = $(".info-menu");
       var viewportWidth  = verge.viewportW();
       var viewportHeight = verge.viewportH();
       var timeline = new TimelineMax();
@@ -51,7 +49,7 @@ Template.menu.rendered = function() {
       timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
       timeline.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
 
-      timeline.to(menu, 1, { top: "0px", ease:Elastic.easeOut });
+      timeline.to(menu, 1, { top: "0", ease:Elastic.easeOut });
 
       return timeline;
     }

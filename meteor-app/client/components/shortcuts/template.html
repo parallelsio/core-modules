@@ -1,0 +1,16 @@
+<template name="shortcuts">
+  
+  <div class="shortcuts" >
+
+    <div class="shortcuts__header">
+      <i class="fa fa-keyboard-o"></i>
+      <h6>What can I do right now? <b>{{ currentModeLabel }}</b></h6>
+    </div>
+
+    {{> Template.dynamic template=currentModeShortcutTemplate }}
+   
+  </div>
+  
+</template>
+
+
