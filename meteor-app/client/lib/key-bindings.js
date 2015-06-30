@@ -59,17 +59,16 @@ Parallels.KeyCommands = {
     Mousetrap.unbind('s');
 
     // shortcuts
-    Mousetrap.unbind('tab');
+    Mousetrap.unbind('?');
 
   },
 
   bindShortcuts: function(){
     log.debug("keyCommand:bindShortcuts");
 
-    Mousetrap.bind("tab", function() {
-      log.debug("pressed 'tab' key");
-  
-      Blaze.render(Template.shortcutsModal, document.body);
+    Mousetrap.bind("?", function() {
+      log.debug("pressed '?' key");
+      $(".shortcuts")[0].style.left = 0;
     });
   },
 

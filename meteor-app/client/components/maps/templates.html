@@ -1,22 +1,9 @@
 <template name="map">
 
-  <div class="wipe load top-to-bottom">
-    <div class="line"></div>
-    <div class="mask top"></div>
-    <div class="mask bottom"></div>
-  </div>
+  {{> mapRevealMasks }}
+ 
+  {{> shortcuts }}
 
-  <div class="wipe load side-to-side">
-    <div class="line"></div>
-    <div class="mask left"></div>
-    <div class="mask right"></div>
-  </div>
-
-  <div class="wipe bit-preview side-to-side">
-    <div class="mask left"></div>
-    <div class="mask right"></div>
-  </div>
-  
   {{> infoMenu }}
 
   {{#if viewingEventLog}}
@@ -40,5 +27,27 @@
   </div>
 
   {{> DebugErrors }}
+
+</template>
+
+
+<template name="mapRevealMasks">
+
+  <div class="wipe load top-to-bottom">
+    <div class="line"></div>
+    <div class="mask top"></div>
+    <div class="mask bottom"></div>
+  </div>
+
+  <div class="wipe load side-to-side">
+    <div class="line"></div>
+    <div class="mask left"></div>
+    <div class="mask right"></div>
+  </div>
+
+  <div class="wipe bit-preview side-to-side">
+    <div class="mask left"></div>
+    <div class="mask right"></div>
+  </div>
 
 </template>

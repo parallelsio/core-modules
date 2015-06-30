@@ -1,9 +1,10 @@
+$shortcuts-width: 15em;
 
 .shortcuts {
   position: fixed; 
   z-index:100;
-  width: 15em;
-  left: -15em; // hide off screen, onRender animates it into view
+  width: $shortcuts-width;
+  left: -$shortcuts-width; // hide off screen, onRender animates it into view
   height: 100%;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.05);
@@ -30,6 +31,8 @@
 
 .shortcut:hover{
   background-color: #FFF;
+
+  & .shortcut__flyout{ display:block; }
 }
 
 /*  positioned underneath + slightly off kilter of 
@@ -46,11 +49,16 @@
   border-top: 0.3em solid #8B8BF5;
 }
 
+
 .shortcut__flyout{
-  position: relative;
+  position: absolute;
+  display:none;
   width:50vh;
   height:80vh;
   background: white;
+  left: $shortcuts-width;
+  padding: 5em;
+
 }
 
 .shortcut__key {
