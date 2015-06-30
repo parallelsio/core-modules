@@ -32,7 +32,6 @@ reactjs:react
 mquandalle:autofocus
 chuangbo:marked
 random
-velocity:html-reporter
 fortawesome:fontawesome
 momentjs:moment
 cosmos:browserify
@@ -42,3 +41,4 @@ cwaring:modernizr
 angelcabo:infinite-undo
 parallels-canvas-manager
 aldeed:autoform
+velocity:console-reporter

@@ -95,7 +95,7 @@ Parallels.Animation.General = {
   /* 
     PURPOSE:
       Animate outward sparks, emitted from the center of each point.
-      Sparks are chorographed to happen sequentially, with a slight overlap
+      Sparks are choreographed to happen sequentially, with a slight overlap
     -----------------------------------------------------------
 
     DOCS: 

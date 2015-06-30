@@ -12,107 +12,114 @@ html { height: 100%; }
 body { height: 100%; }
 
 .wipe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
-	.line {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-		transform-origin: left top;
-	 }
+  .line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transform-origin: left top;
+   }
 
-	.mask {
-		position: absolute;
-		z-index: 2;
-	}
+  .mask {
+    position: absolute;
+    z-index: 2;
+  }
 }
 
-.wipe.top-to-bottom .line	{ background: $color-first; }
-.wipe.side-to-side .line 	{ background: $color-second; }
+.wipe.top-to-bottom .line { background: $color-first; }
+.wipe.side-to-side .line  { background: $color-second; }
 
 .wipe.load.top-to-bottom .mask {
-	width: 100%;
-	height: calc(50% - #{ $line-size });
-	background: $color-init;
-	
-	&.top 		{ top: 0; }
-	&.bottom 	{ bottom: 0; }
+  width: 100%;
+  height: calc(50% - #{ $line-size });
+  background: $color-init;
+  
+  &.top     { top: 0; }
+  &.bottom  { bottom: 0; }
 }
 
 .wipe.side-to-side .mask {
-	height: 100%;
-	
-	&.right { right: 0; }
-	&.left 	{ left: 0; }
+  height: 100%;
+  
+  &.right { right: 0; }
+  &.left  { left: 0; }
 }
 
 .wipe.load.side-to-side .mask {
-	width: calc(50% - #{ $line-size });
-	background: $color-first;
+  width: calc(50% - #{ $line-size });
+  background: $color-first;
 }
 
 .wipe.bit-preview.side-to-side {
-	display:none;
-	opacity:0;
+  display:none;
+  opacity:0;
 }
 
 .wipe.bit-preview.side-to-side .mask {
-	width: calc(50%) !important; // overwrite the line in the middle, not needed here
-	background: #222;
+  width: calc(50%) !important; // overwrite the line in the middle, not needed here
+  background: #222;
 }
 
+
 .menu {
-	position: fixed; 
-	z-index:100;
-	width: 100%;
-  top:-100px;
-	padding: 0.5em;
-	box-sizing: border-box;
+  position: fixed; 
+  z-index:100;
+  width: 15em;
+  top: 0;
+  height: 100%;
+  box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.05);
 
-	h6 { display: inline-block; margin-right: 1em; }
+  h6 { display: inline-block; margin-right: 1em; }
 
-	i {   
-		font-size: 1.25em;
- 		margin: 0 0.4em; 
- 	}
+  i {   
+    font-size: 1.25em;
+    margin: 0 0.4em; 
+  }
 }
 
 .menu--links { float:right;  }
 .menu--link { color: $blue; margin: 0 0.5em; }
 
-.shortcuts { 	
-
-  display: inline-block; 
+.menu--header{
+  margin: 0.5em 0.25em 1.25em 0.25em;
 }
+
+.shortcuts {  
+
+  display: block; 
+  width: 100%;
+}
+
    
 .shortcut {
-  display: inline-block;
   position: relative;
-  font-size: 0.75em;
-  margin: 0 1.75em 0 0;
+  padding: 0.25em 0.6em 0.25em 0.25em;
+}
+
+.shortcut:hover{
+  background-color: #FFF;
 }
 
 // positioned underneath + slightly off kilter of the .shortcuts-key
 // so it's visible 
 .shortcuts--hover-label {
-  display: block;
-  position: absolute;
-  clear: both;
-  top: -5px;
-  left: -3px;
-  width: 90%;
-  height: 2.5em;
+  display: inline-block;
+  position: relative;
   z-index: 1;
-  font-size: 1em;
-  margin: 0 auto 0.25em 0;
-  border: 3px dotted #ADADAD;
+  width: 2.7em;
+  height: 1.8em;
+  top: 0.5em;
+  background: #C6C6C6;
+  border-top: 0.3em solid #8B8BF5;
 }
+
 
 
 .shortcuts--key {
@@ -127,5 +134,10 @@ body { height: 100%; }
   margin: 0 0.25em;
   padding: 0.4em 0.75em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.type--solo{
+  position: relative;
+  left: 3em;
 }
 

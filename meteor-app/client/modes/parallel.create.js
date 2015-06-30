@@ -258,6 +258,8 @@ Parallels.AppModes['create-parallel'] = {
       $('.create-parallel--line').remove();
       $('corner-sparks--particles').remove();
 
+
+
       // stop drawing parallel line
       two.unbind('update');
       $(window).off('mousemove');

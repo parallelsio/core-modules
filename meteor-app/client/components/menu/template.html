@@ -20,12 +20,12 @@
 
 	<div class="menu" >
 
-    <span>
+    <div class="menu--header">
     	<i class="fa fa-keyboard-o"></i>
     	<h6>What can I do right now? <b>{{ currentModeLabel }}</b></h6>
+		</div>
 
-    	{{> Template.dynamic template=currentModeShortcutTemplate }}
-		</span>
+    {{> Template.dynamic template=currentModeShortcutTemplate }}
 
 		<div class="menu--links">
 			<a href="#" class="menu--link">privacy notice</a>
