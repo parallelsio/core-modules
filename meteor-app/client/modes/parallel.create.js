@@ -245,18 +245,18 @@ Parallels.AppModes['create-parallel'] = {
     
     if (Session.get('currentMode')) {
       
+      // stop heartbeat animation
+      timeline.kill();
+
       Session.set('currentMode', null);
       Session.set('originBitId', null);
       Session.set('destBitId', null);
 
       $(".map").removeClass('mode--create-parallel');
       $originBit.removeClass('create-parallel--origin');
-
+/*
       $('.create-parallel--line').remove();
       $('corner-sparks--particles').remove();
-
-      // stop heartbeat animation
-      timeline.kill();
 
       // stop drawing parallel line
       two.unbind('update');
@@ -276,6 +276,7 @@ Parallels.AppModes['create-parallel'] = {
       // erase the canvas by setting re-setting it's width [to anything]
       $(wave.canvas).width = 0;
       $(wave.canvas).remove();
+      */
       if ($destBit) { $destBit.show() } ;
 
       // reenable scrolling

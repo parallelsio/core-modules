@@ -22,7 +22,7 @@ Template.menu.rendered = function() {
         ])
       .play();
 
-    // adapted code from   : http://codepen.io/vdaguenet/pen/raXBKp
+    // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
     function timelineMenu () {
 
       var menu = $(".menu");
