@@ -4,6 +4,8 @@
     * add a check before each bind function
       to ensure it doesnt already exist.
 
+    * refactor structure into bind + unbind for each key
+
 */
 
 Parallels.KeyCommands = {
@@ -59,17 +61,88 @@ Parallels.KeyCommands = {
     Mousetrap.unbind('s');
 
     // shortcuts
-    Mousetrap.unbind('?');
+    Mousetrap.unbind('1', function(){
+      // TODO: clear + GC timeline objects, handlers
+      $('.shortcut').each(function(){
+        $shortcut = $(this);
+        console.log('unbinding each shortcut: ', $shortcut);
+      });
+    
+    });
 
   },
 
   bindShortcuts: function(){
     log.debug("keyCommand:bindShortcuts");
 
-    Mousetrap.bind("?", function() {
-      log.debug("pressed '?' key");
-      $(".shortcuts")[0].style.left = 0;
+    Mousetrap.bind("1", function() {
+      log.debug("pressed '1' key");
+
+      var timeline = new TimelineMax();
+      timeline
+        // first, show the shortcuts panel
+        .to(
+          $(".shortcuts")[0],  // what to tween
+          0.2,  // speed
+          { 
+            left: "0",          
+            ease: Power4.easeIn
+          })
+
+        .add( bindHovers() )
+        .play();
+
+
+      function bindHovers(){
+
+        $('.shortcut').each(function(){
+          var $shortcut = $(this);
+
+          var $cursor   = $shortcut.find('.shortcut__mouse');
+          var $minibit  = $shortcut.find('.shortcut__bit');
+          var $key      = $shortcut.find('.shortcut__key');
+          var $flyout   = $shortcut.find('.shortcut__flyout');
+
+          var timeline = new TimelineMax({
+            paused: true,
+            repeat: -1
+          });
+
+          if ($key.hasClass('shortcut__key--sequence')){
+            timeline
+              .to($cursor, 1, { left: "1.2em", top: "1.5em", ease: Power4.easeIn, opacity: 1 })
+              .set($minibit, { borderTop: "border-top: 0.3em solid #8B8BF5;" } )
+              // TODO: play sound that matches key
+              .set($key, { left: "2px", top: "2px" })            
+          }
+
+          $shortcut.on( "mouseenter", 
+            { 
+              timeline: timeline,
+              $flyout: $flyout[0]
+            },
+            function(event){
+              event.data.$flyout.style.display = "block";
+              event.data.timeline.restart();
+            }
+          );
+
+          $shortcut.on("mouseleave", 
+            { 
+              timeline: timeline,
+              $flyout: $flyout[0]
+            },
+            function(event){
+              event.data.$flyout.style.display = "none";
+              event.data.timeline.pause();
+            }
+          );
+        });
+      }
+
     });
+
+    
   },
 
   bindDeleteBit: function(){

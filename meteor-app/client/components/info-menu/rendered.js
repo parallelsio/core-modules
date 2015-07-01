@@ -12,7 +12,7 @@ Template.infoMenu.rendered = function() {
     // Greensock .call is similar to its .add, 
     // except .call lets us pass params to our function
     timelineSequence
-      .add(timelineMenu())
+      .add(timelineMenu()) 
       .call(
         Parallels.Animation.General.shimmer,
         [
@@ -20,6 +20,7 @@ Template.infoMenu.rendered = function() {
         ])
       .play();
 
+    // TODO: extract into Animation class
     // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
     function timelineMenu () {
 

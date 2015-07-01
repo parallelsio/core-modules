@@ -1,4 +1,5 @@
 $shortcuts-width: 15em;
+$shortcut-height: 3em;
 
 .shortcuts {
   position: fixed; 
@@ -27,12 +28,11 @@ $shortcuts-width: 15em;
 .shortcut {
   position: relative;
   padding: 0.25em 0.6em 0.25em 0.25em;
+  height: $shortcut-height;
 }
 
 .shortcut:hover{
-  background-color: #FFF;
-
-  & .shortcut__flyout{ display:block; }
+  background-color: #FFF; 
 }
 
 /*  positioned underneath + slightly off kilter of 
@@ -46,9 +46,18 @@ $shortcuts-width: 15em;
   height: 1.8em;
   top: 0.5em;
   background: #C6C6C6;
-  border-top: 0.3em solid #8B8BF5;
+  /*border-top: 0.3em solid #8B8BF5;*/
 }
 
+.shortcut__mouse {
+  position: absolute;
+  z-index: 100;
+  transform: rotate(40deg);
+  left: 3em;
+  top: 3em;
+  color: #646464;
+  opacity: 0;
+}
 
 .shortcut__flyout{
   position: absolute;
@@ -58,8 +67,19 @@ $shortcuts-width: 15em;
   background: white;
   left: $shortcuts-width;
   padding: 5em;
+  top: -$shortcut-height;
+}
+
+.flyout__h1{
 
 }
+
+.flyout__bit-type{
+  
+}
+
+
+
 
 .shortcut__key {
   display: inline-block;
@@ -75,11 +95,10 @@ $shortcuts-width: 15em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 
-.shortcut__key--sequence{
+.shortcut__key--sequence {
 
 }
 
-.shortcut__key--solo{
+.shortcut__key--solo {
   left: 3em;
-
- }
+}
