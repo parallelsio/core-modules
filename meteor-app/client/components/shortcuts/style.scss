@@ -9,25 +9,12 @@ $shortcut-height: 3em;
   height: 100%;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.05);
+  padding-top: 2.5em; // clear the info menu
 }
 
-.shortcuts__header{
-  margin: 0.5em 0.25em 1.25em 0.25em;
-
-  i {   
-    font-size: 1.25em;
-    margin: 0 0.4em; 
-  }
-  h6 { 
-    display: inline-block; margin-right: 1em; 
-  }
-} 
-
-
-   
 .shortcut {
   position: relative;
-  padding: 0.25em 0.6em 0.25em 0.25em;
+  padding: 0.25em 0.6em 0.25em 1em;
   height: $shortcut-height;
 }
 
@@ -35,9 +22,6 @@ $shortcut-height: 3em;
   background-color: #FFF; 
 }
 
-/*  positioned underneath + slightly off kilter of 
-    the .shortcuts-key so it's visible 
-*/
 .shortcut__bit {
   display: inline-block;
   position: relative;
@@ -46,13 +30,12 @@ $shortcut-height: 3em;
   height: 1.8em;
   top: 0.5em;
   background: #C6C6C6;
-  /*border-top: 0.3em solid #8B8BF5;*/
 }
 
-.shortcut__mouse {
+.shortcut__cursor {
   position: absolute;
   z-index: 100;
-  transform: rotate(40deg);
+  transform: rotate(55deg);
   left: 3em;
   top: 3em;
   color: #646464;
@@ -62,23 +45,25 @@ $shortcut-height: 3em;
 .shortcut__flyout{
   position: absolute;
   display:none;
-  width:50vh;
+  width:50vw;
   height:80vh;
   background: white;
   left: $shortcuts-width;
-  padding: 5em;
   top: -$shortcut-height;
 }
 
 .flyout__h1{
-
+  font-size: 1em;
+  letter-spacing: -1px;
+  margin: 4em 0 0 2em;
 }
 
 .flyout__bit-type{
-  
+  font-size: 0.8em;
+  font-weight:bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
-
-
 
 
 .shortcut__key {
@@ -100,5 +85,7 @@ $shortcut-height: 3em;
 }
 
 .shortcut__key--solo {
-  left: 3em;
+  position: relative;
+  margin-left: 3em;
+ 
 }

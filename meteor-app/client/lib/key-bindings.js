@@ -98,22 +98,22 @@ Parallels.KeyCommands = {
         $('.shortcut').each(function(){
           var $shortcut = $(this);
 
-          var $cursor   = $shortcut.find('.shortcut__mouse');
+          var $cursor   = $shortcut.find('.shortcut__cursor');
           var $minibit  = $shortcut.find('.shortcut__bit');
           var $key      = $shortcut.find('.shortcut__key');
           var $flyout   = $shortcut.find('.shortcut__flyout');
 
           var timeline = new TimelineMax({
-            paused: true,
-            repeat: -1
+            paused: true
           });
 
           if ($key.hasClass('shortcut__key--sequence')){
             timeline
-              .to($cursor, 1, { left: "1.2em", top: "1.5em", ease: Power4.easeIn, opacity: 1 })
-              .set($minibit, { borderTop: "border-top: 0.3em solid #8B8BF5;" } )
+              .to($cursor, 1, { left: "1.2em", top: "1.5em",  ease: Power4.easeIn, y: 0, opacity: 1 })
+              .to($minibit, 0, { borderTop: "0.3em solid #8B8BF5" }, "-=0.2" )
               // TODO: play sound that matches key
-              .set($key, { left: "2px", top: "2px" })            
+              .to($key, 0, { left: "3px", top: "3px" }, "+=0.3") 
+              .to($key, 0, { left: 0, top: 0 }, "+=0.75") 
           }
 
           $shortcut.on( "mouseenter", 
@@ -130,10 +130,15 @@ Parallels.KeyCommands = {
           $shortcut.on("mouseleave", 
             { 
               timeline: timeline,
-              $flyout: $flyout[0]
+              $flyout: $flyout[0],
+              $minibit: $minibit[0],
+              $cursor: $cursor[0]
             },
             function(event){
               event.data.$flyout.style.display = "none";
+              event.data.$minibit.style.border = 0;
+              event.data.$cursor.style.left = "3em";
+              event.data.$cursor.style.top = "3em";
               event.data.timeline.pause();
             }
           );
