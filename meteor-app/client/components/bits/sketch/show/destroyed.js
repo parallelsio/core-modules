@@ -7,7 +7,7 @@ Template.sketchBit.onDestroyed(function(){
   // BitEvents.hoverOutBit();
   Session.set('bitHoveringId', null);
 
-  Parallels.KeyCommands.bindUndo();
+  Parallels.Keys.bindUndo();
   Mousetrap.unbind('a');
   Mousetrap.unbind('c');
   Mousetrap.unbind('up');

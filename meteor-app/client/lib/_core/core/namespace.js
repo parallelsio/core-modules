@@ -10,5 +10,5 @@ Parallels = {
   },
   FileUploads: {},
   Handlers: Inverter,
-  KeyCommands: {}
+  Keys: {}
 };

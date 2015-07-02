@@ -3,8 +3,8 @@ Parallels.AppModes['create-bit'] = {
   enter: function (event) {
     log.debug("mode:create-bit:enter");
 
-    Parallels.KeyCommands.disableAll();
-    Parallels.KeyCommands.bindEsc();
+    Parallels.Keys.disableAll();
+    Parallels.Keys.bindEsc();
 
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'create-bit');
@@ -40,7 +40,7 @@ Parallels.AppModes['create-bit'] = {
     });
 
     Parallels.Audio.player.play('fx-cha-ching');
-    Parallels.KeyCommands.bindAll();
+    Parallels.Keys.bindAll();
 
     Session.set('currentMode', null);
     Session.set('createTextBit', null);
@@ -52,7 +52,7 @@ Parallels.AppModes['create-bit'] = {
 
     // TODO: play zoop sound
     Parallels.Audio.player.play('fx-temp-temp');
-    Parallels.KeyCommands.bindAll();
+    Parallels.Keys.bindAll();
 
     Session.set('currentMode', null);
     Session.set('createTextBit', null);

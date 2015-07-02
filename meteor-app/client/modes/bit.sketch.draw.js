@@ -3,8 +3,8 @@ Parallels.AppModes['sketch-bit'] = {
   enter: function () {
     log.debug("mode:sketch-bit:enter");
 
-    Parallels.KeyCommands.disableAll();
-    Parallels.KeyCommands.bindImageBitPreview(); // to prevent browser from scrolling
+    Parallels.Keys.disableAll();
+    Parallels.Keys.bindImageBitPreview(); // to prevent browser from scrolling
 
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'sketch-bit');
@@ -32,7 +32,7 @@ Parallels.AppModes['sketch-bit'] = {
   exit: function () {
     log.debug("mode:sketch-bit:exit");
 
-    Parallels.KeyCommands.bindAll();
+    Parallels.Keys.bindAll();
 
     Session.set('currentMode', null);
     Session.set('sketchBit', null);

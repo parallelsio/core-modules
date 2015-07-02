@@ -8,9 +8,105 @@
 
 */
 
-Parallels.KeyCommands = {
+
+// extract as a general function
+function _toggleShortcutsPanel(direction){
+  
+  var left = 0;
+  var bindings;
+
+  if (direction === "open"){
+    left = 0;
+    bindings = _bindShortcutEvents;
+    Session.set('isShortcutsDisplayed', true);
+  }
+
+  else if (direction === "close"){
+    left = "-15ems";
+    bindings = function unBindHovers(){ 
+      log.debug("TODO: unbind shortcut hovers");
+    };
+    Session.set('isShortcutsDisplayed', false);
+  }
+
+  var timeline = new TimelineMax();
+  timeline
+    .to(
+      $(".shortcuts")[0],   // what to tween
+      0.2,                  // speed
+      { 
+        left: left,          
+        ease: Power4.easeIn
+      })
+    .add( bindings() )
+    .play();
+}
+
+function _bindShortcutEvents(){
+
+  $('.shortcut').each(function(){
+    var $shortcut = $(this);
+
+    var $cursor   = $shortcut.find('.shortcut__cursor');
+    var $minibit  = $shortcut.find('.shortcut__bit');
+    var $key      = $shortcut.find('.shortcut__key');
+    var $flyout   = $shortcut.find('.shortcut__flyout');
+
+    var timeline = new TimelineMax({
+      paused: true
+    });
+
+    if ($key.hasClass('shortcut__key--sequence')){
+      timeline
+        .to($cursor, 1, { left: "1.5em", top: "1.5em",  ease: Power4.easeIn, y: 0, opacity: 1 })
+        .to($minibit, 0, { borderTop: "0.3em solid #8B8BF5" }, "-=0.2" )
+        // TODO: play sound that matches the shortcut key
+        .to($key, 0, { left: "3px", top: "3px" }, "+=0.3") 
+        .to($key, 0, { left: 0, top: 0 }, "+=0.75") 
+    }
+
+    $shortcut.on( "mouseenter", 
+      { 
+        hoverTimeline: timeline,
+        $flyout: $flyout[0]
+      },
+
+      function(event){
+        event.data.$flyout.style.display = "block";
+        event.data.hoverTimeline.restart();
+      }
+    );
+
+    $shortcut.on("mouseleave", 
+      { 
+        hoverTimeline: timeline,
+        $flyout: $flyout[0],
+        $minibit: $minibit[0],
+        $cursor: $cursor[0]
+      },
+
+      function(event){
+
+        // hide panel and reset hover animations for this shortcut key
+        event.data.$flyout.style.display = "none";
+        event.data.$minibit.style.border = 0;
+        event.data.$cursor.style.left = "3em";
+        event.data.$cursor.style.top = "3em";
+        event.data.$cursor.style.opacity = 0;
+        event.data.hoverTimeline.pause();
+      }
+    );
+  });
+}
+
+
+
+
+Parallels.Keys = {
 
   bindAll: function(){
+
+    // TODO: add 'except' param, convery this list into a map
     log.debug("keyCommand:bindAll");
 
     this.bindDeleteBit();
@@ -51,7 +147,7 @@ Parallels.KeyCommands = {
     Mousetrap.unbind('h');   
 
     // undo last action
-    // handles both command + control for Win/Mac/Linux                                 
+    // mod is an alias for both Apple/command (Mac) and control (Win/Linux)                                 
     Mousetrap.unbind('mod+z');
 
     // redo last action
@@ -62,7 +158,10 @@ Parallels.KeyCommands = {
 
     // shortcuts
     Mousetrap.unbind('1', function(){
-      // TODO: clear + GC timeline objects, handlers
+      
+      _toggleShortcutsPanel("close");
+
+      // TODO: clear + garbage collect timeline objects, handlers
       $('.shortcut').each(function(){
         $shortcut = $(this);
         console.log('unbinding each shortcut: ', $shortcut);
@@ -74,80 +173,21 @@ Parallels.KeyCommands = {
 
   bindShortcuts: function(){
     log.debug("keyCommand:bindShortcuts");
+    Session.set('isShortcutsDisplayed', false);
 
     Mousetrap.bind("1", function() {
       log.debug("pressed '1' key");
 
-      var timeline = new TimelineMax();
-      timeline
-        // first, show the shortcuts panel
-        .to(
-          $(".shortcuts")[0],  // what to tween
-          0.2,  // speed
-          { 
-            left: "0",          
-            ease: Power4.easeIn
-          })
+      if(Session.equals('isShortcutsDisplayed', false)){
+        _toggleShortcutsPanel("open");
+        _bindShortcutEvents();
+      }
 
-        .add( bindHovers() )
-        .play();
-
-
-      function bindHovers(){
-
-        $('.shortcut').each(function(){
-          var $shortcut = $(this);
-
-          var $cursor   = $shortcut.find('.shortcut__cursor');
-          var $minibit  = $shortcut.find('.shortcut__bit');
-          var $key      = $shortcut.find('.shortcut__key');
-          var $flyout   = $shortcut.find('.shortcut__flyout');
-
-          var timeline = new TimelineMax({
-            paused: true
-          });
-
-          if ($key.hasClass('shortcut__key--sequence')){
-            timeline
-              .to($cursor, 1, { left: "1.2em", top: "1.5em",  ease: Power4.easeIn, y: 0, opacity: 1 })
-              .to($minibit, 0, { borderTop: "0.3em solid #8B8BF5" }, "-=0.2" )
-              // TODO: play sound that matches key
-              .to($key, 0, { left: "3px", top: "3px" }, "+=0.3") 
-              .to($key, 0, { left: 0, top: 0 }, "+=0.75") 
-          }
-
-          $shortcut.on( "mouseenter", 
-            { 
-              timeline: timeline,
-              $flyout: $flyout[0]
-            },
-            function(event){
-              event.data.$flyout.style.display = "block";
-              event.data.timeline.restart();
-            }
-          );
-
-          $shortcut.on("mouseleave", 
-            { 
-              timeline: timeline,
-              $flyout: $flyout[0],
-              $minibit: $minibit[0],
-              $cursor: $cursor[0]
-            },
-            function(event){
-              event.data.$flyout.style.display = "none";
-              event.data.$minibit.style.border = 0;
-              event.data.$cursor.style.left = "3em";
-              event.data.$cursor.style.top = "3em";
-              event.data.timeline.pause();
-            }
-          );
-        });
+      else if (Session.equals('isShortcutsDisplayed', true)){
+        _toggleShortcutsPanel("close");
       }
 
     });
-
-    
   },
 
   bindDeleteBit: function(){

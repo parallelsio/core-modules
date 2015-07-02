@@ -2,7 +2,7 @@ Meteor.startup(function(){
 
   log.debug("Meteor.startup begin.");
 
-  Parallels.KeyCommands.bindAll();
+  Parallels.Keys.bindAll();
   Parallels.Audio.player.initAndStartEnv();
 
   // TODO: make Session bootup/init?
