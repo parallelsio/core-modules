@@ -1,3 +1,4 @@
 [submodule "meteor-app"]
 	path = meteor-app
 	url = https://github.com/parallelsio/parallels-web.git
+	branch = master
