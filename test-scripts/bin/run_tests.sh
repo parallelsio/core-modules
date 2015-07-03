@@ -19,7 +19,7 @@ if [ -z "$CI" ]; then
 fi
 
 # Run integration tests
-TESTS=${GROUP:-end2end-tests}
+TESTS=${GROUP:-test-scripts}
 node node_modules/cucumber/bin/cucumber.js $TESTS $CUCUMBER_ARGS
 status=$?
 

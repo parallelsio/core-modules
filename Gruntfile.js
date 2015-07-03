@@ -4,12 +4,10 @@ var fs = require('fs'), util = require('util'), busboy = require('connect-busboy
 
 module.exports = function (grunt) {
 
-  var target = grunt.option('target') || 'local';
-
   var config = {
     dist: 'extensions/chrome/build',
     test: 'tests',
-    testImageUploads: 'end2end-tests/.tmp/',
+    testImageUploads: 'test-scripts/.tmp/',
     chromeExt: 'extensions/chrome/source',
     appRootUrl: {
       local: 'localhost:3000',
@@ -113,38 +111,11 @@ module.exports = function (grunt) {
     },
 
     bgShell: {
-      e2e: {
-        cmd: './end2end-tests/bin/run_tests.sh',
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
-      },
-
       meteor: {
         cmd: [
           'cd meteor-app',
           'meteor run --settings settings.json'
         ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
-      },
-
-      meteorTests: {
-        cmd: [
-          'cd meteor-app',
-          'meteor --test --release velocity:METEOR@1.1.0.2_2 --settings settings.json'
-        ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
-      },
-
-      resetTestDb: {
-        cmd: 'mongo parallels_test --eval "printjson(db.dropDatabase())"',
         bg: false,
         stdout: true,
         stderr: true,
@@ -168,17 +139,6 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true,
         fail: false
-      },
-
-      meteordebug: {
-        cmd: [
-          'cd meteor-app',
-          'NODE_OPTIONS=\'--debug-brk\' meteor run --settings settings.json'
-        ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
       },
 
       bowerChromeExt: {
@@ -220,10 +180,6 @@ module.exports = function (grunt) {
     },
 
     concurrent: {
-      serverdebug: [
-        'bgShell:meteordebug',
-        'watch'
-      ],
       server: [
         'bgShell:meteor',
         'watch'
@@ -284,7 +240,7 @@ module.exports = function (grunt) {
     connect: {
       options: {},
 
-      chrome: {
+      clipperServer: {
         options: {
           port: 9000,
           livereload: 35729,
@@ -335,7 +291,7 @@ module.exports = function (grunt) {
           }
         }
       },
-      test: {}
+      clipperTestServer: {}
     },
 
     env: {
@@ -348,7 +304,7 @@ module.exports = function (grunt) {
     },
 
     jasmine: {
-      all: {
+      clipperUnitTests: {
         options: {
           display: 'short',
           keepRunner: true,
@@ -423,7 +379,7 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask('server', 'Run server', function (target) {
+  grunt.registerTask('server', 'Run server', function () {
     fs.exists('.env', function (exists) {
       if (exists) {
         console.log("Found .env file");
@@ -431,35 +387,16 @@ module.exports = function (grunt) {
       }
     });
 
-    if (target !== 'debug')
-      target = '';
-
     var tasks = [
       'bgShell:bowerChromeExt',
       'sass',
       'jade',
-      'connect:chrome',
-      'concurrent:server' + target
+      'connect:clipperServer',
+      'concurrent:server'
     ];
 
     grunt.task.run(tasks);
   });
-
-  grunt.registerTask('all-tests', 'Run units + integration tests', [
-    'jshint',
-    'bgShell:meteorTests',
-    'connect:test',
-    'connect:chrome',
-    'jasmine',
-    'env:' + target,
-    'build:' + target,
-    'bgShell:resetTestDb',
-    'bgShell:e2e'
-  ]);
-
-  grunt.registerTask('unit-tests', 'Run unit tests', ['jshint', 'bgShell:meteorTests', 'connect:test', 'jasmine']);
-
-  grunt.registerTask('e2e-tests', 'Run integration tests', ['jshint', 'env:' + target, 'connect:chrome', 'build:' + target, 'bgShell:resetTestDb', 'bgShell:e2e']);
 
   grunt.registerTask('default', 'server');
 };

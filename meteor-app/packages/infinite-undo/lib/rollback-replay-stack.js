@@ -12,7 +12,6 @@ var _findOldestReplayableEvent = Meteor.wrapAsync(function (entityId, callback) 
 
 var insertNewEvent = Meteor.bindEnvironment(function (payload) {
   var entity = payload.data.entity;
-  console.log('rollback.replay:insertNewEvent: entity:', entity.id);
 
   RollbackReplayStack.insert({
     entityId: entity.id,
@@ -33,7 +32,6 @@ var recordEventRollback = Meteor.bindEnvironment(function (payload) {
 
   var event = _findMostRecentUndoableEvent(entity.id);
   if (event) {
-    console.log('eventLog:recordEventRollback: entity:', entity.id, event._id);
 
     RollbackReplayStack.update(event._id, query, function (err /*, result */) {
       if (err) console.error(err);
@@ -53,8 +51,6 @@ var recordEventReplay = Meteor.bindEnvironment(function (payload) {
 
   var event = _findOldestReplayableEvent(entity.id);
   if (event) {
-    console.log('eventLog:recordEventReplay: entity:', entity.id, event._id);
-
     RollbackReplayStack.update(event._id, query, function (err /*, result */) {
       if (err) console.error(err);
     });
@@ -70,8 +66,6 @@ var resetReplayableEvents = Meteor.bindEnvironment(function (payload) {
       replayable: ""
     }
   };
-
-  console.log('eventLog:resetReplayableEvents: entity:', entity.id);
 
   RollbackReplayStack.update({ entityId: entity.id, replayable: true}, query, { multi: true }, function (err /*, result */) {
     if (err) console.error(err);

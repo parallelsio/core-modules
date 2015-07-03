@@ -33,7 +33,7 @@ module.exports = function () {
     this.browser.isElementPresent({ xpath: "//div[@data-filename='mine_flow_times_square_orange_curves_2_0749.jpg']" }).
       then(function (isPresent) {
         if (isPresent) {
-          var uploadedImagePath = path.resolve('./end2end-tests/.tmp', image);
+          var uploadedImagePath = path.resolve('./test-scripts/.tmp', image);
           fs.unlink(uploadedImagePath, callback);
         }
         else {

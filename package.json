@@ -7,6 +7,7 @@
   "devDependencies": {
     "adm-zip": "^0.4.7",
     "bower": "^1.4.1",
+    "chai": "^3.0.0",
     "connect-busboy": "0.0.2",
     "cucumber": "^0.4.7",
     "dotenv": "^1.1.0",
@@ -31,28 +32,28 @@
     "grunt-template-jasmine-requirejs": "^0.2.0",
     "jshint-stylish": "^1.0.0",
     "matchdep": "^0.3.0",
+    "meteor-stubs": "0.0.6",
+    "mocha": "^2.2.5",
     "selenium-standalone": "2.44.0-7",
     "selenium-webdriver": "2.44.0",
-    "shelljs": "^0.4.0"
+    "shelljs": "^0.4.0",
+    "sourced": "0.0.14",
+    "sourced-repo-mongo": "^0.3.5",
+    "spacejam": "^1.2.1"
   },
-
   "scripts": {
-    "start": "JASMINE_SERVER_INTEGRATION=0 JASMINE_SERVER_UNIT=0 JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server",
-    "test": "grunt all-tests",
+    "start": "grunt server",
     "postinstall": "electron-rebuild",
-    "units": "grunt unit-tests",
-    "e2e": "JASMINE_SERVER_INTEGRATION=0 JASMINE_SERVER_UNIT=0 JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt e2e-tests",
-    "e2e-dev": "JASMINE_SERVER_INTEGRATION=0 JASMINE_SERVER_UNIT=0 JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 CUCUMBER_ARGS='--tags @dev' grunt e2e-tests",
     "local": "grunt build:local",
     "ci": "grunt build:ci",
     "prod": "grunt build",
-    "server": "JASMINE_SERVER_INTEGRATION=0 JASMINE_SERVER_UNIT=0 JASMINE_CLIENT_INTEGRATION=0 JASMINE_CLIENT_UNIT=0 grunt server",
+    "server": "grunt server",
     "dropneo": "neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start",
     "resetdb": "grunt bgShell:resetMeteorDb && neo4j restart && grunt bgShell:resetNeo4jDb",
     "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json",
     "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\"",
-    "test-packages": "./end2end-tests/bin/test-all.sh",
-    "test-package": "./end2end-tests/bin/test-package.sh",
-    "test-server": "cd meteor-app && meteor test-packages -p 3030"
+    "test": "grunt jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
+    "test:integration": "cd meteor-app && spacejam test-packages",
+    "test:server": "cd meteor-app && meteor test-packages -p 3030"
   }
 }

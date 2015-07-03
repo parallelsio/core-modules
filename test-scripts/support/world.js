@@ -32,7 +32,7 @@ var World = function (callback) {
         'username': username,
         'accessKey': accessKey,
         'chromeOptions': {
-          'args': ["user-data-dir=end2end-tests/.tmp/chromeprofile"],
+          'args': ["user-data-dir=test-scripts/.tmp/chromeprofile"],
           'extensions': [extension.base64]
         }
       }).
@@ -55,7 +55,7 @@ var World = function (callback) {
         "browserName": "chrome",
         "selenium-version": "2.44.0",
         "chromeOptions": {
-          "args": ["user-data-dir=end2end-tests/.tmp/chromeprofile"],
+          "args": ["user-data-dir=test-scripts/.tmp/chromeprofile"],
           "extensions": [extension.base64]
         }
       })

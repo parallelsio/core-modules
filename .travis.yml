@@ -11,17 +11,12 @@ before_install:
   - npm install -g grunt-cli bower
   - curl https://install.meteor.com | /bin/sh
 
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
 notifications:
   slack:
     secure: u1npbUGXtq6p1A602OwybuvIzjsNC2Y19cEunQ2todwdg03PXzB722nLJPQ7vOXZ7meRvYQQV1nFeAlg/OtGtFsMahnB9KM5OkT7QTJBPK8Y0z3l6Q8xoRnL2MO8SZAUVNZchQ2ILkLz58gffXgqO2YYTeytD3PzCeTBaY6L78Y=
 
 env:
   global:
-  - CUCUMBER_ARGS="--tags ~@dev"
   - METEOR_DEPLOY_URL=http://parallels-ci.meteor.com
   - METEOR_EMAIL=angelcabo
   - secure: pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc=
@@ -29,6 +24,5 @@ env:
   - secure: UYFJn1QtcklD60smQFzuimoyMS67XwXtIQr6mvx03B3NMhYp5hqpkaciw73iWyS8Sdb7NLvFPnY6SWRjB+Xalgp1SNIohKkXW95Oeuhwd4XqdMz8VRazZoPUXDaeOkIJojXRbo+NnHAVnMg6AwRHgx1bUmfuzP8KO/iZHeVDTTg=
 
 script:
+  - npm test && npm run test:integration
   - expect deploy.exp
-  - sleep 5
-  - grunt all-tests --target=ci
