@@ -1,0 +1,3 @@
+[submodule "meteor-app"]
+	path = meteor-app
+	url = git@github.com:parallelsio/parallels-web.git
