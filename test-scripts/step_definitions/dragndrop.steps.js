@@ -13,7 +13,7 @@ module.exports = function () {
         return self.browser.executeScript("window.seleniumUpload = window.$('<input/>').attr({id: 'seleniumUpload', type:'file'}).appendTo('body');");
       }).
       then(function () {
-        var imagePath = path.resolve('./meteor-app/public/images/1000', image);
+        var imagePath = path.resolve('./app/public/images/1000', image);
         return self.browser.findElement(self.webdriver.By.id("seleniumUpload")).sendKeys(imagePath);
       }).
       then(function () {

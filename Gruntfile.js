@@ -113,7 +113,7 @@ module.exports = function (grunt) {
     bgShell: {
       meteor: {
         cmd: [
-          'cd meteor-app',
+          'cd app',
           'meteor run --settings settings.json'
         ].join('&&'),
         bg: false,
@@ -124,7 +124,7 @@ module.exports = function (grunt) {
 
       resetMeteorDb: {
         cmd: [
-          'cd meteor-app',
+          'cd app',
           'meteor reset'
         ].join('&&'),
         bg: false,

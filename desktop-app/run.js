@@ -31,7 +31,7 @@ if (osName.indexOf('windows') !== -1) {
 console.log('On Windows: ', onWindows);
 console.log(osName);
 
-cd(base + '/meteor-app');
+cd(base + '/app');
 
 
 // Start Meteor

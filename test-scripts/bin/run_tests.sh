@@ -7,7 +7,7 @@ if [ -z "$CI" ]; then
 
   echo "Starting Meteor App with DB: mongodb://localhost:27017/parallels_test"
   METEOR_LOG=$(mktemp /tmp/meteor.startup.XXXXXXXX)
-  cd meteor-app
+  cd app
   MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json > $METEOR_LOG 2>&1 &
   cd ..
 
