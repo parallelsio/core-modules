@@ -1,0 +1,261 @@
+$ui-header-height: 0.4em;
+
+.bit {
+  display: none; // hide bits by default when map loads: animation functions display them 
+  position: absolute;
+  -webkit-font-smoothing: antialiased;
+  
+  // ************** base ************    
+  .ui-widget-header {
+    display: none;
+    position: absolute;
+  }
+
+
+  // ******** subclasses (type image, text) ************    
+  &.text {
+    padding: 0.1em;
+    background-color: white;
+  }
+
+  &.editing .content,
+  &.text .content {
+    padding: 1em;
+    background-color: #fff;
+  }
+
+  &.image img {
+    width: 200px;
+  }
+
+  &.sketch {
+    cursor: crosshair;
+  }
+
+  &.parallel {
+    background: #f0f0fa !important;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.75em;
+    text-transform: uppercase;
+  }
+
+  // ************ states ***********
+  &.hovering .ui-widget-header {
+    display: block;
+    top: -$ui-header-height;
+    height: $ui-header-height;
+    width: 100%;
+    background-color: #8B8BF5;
+    cursor: move;
+  }
+
+  &.create-parallel--origin { border: 0.4em solid yellow; }  
+
+}
+
+// file upload animation
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// TODO: use bourbon SASS functions here
+@mixin prefix($map, $vendors: webkit moz ms o) {
+  @each $prop, $value in $map {
+    @if $vendors {
+      @each $vendor in $vendors {
+        #{"-" + $vendor + "-" + $prop}: #{$value};
+      }
+    }
+    // Dump regular property anyway
+    #{$prop}: #{$value};
+  }
+}
+
+@include keyframes(passing-through) {
+
+  0% {
+    @include prefix((transform: translateY(40px)));
+    opacity: 0;
+  }
+
+  30%, 70% {
+    @include prefix((transform: translateY(0px)));
+    opacity: 1;
+  }
+
+  100% {
+    @include prefix((transform: translateY(-40px)));
+    opacity: 0;
+  }
+}
+
+@include keyframes(slide-in) {
+
+  0% {
+    @include prefix((transform: translateY(40px)));
+    opacity: 0;
+  }
+
+  30% {
+    @include prefix((transform: translateY(0px)));
+    opacity: 1;
+  }
+}
+
+@include keyframes(pulse) {
+  0% { @include prefix((transform: scale(1))); }
+  10% { @include prefix((transform: scale(1.1))); }
+  20% { @include prefix((transform: scale(1))); }
+}
+
+.bit {
+  
+  .success .success-mark {
+    @include prefix((animation: passing-through 3s cubic-bezier(0.770, 0.000, 0.175, 1.000)));
+  }
+  
+  .error .error-mark {
+    @include prefix((animation: slide-in 3s cubic-bezier(0.770, 0.000, 0.175, 1.000)));
+    opacity: 1;
+  }
+  
+  .success-mark, .error-mark {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    z-index: 500;
+    top: 50%;
+    left: 50%;
+    margin-left: -1.5em;
+    margin-top: -1.5em;
+    pointer-events: none;
+  }
+  
+  .success-mark svg, .error-mark svg {
+    display: block;
+    width: 3em;
+    height: 3em;
+  }
+  
+  .processing .progress {
+    @include prefix((transition: all 0.2s linear));
+    opacity: 1;
+  }
+  
+  .complete .progress {
+    @include prefix((transition: opacity 0.4s ease-in));
+    opacity: 0;
+  }
+
+  :not(.processing) .progress {
+    @include prefix((animation: pulse 6s ease infinite));
+  }
+  .progress {
+    position: absolute;
+    overflow: hidden;
+    opacity: 1;
+    z-index: 1000;
+    -webkit-transform: scale(1);
+    height: 1em;
+    width: 5em;
+    top: 50%;
+    left: 50%;
+    margin-top: -0.75em;
+    margin-left: -2.5em;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 0.5em;
+    pointer-events: none;
+    
+    .upload {
+      @include prefix((transition: width 300ms ease-in-out));
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(to bottom, #666, #444);
+      background: #333;
+    }
+  }
+
+  .error {
+    .error-message {
+      display: block;
+    }
+
+    &:hover .error-message {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .error-message {
+    @include prefix((transition: opacity 0.3s ease));
+
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    opacity: 0;
+    top: 100%;
+    width: 100%;
+    padding: 0.5em 1.2em;
+    background: linear-gradient(to bottom, #be2626, #a92222);
+    background: #be2626;
+    color: white;
+    text-align: center;
+    pointer-events: none;
+    
+    &:after {
+      position: absolute;
+      content: '';
+      top: 0.4em;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-left: 0.4em solid transparent;
+      border-right: 0.4em solid transparent;
+      border-bottom: 0.4em solid #be2626;
+    }
+  }
+}
+
+/*
+  Binds the HTML Dom element to the JS drawing engine via ploma.js.
+  Doesn't need to be seen by person,
+  but can't be hidden, as then JS lib can't attach to it.
+  Since different browsers render the object element
+  in different ways, the easiest thing is to just
+  make it have no h/w
+*/
+#wtPlugin{
+  width:0;
+  height:0;
+}
+
+// via https://sunpig.com/martin/2010/02/10/marching-ants-in-css/
+// https://sunpig.com/martin/code/2010/marchingants/marchingants.html
+// .marching-ants-border {
+//   -webkit-animation-name: march-up;
+//   -webkit-animation-duration: 0.3s;
+//   -webkit-animation-iteration-count: infinite;
+//   -webkit-animation-timing-function: linear;
+// }
+
+// @-webkit-keyframes march-up {
+//   from {
+//     background-position-y: 0.6em;
+//   }
+//   to {
+//     background-position-y: 0;
+//   }
+// }
+

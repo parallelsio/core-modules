@@ -1,0 +1,24 @@
+<template name="debug">
+
+  <div class="debug-list">
+
+    <ul>
+      {{ #each allTypesBits }}
+        {{#if isWebpage }}
+          <li>
+            <p>title: <b>{{ title }}</b></p>
+            <p>url: <b>{{ url }}</b></p>
+            <p>pageIdentifier: <b>{{ pageIdentifier }}</b></p>
+            <p>liftStatus: <b>{{ liftStatus }}</b></p>
+            {{#if html}}
+              <iframe id="iframehtml" srcdoc="{{html}}" style="width: 100%; height: 900px;"></iframe>
+            {{/if}}
+          </li>
+        {{/if}}
+      {{/each }}
+    </ul>
+
+  </div>
+
+</template>
+

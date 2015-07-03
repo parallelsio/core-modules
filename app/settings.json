@@ -1,0 +1,9 @@
+{
+  "public": {
+    "options": {
+      "isAudioEnabled": false,
+      "uploader": "fileSystemUploader",
+      "displayIntroAnimation": true
+    }
+  }
+}

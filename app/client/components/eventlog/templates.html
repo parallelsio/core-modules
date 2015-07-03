@@ -1,0 +1,33 @@
+<template name="eventlog">
+  <div class="eventlog p-lr-1 bg-white">
+    <div class="activity--header p-1 bold border-b-solid">Activity Stream</div>
+    <div class="timeline">
+      {{ #each events }}
+        {{> event }}
+      {{/each }}
+    </div>
+  </div>
+</template>
+
+<template name="event">
+  <div class="activity--container border-b-dotted p-lr-075 p-tb-1">
+    <span class="icon
+                m-r-15 
+                m-t-025">
+      <i class="activity--dot fa fa-circle"></i>
+    </span>
+
+    <div class="activity-body inline-block">
+      <p class="activity--description
+                p-b-025
+                m-t-025 
+                ">{{ description }}</p>
+      
+      <p class="m-b-0 clear">{{ meta }}</p>
+      <p class="activity--time
+                m-b-0
+                m-t-025 
+                italic">{{ time }}</p>
+    </div>
+  </div>
+</template>

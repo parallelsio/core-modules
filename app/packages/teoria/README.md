@@ -1,0 +1,1 @@
+Wrapper for [teoria](https://github.com/saebekassebil/teoria) JS lib.

@@ -1,0 +1,42 @@
+# Meteor packages used by this project, one per line.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+coffeescript
+insecure
+underscore
+iron:router
+waitingkuo:normalize
+meteorhacks:kadira
+meteorhacks:inject-initial
+infinitedg:gsap
+fourseven:scss
+wolves:bourbon
+msavin:mongol
+msavin:jetsetter
+chriswessels:hammer
+awatson1978:mousetrap
+xolvio:inverter
+meteorhacks:npm
+npm-container
+stevezhu:lodash
+raix:ui-dropped-event
+edgee:slingshot
+ostrio:neo4jdriver
+ogourment:settings
+practicalmeteor:loglevel
+reactjs:react
+mquandalle:autofocus
+chuangbo:marked
+random
+fortawesome:fontawesome
+momentjs:moment
+cosmos:browserify
+lifeinchords:teoria
+meteorhacks:kadira-debug
+cwaring:modernizr
+angelcabo:infinite-undo
+parallels-canvas-manager
+aldeed:autoform
