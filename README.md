@@ -57,7 +57,7 @@
 
 > 2 main components, meant to run together, in this repository:
 > 
-> [/app](https://github.com/parallelsio/core-modules/tree/master/app) - the reactive, web app: a digital canvas where documents are created, remixed and shared. Based on [Meteor JS](http://www.meteor.com)
+> [/meteor-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - the reactive, web app: a digital canvas where documents are created, remixed and shared. Based on [Meteor JS](http://www.meteor.com)
 > 
 > 
 > [/extensions/chrome/source](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome/source) - a Chrome extension for easily tagging + saving browser content found on the web, to your Parallels canvas
@@ -146,7 +146,7 @@
 > We use Neo4j to graph the relationship between Bits and more. We recommend installing using a package manager to install: our preference is with homebrew
 > [Installation Instructions](http://brewformulas.org/Neo4j)
 
-> After install is complete, run `$ neo4j start` to start the neo4j server, which defaults to `http://localhost:7474`. If you've changed this to another URL, you'll need to add an entry for the Neo4j location, to the `/app/settings.json` file. Have a look at the `app/settings.json.sample` for an example how to set this location
+> After install is complete, run `$ neo4j start` to start the neo4j server, which defaults to `http://localhost:7474`. If you've changed this to another URL, you'll need to add an entry for the Neo4j location, to the `/meteor-app/settings.json` file. Have a look at the `meteor-app/settings.json.sample` for an example how to set this location
 > 
 
 
@@ -170,7 +170,7 @@
 > When server has finished booting, your terminal output should look something like this:
 > <img src="http://i.imgur.com/5zxxnoC.png" />
 
-> We've **disabled** the built in Meteor Hot Code, wihch automatically refreshed your browser whenever a change to the Meteor code was detected. We found it was slow and unpredictable. Make changes to `/app` and refresh manually to see your changes on `http://localhost:3000`. Note there is a slight delay for file changes to "kick in".
+> We've **disabled** the built in Meteor Hot Code, wihch automatically refreshed your browser whenever a change to the Meteor code was detected. We found it was slow and unpredictable. Make changes to `/meteor-app` and refresh manually to see your changes on `http://localhost:3000`. Note there is a slight delay for file changes to "kick in".
 > 
 > We've also added [Kadira's Meteor Debug](https://kadira.io/blog/introducing-kadira-debug) package, which provides an interactive log of the important events happening in the Meteor web app. You'll use 2 URL's in tandem while developing, after running `npm run server` to get everything going:
 
@@ -244,11 +244,11 @@ We've added more tasks to make ease development:
 
 > <br>
 > 
-> `npm run exportlog`: Export your canvas's data to a json file. The data will be ouptut to `app/private/data-backups/canvas.events.json`. **This task only works while the web app is running (via `npm run server`)**
+> `npm run exportlog`: Export your canvas's data to a json file. The data will be ouptut to `meteor-app/private/data-backups/canvas.events.json`. **This task only works while the web app is running (via `npm run server`)**
 
 > <br>
 
-> `npm run importlog`: Rebuild your canvas from scratch by importing a json file of canvas events to be replayed. This task will read events data from the file at: `app/private/data-backups/canvas.events.json`. **This task only works when the web app is running (via `npm run server`). ** You will probably want to clear/reset the databases before importing, although it isn't necessary.
+> `npm run importlog`: Rebuild your canvas from scratch by importing a json file of canvas events to be replayed. This task will read events data from the file at: `meteor-app/private/data-backups/canvas.events.json`. **This task only works when the web app is running (via `npm run server`). ** You will probably want to clear/reset the databases before importing, although it isn't necessary.
 <br>
 
 <br>

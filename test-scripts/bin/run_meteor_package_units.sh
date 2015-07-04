@@ -9,7 +9,7 @@ fi
 
 SPECIFIED_PACKAGES="$1"
 if [ -z "${SPECIFIED_PACKAGES}" ]; then
-  PACKAGES=( $(find app/packages -type d | $GREP -v .npm | $GREP -i '\/test$' | $GREP -Po 'app/packages/\K.*(?=/)' | sort -u) )
+  PACKAGES=( $(find meteor-app/packages -type d | $GREP -v .npm | $GREP -i '\/test$' | $GREP -Po 'meteor-app/packages/\K.*(?=/)' | sort -u) )
 else
   PACKAGES=("$SPECIFIED_PACKAGES")
 fi
@@ -18,9 +18,9 @@ fi
 TESTS_FAILED=0
 PACKAGES_FAILED=""
 for pkg in ${PACKAGES}; do
-  if [ -d "app/packages/${pkg}/test" ]; then
+  if [ -d "meteor-app/packages/${pkg}/test" ]; then
     echo ">>> Testing package '${pkg}'..."
-    mocha app/packages/${pkg}/test || {
+    mocha meteor-app/packages/${pkg}/test || {
       echo "ERROR: Tests for package '${pkg}' failed."
       TESTS_FAILED=1
       PACKAGES_FAILED="${PACKAGES_FAILED} ${pkg}"

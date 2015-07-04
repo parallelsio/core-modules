@@ -50,10 +50,10 @@
     "server": "grunt server",
     "dropneo": "neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start",
     "resetdb": "grunt bgShell:resetMeteorDb && neo4j restart && grunt bgShell:resetNeo4jDb",
-    "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out app/private/data-backups/canvas.events.json",
+    "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json",
     "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\"",
     "test": "grunt jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
-    "test:integration": "cd app && spacejam test-packages",
-    "test:server": "cd app && meteor test-packages -p 3030"
+    "test:integration": "cd meteor-app && spacejam test-packages",
+    "test:server": "cd meteor-app && meteor test-packages -p 3030"
   }
 }

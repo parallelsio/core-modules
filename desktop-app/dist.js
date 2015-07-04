@@ -47,7 +47,7 @@ if (onWindows) {
 
 echo('-----> Building bundle from Meteor app, this may take a few minutes');
 
-cd(base + '/app');
+cd(base + '/meteor-app');
 var meteorCommand = onWindows === true ? 'meteor.bat' : 'meteor';
 exec(meteorCommand + ' build --directory ../.');
 

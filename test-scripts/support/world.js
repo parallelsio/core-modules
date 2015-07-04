@@ -5,7 +5,7 @@ var World = function (callback) {
   var appSettings;
 
   try {
-    appSettings = require("../../app/settings.json");
+    appSettings = require("../../meteor-app/settings.json");
   }
     //error handled next
   catch (error) {

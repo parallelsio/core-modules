@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var fs = require('fs');
-var events = require('./app/private/tmp/canvas.events.json');
+var events = require('./meteor-app/private/tmp/canvas.events.json');
 
 var filtered = _.filter(events, function (e) {
   return e.data._id === 'mQfnLHASj9bC4fyYL';
@@ -8,7 +8,7 @@ var filtered = _.filter(events, function (e) {
 
 console.log(_.map(filtered, function (e) { return e.method + ', version: ' + e.version}));
 
-var outputFilename = './app/private/data-backups/canvas.events.filtered.json';
+var outputFilename = './meteor-app/private/data-backups/canvas.events.filtered.json';
 
 fs.writeFile(outputFilename, JSON.stringify(filtered, null, 2), function(err) {
   if(err) {
