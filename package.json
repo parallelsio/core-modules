@@ -14,7 +14,6 @@
     "electron-prebuilt": "^0.27.3",
     "electron-rebuild": "^0.2.2",
     "grunt": "^0.4.5",
-    "grunt-bg-shell": "^2.3.1",
     "grunt-cli": "^0.1.13",
     "grunt-concurrent": "^1.0.0",
     "grunt-contrib-clean": "^0.6.0",
@@ -26,7 +25,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-crx": "^0.3.4",
     "grunt-cucumber": "^0.2.3",
-    "grunt-env": "^0.4.2",
+    "grunt-env": "^0.4.4",
     "grunt-preprocess": "^4.1.0",
     "grunt-sass": "^0.18.1",
     "grunt-template-jasmine-requirejs": "^0.2.0",
@@ -45,15 +44,14 @@
     "start": "grunt server",
     "postinstall": "electron-rebuild",
     "local": "grunt build:local",
-    "ci": "grunt build:ci",
     "prod": "grunt build",
     "server": "grunt server",
-    "dropneo": "neo4j stop && rm -rf /usr/local/Cellar/neo4j/2.1.6/libexec/data/graph.db && neo4j start",
-    "resetdb": "grunt bgShell:resetMeteorDb && neo4j restart && grunt bgShell:resetNeo4jDb",
+    "dropneo": "grunt env:dev neo4jDrop",
+    "resetdb": "neo4j restart && grunt env:dev neo4jReset meteorReset",
     "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json",
     "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\"",
-    "test": "grunt jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
-    "test:integration": "cd meteor-app && spacejam test-packages",
-    "test:server": "cd meteor-app && meteor test-packages -p 3030"
+    "test": "grunt env:dev jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
+    "test:integration": "grunt env:dev meteorPackageIntegration",
+    "test:server": "grunt env:dev meteorPackagesTestServer"
   }
 }

@@ -1,18 +1,18 @@
 'use strict';
 
-var fs = require('fs'), util = require('util'), busboy = require('connect-busboy');
+var fs = require('fs'), util = require('util'), busboy = require('connect-busboy'), shell = require('shelljs');
 
 module.exports = function (grunt) {
 
   var config = {
     dist: 'extensions/chrome/build',
+    webApp: 'meteor-app',
     test: 'tests',
     testImageUploads: 'test-scripts/.tmp/',
     chromeExt: 'extensions/chrome/source',
     appRootUrl: {
       local: 'localhost:3000',
-      ci: 'parallels-ci.meteor.com',
-      dist: 'parallels.meteor.com'
+      dist: 'makeparallels.herokuapp.com'
     }
   };
 
@@ -90,7 +90,6 @@ module.exports = function (grunt) {
 
     preprocess: {
       dist: preprocessChromeExtensionConfig('dist'),
-      ci: preprocessChromeExtensionConfig('ci'),
       local: preprocessChromeExtensionConfig('local')
     },
 
@@ -107,49 +106,6 @@ module.exports = function (grunt) {
       client: {
         src: ['<%= config.dist %>/parallels.crx'],
         dest: '<%= config.dist %>'
-      }
-    },
-
-    bgShell: {
-      meteor: {
-        cmd: [
-          'cd meteor-app',
-          'meteor run --settings settings.json'
-        ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
-      },
-
-      resetMeteorDb: {
-        cmd: [
-          'cd meteor-app',
-          'meteor reset'
-        ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
-      },
-
-      resetNeo4jDb: {
-        cmd: 'curl -X POST http://localhost:7474/db/data/cypher --data \'{"query":"MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r"}\' --header "Content-Type: application/json" --header "Accept: application/json"',
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: false
-      },
-
-      bowerChromeExt: {
-        cmd: [
-          'cd <%= config.chromeExt %>',
-          '../../../node_modules/.bin/bower install'
-        ].join('&&'),
-        bg: false,
-        stdout: true,
-        stderr: true,
-        fail: true
       }
     },
 
@@ -181,7 +137,7 @@ module.exports = function (grunt) {
 
     concurrent: {
       server: [
-        'bgShell:meteor',
+        'meteorServer',
         'watch'
       ],
       options: {
@@ -244,7 +200,6 @@ module.exports = function (grunt) {
         options: {
           port: 9000,
           livereload: 35729,
-          // change this to '0.0.0.0' to access the server from outside
           hostname: 'localhost',
           open: false,
           base: [
@@ -295,11 +250,8 @@ module.exports = function (grunt) {
     },
 
     env: {
-      ci: {
-        PARALLELS_DOMAIN: 'parallels-ci.meteor.com'
-      },
-      local: {
-        PARALLELS_DOMAIN: '127.0.0.1:3000'
+      dev: {
+        src : ".env"
       }
     },
 
@@ -363,15 +315,14 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', 'Build chrome extension', function (target) {
     var tasks = [
-      'bgShell:bowerChromeExt',
+      'env:dev',
+      'bowerInstall',
       'sass',
       'jade'
     ];
 
     if (target === 'local') {
       tasks = tasks.concat(['clean:dist', 'copy:dist', 'preprocess:local', 'crx:dist', 'encode']);
-    } else if (target === 'ci') {
-      tasks = tasks.concat(['clean:dist', 'copy:dist', 'preprocess:ci', 'crx:dist', 'encode']);
     } else {
       tasks = tasks.concat(['clean:dist', 'copy:dist', 'preprocess:dist', 'crx:dist', 'encode']);
     }
@@ -379,16 +330,51 @@ module.exports = function (grunt) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask('server', 'Run server', function () {
-    fs.exists('.env', function (exists) {
-      if (exists) {
-        console.log("Found .env file");
-        require('dotenv').load();
-      }
-    });
+  grunt.registerTask('bowerInstall', function () {
+    grunt.task.requires('env:dev');
+    shell.cd(grunt.config('config').chromeExt);
+    shell.exec('bower install');
+  });
 
+  grunt.registerTask('meteorReset', function () {
+    grunt.task.requires('env:dev');
+    shell.cd(grunt.config('config').webApp);
+    shell.exec('meteor reset');
+  });
+
+  grunt.registerTask('meteorRun', function () {
+    grunt.task.requires('env:dev');
+    shell.cd(grunt.config('config').webApp);
+    shell.exec('meteor run --settings settings.json');
+  });
+  grunt.registerTask('meteorServer', ['env:dev', 'meteorRun']);
+
+  grunt.registerTask('meteorPackageIntegration', function () {
+    grunt.task.requires('env:dev');
+    shell.cd(grunt.config('config').webApp);
+    shell.exec('spacejam test-packages');
+  });
+
+  grunt.registerTask('meteorPackagesTestServer', function () {
+    grunt.task.requires('env:dev');
+    shell.cd(grunt.config('config').webApp);
+    shell.exec('meteor test-packages -p 3030');
+  });
+
+  grunt.registerTask('neo4jReset', function () {
+    grunt.task.requires('env:dev');
+    shell.exec('curl -X POST ' + process.env.GRAPHENEDB_URL + '/db/data/cypher --data \'{"query":"MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r"}\' --header "Content-Type: application/json" --header "Accept: application/json"');
+  });
+
+  grunt.registerTask('neo4jDrop', function () {
+    grunt.task.requires('env:dev');
+    shell.exec('neo4j stop && rm -rf ' + process.env.NEO4J_DB_PATH + ' && neo4j start');
+  });
+
+  grunt.registerTask('server', 'Run server', function () {
     var tasks = [
-      'bgShell:bowerChromeExt',
+      'env:dev',
+      'bowerInstall',
       'sass',
       'jade',
       'connect:clipperServer',
