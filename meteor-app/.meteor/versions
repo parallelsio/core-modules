@@ -58,6 +58,7 @@ parallels-canvas-manager@0.0.1
 parallels-core@0.0.1
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.2.0_1
+raix:ui-dropped-event@0.0.7
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5

@@ -33,6 +33,8 @@ var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
   img.src = u;
 };
 
+var slingshotUploader;
+
 Parallels.Handlers.register('map.events', {
 
   'dropped .map': function(e) {
@@ -45,13 +47,12 @@ Parallels.Handlers.register('map.events', {
 
     var fileUploads = _.map(droppedFiles, function (file, index) {
       var uploadKey = Math.random().toString(36).slice(2);
-      var uploader = new Slingshot.Upload('fileSystemUploader');
-      uploader.send(file, function (error) {
-        if (error) Errors.insert({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
+      slingshotUploader.send(file, function (error) {
+        if (error) console.log({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
       });
-      Parallels.FileUploads[uploadKey] = uploader;
-      createImageBit(file, uploader.url(true), event, uploadKey, index);
-      return uploader;
+      Parallels.FileUploads[uploadKey] = slingshotUploader;
+      createImageBit(file, slingshotUploader.url(true), event, uploadKey, index);
+      return slingshotUploader;
     });
 
     Tracker.autorun(function (computation) {
@@ -72,6 +73,12 @@ Parallels.Handlers.register('map.events', {
       }
     });
   }
+});
+
+Template.map.onCreated(function () {
+  Meteor.call('getSetting', 'uploader', function (err, uploader) {
+    slingshotUploader = new Slingshot.Upload(uploader);
+  });
 });
 
 Template.map.events(Parallels.Handlers.get('map.events'));

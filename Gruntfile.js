@@ -341,7 +341,7 @@ module.exports = function (grunt) {
   grunt.registerTask('meteorRun', function () {
     grunt.task.requires('env:dev');
     shell.cd(grunt.config('config').webApp);
-    shell.exec('meteor run --settings settings.json');
+    shell.exec('meteor run');
   });
   grunt.registerTask('meteorServer', ['env:dev', 'meteorRun']);
 
