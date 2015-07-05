@@ -42,6 +42,7 @@
   },
   "scripts": {
     "start": "grunt server",
+    "desktop": "node desktop-app/setup.js && node desktop-app/run.js",
     "postinstall": "electron-rebuild",
     "local": "grunt build:local",
     "prod": "grunt build",

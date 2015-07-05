@@ -1,0 +1,3 @@
+Parallels.Audio = {
+  Definition: {}
+};

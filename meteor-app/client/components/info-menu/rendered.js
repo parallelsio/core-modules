@@ -1,18 +1,13 @@
-// TODO: refactor all settings into Session obj
-MeteorSettings.setDefaults({
-  public: { options: { displayIntroAnimation: true } }
-});
-
 Template.infoMenu.rendered = function() {
-
-  if (Meteor.settings.public.options.displayIntroAnimation) {
+  // todo: Meteor.settings.public.options.displayIntroAnimation
+  if (true) {
 
     var timelineSequence = new TimelineMax({ paused: true });
 
-    // Greensock .call is similar to its .add, 
+    // Greensock .call is similar to its .add,
     // except .call lets us pass params to our function
     timelineSequence
-      .add(timelineMenu()) 
+      .add(timelineMenu())
       .call(
         Parallels.Animation.General.shimmer,
         [
@@ -25,8 +20,8 @@ Template.infoMenu.rendered = function() {
     function timelineMenu () {
 
       var menu = $(".info-menu");
-      var viewportWidth  = verge.viewportW();
-      var viewportHeight = verge.viewportH();
+      var viewportWidth  = 1385; // verge.viewportW();
+      var viewportHeight = 534; // verge.viewportH();
       var timeline = new TimelineMax();
 
       var topToBottomLine  = $('.wipe.top-to-bottom .line');

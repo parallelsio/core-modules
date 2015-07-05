@@ -1,7 +1,3 @@
-MeteorSettings.setDefaults({
-  public: { options: { uploader: 'fileSystemUploader' } }
-});
-
 var getDroppedFiles = function(e) {
   var files = e.target.files;
 
@@ -49,7 +45,7 @@ Parallels.Handlers.register('map.events', {
 
     var fileUploads = _.map(droppedFiles, function (file, index) {
       var uploadKey = Math.random().toString(36).slice(2);
-      var uploader = new Slingshot.Upload(Meteor.settings.public.options.uploader);
+      var uploader = new Slingshot.Upload('fileSystemUploader');
       uploader.send(file, function (error) {
         if (error) Errors.insert({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
       });

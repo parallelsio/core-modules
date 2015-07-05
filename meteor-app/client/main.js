@@ -1,6 +1,6 @@
 Meteor.startup(function(){
 
-  log.debug("Meteor.startup begin.");
+  console.log("Meteor.startup begin.");
 
   Parallels.Keys.bindAll();
   Parallels.Audio.player.initAndStartEnv();

@@ -1,1 +1,0 @@
-Bits = new Meteor.Collection("bits");
