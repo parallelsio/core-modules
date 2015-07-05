@@ -138,7 +138,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'meteorServer',
-        'watch'
+        'watch',
+        'connect:clipperServer:keepalive'
       ],
       options: {
         limit: 5,
@@ -201,24 +202,24 @@ module.exports = function (grunt) {
           port: 9000,
           livereload: 35729,
           hostname: 'localhost',
-          open: false,
           base: [
             '<%= config.chromeExt %>',
             '<%= config.testImageUploads %>'
           ],
-          middleware: function (connect, options) {
-            var middlewares = [
-              connect().use(busboy()),
+          middleware: function (connect, options, middlewares) {
 
-              // Add CORS Headers for testing Image Upload
-              connect().use(function (req, res, next) {
+            middlewares.unshift(
+              busboy(),
+
+              function setCORSHeaders (req, res, next) {
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader('Access-Control-Allow-Methods', '*');
                 return next();
-              }),
+              },
 
-              // Add mock upload server for testing Image Upload
-              connect().use('/upload', function (req, res) {
+              function uploadImageRoute (req, res, next) {
+                if (req.url !== '/upload') return next();
+
                 if (req.method === 'OPTIONS') {
                   res.statusCode = 200;
                   res.end();
@@ -234,13 +235,8 @@ module.exports = function (grunt) {
                     });
                   });
                 }
-              })
-            ];
-
-            // add the static paths in options.base
-            options.base.forEach(function (base) {
-              middlewares.unshift(connect.static(base));
-            });
+              }
+            );
 
             return middlewares;
           }
@@ -251,7 +247,7 @@ module.exports = function (grunt) {
 
     env: {
       dev: {
-        src : ".env"
+        src: ".env"
       }
     },
 
@@ -377,7 +373,6 @@ module.exports = function (grunt) {
       'bowerInstall',
       'sass',
       'jade',
-      'connect:clipperServer',
       'concurrent:server'
     ];
 
