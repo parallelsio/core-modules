@@ -70,7 +70,6 @@ console.log('Architecture is ', arch);
 var npmFile = 'npm-' + npmVersion + '.zip';
 
 var electronFile = 'electron-v' + electronVersion + '-' + osName + '-x64.zip';
-var mongoFile = 'mongodb-' + osName + '-x86_64-' + mongoVersion + '.tgz';
 var nodeFile = 'node-v' + nodeVersion + '-' + osName + '-x64.tar.gz';
 
 cd(base);
@@ -101,11 +100,12 @@ if (!test('-f', electronFile)) {
   }
 }
 
+var os = osName === 'darwin' ? 'osx' : osName;
+var mongoFile = 'mongodb-' + os + '-x86_64-' + mongoVersion + '.tgz';
 echo('mongoFile = ' + mongoFile);
 
 if (!test('-f', mongoFile)) {
   echo('-----> Downloading MongoDB... (version: ' + mongoVersion + ')');
-  var os = osName === 'darwin' ? 'osx' : osName;
   var mongoCurl = 'curl -L -o '
     + mongoFile
     + ' https://fastdl.mongodb.org/'

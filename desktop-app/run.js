@@ -44,9 +44,9 @@ var meteor = spawn(meteorCommand);
 // ==============
 var electronPath = '';
 if (osName === 'darwin') {
-  electronPath = '/cache/electron/electron.app/contents/MacOS/Electron';
+  electronPath = '/desktop-app/cache/electron/electron.app/contents/MacOS/Electron';
 } else {
-  electronPath = '/cache/electron/electron';
+  electronPath = '/desktop-app/cache/electron/electron';
 }
 var electron = exec(base + electronPath + ' ' + base, {async: true});
 
