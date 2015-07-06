@@ -1,4 +1,5 @@
 
+// Add all configuration options the app will use here.
 const ConfigurationOptions = {
   displayIntroAnimation: {key: 'DISPLAY_INTRO_ANIMATION', defaultValue: "true", valueType: 'boolean' },
   uploader: {key: 'UPLOADER', defaultValue: 'fileSystemUploader', valueType: 'string' }
