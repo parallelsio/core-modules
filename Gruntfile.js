@@ -141,6 +141,10 @@ module.exports = function (grunt) {
         'watch',
         'connect:clipperServer:keepalive'
       ],
+      desktop: [
+        'desktopServer',
+        'connect:clipperServer:keepalive'
+      ],
       options: {
         limit: 5,
         logConcurrentOutput: true
@@ -350,6 +354,7 @@ module.exports = function (grunt) {
     shell.exec('node desktop-app/setup.js');
     shell.exec('node desktop-app/run.js');
   });
+  grunt.registerTask('desktopServer', ['env:dev', 'desktopRun']);
 
   grunt.registerTask('meteorPackageIntegration', function () {
     grunt.task.requires('env:dev');
@@ -384,8 +389,6 @@ module.exports = function (grunt) {
 
     grunt.task.run(tasks);
   });
-
-  grunt.registerTask('serveDesktop', ['env:dev', 'desktopRun']);
 
   grunt.registerTask('default', 'server');
 };

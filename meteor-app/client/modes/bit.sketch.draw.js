@@ -1,7 +1,7 @@
 Parallels.AppModes['sketch-bit'] = {
-  
+
   enter: function () {
-    log.debug("mode:sketch-bit:enter");
+    console.log("mode:sketch-bit:enter");
 
     Parallels.Keys.disableAll();
     Parallels.Keys.bindImageBitPreview(); // to prevent browser from scrolling
@@ -9,15 +9,15 @@ Parallels.AppModes['sketch-bit'] = {
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'sketch-bit');
 
-    // retrieve data 
+    // retrieve data
 
     // get ploma instance
-    
+
     // bind handler for ploma instance
 
 
     // move into a fixture?
-    Session.set('sketchBit', { 
+    Session.set('sketchBit', {
       canvasId: '1',
       type: 'sketch',
       color: 'blue',
@@ -30,7 +30,7 @@ Parallels.AppModes['sketch-bit'] = {
   },
 
   exit: function () {
-    log.debug("mode:sketch-bit:exit");
+    console.log("mode:sketch-bit:exit");
 
     Parallels.Keys.bindAll();
 
@@ -38,7 +38,7 @@ Parallels.AppModes['sketch-bit'] = {
     Session.set('sketchBit', null);
 
     // TODO: use data id, this will be unreliable when more than one sketch bit instance
-    // is on the canvas. 
+    // is on the canvas.
     $bit = $(".bit.sketch");
     bitTemplate = Blaze.getView($bit[0]);
     console.log("plomaInstance:", bitTemplate.templateInstance().plomaInstance.getStrokes());

@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "grunt server",
-    "desktop": "grunt serveDesktop",
+    "desktop": "grunt concurrent:desktop",
     "postinstall": "electron-rebuild",
     "local": "grunt build:local",
     "prod": "grunt build",

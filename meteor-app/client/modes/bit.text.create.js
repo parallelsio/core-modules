@@ -1,7 +1,7 @@
 Parallels.AppModes['create-bit'] = {
 
   enter: function (event) {
-    log.debug("mode:create-bit:enter");
+    console.log("mode:create-bit:enter");
 
     Parallels.Keys.disableAll();
     Parallels.Keys.bindEsc();
@@ -21,7 +21,7 @@ Parallels.AppModes['create-bit'] = {
   },
 
   success: function(template, createTextBit){
-    log.debug("mode:create-bit:success");
+    console.log("mode:create-bit:success");
 
     Meteor.call('changeState', {
       command: 'createBit',
@@ -29,7 +29,7 @@ Parallels.AppModes['create-bit'] = {
         canvasId: createTextBit.canvasId,
         type: createTextBit.type,
 
-        // TODO: sanitize? 
+        // TODO: sanitize?
         content: template.find('.editbit').value.trim(),
         color: createTextBit.color,
         position: {
@@ -48,7 +48,7 @@ Parallels.AppModes['create-bit'] = {
   },
 
   exit: function () {
-    log.debug("mode:create-bit:exit");
+    console.log("mode:create-bit:exit");
 
     // TODO: play zoop sound
     Parallels.Audio.player.play('fx-temp-temp');

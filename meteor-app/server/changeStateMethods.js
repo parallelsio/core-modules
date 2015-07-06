@@ -22,7 +22,7 @@ var _changeState = function (msg) {
       commitRepo(canvas, {/* forceSnapshot: true */});
       return response;
     } else {
-      log.error("changeState: Command not recognized : ", msg.command);
+      console.log("changeState: Command not recognized : ", msg.command);
     }
   }
 };

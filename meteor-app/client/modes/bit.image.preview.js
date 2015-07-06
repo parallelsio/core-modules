@@ -1,4 +1,4 @@
-var 
+var
   $bit,
   bitTemplate,
   bitData,
@@ -8,7 +8,7 @@ var
 Parallels.AppModes['preview-bit'] = {
 
   enter: function () {
-    log.debug("mode:preview-bit:enter");
+    console.log("mode:preview-bit:enter");
 
     bitHoveringId = Session.get('bitHoveringId');
     $bit = Utilities.getBitElement(bitHoveringId);
@@ -24,8 +24,8 @@ Parallels.AppModes['preview-bit'] = {
       Session.set('currentMode', 'preview-bit');
       Session.set('bitPreviewingId', bitPreviewingId);
 
-      log.debug("bit:image:preview: " + bitPreviewingId);
-      
+      console.log("bit:image:preview: " + bitPreviewingId);
+
       Parallels.Keys.disableAll();
       Parallels.Keys.bindEsc();
 
@@ -40,26 +40,26 @@ Parallels.AppModes['preview-bit'] = {
     }
 
     else {
-      log.debug("bit:preview: is not an image. Do nothing." );
+      console.log("bit:preview: is not an image. Do nothing." );
     }
   },
-  
+
   exit: function () {
-    log.debug("mode:preview-bit:exit");
+    console.log("mode:preview-bit:exit");
 
     // refactor: get rid of dep on these vars.
     var bitPreviewingId = Session.get('bitPreviewingId');
-    $bit = Utilities.getBitElement(bitPreviewingId); 
+    $bit = Utilities.getBitElement(bitPreviewingId);
     var bitTemplate = Utilities.getBitTemplate(bitPreviewingId);
     var bitData = Blaze.getData(bitTemplate);
 
     if (bitPreviewingId)
     {
-      // TODO: pass the assignment/resetting of these 
+      // TODO: pass the assignment/resetting of these
       // into Animation.scale,
       // which will then reset it once the animation complete callback is triggered
       // this will avoid potential edge cases where person takes
-      // action in between animations 
+      // action in between animations
       Session.set('currentMode', null);
       Session.set('bitPreviewingId', null);
 
@@ -76,7 +76,7 @@ Parallels.AppModes['preview-bit'] = {
     }
 
     else {
-      log.debug("nothing to close: not previewing a bit");
+      console.log("nothing to close: not previewing a bit");
     }
   }
 };

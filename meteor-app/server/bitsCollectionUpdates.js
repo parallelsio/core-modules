@@ -4,7 +4,7 @@
 var BitsUI = {
   insertBit: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:insertBit', bit._id);
+    console.log('bitsUI:insertBit', bit._id);
 
     var newBit = {
       _id: bit._id,
@@ -25,11 +25,11 @@ var BitsUI = {
     };
 
     Bits.insert(newBit);
-  }, function (err) { log.error('bitsUI:insertBit', err); }),
+  }, function (err) { console.log('bitsUI:insertBit', err); }),
 
   updateBitPosition: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateBitPosition', bit._id);
+    console.log('bitsUI:updateBitPosition', bit._id);
 
     var query = {
       $set: {
@@ -39,13 +39,13 @@ var BitsUI = {
     };
 
     Bits.update({ _id: bit._id }, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) console.log(err);
     });
-  }, function (err) { log.error('bitsUI:updateBitPosition', err); }),
+  }, function (err) { console.log('bitsUI:updateBitPosition', err); }),
 
   updateBitContent: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateBitContent', bit._id);
+    console.log('bitsUI:updateBitContent', bit._id);
 
     var query = {
       $set: {
@@ -55,13 +55,13 @@ var BitsUI = {
     };
 
     Bits.update({ _id: bit._id }, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) console.log(err);
     });
-  }, function (err) { log.error('bitsUI:updateBitContent', err); }),
+  }, function (err) { console.log('bitsUI:updateBitContent', err); }),
 
   updateImageSource: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateImageSource', bit._id);
+    console.log('bitsUI:updateImageSource', bit._id);
 
     var query = {
       $set: {
@@ -72,13 +72,13 @@ var BitsUI = {
     };
 
     Bits.update({ _id: bit._id }, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) console.log(err);
     });
-  }, function (err) { log.error('bitsUI:updateImageSource', err); }),
+  }, function (err) { console.log('bitsUI:updateImageSource', err); }),
 
   updateBitHtml: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateBitHtml', bit._id);
+    console.log('bitsUI:updateBitHtml', bit._id);
 
     var query = {
       $set: {
@@ -89,16 +89,16 @@ var BitsUI = {
     };
 
     Bits.update({ _id: bit._id }, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) console.log(err);
     });
-  }, function (err) { log.error('bitsUI:updateBitHtml', err); }),
+  }, function (err) { console.log('bitsUI:updateBitHtml', err); }),
 
   removeBit: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:removeBit', bit._id);
+    console.log('bitsUI:removeBit', bit._id);
 
     Bits.remove(bit._id);
-  }, function (err) { log.error('bitsUI:removeBit', err); })
+  }, function (err) { console.log('bitsUI:removeBit', err); })
 };
 
 InfiniteUndo.EventStream.on('entity.bit.created', BitsUI.insertBit);

@@ -11,7 +11,7 @@
 
 // extract as a general function
 function _toggleShortcutsPanel(direction){
-  
+
   var left = 0;
   var bindings;
 
@@ -23,8 +23,8 @@ function _toggleShortcutsPanel(direction){
 
   else if (direction === "close"){
     left = "-15ems";
-    bindings = function unBindHovers(){ 
-      log.debug("TODO: unbind shortcut hovers");
+    bindings = function unBindHovers(){
+      console.log("TODO: unbind shortcut hovers");
     };
     Session.set('isShortcutsDisplayed', false);
   }
@@ -34,8 +34,8 @@ function _toggleShortcutsPanel(direction){
     .to(
       $(".shortcuts")[0],   // what to tween
       0.2,                  // speed
-      { 
-        left: left,          
+      {
+        left: left,
         ease: Power4.easeIn
       })
     .add( bindings() )
@@ -61,12 +61,12 @@ function _bindShortcutEvents(){
         .to($cursor, 1, { left: "1.5em", top: "1.5em",  ease: Power4.easeIn, y: 0, opacity: 1 })
         .to($minibit, 0, { borderTop: "0.3em solid #8B8BF5" }, "-=0.2" )
         // TODO: play sound that matches the shortcut key
-        .to($key, 0, { left: "3px", top: "3px" }, "+=0.3") 
-        .to($key, 0, { left: 0, top: 0 }, "+=0.75") 
+        .to($key, 0, { left: "3px", top: "3px" }, "+=0.3")
+        .to($key, 0, { left: 0, top: 0 }, "+=0.75")
     }
 
-    $shortcut.on( "mouseenter", 
-      { 
+    $shortcut.on( "mouseenter",
+      {
         hoverTimeline: timeline,
         $flyout: $flyout[0]
       },
@@ -77,8 +77,8 @@ function _bindShortcutEvents(){
       }
     );
 
-    $shortcut.on("mouseleave", 
-      { 
+    $shortcut.on("mouseleave",
+      {
         hoverTimeline: timeline,
         $flyout: $flyout[0],
         $minibit: $minibit[0],
@@ -107,7 +107,7 @@ Parallels.Keys = {
   bindAll: function(){
 
     // TODO: add 'except' param, convery this list into a map
-    log.debug("keyCommand:bindAll");
+    console.log("keyCommand:bindAll");
 
     this.bindDeleteBit();
     this.bindCreateSketchBit();
@@ -123,31 +123,31 @@ Parallels.Keys = {
   },
 
   disableAll: function(){
-    log.debug("keyCommand:disableAll");
+    console.log("keyCommand:disableAll");
 
     // delete bit
-    Mousetrap.unbind('d');       
-    
+    Mousetrap.unbind('d');
+
     // edit text bit
-    Mousetrap.unbind('e');  
+    Mousetrap.unbind('e');
 
     // create new text bit
     Mousetrap.unbind('t');
 
     // preview
-    Mousetrap.unbind('space');    
-    
+    Mousetrap.unbind('space');
+
     // create-parallel
-    Mousetrap.unbind('shift');                                    
-    
+    Mousetrap.unbind('shift');
+
     // cancel/close
-    Mousetrap.unbind('esc');                                   
-    
+    Mousetrap.unbind('esc');
+
     // history dialog, for undo/redo
-    Mousetrap.unbind('h');   
+    Mousetrap.unbind('h');
 
     // undo last action
-    // mod is an alias for both Apple/command (Mac) and control (Win/Linux)                                 
+    // mod is an alias for both Apple/command (Mac) and control (Win/Linux)
     Mousetrap.unbind('mod+z');
 
     // redo last action
@@ -158,7 +158,7 @@ Parallels.Keys = {
 
     // shortcuts
     Mousetrap.unbind('1', function(){
-      
+
       _toggleShortcutsPanel("close");
 
       // TODO: clear + garbage collect timeline objects, handlers
@@ -166,17 +166,17 @@ Parallels.Keys = {
         $shortcut = $(this);
         console.log('unbinding each shortcut: ', $shortcut);
       });
-    
+
     });
 
   },
 
   bindShortcuts: function(){
-    log.debug("keyCommand:bindShortcuts");
+    console.log("keyCommand:bindShortcuts");
     Session.set('isShortcutsDisplayed', false);
 
     Mousetrap.bind("1", function() {
-      log.debug("pressed '1' key");
+      console.log("pressed '1' key");
 
       if(Session.equals('isShortcutsDisplayed', false)){
         _toggleShortcutsPanel("open");
@@ -191,14 +191,14 @@ Parallels.Keys = {
   },
 
   bindDeleteBit: function(){
-    log.debug("keyCommand:bindDeleteBit");
+    console.log("keyCommand:bindDeleteBit");
 
     Mousetrap.bind("d", function() {
-      log.debug("pressed 'd' key");
+      console.log("pressed 'd' key");
       var bitHoveringId = Session.get('bitHoveringId');
 
       if (bitHoveringId) {
-        log.debug("starting bit:delete on ", bitHoveringId);
+        console.log("starting bit:delete on ", bitHoveringId);
         Parallels.Audio.player.play('fx-tri');
         Meteor.call('changeState', {
           command: 'deleteBit',
@@ -210,17 +210,17 @@ Parallels.Keys = {
       }
 
       else {
-        log.debug ('delete key ignored, not captured for a specific bit')
+        console.log ('delete key ignored, not captured for a specific bit')
       }
 
     });
   },
 
   bindEditTextBit: function(){
-    log.debug("keyCommand:bindEditTextBit");
+    console.log("keyCommand:bindEditTextBit");
 
     Mousetrap.bind("e", function() {
-      log.debug("pressed 'e' key");
+      console.log("pressed 'e' key");
       var bitHoveringId = Session.get('bitHoveringId');
 
       if (bitHoveringId) {
@@ -228,17 +228,17 @@ Parallels.Keys = {
       }
 
       else {
-        log.debug ('edit key ignored, not captured for a specific bit')
+        console.log ('edit key ignored, not captured for a specific bit')
       }
 
     });
   },
 
   bindImageBitPreview: function(){
-    log.debug("keyCommand:bindImageBitPreview");
+    console.log("keyCommand:bindImageBitPreview");
 
     Mousetrap.bind('space', function (event) {
-      log.debug("pressed 'Space' key");
+      console.log("pressed 'Space' key");
       var bitHoveringId = Session.get('bitHoveringId');
       var bitPreviewingId = Session.get('bitPreviewingId');
 
@@ -253,7 +253,7 @@ Parallels.Keys = {
       }
 
       if (bitPreviewingId) {
-        log.debug("already previewing bit: ", bitPreviewingId);
+        console.log("already previewing bit: ", bitPreviewingId);
         return false; // failcheck - end if we're somehow already previewing
       }
 
@@ -262,32 +262,32 @@ Parallels.Keys = {
       }
 
       else{
-        log.debug ('space key ignored, not captured for a specific bit')
+        console.log ('space key ignored, not captured for a specific bit')
       }
     });
   },
 
   bindBeginCreateParallel: function(){
-    log.debug("keyCommand:bindBeginCreateParallel");
+    console.log("keyCommand:bindBeginCreateParallel");
 
     Mousetrap.bind('shift', function (){
       var bitHoveringId = Session.get('bitHoveringId');
       var currentMode = Session.get('currentMode');
 
-      // begin craete parallel, 
+      // begin craete parallel,
       // bitHoveringId is the origin/source bit
       if (bitHoveringId && (!currentMode)) {
         Parallels.AppModes['create-parallel'].enter();
       }
 
       // else if (bitHoveringId && (currentMode === 'create-parallel')) {
-      //   log.debug('closing parallel with ', bitHoveringId);
+      //   console.log('closing parallel with ', bitHoveringId);
       // }
     });
   },
 
   bindCreateSketchBit: function(){
-    log.debug("keyCommand:bindCreateSketchBit");
+    console.log("keyCommand:bindCreateSketchBit");
 
     Mousetrap.bind('s', function (event){
       Parallels.AppModes['sketch-bit'].enter(event);
@@ -295,7 +295,7 @@ Parallels.Keys = {
   },
 
   bindCreateTextBit: function(){
-    log.debug("keyCommand:bindCreateTextBit");
+    console.log("keyCommand:bindCreateTextBit");
 
     Mousetrap.bind('t', function (event) {
       Parallels.AppModes['create-bit'].enter(event);
@@ -303,10 +303,10 @@ Parallels.Keys = {
   },
 
   bindEsc: function(){
-    log.debug("keyCommand:bindEsc");
+    console.log("keyCommand:bindEsc");
 
     Mousetrap.bindGlobal('esc', function() {
-      log.debug("pressed 'Esc' key");
+      console.log("pressed 'Esc' key");
       var currentMode = Session.get('currentMode');
 
       if (!currentMode) return;
@@ -315,7 +315,7 @@ Parallels.Keys = {
   },
 
   bindHistory: function () {
-    log.debug("keyCommand:bindHistory");
+    console.log("keyCommand:bindHistory");
 
     Mousetrap.bind('h', function () {
       var viewingEventLog = Session.get('viewingEventLog');
@@ -324,7 +324,7 @@ Parallels.Keys = {
   },
 
   bindUndo: function () {
-    log.debug("keyCommand:bindUndo");
+    console.log("keyCommand:bindUndo");
 
     Mousetrap.bind('mod+z', function () {
       Meteor.call('undoState', { canvasId: '1'});
@@ -332,7 +332,7 @@ Parallels.Keys = {
   },
 
   bindRedo: function () {
-    log.debug("keyCommand:bindRedo");
+    console.log("keyCommand:bindRedo");
 
     Mousetrap.bind('mod+shift+z', function () {
       Meteor.call('redoState', { canvasId: '1'});

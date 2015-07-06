@@ -76,7 +76,7 @@ var getEventPoint = function(event, template, plugin){
 }
 
 Template.sketchBit.onRendered(function (){
-  log.debug("bit:sketch:render");
+  console.log("bit:sketch:render");
 
   var template = this;
   var canvas = $(template.firstNode).find(".sketch-bit")[0];
@@ -104,14 +104,14 @@ Template.sketchBit.onRendered(function (){
 
   // for debugging - print the ploma instance arrays
   Mousetrap.bind('a', function (){
-    log.debug("pressed 'a' key");
+    console.log("pressed 'a' key");
 
-    log.debug("bit:sketch:getStrokes: ", template.plomaInstance.getStrokes());
-    log.debug("bit:sketch:curStroke: ", template.plomaInstance.curStroke());
+    console.log("bit:sketch:getStrokes: ", template.plomaInstance.getStrokes());
+    console.log("bit:sketch:curStroke: ", template.plomaInstance.curStroke());
   });
 
   Mousetrap.bind('mod+z', function (){
-    log.debug("pressed 'command/ctrl + z'");
+    console.log("pressed 'command/ctrl + z'");
 
     // remove the most recent stroke
     template.plomaInstance.setStrokes(
@@ -123,12 +123,12 @@ Template.sketchBit.onRendered(function (){
   });
 
   Mousetrap.bind('c', function (){
-    log.debug("pressed 'c' key");
+    console.log("pressed 'c' key");
     var bitHoveringId = Session.get('bitHoveringId');
 
     // TODO: only if hovering over a bit, once this is moved from map to
     // if (bitHoveringId) {
-      log.debug("clearing bit:sketch canvas on ", bitHoveringId);
+      console.log("clearing bit:sketch canvas on ", bitHoveringId);
       Parallels.Audio.player.play('fx-pep');
       template.plomaInstance.clear();
       // TODO: bind clear to bit.content data reactively
@@ -136,12 +136,12 @@ Template.sketchBit.onRendered(function (){
   });
 
   Mousetrap.bind('up', function (){
-    log.debug("pressed 'up' key");
+    console.log("pressed 'up' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    log.debug("bit:sketch:opacity = ", opacity);
+    console.log("bit:sketch:opacity = ", opacity);
 
     if (opacity < 1){
       template.firstNode.style.opacity = (opacity + 0.10);
@@ -151,12 +151,12 @@ Template.sketchBit.onRendered(function (){
   });
 
   Mousetrap.bind('down', function (){
-    log.debug("pressed 'down' key");
+    console.log("pressed 'down' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    log.debug("bit:sketch:opacity = ", opacity);
+    console.log("bit:sketch:opacity = ", opacity);
 
     if (opacity > 0.10){
       template.firstNode.style.opacity = (opacity - 0.10);

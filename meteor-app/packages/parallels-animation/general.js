@@ -1,9 +1,9 @@
 Parallels.Animation.General = {
-  
+
   shimmer: function(options){
-  /* 
+  /*
       PURPOSE:
-        Set up a timeline for revealing a collection of DOM elements, 
+        Set up a timeline for revealing a collection of DOM elements,
         in a choreographed sequence, slightly staggered.
 
         Adapted from: http://codepen.io/GreenSock/pen/ramJGv
@@ -11,12 +11,12 @@ Parallels.Animation.General = {
 
       PARAMS:
         $elements: a collection of DOM elements to shimmer, $(".map .bit")
-        paused: true | false 
+        paused: true | false
       -----------------------------------------------------------
 
       RETURNS: reference to Greensock timeline, for chaining or later play
       -----------------------------------------------------------
-      
+
       TODO: only shimmer + play sounds for what is in the viewport
       -----------------------------------------------------------
     */
@@ -32,7 +32,7 @@ Parallels.Animation.General = {
       $element = this;
 
       // Use the Greensock-applied transform values via "translate3d(132px, 89px, 0px)"
-      // Use utility function to get position, as jQuery position wont work, 
+      // Use utility function to get position, as jQuery position wont work,
       // bc elements are currently not visible
       var position = Utilities.getTransformedPosition($element);
 
@@ -42,7 +42,7 @@ Parallels.Animation.General = {
       var offset = parseFloat(position.top) + parseFloat(position.left);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      log.debug("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay );
+      console.log("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay );
 
       /* TODO:
           calc a sound frequency to use as a parameter for the sound played
@@ -52,7 +52,7 @@ Parallels.Animation.General = {
           newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
       */
 
-      // log.debug("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
+      // console.log("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
       // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
 
@@ -92,24 +92,24 @@ Parallels.Animation.General = {
 
   cornerSparks: function(options){
 
-  /* 
+  /*
     PURPOSE:
       Animate outward sparks, emitted from the center of each point.
       Sparks are choreographed to happen sequentially, with a slight overlap
     -----------------------------------------------------------
 
-    DOCS: 
+    DOCS:
       /private/docs/parallel-create-spark-animation-v1.png
 
-      Sketch of sparks ordering, and accomponieng musical notes 
+      Sketch of sparks ordering, and accomponieng musical notes
     -----------------------------------------------------------
 
     OPTIONS/PARAMS:
       $element:   // jQuery object to the element to receive sparks
       prependTo:  // jQuery selector string, of DOM element to prepend the particles container to
     -----------------------------------------------------------
-    
-    TODO: 
+
+    TODO:
       * convert animations to use RequestAnimationFrame for better perf
 
       * experiment with using <canvas> instead of DOM, for better perf
@@ -135,21 +135,21 @@ Parallels.Animation.General = {
       .prependTo(options.prependTo);
 
     var setupAndPlayCornerSpark = function(corner){
-      // log.debug("setupAndPlayCornerSpark: ", corner);
+      // console.log("setupAndPlayCornerSpark: ", corner);
 
       var spark = new particleEmitter({
         onStartCallback: function(){
-          // log.debug("starting particleEmitter for corner: ", corner);
+          // console.log("starting particleEmitter for corner: ", corner);
         },
         onStopCallback: function(){
-          // log.debug("ending particleEmitter for corner: ", corner);
+          // console.log("ending particleEmitter for corner: ", corner);
         },
         container: '#corner-sparks--particles',
         image: 'images/ui/particle.gif',
-        center: [ corner.y, corner.x ], 
-        size: 2, 
-        velocity: 450, 
-        decay: 500, 
+        center: [ corner.y, corner.x ],
+        size: 2,
+        velocity: 450,
+        decay: 500,
         rate: 600
       });
 
@@ -157,14 +157,14 @@ Parallels.Animation.General = {
       var handle = Meteor.setTimeout(function(){
         spark.stop();
       },
-      100);          
+      100);
     }
 
     var tl = new TimelineMax({ paused:true });
 
     _.each(corners, function(corner, i) {
       var offsetDelay = i * 0.10;
-      // log.debug("count:", i, ":", corner, ", delayed: ", offsetDelay);
+      // console.log("count:", i, ":", corner, ", delayed: ", offsetDelay);
       tl.call(setupAndPlayCornerSpark, [ corner ], this, offsetDelay );
     });
 

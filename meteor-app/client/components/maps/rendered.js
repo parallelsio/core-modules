@@ -34,7 +34,7 @@ Template.map.onRendered(function (){
 
       function timelineRemoveDone(node){
         $(node).remove();
-        log.debug("bit:remove:uihook : timeline animate done. removed bit.");
+        console.log("bit:remove:uihook : timeline animate done. removed bit.");
       }
 
       var timelineRemove = new TimelineMax({

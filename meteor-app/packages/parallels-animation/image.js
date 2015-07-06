@@ -1,9 +1,9 @@
 
 Parallels.Animation.Image = {
-  
+
   morph: function(options){
 
-  /* 
+  /*
     PURPOSE:
       Morph an image in place, rather than loading a separate file,
       which would display a disjointed, jarring experience
@@ -13,11 +13,11 @@ Parallels.Animation.Image = {
       -- the full viewport, in the previewed/expanded state
     -----------------------------------------------------------
 
-    DOCS: 
+    DOCS:
       /private/docs/bit-preview-animation-coordinates-v1.jpg
 
       Example diagram of both states, and some arbitrary dimensions.
-      Shows the order of solving, via the circled numbers 1, 2, 3, 4, 5. 
+      Shows the order of solving, via the circled numbers 1, 2, 3, 4, 5.
 
       Once the values are calculated, note which attributes are animated
       where:
@@ -36,11 +36,11 @@ Parallels.Animation.Image = {
       bitTemplate: bitTemplate,
       direction: "expand" | "contract"
     -----------------------------------------------------------
-    
-    TODO: 
-      * pass one bit object, get the other things from it, 
+
+    TODO:
+      * pass one bit object, get the other things from it,
         versus passing 3 diff parts of similar objects
-    
+
       * dont go to Session store for original height/width
 
       * make generic: remove references to bit
@@ -67,7 +67,7 @@ Parallels.Animation.Image = {
     /*
        Set up + calc the vars needed to animate
 
-       When expanding, we use up the most of the viewport space 
+       When expanding, we use up the most of the viewport space
        to preview, as is available, after leaving some margin from the edges.
        We save the bit's thumbnail image height+width, and original x,y position in a session var
        so we can easily animate back on the contract.
@@ -110,9 +110,9 @@ Parallels.Animation.Image = {
 
       var bitContainerOptions = {
         ease: Power4.easeOut,
-        /* 
+        /*
           since the bit container already has x,y transform applied
-          to position it on the canvas, we'll need to 
+          to position it on the canvas, we'll need to
           override them temporarily.
 
           Move the container (and thus the previewed image),
@@ -123,7 +123,7 @@ Parallels.Animation.Image = {
       };
     }
 
-    // Use the original thumbnail height + width as the destination. 
+    // Use the original thumbnail height + width as the destination.
     // We saved these to a session var, before expanding
     else if (options.direction === "contract") {
 
@@ -142,7 +142,7 @@ Parallels.Animation.Image = {
     }
 
     var timelineStart = function () {
-      log.debug('bit:preview timeline starting ...');
+      console.log('bit:preview timeline starting ...');
 
       // TODO: disable bit actions (drag, delete)
 
@@ -166,7 +166,7 @@ Parallels.Animation.Image = {
     };
 
     var timelineDone = function( direction ){
-      log.debug("bit:preview: " , direction, " : tween done." );
+      console.log("bit:preview: " , direction, " : tween done." );
     };
 
     var timeline = new TimelineMax({
@@ -175,17 +175,17 @@ Parallels.Animation.Image = {
       onCompleteParams:[ options.direction ]
     });
 
-    /*  
+    /*
       Run the animations
       Settings + sequencing inspired by the Zelda 'wipes'
       https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
     */
     if (options.direction === "expand") {
-      log.debug("expanding...");
+      console.log("expanding...");
 
       $("body").css( "overflow", "hidden"); // disabling scrolling
-      log.debug("bitImgOptions: ", bitImgOptions);
-      log.debug("bitContainerOptions: ", bitContainerOptions);
+      console.log("bitImgOptions: ", bitImgOptions);
+      console.log("bitContainerOptions: ", bitContainerOptions);
 
       timeline
         .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
@@ -201,7 +201,7 @@ Parallels.Animation.Image = {
     }
 
     else if (options.direction === "contract") {
-      log.debug("contracting...");
+      console.log("contracting...");
 
       $("body").css( "overflow", "visible"); // re-enabling scrolling
 
@@ -223,19 +223,19 @@ Parallels.Animation.Image = {
 
   waveSlice: function(options){
 
-  /* 
+  /*
     PURPOSE:
       Split an image into slices, and animate them as a wave
 
       Technique is a mashup of:
         * A: sine wave oscillation, maths adapted from: https://processing.org/examples/sinewave.html
         * B: a sliceAndDice demo adapted from https://stackoverflow.com/questions/27208715/webgl-animated-texture-performance-versus-canvas-drawimage-performance
-        * C: interpolation of 2 images, like jiri kollar rollages 
+        * C: interpolation of 2 images, like jiri kollar rollages
     -----------------------------------------------------------
 
-    DOCS: 
+    DOCS:
       /private/docs/wave-fx-wave-jiri-media-20150201.jpg
-  
+
       https://trello.com/c/qmOaMksw/54-wave-rollage-animations-transitions-explores
     -----------------------------------------------------------
 
@@ -243,22 +243,22 @@ Parallels.Animation.Image = {
       $img: a jquery obj of the img element to slice + animate
       prependTo: a jquery selector *string, of where to prepend canvas to
     -----------------------------------------------------------
-    
-    TODO: 
-      * 
+
+    TODO:
+      *
     -----------------------------------------------------------
   */
 
     var rect = options.$img[0].getClientRects()[0];
 
-    // The mathematical constant with the value 6.28318530717958647693. 
+    // The mathematical constant with the value 6.28318530717958647693.
     // Twice the ratio of the circumference of a circle to its diameter (pi)
     // useful in combination with trig functions sin() and cos()
     var TWO_PI = 6.28318530717958647693;
 
     // in pixels
     // TODO: make more robust for HiDi displays, Retina
-    var sliceWidth = 15; 
+    var sliceWidth = 15;
 
     var imgWidth = parseInt(rect.width);
     var imgHeight = parseInt(rect.height);
@@ -269,26 +269,26 @@ Parallels.Animation.Image = {
      // slighlty longer to init/load than a regular array
      // but faster across the rest of the operations, as
      // well be accessing it many times a second, inside of the RequestAnimationLoop
-    var yvalues = new Float32Array(numSlices);  
+    var yvalues = new Float32Array(numSlices);
 
     // since wave oscillates up+down, the rendered slices will exceed the boounds
     // of the original image. We add extra margin top+bottom to the canvas to
     // avoid clipping
-    // TODO: align canvas tighter/closer to original image 
+    // TODO: align canvas tighter/closer to original image
     // for seamless transition in/out animation
     var spillover = Math.round(imgHeight * 1.5);
 
-    // Start angle 
-    var theta = 0;        
+    // Start angle
+    var theta = 0;
 
-    // Use a proportion of the imgWidth to 
+    // Use a proportion of the imgWidth to
     // make the feeling consistent across diff image sizes
     var amplitude = Math.round(imgHeight * 0.1)   // Height of the wave
     var period = Math.round(imgWidth * 0.8);      // How many pixels before the wave repeats
-    
+
     // The delta (change) of x, the height, of each slice:
     // a function of period and sliceWidth
-    var dx = (TWO_PI / period) * sliceWidth;   
+    var dx = (TWO_PI / period) * sliceWidth;
     var canvas;
     var rafHandle = -1;
 
@@ -354,7 +354,7 @@ Parallels.Animation.Image = {
         pointArray.push(point);
       }
 
-      fctx.drawImage(options.$img[0], 0, 0, imgWidth, imgHeight); 
+      fctx.drawImage(options.$img[0], 0, 0, imgWidth, imgHeight);
       ctx.imageSmoothingEnabled = true;
 
       // TODO: better perf if we kept track of last frame,
@@ -366,16 +366,16 @@ Parallels.Animation.Image = {
       for(var x = 0; x < numSlices; x++) {
 
         // fill in what's new
-        // TODO: how to add opacity to slices, to feel more like 
+        // TODO: how to add opacity to slices, to feel more like
         // a trail?
         ctx.drawImage(
-          frame, 
+          frame,
 
           // source slice
-          (x * sliceWidth), 0, sliceWidth, frame.height,   
+          (x * sliceWidth), 0, sliceWidth, frame.height,
 
           // dest. slice
-          pointArray[x].x , pointArray[x].y, sliceWidth, imgHeight);    
+          pointArray[x].x , pointArray[x].y, sliceWidth, imgHeight);
       }
 
       rafHandle = requestAnimationFrame(renderWaveSlices);

@@ -4,7 +4,7 @@ Template.bit.onRendered(function (){
   var bitDataContext = template.data;
   var bitDatabaseId = bitDataContext._id;
   var bitElement = Utilities.getBitElement(bitDatabaseId);
-  log.debug("bit:render: ", bitDatabaseId);
+  console.log("bit:render: ", bitDatabaseId);
 
   // Track position changes for Bits.
   // SD: OQ: Why is this here? Doesnt a template automatically
@@ -68,7 +68,7 @@ Template.bit.onRendered(function (){
 
   var resetBitSize = function(message){
     function timelineDone(bitDatabaseId){
-      log.debug(message, bitDatabaseId);
+      console.log(message, bitDatabaseId);
     }
 
     var timeline = new TimelineMax({
@@ -90,7 +90,7 @@ Template.bit.onRendered(function (){
     zIndexBoost:false,
 
     onDragStart:function(event){
-      // log.debug("bit:drag:onDragStart", bitDatabaseId);
+      // console.log("bit:drag:onDragStart", bitDatabaseId);
 
       var x = this.endX;
       var y = this.endY;
@@ -104,7 +104,7 @@ Template.bit.onRendered(function (){
 
     onPress: function(event){
       function timelineDone(bitDatabaseId){
-        // log.debug("bit:drag:onPress", bitDatabaseId);
+        // console.log("bit:drag:onPress", bitDatabaseId);
       }
 
       var timeline = new TimelineMax({
@@ -122,7 +122,7 @@ Template.bit.onRendered(function (){
     },
 
     onRelease: function(event){
-      // log.debug("bit:drag:onrelease", bitDatabaseId);
+      // console.log("bit:drag:onrelease", bitDatabaseId);
       resetBitSize("bit:drag:onRelease: animation end");
     },
 
@@ -131,21 +131,21 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: only display if changed from last reading's value
-      // log.debug("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
+      // console.log("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
       // bitDragAudioInstance.set("elasticStretch.source.freq", x)
 
     },
 
     onDragEnd:function( event ) {
-      // log.debug("bit:drag:onDragEnd", bitDatabaseId);
-      
-     
+      // console.log("bit:drag:onDragEnd", bitDatabaseId);
+
+
       var x = this.endX;
       var y = this.endY;
 
       var mongoId = this.target.dataset.id;
-      // log.debug(event.type + ": " + mongoId + " : " + x + " : " + y);
+      // console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
 
       Meteor.call('changeState', {
         command: 'updateBitPosition',
@@ -164,7 +164,7 @@ Template.bit.onRendered(function (){
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
       function timelineDone(bitDatabaseId){
-        log.debug("bit:drag:end", bitDatabaseId);
+        console.log("bit:drag:end", bitDatabaseId);
       }
 
       var timeline = new TimelineMax({

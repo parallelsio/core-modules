@@ -1,7 +1,7 @@
 Template.sketchBit.onDestroyed(function(){
   unbindPlomaHandlers(canvas);
 
-  log.debug("bit:sketch:destroy");  
+  console.log("bit:sketch:destroy");
 
   // fails, because there's no template instance after the delete
   // BitEvents.hoverOutBit();

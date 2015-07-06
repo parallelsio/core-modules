@@ -25,7 +25,7 @@
  Currently using one logger across the app, set to the debug level.
  Turning that down to the info level will pretty much silence most logs
  then, you can use devlog in places where you want to see output by
- temporarily changing log.debug inline to devlog.debug
+ temporarily changing log.debug('some message') inline to devlog('some message')
 
  TODO:
  Component based logging, like:
