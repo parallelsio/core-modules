@@ -27,3 +27,4 @@ npm-container
 ostrio:neo4jdriver
 momentjs:moment
 raix:ui-dropped-event
+aldeed:autoform
