@@ -33,7 +33,7 @@ var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
   img.src = u;
 };
 
-var slingshotUploader;
+var uploader;
 
 Parallels.Handlers.register('map.events', {
 
@@ -47,6 +47,7 @@ Parallels.Handlers.register('map.events', {
 
     var fileUploads = _.map(droppedFiles, function (file, index) {
       var uploadKey = Math.random().toString(36).slice(2);
+      var slingshotUploader = new Slingshot.Upload(uploader);
       slingshotUploader.send(file, function (error) {
         if (error) console.log({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
       });
@@ -76,8 +77,8 @@ Parallels.Handlers.register('map.events', {
 });
 
 Template.map.onCreated(function () {
-  Meteor.call('getSetting', 'uploader', function (err, uploader) {
-    slingshotUploader = new Slingshot.Upload(uploader);
+  Meteor.call('getSetting', 'uploader', function (err, uploaderSetting) {
+    uploader = uploaderSetting;
   });
 });
 
