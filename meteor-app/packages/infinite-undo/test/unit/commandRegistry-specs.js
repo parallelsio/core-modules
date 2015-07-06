@@ -9,7 +9,7 @@ describe('CommandRegistry', function() {
 
     beforeEach(function () {
       this.Stub = function () {};
-      this.context = loadFile(path.resolve(__dirname, '../lib/command-registry.js'), { InfiniteUndo: {} });
+      this.context = loadFile(path.resolve(__dirname, '../../lib/command-registry.js'), { InfiniteUndo: {} });
     });
 
     it('should accept a command definition object with an "execute" function which will be invoked when the command\'s name is called on the prototype object', function (done) {

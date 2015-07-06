@@ -38,5 +38,5 @@ Package.onTest(function(api) {
   ]);
 
   // All test files
-  api.addFiles("lib/canvas-commands/createBitCommand_tests.js", "server");
+  api.addFiles("test/integration/canvas-commands/createBitCommand_tests.js", "server");
 });

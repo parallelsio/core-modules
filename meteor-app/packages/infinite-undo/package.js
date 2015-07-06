@@ -29,6 +29,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use(["tinytest", "underscore"]);
   api.use("angelcabo:infinite-undo");
-  api.addFiles("lib/entity-repository_tests.js", "server");
-  api.addFiles("lib/rollback-replay-stack_tests.js", "server");
+  api.addFiles("test/integration/entity-repository_tests.js", "server");
+  api.addFiles("test/integration/rollback-replay-stack_tests.js", "server");
 });
