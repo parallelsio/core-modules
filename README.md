@@ -1,20 +1,23 @@
 [![Build Status](https://travis-ci.org/parallelsio/core-modules.svg?branch=master)](https://travis-ci.org/parallelsio/core-modules)
 
-<img src="http://i.imgur.com/lI0HhvV.png" />
+<img src="docs/github-readme-image.png" />
 
 ##[Parallels](http://parallels.io) (working title): <br>A free tool for creativity + play. Designed for storytellers of all kinds, who think + work non-linearly
 
-####4 design principles guide our vision:
-* flow - a system that responds in realtime, always remembers where you are, and lets you play without consequences
-* remixablity: anything can be asssembled, broken apart, recombined
-* parallels: connect ideas together, or make parallels as we call it. This opens up new ways of searching + organization
-* privacy by design- no one has access to your data, unless you've explicitly shared
-
 > We're a [diverse, distributed](https://hackpad.com/Parallels-Cast-Friends-XGzlw9Mxg39) community of designers, developers, artists + researchers interested in changing the way we organize and connect ideas. 
+
+####4 design principles guide our vision:
+> * Flow - a system that responds in realtime, always remembers where you are, and lets you play without consequences
+> * Remixablity: anything can be asssembled, broken apart, recombined
+> * Parallels: create + connect ideas with links, or parallels, as we call them. This allows new ways of searching + organization
+> * Privacy by design- Only you have access to the data you generate, ie, [zero-knowledge](http://zeroknowledgeprivacy.org) philosophy. 
+
 
 > * [Motivation, goals, open research questions](http://bit.ly/1JbkU4y)
 > * [Blog](http://parallels.ghost.io)
 
+
+> This is an alpha version and a proof of concept. It's incomplete, with bugs and continuously changing code, design + features
 
 
 ### License
@@ -51,21 +54,19 @@
 
 ### Components
 
-> 3 main components, meant to run together, in this repository:
+> 3 main components in this repository:
 > 
-> [/meteor-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - the reactive, web app running in modern browsers: a digital canvas enabling you to create, remix + share digital collections of media. Based on [Meteor JS](http://www.meteor.com)
+> [/meteor-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - the reactive, web app running in modern browsers: a digital canvas enabling you to create, remix + share digital collections of media. Built on [Meteor JS](http://www.meteor.com)
 > 
 > [/desktop-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - a wrapper for the Meteor application, letting you use Parallels as an installable app on MacOSX, Windows and Linux. Built on [Electron](http://electron.atom.io)
 > 
 > [/extensions/chrome/source](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome/source) - a Chrome extension, enabling you to easily save+tag content found on the web to your Parallels canvas
 
-> This is an alpha version and a proof of concept. It's incomplete, with bugs and continuously changing code, design + features
-
 
 
 ### Privacy Notice
 
-> All of the data you create while running Parallels locally, (on your computer), during the development, stays private to you. Unlike other systems, any action you've taken in Parallels since the beginning of time is accessible, even if deleted. This is by design, as our project aims to be a [PIMS](http://cacm.acm.org/magazines/2015/5/186024-managing-your-digital-life/fulltext). We've already started the core work in the app to support this functionality, but have not yet designed the UI to intuitively make this characteristic evident. Since this is running locally on your machine, there is little to be concerned about in terms of data privacy.
+> All of the data you create while running Parallels locally during development, (on your computer) stays private to you. Unlike other systems, any action you've taken in Parallels since the beginning of time is accessible, even if deleted. This is by design, as our project aims to be a [PIMS](http://cacm.acm.org/magazines/2015/5/186024-managing-your-digital-life/fulltext). We've already started the core work in the app to support this functionality, but have not yet designed the UI to intuitively make this characteristic evident. Since this is running locally on your machine, there is little to be concerned about in terms of data privacy.
 
 > **However, if you contribute to this project by submitting a Pull Request, and/or are submitting a bug or issue, and include an export of your database activity, all of your Parallels activity is included, even if some content was previously deleted**. You can see what is in your Event history at any time by pressing the `H` key when running the web canvas. 
 
@@ -135,13 +136,15 @@
 
 
 #### Install + start the [Neo4j](http://neo4j.com/) database
-> We use Neo4j to graph the relationship between Bits and more. We recommend installing using a package manager to install: our preference is with homebrew
+> We use Neo4j to graph the links you create between Bits, or as we call them, Parallels. 
+
+> We recommend installing Neo4J using a package manager. Our preference is with homebrew
 > [Installation Instructions](http://brewformulas.org/Neo4j)
 
-> After install is complete, run `$ neo4j start` to start the neo4j server, which defaults to `http://localhost:7474`. 
+> After install is complete, run `$ neo4j start` to start the neo4j server. 
 > Go to `http://localhost:7474` in the browser, which will prompt you for the neo4j username + password. This will only happen once.
 > The default username + password is `neo4j`. Once you have logged in the first time, neo4j will ask you for a new password.
-**write this down**, as you will need this to set up a configuration next.
+> **Write the password down**, as you will need it to set up your application's config file.
 
 
 
@@ -157,10 +160,9 @@
 > NEO4J_DB_PATH="/usr/local/Cellar/neo4j/2.2.1/libexec/data/graph.db”
 > ```
 
-> At the minimum, you'll need these 2 variables defined and set to boot your app successfully. 
-> In the first variable, update the username + password. In this example, `neo4j-local` is the neo4j user name, and `x4G69Go` is the password. 
+> For the app to run successfully, you'll need at least the `GRAPHENEDB_URL` set. For this, update the username + password to match what is set on your local machine. In this example, `neo4j-local` is the neo4j user name, and `x4G69Go` is the password. 
 
-> In the second, find your neo4j path by running `sudo find / -name graph.db`
+> The `NEO4J_DB_PATH` variable is used when running the `$npm run resetdb` task, to clear the neo4j database. To set this variable correctly, find your neo4j path by running `sudo find / -name graph.db`
 
 
 
@@ -197,9 +199,8 @@
 
 > If you've started the app with `$ npm run server`, go to `http://localhost:3000` in your browser.
 
-> If you've started the app with `$ npm run desktop`, you should see a dedicated window start up. This is like a `real` app, in the sense you can minimize/maximize it/focus to it independantly. You will not be able to see the app at http://localhost:3000 by starting using this.
+> If you've started the app with `$ npm run desktop`, you should see a dedicated window start up. This is like a `real` app, in the sense you can minimize/maximize it/focus to it independantly. You will also be able to see the web app at http://localhost:3000 
 
-> You can only run either, at one time.
 
 
 
@@ -250,14 +251,14 @@
 ### More Workflow Task Scripts
 > We've added more tasks to make ease development:
 
-> postinstall
+> `$ npm runn postinstall`: 
 
 <br>
 #### Testing tasks
 
-> Tests should only be written for code in the Meteor app, that lives inside a package. This is because ____
+> We are currently focusing our testing for code that lives inside Meteor packages. This simplifies writing and maintaning our test suite, and re-inforces modular thinking by pushing us to break the Meteor app into small, testable peices.
 
-> `$ npm run test`: Does not rely on Meteor to run. Should only take around ~ to run
+> `$ npm run test`: Does not rely on Meteor to run. Ideally takes only ~2 to 3 minutes to run
 <br>
 > `$ npm run test:integration`: 
 <br>
@@ -269,15 +270,15 @@
 
 #### Database tasks
 
-> `$ npm run resetdb`: Drops **all** data in Meteor's mongo DB and the Neo4j DB. This removes all bit data + event stream history, resetting your application to a fresh state.
+> `$ npm run resetdb`: Drops **all** data in Meteor's Mongo DB and the Neo4j DB, resetting your application to a fresh state. The neo4j portion depends on the `NEO4J_DB_PATH` variable set in the `.env` file, in the project root folder.
 
 > <br>
 > 
-> `$ npm run exportlog`: Export your canvas's data to a json file. The data will be ouptut to `meteor-app/private/data-backups/canvas.events.json`. **This task only works while the web app is running (via `$ npm run server`)**
+> `$ npm run exportlog`: Export your canvas data to a JSON file to `meteor-app/private/data-backups/canvas.events.json`. **This task only works while the web app is running (via `$ npm run server`)**
 
 > <br>
 
-> `$ npm run importlog`: Rebuild your canvas from scratch by importing a json file of canvas events to be replayed. This task will read events data from the file at: `meteor-app/private/data-backups/canvas.events.json`. **This task only works when the web app is running (via `$ npm run server`). ** You will probably want to clear/reset the databases before importing, although it isn't necessary.
+> `$ npm run importlog`: Rebuild your canvas from scratch by importing a JSON file of canvas events to be replayed. This task will read events data from the file at: `meteor-app/private/data-backups/canvas.events.json`. **This task only works when the web app is running (via `$ npm run server`). ** You will probably want to clear/reset the databases before importing, although it isn't necessary.
 <br>
 
 <br>
@@ -349,11 +350,9 @@
 
 > * [Fork the project](https://help.github.com/articles/fork-a-repo), rather than cloning in the setup details above. Modify the code. 
 ><br>
-> * Run the end-to-end test suite when finished with a unit of work.
-> This runs all the tests which ensure the components still work (clipper, web canvas)  
-`$ npm run test` 
+> Ensure all tests pass after running `$ npm run test` 
 ><br>
-> * If tests pass, please [submit a Github Pull Request](https://help.github.com/articles/using-pull-requests). **Please ensure you've excluded any of your data or export files. See our [Privacy Notice](https://github.com/parallelsio/core-modules#privacy-notice) to learn more**
+> * [Submit a Pull Request](https://help.github.com/articles/using-pull-requests) via GitHub **Please ensure you've excluded any of your data or export files. See our [Privacy Notice](https://github.com/parallelsio/core-modules#privacy-notice) to learn more**
 
 
 
