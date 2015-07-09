@@ -1,62 +1,61 @@
 Template.navPanel.rendered = function() {
 
-  Meteor.call('getSetting', 'displayIntroAnimation', function (err, displayIntroAnimation) {
-    if (displayIntroAnimation) {
+  var displayIntro = Parallels.settings.get('PARALLELS_DISPLAY_INTRO_ANIMATION');
+  if (Parallels.utils.stringToBoolean(displayIntro)) {
 
-      var timelineSequence = new TimelineMax({ paused: true });
+    var timelineSequence = new TimelineMax({ paused: true });
 
-      // Greensock .call is similar to its .add,
-      // except .call lets us pass params to our function
-      timelineSequence
-        .add(timelineMenu())
-        .call(
-              Parallels.Animation.General.shimmer,
-              [
-                { $elements: $(".map .bit") }
-              ],
-              "-=0.5")
-        .play();
+    // Greensock .call is similar to its .add,
+    // except .call lets us pass params to our function
+    timelineSequence
+      .add(timelineMenu())
+      .call(
+      Parallels.Animation.General.shimmer,
+      [
+        { $elements: $(".map .bit") }
+      ],
+      "-=0.5")
+      .play();
 
-      // TODO: extract into Animation class
-      // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
-      function timelineMenu () {
+    // TODO: extract into Animation class
+    // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
+    function timelineMenu () {
 
-        var menu = $(".nav-panel");
-        var viewportWidth  = verge.viewportW();
-        var viewportHeight = verge.viewportH();
-        var timeline = new TimelineMax();
+      var menu = $(".nav-panel");
+      var viewportWidth  = verge.viewportW();
+      var viewportHeight = verge.viewportH();
+      var timeline = new TimelineMax();
 
-        var topToBottomLine  = $('.wipe.top-to-bottom .line');
-        var maskTop          = $('.wipe.top-to-bottom .mask.top');
-        var maskBottom       = $('.wipe.top-to-bottom .mask.bottom');
+      var topToBottomLine  = $('.wipe.top-to-bottom .line');
+      var maskTop          = $('.wipe.top-to-bottom .mask.top');
+      var maskBottom       = $('.wipe.top-to-bottom .mask.bottom');
 
-        var sideToSideLine   = $('.wipe.side-to-side .line');
-        var maskLeft         = $('.wipe.load.side-to-side .mask.left');
-        var maskRight        = $('.wipe.load.side-to-side .mask.right');
+      var sideToSideLine   = $('.wipe.side-to-side .line');
+      var maskLeft         = $('.wipe.load.side-to-side .mask.left');
+      var maskRight        = $('.wipe.load.side-to-side .mask.right');
 
-        TweenMax.set($('.wipe.load.side-to-side'), { alpha: 0 });
+      TweenMax.set($('.wipe.load.side-to-side'), { alpha: 0 });
 
-        timeline.fromTo(topToBottomLine, 0.4, { x: viewportWidth }, { x: 0, ease: Circ.easeIn }, 0);
-        timeline.fromTo(maskTop, 0.4, { y: 0 }, { y: -viewportHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
-        timeline.fromTo(maskBottom, 0.4, { y: 0 }, { y: viewportHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
-        timeline.set($('.wipe.load.top-to-bottom'), { alpha: 0, display: "none" });
+      timeline.fromTo(topToBottomLine, 0.4, { x: viewportWidth }, { x: 0, ease: Circ.easeIn }, 0);
+      timeline.fromTo(maskTop, 0.4, { y: 0 }, { y: -viewportHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
+      timeline.fromTo(maskBottom, 0.4, { y: 0 }, { y: viewportHeight / 2, ease: Expo.easeOut, delay: 0.1 }, 0.4);
+      timeline.set($('.wipe.load.top-to-bottom'), { alpha: 0, display: "none" });
 
-        timeline.set($('.wipe.load.side-to-side'), { alpha: 1, display: "block"});
-        timeline.fromTo(sideToSideLine, 0.4, { y: -viewportHeight}, {y: 0, ease: Circ.easeIn});
-        timeline.fromTo(maskRight, 0.4, { x: 0 }, {x: viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
-        timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
-        timeline.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
+      timeline.set($('.wipe.load.side-to-side'), { alpha: 1, display: "block"});
+      timeline.fromTo(sideToSideLine, 0.4, { y: -viewportHeight}, {y: 0, ease: Circ.easeIn});
+      timeline.fromTo(maskRight, 0.4, { x: 0 }, {x: viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2); // 2.5
+      timeline.fromTo(maskLeft, 0.4, { x: 0 }, {x: -viewportWidth / 2, ease: Expo.easeOut, delay: 0.1 }, 1.2);
+      timeline.set($('.wipe.load.side-to-side'), { alpha: 0, display: "none" });
 
-        timeline.to(menu, 1, { top: "0", ease:Elastic.easeOut });
+      timeline.to(menu, 1, { top: "0", ease:Elastic.easeOut });
 
-        return timeline;
-      }
-
+      return timeline;
     }
 
-    else {
-      $('.wipe.load').hide();
-    }
-  });
+  }
+
+  else {
+    $('.wipe.load').hide();
+  }
 };
 

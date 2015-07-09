@@ -11,12 +11,12 @@ Parallels.Audio.player = {
   play: function(soundFileName){
 
     if (Session.equals('isAudioEnabled', true)){
-      log.debug("audio:play: via Howler: ", soundFileName);
+      Parallels.log.debug("audio:play: via Howler: ", soundFileName);
       new Howl({ urls: [ this._folderPath + soundFileName + ".wav"] }).play();
     }
 
     else {
-      log.debug("audio:simulate play: ", soundFileName);
+      Parallels.log.debug("audio:simulate play: ", soundFileName);
     }
   }
 }

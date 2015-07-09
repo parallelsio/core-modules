@@ -26,7 +26,7 @@ Template.sketchBit.onRendered(function () {
   }
 
   var sketchBit = new SketchBit($bitElement, this.data, npApiPlugin);
-  
+
   var draggable = makeBitDraggable($bitElement);
 
   // track the sketch bit's coordinates and opacity from mongo for concurrent session editing
@@ -55,16 +55,16 @@ Template.sketchBit.onRendered(function () {
   var mousetrap = new Mousetrap(template.firstNode);
 
   mousetrap.bind('c', function () {
-    log.debug("pressed 'c' key");
+    Parallels.log.debug("pressed 'c' key");
     if (sketchBit.isFocused()) {
-      log.debug("clearing bit:sketch canvas on ", sketchBit._id);
+      Parallels.log.debug("clearing bit:sketch canvas on ", sketchBit._id);
       Parallels.Audio.player.play('fx-pep');
       sketchBit.ploma.clear();
     }
   });
 
   mousetrap.bind('mod+z', function (event) {
-    log.debug("pressed 'command/ctrl + z'");
+    Parallels.log.debug("pressed 'command/ctrl + z'");
 
     if (sketchBit.isFocused()) {
       // remove the most recent stroke
@@ -78,12 +78,12 @@ Template.sketchBit.onRendered(function () {
   });
 
   mousetrap.bind('up', function (event) {
-    log.debug("pressed 'up' key");
+    Parallels.log.debug("pressed 'up' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    log.debug("bit:sketch:opacity = ", opacity);
+    Parallels.log.debug("bit:sketch:opacity = ", opacity);
 
     if (opacity < 1) {
       template.firstNode.style.opacity = opacity + 0.10;
@@ -97,12 +97,12 @@ Template.sketchBit.onRendered(function () {
   });
 
   mousetrap.bind('down', function (event) {
-    log.debug("pressed 'down' key");
+    Parallels.log.debug("pressed 'down' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    log.debug("bit:sketch:opacity = ", opacity);
+    Parallels.log.debug("bit:sketch:opacity = ", opacity);
 
     if (opacity > 0.10) {
       template.firstNode.style.opacity = (opacity - 0.10);

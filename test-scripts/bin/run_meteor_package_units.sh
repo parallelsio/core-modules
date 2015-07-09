@@ -17,7 +17,7 @@ fi
 # Perform tests.
 TESTS_FAILED=0
 PACKAGES_FAILED=""
-for pkg in ${PACKAGES}; do
+for pkg in "${PACKAGES[@]}"; do
   if [ -d "meteor-app/packages/${pkg}/test/unit" ]; then
     echo ">>> Testing package '${pkg}'..."
     mocha meteor-app/packages/${pkg}/test/unit || {

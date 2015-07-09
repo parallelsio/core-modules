@@ -1,6 +1,6 @@
 Meteor.startup(function () {
 
-  log.debug("Meteor.startup begin.");
+  Parallels.log.debug("Meteor.startup begin.");
 
   // we enable the core *actions, ie
   // bit operations: Examples: bit:create, bit:delete, etc.
@@ -13,24 +13,15 @@ Meteor.startup(function () {
   Parallels.Keys.bindEsc();
   Parallels.Keys.bindShortcuts();
 
-  // TODO: extract out into Utility? or Config?
-  // get settings
-  Meteor.call('getSetting', 'isAudioEnabled', function (err, isAudioEnabled) {
-    if (isAudioEnabled) {
-      Session.set('isAudioEnabled', true);
-    }
+  var isAudioEnabled = Parallels.settings.get('PARALLELS_IS_AUDIO_ENABLED');
+  Session.set('isAudioEnabled', Parallels.utils.stringToBoolean(isAudioEnabled));
 
-    else {
-      Session.set('isAudioEnabled', false);
-    }
+  Tracker.autorun(function () {
+    Parallels.log.debug(Bits.find().count() + ' bits, via Tracker:autorun');
   });
 
   Tracker.autorun(function () {
-    log.debug(Bits.find().count() + ' bits, via Tracker:autorun');
-  });
-
-  Tracker.autorun(function () {
-    log.debug('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
+    Parallels.log.debug('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
   });
 
   var center = Utilities.getViewportCenter();

@@ -88,7 +88,7 @@ Parallels.Panels = {
 
     if (Session.equals('isShortcutsDisplayed', true)){
       // prepare to close
-      log.debug("_toggleShortcutsPanel: close");
+      Parallels.log.debug("_toggleShortcutsPanel: close");
 
       left = "-15em";
       bindings = _unbindShortcutEvents;

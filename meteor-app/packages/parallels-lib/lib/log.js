@@ -1,3 +1,8 @@
+/**
+ * Parallels Log namespace
+ * @namespace Log
+ */
+
 /*
  PURPOSE:
  Sets up granular logging, so as app grows, we can split/isolate
@@ -36,5 +41,4 @@
  bitstextlog = loglevel.createAppLogger('bits/text', 'debug');
  */
 
-log = loglevel.createAppLogger('parallels', defaultLevel = 'debug');
-devlog = loglevel.createLogger('dev', 'debug').debug;
+Parallels.log = loglevel.createAppLogger('parallels', defaultLevel = 'debug');

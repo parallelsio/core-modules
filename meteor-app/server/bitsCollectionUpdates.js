@@ -4,7 +4,7 @@
 var BitsUI = {
   insertBit: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:insertBit', bit._id);
+    Parallels.log.debug('bitsUI:insertBit', bit._id);
 
     var newBit = {
       _id: bit._id,
@@ -27,12 +27,12 @@ var BitsUI = {
 
     Bits.insert(newBit);
   }, function (err) {
-    log.error('bitsUI:insertBit', err);
+    Parallels.log.error('bitsUI:insertBit', err);
   }),
 
   updateBitPosition: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateBitPosition', bit._id);
+    Parallels.log.debug('bitsUI:updateBitPosition', bit._id);
 
     var query = {
       $set: {
@@ -42,15 +42,15 @@ var BitsUI = {
     };
 
     Bits.update({_id: bit._id}, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) Parallels.log.error(err);
     });
   }, function (err) {
-    log.debug('bitsUI:updateBitPosition', err);
+    Parallels.log.debug('bitsUI:updateBitPosition', err);
   }),
 
   updateBitContent: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateBitContent', bit._id);
+    Parallels.log.debug('bitsUI:updateBitContent', bit._id);
 
     var query = {
       $set: {
@@ -61,15 +61,15 @@ var BitsUI = {
     };
 
     Bits.update({_id: bit._id}, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) Parallels.log.error(err);
     });
   }, function (err) {
-    log.debug('bitsUI:updateBitContent', err);
+    Parallels.log.debug('bitsUI:updateBitContent', err);
   }),
 
   updateImageSource: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateImageSource', bit._id);
+    Parallels.log.debug('bitsUI:updateImageSource', bit._id);
 
     var query = {
       $set: {
@@ -80,15 +80,15 @@ var BitsUI = {
     };
 
     Bits.update({_id: bit._id}, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) Parallels.log.error(err);
     });
   }, function (err) {
-    log.debug('bitsUI:updateImageSource', err);
+    Parallels.log.debug('bitsUI:updateImageSource', err);
   }),
 
   updateBitHtml: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:updateBitHtml', bit._id);
+    Parallels.log.debug('bitsUI:updateBitHtml', bit._id);
 
     var query = {
       $set: {
@@ -99,19 +99,19 @@ var BitsUI = {
     };
 
     Bits.update({_id: bit._id}, query, function (err /*, result */) {
-      if (err) log.error(err);
+      if (err) Parallels.log.error(err);
     });
   }, function (err) {
-    log.debug('bitsUI:updateBitHtml', err);
+    Parallels.log.debug('bitsUI:updateBitHtml', err);
   }),
 
   removeBit: Meteor.bindEnvironment(function (event) {
     var bit = event.data.payload;
-    log.debug('bitsUI:removeBit', bit._id);
+    Parallels.log.debug('bitsUI:removeBit', bit._id);
 
     Bits.remove(bit._id);
   }, function (err) {
-    log.debug('bitsUI:removeBit', err);
+    Parallels.log.debug('bitsUI:removeBit', err);
   })
 };
 

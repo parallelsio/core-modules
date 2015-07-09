@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'parallels-audio',
+  name: 'parallels-server',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -14,13 +14,10 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
 
   api.use([
-    "parallels-lib@0.0.1",
-    "ovcharik:howler",
-    "lifeinchords:teoria@0.0.1"
-  ], 'client', { weak: false, unordered: false });
+    "parallels-lib@0.0.1"
+  ], 'server', {weak: false, unordered: false});
 
   api.addFiles([
-    'namespace.js',
-    'actions.js'
-  ], 'client');
+    'lib/startup.js'
+  ], 'server');
 });

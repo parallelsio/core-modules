@@ -33,7 +33,7 @@ Template.map.onRendered(function () {
 
       function timelineRemoveDone(mapElement) {
         $(mapElement).remove();
-        log.debug("bit:remove:uihook : timeline animate done. removed bit.");
+        Parallels.log.debug("bit:remove:uihook : timeline animate done. removed bit.");
       }
 
       var timelineRemove = new TimelineMax({

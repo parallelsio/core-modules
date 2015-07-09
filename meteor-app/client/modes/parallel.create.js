@@ -37,7 +37,7 @@ var $destBit;
 Parallels.AppModes['create-parallel'] = {
 
   enter: function () {
-    log.debug("mode:create-parallel:enter");
+    Parallels.log.debug("mode:create-parallel:enter");
 
     Session.set('currentMode', 'create-parallel');
 
@@ -54,7 +54,7 @@ Parallels.AppModes['create-parallel'] = {
     // we know they are have chosen a destination bit
     // and ready to commit this to the db/UI.
     Mousetrap.bind('shift', function (){
-      log.debug("pressed 'Shift' key: looking to close parallel.");
+      Parallels.log.debug("pressed 'Shift' key: looking to close parallel.");
 
       // get latest value of bit person is hovering over as destination bit.
       // this is expected to happen now that the origin has already been chosen
@@ -73,7 +73,7 @@ Parallels.AppModes['create-parallel'] = {
         two.unbind('update');
 
         Session.set('destBitId', destBitId);
-        log.debug(
+        Parallels.log.debug(
           'closing parallel: source:',
           originBitId,
           " -> dest:",
@@ -117,7 +117,7 @@ Parallels.AppModes['create-parallel'] = {
         // cancel when the rollage is done
         // if(){
         //   isSlicingDicing = false;
-        //   log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
+        //   Parallels.log.debug("canvas slice+dice: saving rafHandle:", rafHandle);
         // }
 
         // show form so person can define relationship
@@ -135,7 +135,7 @@ Parallels.AppModes['create-parallel'] = {
     });
 
 
-    log.debug("ready for creating parallel. starting at bit: " + originBitId);
+    Parallels.log.debug("ready for creating parallel. starting at bit: " + originBitId);
 
     // TODO: abstract out into reusable mode concept.
     // here, it might be : enterMode.createParallel()
@@ -213,12 +213,12 @@ Parallels.AppModes['create-parallel'] = {
 
     // ****************** HEARTBEAT ANIMATION *************
     var timelineStart = function () {
-      log.debug('bit:parallel:create. Origin bit' + originBitId + ': selected-loop animation starting ...');
+      Parallels.log.debug('bit:parallel:create. Origin bit' + originBitId + ': selected-loop animation starting ...');
       // TODO: play sound indicating origin start, jeopardy jingle??
     };
 
     var timelineDone = function( bitOriginId ){
-      log.debug('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
+      Parallels.log.debug('bit:parallel:create. End mode, origin bit' + bitOriginId + ': selected-loop animation ending.');
     };
 
     timeline = new TimelineMax({
@@ -236,7 +236,7 @@ Parallels.AppModes['create-parallel'] = {
   },
 
   exit: function () {
-    log.debug("mode:create-parallel:exit");
+    Parallels.log.debug("mode:create-parallel:exit");
 
     if (Session.get('currentMode')) {
 
@@ -266,7 +266,7 @@ Parallels.AppModes['create-parallel'] = {
       // TODO: move handle to mapInstance
       // if (Utilities.getMapTemplate().pixiInstance.rafHandle){
       if (wave.rafHandle){
-        log.debug("about to cancelAnimationFrame on rafHandle:", wave.rafHandle);
+        Parallels.log.debug("about to cancelAnimationFrame on rafHandle:", wave.rafHandle);
         cancelAnimationFrame(wave.rafHandle);
       }
 

@@ -1,5 +1,5 @@
 makeBitDraggable = function makeBitDraggable($bitElement){
-    
+
   var timeline = new TimelineMax();
 
   // // Needs to happen after position set, or else positions
@@ -14,7 +14,7 @@ makeBitDraggable = function makeBitDraggable($bitElement){
 
       // var x = this.endX;
       // var y = this.endY;
-      // log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
+      // Parallels.log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
     },
 
@@ -26,21 +26,21 @@ makeBitDraggable = function makeBitDraggable($bitElement){
 
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
-      timeline.to($bitElement, 0.20, { 
-        scale: 1.05, 
-        boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", 
-        ease: Expo.easeOut 
+      timeline.to($bitElement, 0.20, {
+        scale: 1.05,
+        boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
+        ease: Expo.easeOut
       });
     },
 
     onRelease: function(event){
       timeline.to(
-        $bitElement, 
-        0.1, 
-        { 
-          scale: 1, 
-          boxShadow: "0", 
-          ease: Expo.easeOut 
+        $bitElement,
+        0.1,
+        {
+          scale: 1,
+          boxShadow: "0",
+          ease: Expo.easeOut
         }
       );
     },

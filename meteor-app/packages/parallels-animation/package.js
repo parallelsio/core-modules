@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
 
   api.use([
-    "parallels-core@0.0.1"
+    "parallels-lib@0.0.1"
   ], 'client', {weak: false, unordered: false});
 
   api.addFiles([

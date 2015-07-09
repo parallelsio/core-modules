@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'parallels-audio',
+  name: 'parallels-client',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -10,17 +10,23 @@ Package.describe({
   documentation: 'README.md'
 });
 
+
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
 
   api.use([
     "parallels-lib@0.0.1",
-    "ovcharik:howler",
-    "lifeinchords:teoria@0.0.1"
-  ], 'client', { weak: false, unordered: false });
+    "chuangbo:marked@0.3.2_4",
+    "angelcabo:mousetrap@1.0.0"
+  ], 'client', {weak: false, unordered: false});
 
   api.addFiles([
-    'namespace.js',
-    'actions.js'
+    'lib/vendor/flocking/flocking-no-jquery.min.js',
+    'lib/vendor/two/two.min.js',
+    'lib/vendor/verge/verge.js',
+    'lib/meteor-reload-config.js',
+    'lib/key-bindings.js',
+    'lib/markdown-config.js',
+    'lib/main.js'
   ], 'client');
 });

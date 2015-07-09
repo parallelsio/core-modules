@@ -7,7 +7,7 @@ Template.bit.onRendered(function (){
 
   makeBitDraggable($bitElement);
 
-  
+
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients
   Tracker.autorun(function() {

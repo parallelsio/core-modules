@@ -1,7 +1,7 @@
 var
   assert = require('chai').assert,
   path = require('path'),
-  loadFile = require('./loadFile.js');
+  loadFile = require('js-file-loader');
 
 describe('CommandRegistry', function() {
 

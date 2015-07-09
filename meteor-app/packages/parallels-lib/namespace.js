@@ -1,0 +1,5 @@
+Parallels = {
+  AppModes: {},
+  FileUploads: {},
+  Keys: {}
+};

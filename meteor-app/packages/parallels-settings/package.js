@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'parallels-audio',
+  name: 'parallels-settings',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -12,15 +12,19 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
-
   api.use([
-    "parallels-lib@0.0.1",
-    "ovcharik:howler",
-    "lifeinchords:teoria@0.0.1"
-  ], 'client', { weak: false, unordered: false });
+    'reactive-dict',
+    'parallels-lib'
+  ], ['client', 'server']);
 
-  api.addFiles([
-    'namespace.js',
-    'actions.js'
-  ], 'client');
+  api.addFiles('namespace.js', ['client', 'server']);
+  api.addFiles('server.js', 'server');
+  api.addFiles('client.js', 'client');
+});
+
+Package.onTest(function(api) {
+  api.use(['coffeescript', 'peerlibrary:classy-test', 'parallels-lib']);
+  api.use('parallels-settings');
+
+  api.addFiles('test/integration/env_tests.coffee');
 });

@@ -22,7 +22,7 @@ var _changeState = function (msg) {
       commitRepo(canvas, {/* forceSnapshot: true */});
       return response;
     } else {
-      log.warn("changeState: Command not recognized : ", msg.command);
+      Parallels.log.warn("changeState: Command not recognized : ", msg.command);
     }
   }
 };

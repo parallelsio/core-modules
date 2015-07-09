@@ -26,6 +26,8 @@
     "grunt-preprocess": "^4.1.0",
     "grunt-sass": "^0.18.1",
     "grunt-template-jasmine-requirejs": "^0.2.0",
+    "jit-grunt": "^0.9.1",
+    "js-file-loader": "^1.0.0",
     "jshint-stylish": "^1.0.0",
     "matchdep": "^0.3.0",
     "meteor-stubs": "0.0.6",
@@ -35,8 +37,7 @@
     "shelljs": "^0.4.0",
     "sourced": "0.0.14",
     "sourced-repo-mongo": "^0.3.5",
-    "spacejam": "^1.2.1",
-    "jit-grunt": "^0.9.1"
+    "spacejam": "^1.2.1"
   },
   "scripts": {
     "start": "grunt server",

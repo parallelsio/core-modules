@@ -1,3 +1,3 @@
 var createParallel = function(){
-	log.debug("running save create parallel");
+	Parallels.log.debug("running save create parallel");
 };
