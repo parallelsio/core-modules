@@ -16,7 +16,6 @@ Parallels.Audio.player = {
 
   initAndStartEnv: function(){
     "use strict";
-    // todo: make configurable: is audio enabled/disabled?
     this._enviro = flock.init({
       bufferSize: 4096
     });

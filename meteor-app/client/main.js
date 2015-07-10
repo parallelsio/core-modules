@@ -3,7 +3,12 @@ Meteor.startup(function(){
   console.log("Meteor.startup begin.");
 
   Parallels.Keys.bindAll();
-  Parallels.Audio.player.initAndStartEnv();
+
+  Meteor.call('getSetting', 'isFlockingAudioEnabled', function (err, displayIntroAnimation) {
+    if (isFlockingAudioEnabled){
+      Parallels.Audio.player.initAndStartEnv();
+    }
+  });
 
   // TODO: make Session bootup/init?
   Session.set('createTextBit', null);

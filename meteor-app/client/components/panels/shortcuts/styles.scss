@@ -9,7 +9,7 @@ $color-second: #C7F464;
 $blue:#8B8BF5;
 
 
-.info-menu {
+.shortcuts-panel {
   position: fixed; 
   z-index:100;
   width: 100%;
@@ -27,7 +27,7 @@ $blue:#8B8BF5;
   }
 }
 
-.info-menu__header{
+.shortcuts-panel__header{
   float: left; 
   margin: 0.1em 0.25em 1.25em 0.25em;
 
@@ -40,8 +40,8 @@ $blue:#8B8BF5;
   }
 } 
 
-.info-menu__links { float: right;  }
-.info-menu__link { color: $blue; margin: 0 0.5em; }
+.shortcuts-panel__links { float: right;  }
+.shortcuts-panel__link { color: $blue; margin: 0 0.5em; }
 
 
 

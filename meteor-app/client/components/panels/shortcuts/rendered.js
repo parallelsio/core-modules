@@ -1,4 +1,5 @@
-Template.infoMenu.rendered = function() {
+Template.shortcutsPanel.rendered = function() {
+
   Meteor.call('getSetting', 'displayIntroAnimation', function (err, displayIntroAnimation) {
     if (displayIntroAnimation) {
 
@@ -19,7 +20,7 @@ Template.infoMenu.rendered = function() {
       // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
       function timelineMenu () {
 
-        var menu = $(".info-menu");
+        var menu = $(".shortcuts-panel");
         var viewportWidth  = verge.viewportW();
         var viewportHeight = verge.viewportH();
         var timeline = new TimelineMax();

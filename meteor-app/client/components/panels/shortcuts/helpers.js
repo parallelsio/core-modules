@@ -1,4 +1,4 @@
-Template.infoMenu.helpers({
+Template.shortcutsPanel.helpers({
    
   currentModeLabel: function () {
     if (Session.get('currentMode')){

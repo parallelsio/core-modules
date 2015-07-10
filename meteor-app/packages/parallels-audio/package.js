@@ -16,7 +16,7 @@ Package.onUse(function(api) {
   api.use([
     "parallels-core@0.0.1",
     "lifeinchords:teoria@0.0.1"
-  ], 'client', {weak: false, unordered: false});
+  ], 'client', { weak: false, unordered: false });
 
   api.addFiles([
     'namespace.js',
