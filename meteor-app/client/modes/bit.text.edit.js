@@ -25,19 +25,7 @@ Parallels.AppModes['edit-bit'] = {
 
   exit: function () {
     console.log("mode:edit-bit:exit");
-
     Session.set('currentMode', null);
     Session.set('bitEditingId', null);
-
-    Meteor.call('changeState', {
-      command: 'deleteBit',
-      data: {
-        canvasId: '1',
-        _id: bitEditingId
-      }
-    });
   }
 };
-
-
-
