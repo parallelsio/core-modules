@@ -12,9 +12,6 @@
     "AWS_SECRET_ACCESS_KEY": {
       "required": true
     },
-    "METEOR_SETTINGS": {
-      "required": true
-    },
     "ROOT_URL": {
       "required": true
     }
