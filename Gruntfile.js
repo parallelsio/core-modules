@@ -345,8 +345,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('meteorRun', function () {
-    var done = this.async();
     grunt.task.requires('env:dev');
+    var done = this.async();
     shell.cd(grunt.config('config').webApp);
     shell.exec('meteor run', {async:true}, function () {
       done();
@@ -356,8 +356,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('desktopRun', function () {
     grunt.task.requires('env:dev');
-    shell.exec('node desktop-app/setup.js');
-    shell.exec('node desktop-app/run.js');
+    var done = this.async();
+    shell.exec('node desktop-app/setup.js', {async:true}, function () {
+      shell.exec('node desktop-app/run.js', {async:true}, function () {
+        done();
+      });
+    });
   });
   grunt.registerTask('desktopServer', ['env:dev', 'desktopRun']);
 
