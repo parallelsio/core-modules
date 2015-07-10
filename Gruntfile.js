@@ -5,7 +5,7 @@ var fs = require('fs'), util = require('util'), busboy = require('connect-busboy
 module.exports = function (grunt) {
 
   require('jit-grunt')(grunt);
-  
+
   var config = {
     dist: 'extensions/chrome/build',
     webApp: 'meteor-app',
@@ -345,9 +345,12 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('meteorRun', function () {
+    var done = this.async();
     grunt.task.requires('env:dev');
     shell.cd(grunt.config('config').webApp);
-    shell.exec('meteor run');
+    shell.exec('meteor run', {async:true}, function () {
+      done();
+    });
   });
   grunt.registerTask('meteorServer', ['env:dev', 'meteorRun']);
 
