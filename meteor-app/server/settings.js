@@ -1,6 +1,8 @@
 const ConfigurationOptions = {
-  displayIntroAnimation: {key: 'DISPLAY_INTRO_ANIMATION', default: 'true', type: 'boolean'},
-  uploader: {key: 'UPLOADER', default: 'fileSystemUploader', type: 'string'}
+  
+  displayIntroAnimation:      { key: 'DISPLAY_INTRO_ANIMATION', default: 'true', type: 'boolean'},
+  uploader:                   { key: 'UPLOADER', default: 'fileSystemUploader', type: 'string'},
+  isAudioEnabled:             { key: 'IS_AUDIO_ENABLED', default: 'true', type: 'boolean'}
 };
 
 function stringToBool(string) {
