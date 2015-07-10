@@ -4,6 +4,8 @@ var fs = require('fs'), util = require('util'), busboy = require('connect-busboy
 
 module.exports = function (grunt) {
 
+  require('jit-grunt')(grunt);
+  
   var config = {
     dist: 'extensions/chrome/build',
     webApp: 'meteor-app',
