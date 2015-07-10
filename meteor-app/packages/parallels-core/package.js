@@ -28,7 +28,8 @@ Package.onUse(function(api) {
     'log.js',
     'namespace.js',
     'no-reload.js',
-    'key-bindings.js'
+    'key-bindings.js',
+    'markdown-config.js'
   ], 'client');
 
   api.export("Parallels", 'client');
