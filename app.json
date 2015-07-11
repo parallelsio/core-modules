@@ -3,6 +3,18 @@
   "description": "",
   "scripts": {},
   "env": {
+    "GRAPHENEDB_URL": {
+      "required": true
+    },
+    "MONGOLAB_URI": {
+      "required": true
+    },
+    "MONGO_URL": {
+      "required": true
+    },
+    "UPLOADER": {
+      "required": true
+    },
     "AWS_ACCESS_KEY_ID": {
       "required": true
     },
