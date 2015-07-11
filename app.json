@@ -3,12 +3,6 @@
   "description": "",
   "scripts": {},
   "env": {
-    "GRAPHENEDB_URL": {
-      "required": true
-    },
-    "MONGOLAB_URI": {
-      "required": true
-    },
     "MONGO_URL": {
       "required": true
     },
