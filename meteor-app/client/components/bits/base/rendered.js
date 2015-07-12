@@ -6,11 +6,8 @@ Template.bit.onRendered(function (){
   var bitElement = Utilities.getBitElement(bitDatabaseId);
   console.log("bit:render: ", bitDatabaseId);
 
-  // Track position changes for Bits.
-  // SD: OQ: Why is this here? Doesnt a template automatically
-  // data bind and save/sync the x/y position already?
-
-  // SD: OQ/TODO: https://www.discovermeteor.com/blog/template-level-subscriptions?
+  // When a Bit position is updated during a concurrent session (by someone else)
+  // move the bit to it's new position on all other sessions/clients
   Tracker.autorun(function() {
     var bit = Bits.findOne(bitDatabaseId);
     if (bit) {
