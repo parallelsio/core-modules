@@ -193,10 +193,6 @@
 
 > We've **disabled** the built in Meteor Hot Code, wihch automatically refreshed your browser whenever a change to the Meteor code was detected. We found it was slow and unpredictable. Make changes to `/meteor-app` and refresh manually to see your changes on `http://localhost:3000`. Note there is a slight delay for file changes to "kick in".
 > 
-> We've also added [Kadira's Meteor Debug](https://kadira.io/blog/introducing-kadira-debug) package, which provides an interactive log of the important events happening in the Meteor web app. You'll use 2 URL's in tandem while developing, after running `$ npm run server` to get everything going:
-
-> * http://localhost:3000 - the local instance of the Parallels Meteor web app
-> * http://debug.kadiraio.com/debug - the local Kadira Debug dashboard, providing a realtime view of what's happening in the web app on http://localhost:3000
 
 > If you've started the app with `$ npm run server`, go to `http://localhost:3000` in your browser.
 
