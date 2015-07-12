@@ -14,7 +14,7 @@ check@1.0.5
 chriswessels:hammer@4.0.1
 chuangbo:marked@0.3.5
 coffeescript@1.0.6
-cosmos:browserify@0.3.0
+cosmos:browserify@0.4.0
 cwaring:modernizr@3.0.0_1
 ddp@1.1.0
 deps@1.0.7
@@ -40,6 +40,7 @@ iron:router@1.0.9
 iron:url@1.0.9
 jquery@1.11.3_2
 json@1.0.3
+kadira:debug@2.0.1
 launch-screen@1.0.2
 lifeinchords:teoria@0.0.1
 livedata@1.0.13
