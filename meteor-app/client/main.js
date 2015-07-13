@@ -4,7 +4,7 @@ Meteor.startup(function(){
 
   Parallels.Keys.bindAll();
 
-  Meteor.call('getSetting', 'isFlockingAudioEnabled', function (err, displayIntroAnimation) {
+  Meteor.call('getSetting', 'isFlockingAudioEnabled', function (err, isFlockingAudioEnabled) {
     if (isFlockingAudioEnabled){
       Parallels.Audio.player.initAndStartEnv();
     }
