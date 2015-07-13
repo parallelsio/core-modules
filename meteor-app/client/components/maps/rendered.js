@@ -3,8 +3,7 @@ Template.map.onRendered(function (){
   var template = this;
   var mapContainer = template.find('.map');
 
-  // TODO: craft this sound like fx-welcome.wav
-  // template.opening = Parallels.Audio.player.play('moogSeq');
+  Parallels.Audio.player.play("fx-welcome-v2");
 
   mapContainer._uihooks = {
 

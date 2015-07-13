@@ -9,7 +9,14 @@ Parallels.Audio.player = {
   _folderPath: "sounds/",
 
   play: function(soundFileName){
-    log.debug("audio:play: trigger: ", soundFileName);
-    new Howl({ urls: [ this._folderPath + soundFileName] }).play();
+
+    if (Session.equals('isAudioEnabled', true)){
+      log.debug("audio:play: via Howler: ", soundFileName);
+      new Howl({ urls: [ this._folderPath + soundFileName + ".wav"] }).play();
+    }
+
+    else {
+      log.debug("audio:simulate play: ", soundFileName);
+    }
   }
 }

@@ -4,9 +4,15 @@ Meteor.startup(function(){
 
   Parallels.Keys.bindAll();
 
+  // TODO: extract out into Utility? or Config?
+  // get settings
   Meteor.call('getSetting', 'isAudioEnabled', function (err, isAudioEnabled) {
     if (isAudioEnabled){
-      Parallels.Audio.player.play("fx-welcome-v1.wav");
+      Session.set('isAudioEnabled', true);
+    }
+
+    else{
+      Session.set('isAudioEnabled', false);
     }
   });
 
