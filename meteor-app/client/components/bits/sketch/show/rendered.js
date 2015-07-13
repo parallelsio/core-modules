@@ -110,6 +110,31 @@ Template.sketchBit.onRendered(function (){
     console.log("bit:sketch:curStroke: ", template.plomaInstance.curStroke());
   });
 
+  Mousetrap.bind('s', function (){
+    console.log("pressed 's' key");
+
+    var bitData = template.plomaInstance.getStrokes();
+
+    // save to Mongo
+
+    // Meteor.call('changeState', {
+    //   command: 'createBit',
+    //   data: {
+    //     canvasId: createTextBit.canvasId,
+    //     type: 'sketch',
+
+    //     content: bitData,
+    //     color: createTextBit.color,
+    //     position: {
+    //       x: $(template.firstNode).position().left,
+    //       y: $(template.firstNode).position().top
+    //     }
+    //   }
+    // });
+
+  
+  });
+
   Mousetrap.bind('mod+z', function (){
     console.log("pressed 'command/ctrl + z'");
 

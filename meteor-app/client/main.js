@@ -3,6 +3,8 @@ Meteor.startup(function(){
   console.log("Meteor.startup begin.");
 
   Parallels.Keys.bindAll();
+  Parallels.Keys.bindEsc();
+
 
   // TODO: extract out into Utility? or Config?
   // get settings

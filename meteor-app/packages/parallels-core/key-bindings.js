@@ -119,7 +119,7 @@ Parallels.Keys = {
     this.bindUndo();
     this.bindRedo();
     this.bindShortcuts();
-    this.bindEsc();
+    // this.bindEsc();
   },
 
   disableAll: function(){
@@ -141,7 +141,7 @@ Parallels.Keys = {
     Mousetrap.unbind('shift');
 
     // cancel/close
-    Mousetrap.unbind('esc');
+    // Mousetrap.unbind('esc');
 
     // history dialog, for undo/redo
     Mousetrap.unbind('h');
