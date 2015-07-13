@@ -3,18 +3,6 @@
   "description": "",
   "scripts": {},
   "env": {
-    "GRAPHENEDB_URL": {
-      "required": true,
-      "description": "Neo4j DB connection URI"
-    },
-    "MONGOLAB_URI": {
-      "required": true,
-      "description": "Mongolab DB connection URI"
-    },
-    "MONGO_URL": {
-      "required": true,
-      "description": "Meteor only looks for MONGO_URL to connect to a Mongo DB"
-    },
     "UPLOADER": {
       "required": true,
       "description": "Type of uploader to use for multimedia upload: (s3Uploader)"
@@ -36,7 +24,12 @@
       "description": "URL of the hosted Heroku app: (makeparallels-pr-[PULL_REQUEST_NUMBER])"
     }
   },
-  "addons": [],
+  
+  "addons": [
+    "graphenedb",
+    "mongolab"
+  ],
+
   "buildpacks": [
     {
       "url": "https://github.com/AngelCabo/meteor-buildpack-horse.git"
