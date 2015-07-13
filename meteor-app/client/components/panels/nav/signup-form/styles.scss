@@ -1,11 +1,11 @@
 .mc_embed_signup{
   display: inline-block;
   float: right;
+  margin: 0.5em 0 0 0;
 
-  input { display: inline-block; }
+  input { display: inline-block;  }
 
-  input["text-field"]{
-    padding: 1em;
-  }
+  .button { background: #3C9FFF; }
 } 
+
 
