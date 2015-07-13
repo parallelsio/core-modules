@@ -5,7 +5,6 @@ Meteor.startup(function(){
   Parallels.Keys.bindAll();
   Parallels.Keys.bindEsc();
 
-
   // TODO: extract out into Utility? or Config?
   // get settings
   Meteor.call('getSetting', 'isAudioEnabled', function (err, isAudioEnabled) {

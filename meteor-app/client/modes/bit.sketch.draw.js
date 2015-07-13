@@ -3,9 +3,6 @@ Parallels.AppModes['sketch-bit'] = {
   enter: function () {
     console.log("mode:sketch-bit:enter");
 
-    Parallels.Keys.disableAll();
-    Parallels.Keys.bindImageBitPreview(); // to prevent browser from scrolling
-
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'sketch-bit');
 

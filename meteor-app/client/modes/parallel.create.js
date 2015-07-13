@@ -49,7 +49,6 @@ Parallels.AppModes['create-parallel'] = {
     var originBitCenterY  = originBitData.position.y + ($originBit[0].clientHeight / 2)
 
     Parallels.Keys.disableAll();
-    Parallels.Keys.bindEsc();
 
     // re-binding Shift, so if person hits it again,
     // we know they are have chosen a destination bit

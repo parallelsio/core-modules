@@ -27,7 +27,6 @@ Parallels.AppModes['preview-bit'] = {
       console.log("bit:image:preview: " + bitPreviewingId);
 
       Parallels.Keys.disableAll();
-      Parallels.Keys.bindEsc();
 
       var options = {
         bitData: bitData,

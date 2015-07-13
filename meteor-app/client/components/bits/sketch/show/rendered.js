@@ -117,20 +117,7 @@ Template.sketchBit.onRendered(function (){
 
     // save to Mongo
 
-    // Meteor.call('changeState', {
-    //   command: 'createBit',
-    //   data: {
-    //     canvasId: createTextBit.canvasId,
-    //     type: 'sketch',
 
-    //     content: bitData,
-    //     color: createTextBit.color,
-    //     position: {
-    //       x: $(template.firstNode).position().left,
-    //       y: $(template.firstNode).position().top
-    //     }
-    //   }
-    // });
 
   
   });

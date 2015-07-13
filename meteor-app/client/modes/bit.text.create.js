@@ -4,7 +4,6 @@ Parallels.AppModes['create-bit'] = {
     console.log("mode:create-bit:enter");
 
     Parallels.Keys.disableAll();
-    Parallels.Keys.bindEsc();
 
     var center = Utilities.getViewportCenter();
     Session.set('currentMode', 'create-bit');
