@@ -30,7 +30,7 @@ Utilities = {
   // In situations where the element is display:none, we can use the transform 
   // property, if it's set, to get the position 
   getTransformedPosition: function(element){
-    var cssTransform = element.style["transform"];
+    var cssTransform = element.style["transform"] || element.style["webkitTransform"];
     var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;
 
     // slice + dice the string with a regexp to remove everything except
