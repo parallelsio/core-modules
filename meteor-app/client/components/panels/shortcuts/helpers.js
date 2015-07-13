@@ -1,13 +1,7 @@
-Template.shortcutsPanel.helpers({
-   
-  currentModeLabel: function () {
-    if (Session.get('currentMode')){
-      return 'in ' + Session.get('currentMode') + ' mode';
-    }
-  },
+Template.shortcuts.helpers({
   
-  progress: function () {
-    return Session.get('uploadProgress');
+  currentModeShortcutTemplate: function () {
+    return 'mode-shortcuts-' + ( Session.get('currentMode') || 'home' );
   }
 
 });

@@ -32,13 +32,7 @@ $ui-header-height: 0.4em;
     cursor: crosshair;
   }
 
-  &.parallel {
-    background: #f0f0fa !important;
-    font-family: 'Merriweather Sans', sans-serif;
-    font-weight: 800;
-    font-size: 0.75em;
-    text-transform: uppercase;
-  }
+
 
   // ************ states ***********
   &.hovering .ui-widget-header {
