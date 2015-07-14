@@ -12,31 +12,36 @@
 // extract as a general function
 function _toggleShortcutsPanel(direction){
 
-  var left = 0;
+  var left;
   var bindings;
+  var easeType;
 
   if (direction === "open"){
+    console.log("_toggleShortcutsPanel: open");
+
     left = 0;
     bindings = _bindShortcutEvents;
     Session.set('isShortcutsDisplayed', true);
-    console.log("_toggleShortcutsPanel: open");
+    easeType = Expo.easeIn;
   }
 
   else if (direction === "close"){
-    left = "-15ems";
+    console.log("_toggleShortcutsPanel: close");
+
+    left = "-15em";
     bindings = _unbindShortcutEvents;
     Session.set('isShortcutsDisplayed', false);
-    console.log("_toggleShortcutsPanel: close");
+    easeType = Expo.easeOut;
   }
 
   var timeline = new TimelineMax();
   timeline
     .to(
       $(".shortcuts")[0],   // what to tween
-      0.2,                  // speed
+      0.1,                  // speed
       {
         left: left,
-        ease: Elastic.easeIn
+        ease: easeType
       })
     .add( bindings )
     .play();

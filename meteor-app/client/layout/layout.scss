@@ -38,6 +38,15 @@ a           { color: #8B8BF5; }
 } 
 
 
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .field { 
   padding: 0;
   border: 0;

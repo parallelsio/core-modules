@@ -10,10 +10,11 @@ Template.navPanel.rendered = function() {
       timelineSequence
         .add(timelineMenu())
         .call(
-        Parallels.Animation.General.shimmer,
-        [
-          { $elements: $(".map .bit") }
-        ])
+              Parallels.Animation.General.shimmer,
+              [
+                { $elements: $(".map .bit") }
+              ],
+              "-=0.5")
         .play();
 
       // TODO: extract into Animation class
