@@ -19,15 +19,14 @@ function _toggleShortcutsPanel(direction){
     left = 0;
     bindings = _bindShortcutEvents;
     Session.set('isShortcutsDisplayed', true);
+    console.log("_toggleShortcutsPanel: open");
   }
 
   else if (direction === "close"){
     left = "-15ems";
-    bindings = function unBindHovers(){
-      console.log("TODO: unbind shortcut hovers");
-      return "";
-    };
+    bindings = _unbindShortcutEvents;
     Session.set('isShortcutsDisplayed', false);
+    console.log("_toggleShortcutsPanel: close");
   }
 
   var timeline = new TimelineMax();
@@ -37,9 +36,9 @@ function _toggleShortcutsPanel(direction){
       0.2,                  // speed
       {
         left: left,
-        ease: Power4.easeIn
+        ease: Elastic.easeIn
       })
-    .add( bindings() )
+    .add( bindings )
     .play();
 }
 
@@ -52,16 +51,17 @@ function _bindShortcutEvents(){
     var $minibit  = $shortcut.find('.shortcut__bit');
     var $key      = $shortcut.find('.shortcut__key');
     var $flyout   = $shortcut.find('.shortcut__flyout');
+    var isSequenceKeyCommand = $key.hasClass('shortcut__key--sequence') ? true : false;
 
     var timeline = new TimelineMax({
-      paused: true
-    });
+        paused: true
+      });
 
-    if ($key.hasClass('shortcut__key--sequence')){
+    if (isSequenceKeyCommand){
       timeline
-        .to($cursor, 1, { left: "1.5em", top: "1.5em",  ease: Power4.easeIn, y: 0, opacity: 1 })
+        .to($cursor, 0.3, { left: "2em", top: "1.5em",  ease: Power2.easeIn, y: 0, opacity: 1 })
         .to($minibit, 0, { borderTop: "0.3em solid #8B8BF5" }, "-=0.2" )
-        // TODO: play sound that matches the shortcut key
+        .call( Parallels.Audio.player.play, [ 'fx-ting3' ], "-=0.3")
         .to($key, 0, { left: "3px", top: "3px" }, "+=0.3")
         .to($key, 0, { left: 0, top: 0 }, "+=0.75")
     }
@@ -81,25 +81,45 @@ function _bindShortcutEvents(){
     $shortcut.on("mouseleave",
       {
         hoverTimeline: timeline,
+        isSequenceKeyCommand: isSequenceKeyCommand,
         $flyout: $flyout[0],
         $minibit: $minibit[0],
-        $cursor: $cursor[0]
+        $cursor: $cursor[0],
+        $key: $key[0]
       },
 
       function(event){
 
-        // hide panel and reset hover animations for this shortcut key
         event.data.$flyout.style.display = "none";
-        event.data.$minibit.style.border = 0;
-        event.data.$cursor.style.left = "3em";
-        event.data.$cursor.style.top = "3em";
-        event.data.$cursor.style.opacity = 0;
-        event.data.hoverTimeline.pause();
+
+        if (event.data.isSequenceKeyCommand) {
+          event.data.$minibit.style.border = 0;
+          event.data.$cursor.style.left = "3em";
+          event.data.$cursor.style.top = "3em";
+          event.data.$cursor.style.opacity = 0;
+          event.data.$key.style.left = 0;
+          event.data.$key.style.top = 0;
+
+          event.data.hoverTimeline.pause();
+          event.data.hoverTimeline.seek(0);
+        }
       }
     );
   });
 }
 
+function _unbindShortcutEvents(){
+
+  // TODO: GC all the instances of timeline for each shortcut
+  // that were bound
+  $('.shortcut').each(function(){
+    var $shortcut = $(this);
+    $shortcut.off( "mouseenter");
+    $shortcut.off( "mouseleave");
+  });
+
+  return "";
+};
 
 
 
@@ -176,7 +196,7 @@ Parallels.Keys = {
 
       if(Session.equals('isShortcutsDisplayed', false)){
         _toggleShortcutsPanel("open");
-        _bindShortcutEvents();
+        // _bindShortcutEvents();
       }
 
       else if (Session.equals('isShortcutsDisplayed', true)){

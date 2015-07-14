@@ -52,8 +52,7 @@ Parallels.AppModes['preview-bit'] = {
     var bitTemplate = Utilities.getBitTemplate(bitPreviewingId);
     var bitData = Blaze.getData(bitTemplate);
 
-    if (bitPreviewingId)
-    {
+    if (bitPreviewingId) {
       // TODO: pass the assignment/resetting of these
       // into Animation.scale,
       // which will then reset it once the animation complete callback is triggered

@@ -1,11 +1,33 @@
-.mc_embed_signup{
+#mc_embed_signup{
   display: inline-block;
   float: right;
-  margin: 0.5em 0 0 0;
 
-  input { display: inline-block;  }
+  .field { 
+    height: 2.25em;
+    padding: 0 0.5em;
+    margin: 0;
+  }
 
-  .button { background: #3C9FFF; }
-} 
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #B8B8B8;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    #B8B8B8;
+     opacity:  1;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color:    #B8B8B8;
+     opacity:  1;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+     color:    #B8B8B8;
+  }
 
+
+  .button { 
+    height: 2.25em;
+    padding: 0 1.5em;
+    margin: 0 0.5em 0 0;
+  }
+}
 

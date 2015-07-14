@@ -8,7 +8,6 @@
 
           - Use a local collection to cache strokes to minimize
             delays/writes to db?
-
 */
 
 

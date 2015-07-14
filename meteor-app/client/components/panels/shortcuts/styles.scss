@@ -45,8 +45,8 @@ $shortcut-height: 3em;
 .shortcut__flyout{
   position: absolute;
   display:none;
-  width:50vw;
-  height:80vh;
+  width:40vw;
+  height:40vh;
   background: white;
   left: $shortcuts-width;
   top: -$shortcut-height;
