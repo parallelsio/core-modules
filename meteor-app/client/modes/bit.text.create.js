@@ -43,7 +43,6 @@ Parallels.AppModes['create-bit'] = {
 
     Session.set('currentMode', null);
     Session.set('createTextBit', null);
-
   },
 
   exit: function () {

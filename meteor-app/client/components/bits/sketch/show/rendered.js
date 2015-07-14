@@ -110,17 +110,13 @@ Template.sketchBit.onRendered(function (){
     console.log("bit:sketch:curStroke: ", template.plomaInstance.curStroke());
   });
 
-  Mousetrap.bind('s', function (){
-    console.log("pressed 's' key");
+  // Mousetrap.bind('s', function (){
+  //   console.log("pressed 's' key");
 
-    var bitData = template.plomaInstance.getStrokes();
+  //   var bitData = template.plomaInstance.getStrokes();
 
-    // save to Mongo
-
-
-
-  
-  });
+  //   // save to Mongo
+  // });
 
   Mousetrap.bind('mod+z', function (){
     console.log("pressed 'command/ctrl + z'");
