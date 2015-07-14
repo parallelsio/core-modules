@@ -2,8 +2,16 @@ Meteor.startup(function(){
 
   console.log("Meteor.startup begin.");
 
-  Parallels.Keys.bindAll();
+  // we enable the core *actions, ie
+  // bit operations: Examples: bit:create, bit:delete, etc.
+  // These get bound and unbound based on where person is,
+  // what context they are 
+  Parallels.Keys.bindActions();
+
+  // the core system navigation shortcuts,
+  // that should persist regardless of context
   Parallels.Keys.bindEsc();
+  Parallels.Keys.bindShortcuts();
 
   // TODO: extract out into Utility? or Config?
   // get settings

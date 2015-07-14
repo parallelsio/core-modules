@@ -48,7 +48,7 @@ Parallels.AppModes['create-parallel'] = {
     var originBitCenterX  = originBitData.position.x + ($originBit[0].clientWidth / 2)
     var originBitCenterY  = originBitData.position.y + ($originBit[0].clientHeight / 2)
 
-    Parallels.Keys.disableAll();
+    Parallels.Keys.unbindActions();
 
     // re-binding Shift, so if person hits it again,
     // we know they are have chosen a destination bit
@@ -285,7 +285,7 @@ Parallels.AppModes['create-parallel'] = {
       $("body").css( "position", "static");
 
       // put key commands back to normal
-      Parallels.Keys.bindAll();
+      Parallels.Keys.bindActions();
     }
   }
 };

@@ -25,6 +25,7 @@ function _toggleShortcutsPanel(direction){
     left = "-15ems";
     bindings = function unBindHovers(){
       console.log("TODO: unbind shortcut hovers");
+      return "";
     };
     Session.set('isShortcutsDisplayed', false);
   }
@@ -104,10 +105,10 @@ function _bindShortcutEvents(){
 
 Parallels.Keys = {
 
-  bindAll: function(){
+  bindActions: function(){
 
     // TODO: add 'except' param, convery this list into a map
-    console.log("keyCommand:bindAll");
+    console.log("keyCommand:bindActions");
 
     this.bindDeleteBit();
     this.bindCreateSketchBit();
@@ -118,12 +119,10 @@ Parallels.Keys = {
     this.bindHistory();
     this.bindUndo();
     this.bindRedo();
-    this.bindShortcuts();
-    // this.bindEsc();
   },
 
-  disableAll: function(){
-    console.log("keyCommand:disableAll");
+  unbindActions: function(){
+    console.log("keyCommand:disableActions");
 
     // delete bit
     Mousetrap.unbind('d');
@@ -139,9 +138,6 @@ Parallels.Keys = {
 
     // create-parallel
     Mousetrap.unbind('shift');
-
-    // cancel/close
-    // Mousetrap.unbind('esc');
 
     // history dialog, for undo/redo
     Mousetrap.unbind('h');

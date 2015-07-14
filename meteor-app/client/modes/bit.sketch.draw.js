@@ -29,7 +29,7 @@ Parallels.AppModes['sketch-bit'] = {
   exit: function () {
     console.log("mode:sketch-bit:exit");
 
-    Parallels.Keys.bindAll();
+    Parallels.Keys.bindActions();
 
     Session.set('currentMode', null);
     Session.set('sketchBit', null);

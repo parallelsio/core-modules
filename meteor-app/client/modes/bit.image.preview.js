@@ -26,7 +26,7 @@ Parallels.AppModes['preview-bit'] = {
 
       console.log("bit:image:preview: " + bitPreviewingId);
 
-      Parallels.Keys.disableAll();
+      Parallels.Keys.unbindActions();
 
       var options = {
         bitData: bitData,
@@ -71,7 +71,7 @@ Parallels.AppModes['preview-bit'] = {
 
       Parallels.Animation.Image.morph(options);
 
-      Parallels.Keys.bindAll();
+      Parallels.Keys.bindActions();
     }
 
     else {
