@@ -245,7 +245,7 @@ Parallels.Animation.Image = {
     -----------------------------------------------------------
 
     TODO:
-      *
+      * make start + stop function, to ensure GC + good cleanup happens on objects used here
     -----------------------------------------------------------
   */
 

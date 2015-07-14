@@ -83,12 +83,7 @@ Parallels.AppModes['create-parallel'] = {
         $('.create-parallel--line').remove();
         $originBit.removeClass('create-parallel--origin');
 
-        /*
-        Parallels.Animation.General.cornerSparks({
-          $element: $destBit,
-          prependTo: ".map"
-        });
-        */
+
 
         // TODO: prep images for slicing
         // query Neo4j for image bits that are connected, by X number of hops

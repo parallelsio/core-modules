@@ -22,7 +22,6 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'vendor/flocking/flocking-no-jquery.min.js',
-    'vendor/particle.emitter.js/particle.emitter.js',
     'vendor/two/two.min.js',
     'vendor/verge/verge.js',
     'log.js',

@@ -41,7 +41,17 @@ Template.map.onRendered(function (){
         onCompleteParams:[ node ]
       });
 
-      timelineRemove.to(node, 0.10, { opacity: 0, ease:Expo.easeIn, display: 'none' });
+      timelineRemove
+        // .call(
+        //     Parallels.Animation.General.cornerSparks,
+        //     [
+        //       {
+        //         $element: $(node),
+        //         prependTo: ".map"
+        //       }
+        //     ]
+        // )
+        .to(node, 0.10, { opacity: 0, ease:Expo.easeIn, display: 'none' });
     }
   };
 
