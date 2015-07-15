@@ -294,12 +294,14 @@ Parallels.Keys = {
           canvasId: '1',
           type: 'sketch',
           content: [],
-          color: 'color',
+          color: 'blue',
           position: {
             x: 50,
             y: 80
           }
         }
+      }, function (err, bit) {
+        Session.set('bitEditingId', bit._id);
       });
     });
   },
@@ -307,8 +309,19 @@ Parallels.Keys = {
   bindCreateTextBit: function () {
     console.log("keyCommand:bindCreateTextBit");
 
-    Mousetrap.bind('t', function (event) {
-      Parallels.AppModes['create-bit'].enter(event);
+    Mousetrap.bind('t', function () {
+      Meteor.call('changeState', {
+        command: 'createBit',
+        data: {
+          canvasId: '1',
+          type: 'text',
+          content: '',
+          color: 'white',
+          position: pointerPosition
+        }
+      }, function (err, bit) {
+        Session.set('bitEditingId', bit._id);
+      });
     });
   },
 

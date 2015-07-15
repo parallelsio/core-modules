@@ -4,10 +4,6 @@ Template.bit.helpers({
     return Session.equals('bitEditingId', this._id);
   },
 
-  isSketchBit: function() {
-    return this.type === "sketch";
-  },
-
   isTextBit: function() {
     return this.type === "text";
   },

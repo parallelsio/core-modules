@@ -21,12 +21,13 @@ function SketchBit($node, bit) {
   self.canvas = self.$node.find('.sketch-bit')[0];
   self.ploma = new Ploma(self.canvas);
   self.ploma.setStrokes(self.content);
-  self.isDrawing = false;
+  self.drawingEnabled = false;
 }
 
 SketchBit.prototype.enableDrawing = function () {
   var self = this;
   var isStroke = false;
+  self.drawingEnabled = true;
   self.$node.style.cursor = 'crosshair';
 
   // begin a stroke at the mouse down point
@@ -53,6 +54,12 @@ SketchBit.prototype.enableDrawing = function () {
     var point = self.getEventPoint(event);
     ploma.endStroke(point.x, point.y, point.p);
   };
+};
+
+SketchBit.prototype.disableDrawing = function () {
+  var self = this;
+  self.canvas.onmousedown = self.canvas.onmousemove = self.canvas.onmouseup = null;
+  self.drawingEnabled = false;
 };
 
 SketchBit.prototype.getEventPoint = function (event) {
@@ -92,10 +99,13 @@ Template.sketchBit.onRendered(function () {
   var timeline = new TimelineMax();
   timeline.to(template.firstNode, 0, {x: sketchBit.position.x, y: sketchBit.position.y});
 
-  // If the user is currently focused on this bit, open the canvas up for drawing
-  if (sketchBit.isFocused()) {
-    sketchBit.enableDrawing();
-  }
+  Tracker.autorun(function () {
+    if (sketchBit.isFocused() && !sketchBit.drawingEnabled) {
+      sketchBit.enableDrawing();
+    } else {
+      sketchBit.disableDrawing();
+    }
+  });
 
   Draggable.create(template.firstNode, {
 

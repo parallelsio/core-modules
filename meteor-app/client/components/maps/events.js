@@ -37,6 +37,13 @@ var uploader;
 
 Parallels.Handlers.register('map.events', {
 
+  'mousemove .map': function (event) {
+    pointerPosition =  {
+      x: event.pageX,
+      y: event.pageY
+    };
+  },
+
   'dropped .map': function(e) {
     var event = (e.originalEvent || e);
 
