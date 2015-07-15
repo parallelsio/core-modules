@@ -1,0 +1,47 @@
+.parallels-lightbox {
+  position: absolute;
+  background-color: white;
+  height: 5000px; // make as document.height instead of hardcoding
+  width: 100vw;
+  top: 0;
+  overflow: hidden;
+  z-index: 10000000; // should be higher than the nav panel
+    padding: 3em 15em;
+
+
+  h1 {
+    font-weight: 600;
+    margin: 2em 0 0.5em 0;
+    border-bottom: #39c solid 1px;
+    padding: 0 2em 0.1em 0;
+    display: inline-block;
+  }
+
+  p { line-height: 1.3em; margin: 0 0 0.5em 0}
+
+  hr { display:none;}
+
+  .caps { 
+    text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8em;
+  font-weight: bolder;
+  color: rgb(89, 89, 89);
+  margin: 0 0.4em;
+  }
+
+  ul { 
+    margin: 0 0 0 2em;
+  }
+  
+  ul li { 
+    line-height: 1.3em;
+    margin: 0.3em 0;
+    list-style-type: circle;
+  }
+}
+
+
+
+
+

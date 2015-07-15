@@ -90,6 +90,55 @@ Parallels.Animation.General = {
     return timeline;
   },
 
+  morphLightbox: function(options){
+
+  /*
+    PURPOSE:
+      Display a full screen view, morphed from an element.
+      Use Greensock for animation choreography, vs CSS.
+
+      Inspired by http://tympanus.net/Development/MorphingSearch
+    -----------------------------------------------------------
+
+    OPTIONS/PARAMS:
+
+      $element:   // jQuery object to the element to morph from
+    -----------------------------------------------------------
+
+    TODO:
+    -----------------------------------------------------------
+  */
+    
+    var duration = 0.2;
+    var delay = 0;
+
+    var $viewElement;
+
+    var timeline = new TimelineMax({
+      // paused: false || options.paused
+    });
+
+    timeline.to(
+      options.$element,
+      duration,
+      {
+        // to
+        scale: 1,
+        opacity: 1,
+        ease: Expo.easeIn,
+        display: 'block',
+
+        onComplete: function() {
+          Parallels.Audio.player.play('fx-ting3');
+        }
+      },
+      delay
+    );
+
+    return timeline;
+
+  },
+
   cornerSparks: function(options){
 
   /*
