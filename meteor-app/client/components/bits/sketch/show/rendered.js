@@ -16,7 +16,7 @@ var unbindPlomaHandlers = function () {
   canvas.onmousedown = canvas.onmousemove = canvas.onmouseup = null;
 };
 
-var getEventPoint = function (event, template, plugin) {
+var getEventPoint = function (event, template) {
 
   var point = {};
 
@@ -43,7 +43,7 @@ function beginEditing(template) {
   // begin a stroke at the mouse down point
   canvas.onmousedown = function (event) {
     isDrawing = true;
-    var point = getEventPoint(event, template, plugin);
+    var point = getEventPoint(event, template);
     ploma.beginStroke(point.x, point.y, point.p);
     // Parallels.Audio.player.play('fx-cinq-drop');
 
@@ -54,14 +54,14 @@ function beginEditing(template) {
   // extend the stroke at the mouse move point
   canvas.onmousemove = function (event) {
     if (!isDrawing) return;
-    var point = getEventPoint(event, template, plugin);
+    var point = getEventPoint(event, template);
     ploma.extendStroke(point.x, point.y, point.p);
   };
 
   // end the stroke at the mouse up point
   canvas.onmouseup = function (event) {
     isDrawing = false;
-    var point = getEventPoint(event, template, plugin);
+    var point = getEventPoint(event, template);
     ploma.endStroke(point.x, point.y, point.p);
   };
 
@@ -87,9 +87,6 @@ Template.sketchBit.onRendered(function () {
     beginEditing(template);
   }
 
-  // save a reference to the plomaCanvas to the template instance
-  // as a property, so we can later access it and pull it down ,
-  // stop the handlers, when no longer in use
   ploma.setStrokes(bit.content);
 
   Draggable.create(template.firstNode, {
@@ -127,16 +124,6 @@ Template.sketchBit.onRendered(function () {
       return true;
     }
   });
-
-  // TODO: into a 'sketch-mode'
-  // Parallels.AppModes['bit-sketch'].enter();
-
-
-  // draw the canvas from data, if available
-
-  // bind sketch key handlers
-
-  // Parallels.AppModes['bit-sketch'].enter()
 
   // for debugging - print the ploma instance arrays
   Mousetrap.bind('a', function () {
@@ -212,4 +199,20 @@ Template.sketchBit.onRendered(function () {
     }
 
   });
+});
+
+Template.sketchBit.onDestroyed(function(){
+  unbindPlomaHandlers();
+  ploma = plugin = isDrawing = canvas = null;
+
+  console.log("bit:sketch:destroy");
+
+  Session.set('bitHoveringId', null);
+
+  Parallels.Keys.bindUndo();
+  Mousetrap.unbind('a');
+  Mousetrap.unbind('mod+z');
+  Mousetrap.unbind('c');
+  Mousetrap.unbind('up');
+  Mousetrap.unbind('down');
 });
