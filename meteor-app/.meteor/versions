@@ -3,6 +3,7 @@ aldeed:simple-schema@1.1.0
 aldeed:template-extension@3.4.3
 angelcabo:infinite-undo@0.0.1
 angelcabo:meteor-gsap@1.16.0
+angelcabo:mousetrap@1.0.0
 autoupdate@1.2.1
 awatson1978:mousetrap@1.0.2
 babrahams:editable-json@0.4.3
