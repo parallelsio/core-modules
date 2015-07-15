@@ -73,18 +73,23 @@ var getEventPoint = function(event, template, plugin){
   // tablet reports a range of 0 to 1
   point.p = plugin.penAPI && plugin.penAPI.pressure ? plugin.penAPI.pressure : 0.6;
   return point;
-}
+};
 
 Template.sketchBit.onRendered(function (){
   console.log("bit:sketch:render");
 
   var template = this;
+  var bit = this.data;
   var canvas = $(template.firstNode).find(".sketch-bit")[0];
+
+  var timeline = new TimelineMax();
+  timeline.to(template.firstNode, 0, { x: bit.position.x, y: bit.position.y });
 
   // save a reference to the plomaCanvas to the template instance
   // as a property, so we can later access it and pull it down ,
   // stop the handlers, when no longer in use
   template.plomaInstance = createPlomaCanvas(template, canvas);
+  template.plomaInstance.setStrokes(bit.content);
 
    // TODO : reuse same drag init as bit.rendered (with effects, etc)
   // Draggable.create(this.firstNode, {

@@ -12,8 +12,12 @@
   
   <div class="map" >
 
-    {{ #each allTypesBits }}
-      {{> bit }}
+    {{#each bit}}
+
+      {{#if isSketch}}
+        {{> sketchBit}}
+      {{/if}}
+
     {{/each }}
 
     {{#if isCreatingTextBit}}
