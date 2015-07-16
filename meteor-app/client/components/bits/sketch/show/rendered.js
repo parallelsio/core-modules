@@ -24,10 +24,16 @@ Template.sketchBit.onRendered(function () {
   }
 
   var sketchBit = new SketchBit($(template.firstNode), this.data, npApiPlugin);
+  var timeline;
 
-  // Move the bit into position
-  var timeline = new TimelineMax();
-  timeline.to(template.firstNode, 0, {x: sketchBit.position.x, y: sketchBit.position.y});
+  // Move the bit into position and track it's coordinates from mongo
+  Tracker.autorun(function() {
+    var bit = Bits.findOne(sketchBit._id);
+    if (bit) {
+      timeline = new TimelineMax();
+      timeline.to(template.firstNode, 0, { x: bit.position.x, y: bit.position.y });
+    }
+  });
 
   // TODO: set up a draggable initializer, for reuse across bits
   var draggable = Draggable.create(template.firstNode, {
@@ -144,6 +150,12 @@ Template.sketchBit.onRendered(function () {
 
   mousetrap.bind('enter', sketchBit.save.bind(sketchBit));
 
-  mousetrap.bind('esc', sketchBit.save.bind(sketchBit));
+  mousetrap.bind('esc', function (event) {
+    if (sketchBit.isFocused()) {
+      sketchBit.ploma.setStrokes(sketchBit.content);
+      event.stopPropagation();
+      Session.set('bitEditingId', null);
+    }
+  });
 });
 

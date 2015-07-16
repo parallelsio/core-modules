@@ -44,5 +44,9 @@ Template.bit.events({
 
       Session.set('bitEditingId', null);
     }
+
+    if (event.which === 27) {
+      Session.set('bitEditingId', null);
+    }
   }
 });
