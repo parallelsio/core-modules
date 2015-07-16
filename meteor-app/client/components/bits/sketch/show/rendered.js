@@ -149,6 +149,23 @@ Template.sketchBit.onRendered(function () {
     }
   });
 
+  var saveSketch = function () {
+    if (sketchBit.content != sketchBit.ploma.getStrokes()) {
+      Meteor.call('changeState', {
+        command: 'updateBitContent',
+        data: {
+          canvasId: '1',
+          _id: sketchBit._id,
+          content: sketchBit.ploma.getStrokes()
+        }
+      });
+    }
+
+    Parallels.Audio.player.play('fx-cha-ching');
+
+    Session.set('bitEditingId', null);
+  };
+
   var mousetrap = new Mousetrap(template.firstNode);
 
   mousetrap.bind('c', function () {
@@ -156,8 +173,11 @@ Template.sketchBit.onRendered(function () {
   });
 
   mousetrap.bind('e', function () {
-    //Session.set
+    Session.set('bitEditingId', sketchBit._id);
   });
+
+  mousetrap.bind('enter', saveSketch);
+  mousetrap.bind('esc', saveSketch);
 });
 
 Template.sketchBit.onDestroyed(function () {
