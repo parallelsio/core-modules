@@ -6,7 +6,7 @@ BitEvents = {
     // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
     var $bit = $(template.firstNode);
     $bit.addClass('hovering');
-    $bit.focus();
+    $bit.focusWithoutScrolling();
   },
 
   hoverOutBit: function (event, template){

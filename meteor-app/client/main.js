@@ -32,4 +32,11 @@ Meteor.startup(function () {
   };
 
   Session.set('bitEditingId', null);
+
+  $.fn.focusWithoutScrolling = function(){
+    var x = verge.scrollX(), y = verge.scrollY();
+    this.focus();
+    window.scrollTo(x, y);
+    return this;
+  };
 });
