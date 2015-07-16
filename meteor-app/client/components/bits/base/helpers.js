@@ -8,6 +8,11 @@ Template.bit.helpers({
     return this.type === "text";
   },
 
+  contentOrPlaceholder: function () {
+    var hasContent = this.content && this.content.length > 0;
+    return hasContent ? this.content : '[enter text]';
+  },
+
   imageSrc: function () {
     return this.imageDataUrl || this.imageSource;
   },
