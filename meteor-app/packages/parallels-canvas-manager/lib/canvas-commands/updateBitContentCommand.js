@@ -12,9 +12,11 @@ Meteor.startup(function () {
       payload.original = {
         _id: bit._id,
         canvasId: bit.canvasId,
-        content: bit.content
+        content: bit.content,
+        opacity: payload.opacity
       };
       bit.content = payload.content;
+      bit.opacity = payload.opacity;
 
       onComplete(null, {payload: payload, result: bit});
     }

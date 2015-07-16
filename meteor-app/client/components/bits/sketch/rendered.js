@@ -12,7 +12,9 @@
  */
 
 // NAPAPI is necessary for interfacing with the Wacom tablet
-var npApiPlugin;// We can re-use the same npApiPlugin instance for all sketch bits (which is why it's a "global").
+// We can re-use the same npApiPlugin instance for all sketch bits 
+// (which is why it's a "global").
+var npApiPlugin;
 
 Template.sketchBit.onRendered(function () {
   var template = this;

@@ -273,6 +273,7 @@ Parallels.Keys = {
           canvasId: '1',
           type: 'sketch',
           content: [],
+          opacity: 1,
           color: 'blue',
           position: {
             x: 50,

@@ -1,9 +1,9 @@
 Template.bit.onRendered(function (){
 
   var template = this;
-  var bitDataContext = template.data;
-  var bitDatabaseId = bitDataContext._id;
-  var bitElement = Utilities.getBitElement(bitDatabaseId);
+  var bit = template.data;
+  var bitDatabaseId = bit._id;
+  var $bitElement = $(template.firstNode);
   console.log("bit:render: ", bitDatabaseId);
 
   // When a Bit position is updated during a concurrent session (by someone else)
@@ -12,13 +12,13 @@ Template.bit.onRendered(function (){
     var bit = Bits.findOne(bitDatabaseId);
     if (bit) {
       var timeline = new TimelineMax();
-      timeline.to(bitElement, 0, { x: bit.position.x, y: bit.position.y });
+      timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
     }
   });
 
   // Track upload status for new Bits
   Tracker.autorun(function (computation) {
-    var bitUpload = Parallels.FileUploads[bitElement.data('upload-key')];
+    var bitUpload = Parallels.FileUploads[$bitElement.data('upload-key')];
     if (!bitUpload) {
       computation.stop();
       return;
@@ -28,7 +28,7 @@ Template.bit.onRendered(function (){
       /*
         AB: OQ: would show a friendly error message but the next line we remove the bit
         so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
-        bitElement.find('.content')[0].classList.add('complete', 'error');
+        $bitElement.find('.content')[0].classList.add('complete', 'error');
       */
       computation.stop();
       Meteor.call('changeState', {
@@ -42,7 +42,7 @@ Template.bit.onRendered(function (){
     }
 
     if (bitUpload.status() === 'done') {
-      bitElement.find('.upload-status')[0].classList.add('complete', 'success');
+      $bitElement.find('.upload-status').addClass('complete success')
       Meteor.call('changeState', {
         command: 'uploadImage',
         data: {
@@ -57,8 +57,8 @@ Template.bit.onRendered(function (){
   });
 
   // Set a default image so we don't see a broken image in case the file can't be loaded
-  bitElement.find(".bit-image").error(function(){
-    $(this).attr('src', 'http://placehold.it/850x650&text=' + bitDataContext.filename);
+  $bitElement.find(".bit-image").error(function(){
+    $(this).attr('src', 'http://placehold.it/850x650&text=' + bit.filename);
   });
 
   var bitDragAudioInstance = "";
@@ -73,7 +73,7 @@ Template.bit.onRendered(function (){
       onCompleteParams:[ bitDatabaseId  ]
     });
 
-    timeline.to(bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
+    timeline.to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
   };
 
   // // Needs to happen after position set, or else positions
@@ -115,7 +115,7 @@ Template.bit.onRendered(function (){
 
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
-      timeline.to(bitElement, 0.20, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });
+      timeline.to($bitElement, 0.20, { scale: 1.05, boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", ease: Expo.easeOut });
     },
 
     onRelease: function(event){
@@ -169,7 +169,7 @@ Template.bit.onRendered(function (){
         onCompleteParams:[ bitDatabaseId  ]
       });
 
-      timeline.to(bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
+      timeline.to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
 
       resetBitSize("bit:drag:onDragEnd, animation end");
 

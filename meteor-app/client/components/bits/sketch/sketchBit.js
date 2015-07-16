@@ -1,21 +1,20 @@
 
-SketchBit = function SketchBit($node, bit, npApiPlugin) {
+SketchBit = function SketchBit($bit, bit, npApiPlugin) {
   var self = this;
   _.extend(self, bit);
-  self.$node = $node;
+  self.$bit = $bit;
   self.npApiPlugin = npApiPlugin;
-  self.canvas = self.$node.find('.sketch-bit')[0];
+  self.canvas = self.$bit.find('canvas')[0];
   self.ploma = new Ploma(self.canvas);
   self.ploma.setStrokes(self.content);
   self.drawingEnabled = false;
-  self.opacity = self.opacity;
 };
 
 SketchBit.prototype.enableDrawing = function () {
   var self = this;
   var isStroke = false;
   self.drawingEnabled = true;
-  self.$node.css('cursor', 'crosshair');
+  self.$bit.css('cursor', 'crosshair');
 
   // begin a stroke at the mouse down point
   self.canvas.onmousedown = function (event) {
@@ -57,8 +56,8 @@ SketchBit.prototype.getEventPoint = function (event) {
   // 1) where the bit sits, offset from 0,0 via the template instance
   // 2) if person is scrolled away from default viewport, via the Window object
   // use verge lib for cross-browser compatibility
-  point.x = (verge.scrollX() + event.clientX) - self.$node.position().left;
-  point.y = (verge.scrollY() + event.clientY) - self.$node.position().top;
+  point.x = (verge.scrollX() + event.clientX) - self.$bit.position().left;
+  point.y = (verge.scrollY() + event.clientY) - self.$bit.position().top;
 
   // fail gracefully if no pressure is detected (no tablet found)
   // tablet reports a range of 0 to 1
