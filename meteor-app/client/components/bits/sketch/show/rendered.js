@@ -23,12 +23,13 @@ Template.sketchBit.onRendered(function () {
 
   var template = this;
   var sketchBit = new SketchBit($(template.firstNode), this.data, npApiPlugin);
+  var timeline;
 
   // Move the bit into position and track it's coordinates from mongo
   Tracker.autorun(function() {
     var bit = Bits.findOne(sketchBit._id);
     if (bit) {
-      var timeline = new TimelineMax();
+      timeline = new TimelineMax();
       timeline.to(template.firstNode, 0, { x: bit.position.x, y: bit.position.y });
     }
   });
@@ -144,7 +145,13 @@ Template.sketchBit.onRendered(function () {
 
   mousetrap.bind('enter', sketchBit.save.bind(sketchBit));
 
-  mousetrap.bind('esc', sketchBit.save.bind(sketchBit));
+  mousetrap.bind('esc', function (event) {
+    if (sketchBit.isFocused()) {
+      sketchBit.ploma.setStrokes(sketchBit.content);
+      event.stopPropagation();
+      Session.set('bitEditingId', null);
+    }
+  });
 });
 
 Template.sketchBit.onDestroyed(function () {
