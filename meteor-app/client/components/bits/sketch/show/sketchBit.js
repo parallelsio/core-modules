@@ -8,6 +8,7 @@ SketchBit = function SketchBit($node, bit, npApiPlugin) {
   self.ploma = new Ploma(self.canvas);
   self.ploma.setStrokes(self.content);
   self.drawingEnabled = false;
+  self.opacity = self.opacity;
 };
 
 SketchBit.prototype.enableDrawing = function () {
@@ -80,7 +81,8 @@ SketchBit.prototype.save = function () {
         data: {
           canvasId: '1',
           _id: self._id,
-          content: self.ploma.getStrokes()
+          content: self.ploma.getStrokes(),
+          opacity: self.opacity
         }
       });
     }

@@ -15,19 +15,21 @@
 var npApiPlugin;// We can re-use the same npApiPlugin instance for all sketch bits (which is why it's a "global").
 
 Template.sketchBit.onRendered(function () {
+  var template = this;
+
   console.log("bit:sketch:render");
 
   if (!npApiPlugin) {
     npApiPlugin = document.getElementById('wtPlugin');
   }
 
-  var template = this;
   var sketchBit = new SketchBit($(template.firstNode), this.data, npApiPlugin);
 
   // Move the bit into position
   var timeline = new TimelineMax();
   timeline.to(template.firstNode, 0, {x: sketchBit.position.x, y: sketchBit.position.y});
 
+  // TODO: set up a draggable initializer, for reuse across bits
   var draggable = Draggable.create(template.firstNode, {
 
     throwProps: false,
@@ -114,11 +116,14 @@ Template.sketchBit.onRendered(function () {
     console.log("bit:sketch:opacity = ", opacity);
 
     if (opacity < 1) {
-      template.firstNode.style.opacity = (opacity + 0.10);
+      template.firstNode.style.opacity = opacity + 0.10;
+    } 
+
+    else { Parallels.Audio.player.play('fx-tri'); 
     }
-    else {
-      Parallels.Audio.player.play('fx-tri');
-    }
+
+    sketchBit.opacity = opacity;
+
   });
 
   mousetrap.bind('down', function (event) {
@@ -142,7 +147,3 @@ Template.sketchBit.onRendered(function () {
   mousetrap.bind('esc', sketchBit.save.bind(sketchBit));
 });
 
-Template.sketchBit.onDestroyed(function () {
-  console.log("bit:sketch:destroy");
-  Session.set('bitHoveringId', null);
-});
