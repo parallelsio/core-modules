@@ -2,18 +2,14 @@
 
 Template.map.helpers({
 
-  allTypesBits: function(){
+  bits: function(){
     return Bits.find();
   },
 
-  isCreatingTextBit: function () {
-    return Session.get('createTextBit');
+  isSketch: function () {
+    return this.type === 'sketch';
   },
 
-  isCreatingSketchBit: function () {
-    return Session.get('sketchBit');
-  },
-  
   viewingEventLog: function () {
     return Session.get('viewingEventLog');
   }

@@ -1,44 +1,44 @@
-Template.map.onRendered(function (){
+Template.map.onRendered(function () {
 
   var template = this;
-  var mapContainer = template.find('.map');
+  var mapElement = template.find('.map');
 
   Parallels.Audio.player.play("fx-welcome-v2");
 
-  mapContainer._uihooks = {
+  mapElement._uihooks = {
 
-    insertElement: function(node, next) {
-      var bitDataContext = Blaze.getData(node) || Session.get('createTextBit') || Session.get('sketchBit');
+    insertElement: function (mapElement, next) {
+      var bit = Blaze.getData(mapElement);
 
-      $(node).insertBefore(next);
+      $(mapElement).insertBefore(next);
 
-      function timelineInsertDone (node) {
+      function timelineInsertDone(mapElement) {
         // TODO: only if text bit
-        $(node).find('.editbit').focus();
+        $(mapElement).find('.editbit').focus();
       }
 
       var timelineInsert = new TimelineMax({
         onComplete: timelineInsertDone,
-        onCompleteParams:[ node ]
+        onCompleteParams: [mapElement]
       });
 
       timelineInsert
-        .to(node, 0, { x: bitDataContext.position.x, y: bitDataContext.position.y })
-        .to(node, 0.125, { ease: Bounce.easeIn , display: 'block', opacity: 1, alpha: 1 })
-        .to(node, 0.125, { scale: 0.95, ease: Quint.easeOut } )
-        .to(node, 0.275, { scale: 1, ease: Elastic.easeOut } );
+        .to(mapElement, 0, {x: bit.position.x, y: bit.position.y})
+        .to(mapElement, 0.125, {ease: Bounce.easeIn, display: 'block', opacity: 1, alpha: 1})
+        .to(mapElement, 0.125, {scale: 0.95, ease: Quint.easeOut})
+        .to(mapElement, 0.275, {scale: 1, ease: Elastic.easeOut});
     },
 
-    removeElement: function(node) {
+    removeElement: function (mapElement) {
 
-      function timelineRemoveDone(node){
-        $(node).remove();
+      function timelineRemoveDone(mapElement) {
+        $(mapElement).remove();
         console.log("bit:remove:uihook : timeline animate done. removed bit.");
       }
 
       var timelineRemove = new TimelineMax({
         onComplete: timelineRemoveDone,
-        onCompleteParams:[ node ]
+        onCompleteParams: [mapElement]
       });
 
       timelineRemove
@@ -51,7 +51,7 @@ Template.map.onRendered(function (){
         //       }
         //     ]
         // )
-        .to(node, 0.10, { opacity: 0, ease:Expo.easeIn, display: 'none' });
+        .to(mapElement, 0.10, {opacity: 0, ease: Expo.easeIn, display: 'none'});
     }
   };
 

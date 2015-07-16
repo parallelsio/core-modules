@@ -4,7 +4,8 @@ $ui-header-height: 0.2em;
   display: none; // hide bits by default when map loads: animation functions display them 
   position: absolute;
   -webkit-font-smoothing: antialiased;
-  
+  outline: none;
+
   // ************** base ************    
   .ui-widget-header {
     display: none;
@@ -26,10 +27,6 @@ $ui-header-height: 0.2em;
 
   &.image img {
     width: 200px;
-  }
-
-  &.sketch {
-    cursor: crosshair;
   }
 
 

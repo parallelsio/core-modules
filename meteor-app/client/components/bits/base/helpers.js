@@ -4,12 +4,13 @@ Template.bit.helpers({
     return Session.equals('bitEditingId', this._id);
   },
 
-  isSketchBit: function() {
-    return this.type === "sketch";
-  },
-
   isTextBit: function() {
     return this.type === "text";
+  },
+
+  contentOrPlaceholder: function () {
+    var hasContent = this.content && this.content.length > 0;
+    return hasContent ? this.content : '[enter text]';
   },
 
   imageSrc: function () {

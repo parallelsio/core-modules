@@ -7,10 +7,6 @@
     data-upload-key="{{ uploadKey }}">
     
     <div class="content {{ color }}">
-        {{#if isSketchBit }} 
-          sketch bit
-        {{/if}}
-
         {{#if imageSrc }}
           <img class="bit-image" src="{{ imageSrc }}" alt="{{ filename }}">
         {{/if}}
@@ -26,7 +22,7 @@
             <!-- ensure no white space between these template variables,
                   or they will be incorrectly interpreted by 
                   Markdown -->
-            {{#markdown }}{{ content }}{{/markdown }}
+            {{#markdown }}{{ contentOrPlaceholder }}{{/markdown }}
           {{/if}}
 
 

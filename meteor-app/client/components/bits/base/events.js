@@ -29,7 +29,6 @@ Template.bit.events({
 
     if(event.which === 13){
 
-      // TODO: should this go in a "success" mode?
       if (this.content != template.find('.editbit').value) {
         Meteor.call('changeState', {
           command: 'updateBitContent',
@@ -44,7 +43,10 @@ Template.bit.events({
       Parallels.Audio.player.play('fx-cha-ching');
 
       Session.set('bitEditingId', null);
-      Session.set('currentMode', null);
+    }
+
+    if (event.which === 27) {
+      Session.set('bitEditingId', null);
     }
   }
 });

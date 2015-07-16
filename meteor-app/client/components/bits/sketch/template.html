@@ -1,5 +1,5 @@
 <template name="sketchBit">
-  <div class="bit sketch" data-id="{{ _id }}">
+  <div tabindex="0" class="bit sketch" data-id="{{ _id }}">
     <div class="content {{ color }}">
 
       <!-- 
@@ -15,7 +15,7 @@
       </object>
 
       <!-- canvas when Ploma draws onto.  -->
-      <canvas class="sketch-bit" height="500" width="500"></canvas>
+      <canvas height="500" width="500"></canvas>
 
     </div>
     <p class="ui-widget-header"></p>

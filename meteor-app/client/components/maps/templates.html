@@ -1,7 +1,7 @@
 <template name="map">
 
   {{> mapRevealMasks }}
- 
+
   {{> shortcuts }}
 
   {{> navPanel }}
@@ -9,21 +9,18 @@
   {{#if viewingEventLog}}
     {{> eventlog }}
   {{/if}}
-  
-  <div class="map" >
 
-    {{ #each allTypesBits }}
-      {{> bit }}
+  <div class="map">
+
+    {{#each bits}}
+
+      {{#if isSketch}}
+        {{> sketchBit}}
+      {{else}}
+        {{> bit}}
+      {{/if}}
+
     {{/each }}
-
-    {{#if isCreatingTextBit}}
-      {{> createTextBit}}
-    {{/if}}
-
-    {{#if isCreatingSketchBit}}
-      {{> sketchBit}}
-    {{/if}}
-
   </div>
 
 </template>

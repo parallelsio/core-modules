@@ -1,4 +1,4 @@
-Meteor.startup(function(){
+Meteor.startup(function () {
 
   console.log("Meteor.startup begin.");
 
@@ -16,22 +16,35 @@ Meteor.startup(function(){
   // TODO: extract out into Utility? or Config?
   // get settings
   Meteor.call('getSetting', 'isAudioEnabled', function (err, isAudioEnabled) {
-    if (isAudioEnabled){
+    if (isAudioEnabled) {
       Session.set('isAudioEnabled', true);
     }
 
-    else{
+    else {
       Session.set('isAudioEnabled', false);
     }
   });
 
-  Tracker.autorun(function() {
+  Tracker.autorun(function () {
     console.log(Bits.find().count() + ' bits, via Tracker:autorun');
   });
 
-  Tracker.autorun(function() {
+  Tracker.autorun(function () {
     console.log('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
   });
 
-  Session.set('createTextBit', null);
+  var center = Utilities.getViewportCenter();
+  pointerPosition = {
+    x: center.x,
+    y: center.y
+  };
+
+  Session.set('bitEditingId', null);
+
+  $.fn.focusWithoutScrolling = function(){
+    var x = verge.scrollX(), y = verge.scrollY();
+    this.focus();
+    window.scrollTo(x, y);
+    return this;
+  };
 });
