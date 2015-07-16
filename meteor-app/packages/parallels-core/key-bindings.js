@@ -110,6 +110,7 @@ Parallels.Keys = {
     this.bindDeleteBit();
     this.bindCreateSketchBit();
     this.bindCreateTextBit();
+    this.bindEditTextBit();
     this.bindBeginCreateParallel();
     this.bindImageBitPreview();
     this.bindHistory();
@@ -126,6 +127,10 @@ Parallels.Keys = {
 
     // create new text bit
     Mousetrap.unbind('t');
+
+    // edit text bit
+    Mousetrap.unbind('e');
+    Mousetrap.unbind('e');
 
     // preview
     Mousetrap.unbind('space');
@@ -296,6 +301,30 @@ Parallels.Keys = {
       }, function (err, bit) {
         Session.set('bitEditingId', bit._id);
       });
+    });
+  },
+
+  bindEditTextBit: function () {
+    console.log("keyCommand:bindEditTextBit");
+
+    Mousetrap.bind("e", function () {
+      console.log("pressed 'e' key");
+      
+      var bitHoveringId = Session.get('bitHoveringId');
+      if (bitHoveringId) {
+        Parallels.Audio.player.play('fx-temp-temp-subtle');
+        var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
+        var bitData = Blaze.getData(bitTemplate);
+        if (bitData.type === "text") {
+          Session.set('bitEditingId', bitHoveringId);
+        }
+        else {
+          console.log("bit:edit: bit not of type 'text'.");
+        }
+      }
+      else {
+        console.log('edit key ignored, not captured for a specific bit')
+      }
     });
   },
 
