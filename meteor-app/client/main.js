@@ -25,8 +25,6 @@ Meteor.startup(function () {
     console.log('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
   });
 
-  Session.set('createTextBit', null);
-
   var center = Utilities.getViewportCenter();
   pointerPosition = {
     x: center.x,

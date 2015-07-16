@@ -110,14 +110,12 @@ Parallels.Keys = {
     this.bindDeleteBit();
     this.bindCreateSketchBit();
     this.bindCreateTextBit();
-    this.bindEditTextBit();
     this.bindBeginCreateParallel();
     this.bindImageBitPreview();
     this.bindHistory();
     this.bindUndo();
     this.bindRedo();
     this.bindShortcuts();
-    // this.bindEsc();
   },
 
   disableAll: function () {
@@ -125,9 +123,6 @@ Parallels.Keys = {
 
     // delete bit
     Mousetrap.unbind('d');
-
-    // edit text bit
-    Mousetrap.unbind('e');
 
     // create new text bit
     Mousetrap.unbind('t');
@@ -137,9 +132,6 @@ Parallels.Keys = {
 
     // create-parallel
     Mousetrap.unbind('shift');
-
-    // cancel/close
-    // Mousetrap.unbind('esc');
 
     // history dialog, for undo/redo
     Mousetrap.unbind('h');
@@ -209,24 +201,6 @@ Parallels.Keys = {
 
       else {
         console.log('delete key ignored, not captured for a specific bit')
-      }
-
-    });
-  },
-
-  bindEditTextBit: function () {
-    console.log("keyCommand:bindEditTextBit");
-
-    Mousetrap.bind("e", function () {
-      console.log("pressed 'e' key");
-      var bitHoveringId = Session.get('bitHoveringId');
-
-      if (bitHoveringId) {
-        Parallels.AppModes['edit-bit'].enter(bitHoveringId);
-      }
-
-      else {
-        console.log('edit key ignored, not captured for a specific bit')
       }
 
     });

@@ -8,7 +8,7 @@ Template.map.onRendered(function (){
   mapContainer._uihooks = {
 
     insertElement: function(node, next) {
-      var bitDataContext = Blaze.getData(node) || Session.get('createTextBit') || Session.get('sketchBit');
+      var bitDataContext = Blaze.getData(node);
 
       $(node).insertBefore(next);
 
