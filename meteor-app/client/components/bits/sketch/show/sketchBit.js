@@ -21,7 +21,7 @@ SketchBit.prototype.enableDrawing = function () {
     isStroke = true;
     var point = self.getEventPoint(event);
     self.ploma.beginStroke(point.x, point.y, point.p);
-    // Parallels.Audio.player.play('fx-cinq-drop');
+    Parallels.Audio.player.play('fx-cinq-drop');
 
     // disabled - need to make sure performance is snappy first
     // template.firstNode.style.cursor = 'none';
