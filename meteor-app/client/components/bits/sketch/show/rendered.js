@@ -28,13 +28,13 @@ SketchBit.prototype.enableDrawing = function () {
   var self = this;
   var isStroke = false;
   self.drawingEnabled = true;
-  self.$node.style.cursor = 'crosshair';
+  self.$node.css('cursor', 'crosshair');
 
   // begin a stroke at the mouse down point
   self.canvas.onmousedown = function (event) {
     isStroke = true;
     var point = self.getEventPoint(event);
-    ploma.beginStroke(point.x, point.y, point.p);
+    self.ploma.beginStroke(point.x, point.y, point.p);
     // Parallels.Audio.player.play('fx-cinq-drop');
 
     // disabled - need to make sure performance is snappy first
@@ -45,14 +45,14 @@ SketchBit.prototype.enableDrawing = function () {
   self.canvas.onmousemove = function (event) {
     if (!isStroke) return;
     var point = self.getEventPoint(event);
-    ploma.extendStroke(point.x, point.y, point.p);
+    self.ploma.extendStroke(point.x, point.y, point.p);
   };
 
   // end the stroke at the mouse up point
   self.canvas.onmouseup = function (event) {
     isStroke = false;
     var point = self.getEventPoint(event);
-    ploma.endStroke(point.x, point.y, point.p);
+    self.ploma.endStroke(point.x, point.y, point.p);
   };
 };
 
@@ -81,7 +81,7 @@ SketchBit.prototype.getEventPoint = function (event) {
 
 SketchBit.prototype.isFocused = function () {
   var self = this;
-  var currentlyEditingId = Session.get('currently-editing-id');
+  var currentlyEditingId = Session.get('bitEditingId');
   return currentlyEditingId && currentlyEditingId === self._id;
 };
 
@@ -99,15 +99,7 @@ Template.sketchBit.onRendered(function () {
   var timeline = new TimelineMax();
   timeline.to(template.firstNode, 0, {x: sketchBit.position.x, y: sketchBit.position.y});
 
-  Tracker.autorun(function () {
-    if (sketchBit.isFocused() && !sketchBit.drawingEnabled) {
-      sketchBit.enableDrawing();
-    } else {
-      sketchBit.disableDrawing();
-    }
-  });
-
-  Draggable.create(template.firstNode, {
+  var draggable = Draggable.create(template.firstNode, {
 
     throwProps: false,
     zIndexBoost: false,
@@ -144,6 +136,16 @@ Template.sketchBit.onRendered(function () {
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
       timeline.to(template.firstNode, 0.1, {scale: 1, boxShadow: "0", ease: Expo.easeOut});
       return true;
+    }
+  });
+
+  Tracker.autorun(function () {
+    if (sketchBit.isFocused() && !sketchBit.drawingEnabled) {
+      draggable[0].disable();
+      sketchBit.enableDrawing();
+    } else {
+      draggable[0].enable();
+      sketchBit.disableDrawing();
     }
   });
 
