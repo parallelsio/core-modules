@@ -309,7 +309,7 @@ Parallels.Keys = {
 
     Mousetrap.bind("e", function () {
       console.log("pressed 'e' key");
-      
+
       var bitHoveringId = Session.get('bitHoveringId');
       if (bitHoveringId) {
         Parallels.Audio.player.play('fx-temp-temp-subtle');

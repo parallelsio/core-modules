@@ -24,9 +24,14 @@ Template.sketchBit.onRendered(function () {
   var template = this;
   var sketchBit = new SketchBit($(template.firstNode), this.data, npApiPlugin);
 
-  // Move the bit into position
-  var timeline = new TimelineMax();
-  timeline.to(template.firstNode, 0, {x: sketchBit.position.x, y: sketchBit.position.y});
+  // Move the bit into position and track it's coordinates from mongo
+  Tracker.autorun(function() {
+    var bit = Bits.findOne(sketchBit._id);
+    if (bit) {
+      var timeline = new TimelineMax();
+      timeline.to(template.firstNode, 0, { x: bit.position.x, y: bit.position.y });
+    }
+  });
 
   var draggable = Draggable.create(template.firstNode, {
 
