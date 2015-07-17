@@ -1,7 +1,7 @@
 var
   $bit,
+  bit,
   bitTemplate,
-  bitData,
   bitPreviewingId,
   bitHoveringId;
 
@@ -13,13 +13,12 @@ Parallels.AppModes['preview-bit'] = {
     bitHoveringId = Session.get('bitHoveringId');
     $bit = Utilities.getBitElement(bitHoveringId);
     bitTemplate = Utilities.getBitTemplate(bitHoveringId);
-    bitData = Blaze.getData(bitTemplate);
+    bit = Blaze.getData(bitTemplate);
 
-    // TODO: disable bitHover too
 
     // only supporting image preview currently
     // webpage is currently represented on canvas as an image
-    if ((bitData.type === "image") || (bitData.type === "webpage")){
+    if ((bit.type === "image") || (bit.type === "webpage")){
       bitPreviewingId = bitHoveringId;
       Session.set('currentMode', 'preview-bit');
       Session.set('bitPreviewingId', bitPreviewingId);
@@ -29,13 +28,16 @@ Parallels.AppModes['preview-bit'] = {
       Parallels.Keys.unbindActions();
 
       var options = {
-        bitData: bitData,
+        bit: bit,
         $bit: $bit,
         bitTemplate: bitTemplate,
         direction: "expand"
       };
 
       Parallels.Animation.Image.morph(options);
+      Draggable.get( $bit ).disable();
+      // TODO: disable bitHover too
+
     }
 
     else {
@@ -50,7 +52,8 @@ Parallels.AppModes['preview-bit'] = {
     var bitPreviewingId = Session.get('bitPreviewingId');
     $bit = Utilities.getBitElement(bitPreviewingId);
     var bitTemplate = Utilities.getBitTemplate(bitPreviewingId);
-    var bitData = Blaze.getData(bitTemplate);
+    var bit = Blaze.getData(bitTemplate);
+
 
     if (bitPreviewingId) {
       // TODO: pass the assignment/resetting of these
@@ -61,16 +64,17 @@ Parallels.AppModes['preview-bit'] = {
       Session.set('currentMode', null);
       Session.set('bitPreviewingId', null);
 
+      Parallels.Keys.bindActions();
+
       var options = {
-        bitData: bitData,
+        bit: bit,
         $bit: $bit,
         bitTemplate: bitTemplate,
         direction: "contract"
       };
 
       Parallels.Animation.Image.morph(options);
-
-      Parallels.Keys.bindActions();
+      Draggable.get( $bit ).enable();
     }
 
     else {

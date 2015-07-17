@@ -31,8 +31,8 @@ Parallels.Animation.Image = {
 
     OPTIONS/PARAMS:
 
-      bitData: bitData,
-      $bit: $bit,
+      bit: bit,                     // the db model
+      $bit: $bit,                   // jquery object
       bitTemplate: bitTemplate,
       direction: "expand" | "contract"
     -----------------------------------------------------------
@@ -75,7 +75,7 @@ Parallels.Animation.Image = {
     if (options.direction === "expand") {
       // padding for top and bottom
       // TODO: left + right, for very wide images
-      var edgePadding = 10;
+      var edgePadding = 20;
 
       /*
         using d.d.c faster than jQuery(window).width()
@@ -86,7 +86,7 @@ Parallels.Animation.Image = {
       var availableHeight = document.documentElement.clientHeight - (edgePadding * 2);
 
       // use availableHeight to determine previewWidth
-      if ((options.bitData.nativeHeight > bitThumbHeight) &&
+      if ((options.bit.nativeHeight > bitThumbHeight) &&
           (bitThumbHeight <= availableHeight)) {
 
         var previewHeight = availableHeight;
@@ -98,7 +98,7 @@ Parallels.Animation.Image = {
             -------------  =  ----------------
              nativeWidth       x (previewWidth)
         */
-        var previewWidth = Math.floor((options.bitData.nativeWidth * previewHeight) / options.bitData.nativeHeight);
+        var previewWidth = Math.floor((options.bit.nativeWidth * previewHeight) / options.bit.nativeHeight);
       }
 
       var bitImgOptions = {
