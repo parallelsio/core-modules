@@ -18,15 +18,16 @@ var npApiPlugin;
 
 Template.sketchBit.onRendered(function () {
   var template = this;
-
-  log.debug("bit:sketch:render");
+  var $bitElement = $(template.firstNode);
+  var timeline;
 
   if (!npApiPlugin) {
     npApiPlugin = document.getElementById('wtPlugin');
   }
 
-  var sketchBit = new SketchBit($(template.firstNode), this.data, npApiPlugin);
-  var timeline;
+  var sketchBit = new SketchBit($bitElement, this.data, npApiPlugin);
+  
+  var draggable = makeBitDraggable($bitElement);
 
   // track the sketch bit's coordinates and opacity from mongo for concurrent session editing
   Tracker.autorun(function () {
@@ -34,50 +35,10 @@ Template.sketchBit.onRendered(function () {
     if (bit) {
       timeline = new TimelineMax();
       timeline.to(template.firstNode, 0, {x: bit.position.x, y: bit.position.y});
-      $(template.firstNode).css('opacity', bit.opacity);
+      $bitElement.css('opacity', bit.opacity);
     }
   });
 
-  // TODO: set up a draggable initializer, for reuse across bits
-  var draggable = Draggable.create(template.firstNode, {
-
-    throwProps: false,
-    zIndexBoost: false,
-
-    onDragStart: function () {
-      Parallels.Audio.player.play('fx-cinq-drop');
-    },
-
-    onPress: function () {
-      timeline.to(template.firstNode, 0.20, {
-        scale: 1.05,
-        boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
-        ease: Expo.easeOut
-      });
-    },
-
-    onRelease: function () {
-      timeline.to(template.firstNode, 0.1, {scale: 1, boxShadow: "0", ease: Expo.easeOut});
-    },
-
-    onDragEnd: function () {
-      var x = this.endX;
-      var y = this.endY;
-
-      Meteor.call('changeState', {
-        command: 'updateBitPosition',
-        data: {
-          canvasId: '1',
-          _id: sketchBit._id,
-          position: {x: x, y: y}
-        }
-      });
-
-      Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
-      timeline.to(template.firstNode, 0.1, {scale: 1, boxShadow: "0", ease: Expo.easeOut});
-      return true;
-    }
-  });
 
   // isFocused() checks to see if Session.get("bitEditingId") is set to this sketch.
   // As the bitEditingId changes we need to ensure our code checks to see if it's now in focus for drawing.
