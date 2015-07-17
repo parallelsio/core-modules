@@ -3,7 +3,9 @@ Router.configure({
   loadingTemplate: 'loading',
   waitOn: function() {
     return Meteor.subscribe('bits');
-  }
+  },
+  fastRender: true
+
 });
 
 Router.route('/', function () {
