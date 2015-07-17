@@ -70,9 +70,19 @@ SketchBit.prototype.isFocused = function () {
   return currentlyEditingId && currentlyEditingId === self._id;
 };
 
+SketchBit.prototype.hasChanged = function () {
+  var self = this;
+  var addedOrRemovedStrokes = _.filter(self.ploma.getStrokes(), function (obj) {
+    return !_.findWhere(self.content, obj);
+  });
+  var changedOpacity = self.$bit.css('opacity') != self.opacity;
+  return changedOpacity || addedOrRemovedStrokes.length > 0;
+};
+
 SketchBit.prototype.save = function () {
   var self = this;
-  if (self.isFocused()) {
+
+  if (self.hasChanged()) {
     Meteor.call('changeState', {
       command: 'updateBitContent',
       data: {
@@ -84,9 +94,11 @@ SketchBit.prototype.save = function () {
     }, function (err, bit) {
       _.extend(self, bit);
     });
+  }
 
-    Parallels.Audio.player.play('fx-cha-ching');
+  Parallels.Audio.player.play('fx-cha-ching');
 
+  if (self.isFocused()) {
     Session.set('bitEditingId', null);
   }
 };
