@@ -10,12 +10,10 @@ var trusted = [
   'fonts.googleapis.com',
 
   'makeparallels.herokuapp.com',
-  'platform.twitter.com/widgets',
-  'cdn.syndication.twitter.com',
   'placehold.it'
 ];
 
 _.each(trusted, function(origin) {
-  origin = "https://" + origin;
-  BrowserPolicy.content.allowOriginForAll(origin);
+  BrowserPolicy.content.allowOriginForAll("https://" + origin);
+  BrowserPolicy.content.allowOriginForAll("http://" + origin);
 });
