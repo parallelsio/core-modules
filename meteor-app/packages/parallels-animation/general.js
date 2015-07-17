@@ -1,25 +1,25 @@
 Parallels.Animation.General = {
 
-  shimmer: function(options){
-  /*
-      PURPOSE:
-        Set up a timeline for revealing a collection of DOM elements,
-        in a choreographed sequence, slightly staggered.
+  shimmer: function (options) {
+    /*
+     PURPOSE:
+     Set up a timeline for revealing a collection of DOM elements,
+     in a choreographed sequence, slightly staggered.
 
-        Adapted from: http://codepen.io/GreenSock/pen/ramJGv
-      -----------------------------------------------------------
+     Adapted from: http://codepen.io/GreenSock/pen/ramJGv
+     -----------------------------------------------------------
 
-      PARAMS:
-        $elements: a collection of DOM elements to shimmer, $(".map .bit")
-        paused: true | false
-      -----------------------------------------------------------
+     PARAMS:
+     $elements: a collection of DOM elements to shimmer, $(".map .bit")
+     paused: true | false
+     -----------------------------------------------------------
 
-      RETURNS: reference to Greensock timeline, for chaining or later play
-      -----------------------------------------------------------
+     RETURNS: reference to Greensock timeline, for chaining or later play
+     -----------------------------------------------------------
 
-      TODO: only shimmer + play sounds for what is in the viewport
-      -----------------------------------------------------------
-    */
+     TODO: only shimmer + play sounds for what is in the viewport
+     -----------------------------------------------------------
+     */
 
     var delayMultiplier = 0.0005;
     var duration = 0.4;
@@ -27,7 +27,7 @@ Parallels.Animation.General = {
       paused: false || options.paused
     });
 
-    options.$elements.each(function() {
+    options.$elements.each(function () {
 
       $element = this;
 
@@ -42,15 +42,15 @@ Parallels.Animation.General = {
       var offset = parseFloat(position.top) + parseFloat(position.left);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      console.log("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay );
+      console.log("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay);
 
       /* TODO:
-          calc a sound frequency to use as a parameter for the sound played
-          Using the delay param we used above for the animation will tie
-          the 2 together nicely
-          var newFreq = Math.random() * 1000 + 1060;
-          newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
-      */
+       calc a sound frequency to use as a parameter for the sound played
+       Using the delay param we used above for the animation will tie
+       the 2 together nicely
+       var newFreq = Math.random() * 1000 + 1060;
+       newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
+       */
 
       // console.log("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
@@ -69,11 +69,11 @@ Parallels.Animation.General = {
         {
           // to
           scale: 1,
-          opacity: 1,
+          opacity: $element.style.opacity && $element.style.opacity > 0 ? $element.style.opacity : 1,
           ease: Expo.easeIn,
           display: 'block',
 
-          onComplete: function() {
+          onComplete: function () {
             // TODO: vary this sound (pitch up?) after each iteration
             Parallels.Audio.player.play('fx-ting3');
           }
@@ -83,32 +83,32 @@ Parallels.Animation.General = {
 
     });
 
-    if (!options.paused){
+    if (!options.paused) {
       timeline.play();
     }
 
     return timeline;
   },
 
-  morphLightbox: function(options){
+  morphLightbox: function (options) {
 
-  /*
-    PURPOSE:
-      Display a full screen view, morphed from an element.
-      Use Greensock for animation choreography, vs CSS.
+    /*
+     PURPOSE:
+     Display a full screen view, morphed from an element.
+     Use Greensock for animation choreography, vs CSS.
 
-      Inspired by http://tympanus.net/Development/MorphingSearch
-    -----------------------------------------------------------
+     Inspired by http://tympanus.net/Development/MorphingSearch
+     -----------------------------------------------------------
 
-    OPTIONS/PARAMS:
+     OPTIONS/PARAMS:
 
-      $element:   // jQuery object to the element to morph from
-    -----------------------------------------------------------
+     $element:   // jQuery object to the element to morph from
+     -----------------------------------------------------------
 
-    TODO:
-    -----------------------------------------------------------
-  */
-    
+     TODO:
+     -----------------------------------------------------------
+     */
+
     var duration = 0.2;
     var delay = 0;
 
@@ -128,7 +128,7 @@ Parallels.Animation.General = {
         ease: Expo.easeIn,
         display: 'block',
 
-        onComplete: function() {
+        onComplete: function () {
           Parallels.Audio.player.play('fx-ting3');
         }
       },
@@ -139,63 +139,63 @@ Parallels.Animation.General = {
 
   },
 
-  cornerSparks: function(options){
+  cornerSparks: function (options) {
 
-  /*
-    PURPOSE:
-      Animate outward sparks, emitted from the center of each point.
-      Sparks are choreographed to happen sequentially, with a slight overlap
-    -----------------------------------------------------------
+    /*
+     PURPOSE:
+     Animate outward sparks, emitted from the center of each point.
+     Sparks are choreographed to happen sequentially, with a slight overlap
+     -----------------------------------------------------------
 
-    DOCS:
-      /private/docs/parallel-create-spark-animation-v1.png
+     DOCS:
+     /private/docs/parallel-create-spark-animation-v1.png
 
-      Sketch of sparks ordering, and accomponieng musical notes
-    -----------------------------------------------------------
+     Sketch of sparks ordering, and accomponieng musical notes
+     -----------------------------------------------------------
 
-    OPTIONS/PARAMS:
-      $element:   // jQuery object to the element to receive sparks
-      prependTo:  // jQuery selector string, of DOM element to prepend the particles container to
-    -----------------------------------------------------------
+     OPTIONS/PARAMS:
+     $element:   // jQuery object to the element to receive sparks
+     prependTo:  // jQuery selector string, of DOM element to prepend the particles container to
+     -----------------------------------------------------------
 
-    TODO:
-      * convert animations to use RequestAnimationFrame for better perf
+     TODO:
+     * convert animations to use RequestAnimationFrame for better perf
 
-      * experiment with using <canvas> instead of DOM, for better perf
+     * experiment with using <canvas> instead of DOM, for better perf
 
-      * include End function in here
-    -----------------------------------------------------------
-  */
+     * include End function in here
+     -----------------------------------------------------------
+     */
 
     var destBitRect = options.$element[0].getClientRects()[0];
     var corners = [
-      { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.left),  freq: teoria.note('g2').fq() },
-      { x: parseInt(destBitRect.top),     y: parseInt(destBitRect.right), freq: teoria.note('d2').fq() },
-      { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.left),  freq: teoria.note('c2').fq() },
-      { x: parseInt(destBitRect.bottom),  y: parseInt(destBitRect.right), freq: teoria.note('a2').fq() }
+      {x: parseInt(destBitRect.top), y: parseInt(destBitRect.left), freq: teoria.note('g2').fq()},
+      {x: parseInt(destBitRect.top), y: parseInt(destBitRect.right), freq: teoria.note('d2').fq()},
+      {x: parseInt(destBitRect.bottom), y: parseInt(destBitRect.left), freq: teoria.note('c2').fq()},
+      {x: parseInt(destBitRect.bottom), y: parseInt(destBitRect.right), freq: teoria.note('a2').fq()}
     ];
 
     // TODO: set up Meteor.settings vars for map dimensions instead of hardcoding
     var particles = document.createElement('div');
     $(particles)
-      .attr( "id", "corner-sparks--particles")
-      .height( 5000 )
-      .width( 5000)
+      .attr("id", "corner-sparks--particles")
+      .height(5000)
+      .width(5000)
       .prependTo(options.prependTo);
 
-    var setupAndPlayCornerSpark = function(corner){
+    var setupAndPlayCornerSpark = function (corner) {
       // console.log("setupAndPlayCornerSpark: ", corner);
 
       var spark = new particleEmitter({
-        onStartCallback: function(){
+        onStartCallback: function () {
           // console.log("starting particleEmitter for corner: ", corner);
         },
-        onStopCallback: function(){
+        onStopCallback: function () {
           // console.log("ending particleEmitter for corner: ", corner);
         },
         container: '#corner-sparks--particles',
         image: 'images/ui/particle.gif',
-        center: [ corner.y, corner.x ],
+        center: [corner.y, corner.x],
         size: 2,
         velocity: 450,
         decay: 500,
@@ -203,18 +203,18 @@ Parallels.Animation.General = {
       });
 
       spark.start()
-      var handle = Meteor.setTimeout(function(){
-        spark.stop();
-      },
-      100);
+      var handle = Meteor.setTimeout(function () {
+          spark.stop();
+        },
+        100);
     }
 
-    var tl = new TimelineMax({ paused:true });
+    var tl = new TimelineMax({paused: true});
 
-    _.each(corners, function(corner, i) {
+    _.each(corners, function (corner, i) {
       var offsetDelay = i * 0.10;
       // console.log("count:", i, ":", corner, ", delayed: ", offsetDelay);
-      tl.call(setupAndPlayCornerSpark, [ corner ], this, offsetDelay );
+      tl.call(setupAndPlayCornerSpark, [corner], this, offsetDelay);
     });
 
 

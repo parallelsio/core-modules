@@ -1,4 +1,3 @@
-
 SketchBit = function SketchBit($bit, bit, npApiPlugin) {
   var self = this;
   _.extend(self, bit);
@@ -74,17 +73,17 @@ SketchBit.prototype.isFocused = function () {
 SketchBit.prototype.save = function () {
   var self = this;
   if (self.isFocused()) {
-    if (self.content != self.ploma.getStrokes()) {
-      Meteor.call('changeState', {
-        command: 'updateBitContent',
-        data: {
-          canvasId: '1',
-          _id: self._id,
-          content: self.ploma.getStrokes(),
-          opacity: self.opacity
-        }
-      });
-    }
+    Meteor.call('changeState', {
+      command: 'updateBitContent',
+      data: {
+        canvasId: '1',
+        _id: self._id,
+        content: self.ploma.getStrokes(),
+        opacity: self.opacity
+      }
+    }, function (err, bit) {
+      _.extend(self, bit);
+    });
 
     Parallels.Audio.player.play('fx-cha-ching');
 

@@ -12,7 +12,7 @@
  */
 
 // NAPAPI is necessary for interfacing with the Wacom tablet
-// We can re-use the same npApiPlugin instance for all sketch bits 
+// We can re-use the same npApiPlugin instance for all sketch bits
 // (which is why it's a "global").
 var npApiPlugin;
 
@@ -28,12 +28,13 @@ Template.sketchBit.onRendered(function () {
   var sketchBit = new SketchBit($(template.firstNode), this.data, npApiPlugin);
   var timeline;
 
-  // Move the bit into position and track it's coordinates from mongo
-  Tracker.autorun(function() {
+  // track the sketch bit's coordinates and opacity from mongo for concurrent session editing
+  Tracker.autorun(function () {
     var bit = Bits.findOne(sketchBit._id);
     if (bit) {
       timeline = new TimelineMax();
-      timeline.to(template.firstNode, 0, { x: bit.position.x, y: bit.position.y });
+      timeline.to(template.firstNode, 0, {x: bit.position.x, y: bit.position.y});
+      $(template.firstNode).css('opacity', bit.opacity);
     }
   });
 
@@ -125,9 +126,9 @@ Template.sketchBit.onRendered(function () {
 
     if (opacity < 1) {
       template.firstNode.style.opacity = opacity + 0.10;
-    } 
-
-    else { Parallels.Audio.player.play('fx-tri'); 
+    }
+    else {
+      Parallels.Audio.player.play('fx-tri');
     }
 
     sketchBit.opacity = opacity;
@@ -148,6 +149,9 @@ Template.sketchBit.onRendered(function () {
     else {
       Parallels.Audio.player.play('fx-tri');
     }
+
+    sketchBit.opacity = opacity;
+
   });
 
   mousetrap.bind('enter', sketchBit.save.bind(sketchBit));
