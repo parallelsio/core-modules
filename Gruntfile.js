@@ -124,19 +124,6 @@ module.exports = function (grunt) {
       }
     },
 
-    jade: {
-      compile: {
-        options: {
-          data: {
-            debug: false
-          }
-        },
-        files: {
-          '<%= config.chromeExt %>/html/web_clipper.html': ['<%= config.chromeExt %>/templates/web_clipper.jade']
-        }
-      }
-    },
-
     concurrent: {
       server: [
         'meteorServer',
@@ -174,14 +161,6 @@ module.exports = function (grunt) {
       styles: {
         files: ['<%= config.chromeExt %>/styles/compiled/{,*/}*.css', '<%= config.chromeExt %>/styles/vendor/{,*/}*.css'],
         tasks: [],
-        options: {
-          livereload: true
-        }
-      },
-
-      templates: {
-        files: ['<%= config.chromeExt %>/templates/{,*/}*.jade'],
-        tasks: ['jade'],
         options: {
           livereload: true
         }
@@ -319,8 +298,7 @@ module.exports = function (grunt) {
     var tasks = [
       'env:dev',
       'bowerInstall',
-      'sass',
-      'jade'
+      'sass'
     ];
 
     if (target === 'local') {
@@ -392,7 +370,6 @@ module.exports = function (grunt) {
       'env:dev',
       'bowerInstall',
       'sass',
-      'jade',
       'concurrent:server'
     ];
 
