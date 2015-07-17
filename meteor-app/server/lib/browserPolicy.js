@@ -5,12 +5,13 @@ BrowserPolicy.content.allowInlineStyles();
 BrowserPolicy.content.allowFontDataUrl();
 
 var trusted = [
-  '*.s3.amazonaws.com',
+  process.env.AWS_BUCKET + '.s3.amazonaws.com',
+  
   'fonts.gstatic.com',
   'fonts.googleapis.com',
+  'placeholdit.imgix.net',
 
-  'makeparallels.herokuapp.com',
-  'placehold.it'
+  'localhost:9000'
 ];
 
 _.each(trusted, function(origin) {
