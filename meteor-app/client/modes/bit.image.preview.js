@@ -8,7 +8,7 @@ var
 Parallels.AppModes['preview-bit'] = {
 
   enter: function () {
-    console.log("mode:preview-bit:enter");
+    log.debug("mode:preview-bit:enter");
 
     bitHoveringId = Session.get('bitHoveringId');
     $bit = Utilities.getBitElement(bitHoveringId);
@@ -24,7 +24,7 @@ Parallels.AppModes['preview-bit'] = {
       Session.set('currentMode', 'preview-bit');
       Session.set('bitPreviewingId', bitPreviewingId);
 
-      console.log("bit:image:preview: " + bitPreviewingId);
+      log.debug("bit:image:preview: " + bitPreviewingId);
 
       Parallels.Keys.unbindActions();
 
@@ -39,12 +39,12 @@ Parallels.AppModes['preview-bit'] = {
     }
 
     else {
-      console.log("bit:preview: is not an image. Do nothing." );
+      log.debug("bit:preview: is not an image. Do nothing." );
     }
   },
 
   exit: function () {
-    console.log("mode:preview-bit:exit");
+    log.debug("mode:preview-bit:exit");
 
     // refactor: get rid of dep on these vars.
     var bitPreviewingId = Session.get('bitPreviewingId');
@@ -74,7 +74,7 @@ Parallels.AppModes['preview-bit'] = {
     }
 
     else {
-      console.log("nothing to close: not previewing a bit");
+      log.debug("nothing to close: not previewing a bit");
     }
   }
 };

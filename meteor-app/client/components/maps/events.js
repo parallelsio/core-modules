@@ -56,7 +56,7 @@ Parallels.Handlers.register('map.events', {
       var uploadKey = Math.random().toString(36).slice(2);
       var slingshotUploader = new Slingshot.Upload(uploader);
       slingshotUploader.send(file, function (error) {
-        if (error) console.log({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
+        if (error) log.debug({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
       });
       Parallels.FileUploads[uploadKey] = slingshotUploader;
       createImageBit(file, slingshotUploader.url(true), event, uploadKey, index);

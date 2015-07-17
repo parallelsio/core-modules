@@ -42,7 +42,7 @@ Parallels.Animation.General = {
       var offset = parseFloat(position.top) + parseFloat(position.left);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      console.log("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay);
+      log.debug("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay);
 
       /* TODO:
        calc a sound frequency to use as a parameter for the sound played
@@ -52,7 +52,7 @@ Parallels.Animation.General = {
        newFreq = newFreq * (delay + 100);  // TODO: lose precision, unecessary?
        */
 
-      // console.log("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
+      // log.debug("sound freq for bit: ", newFreq, ". Animation delay: ", delay);
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
       // bitDragAudioInstance.set("elasticStretch.source.freq", newFreq);
 
@@ -184,14 +184,14 @@ Parallels.Animation.General = {
       .prependTo(options.prependTo);
 
     var setupAndPlayCornerSpark = function (corner) {
-      // console.log("setupAndPlayCornerSpark: ", corner);
+      // log.debug("setupAndPlayCornerSpark: ", corner);
 
       var spark = new particleEmitter({
         onStartCallback: function () {
-          // console.log("starting particleEmitter for corner: ", corner);
+          // log.debug("starting particleEmitter for corner: ", corner);
         },
         onStopCallback: function () {
-          // console.log("ending particleEmitter for corner: ", corner);
+          // log.debug("ending particleEmitter for corner: ", corner);
         },
         container: '#corner-sparks--particles',
         image: 'images/ui/particle.gif',
@@ -213,7 +213,7 @@ Parallels.Animation.General = {
 
     _.each(corners, function (corner, i) {
       var offsetDelay = i * 0.10;
-      // console.log("count:", i, ":", corner, ", delayed: ", offsetDelay);
+      // log.debug("count:", i, ":", corner, ", delayed: ", offsetDelay);
       tl.call(setupAndPlayCornerSpark, [corner], this, offsetDelay);
     });
 

@@ -4,6 +4,6 @@
 //    /* `template` is the `Blaze.TemplateInstance` */
 //    /* `this` is the data context of the element in your template */
 //
-//    console.log('bit:long-press');
+//    log.debug('bit:long-press');
 //  }
 //});

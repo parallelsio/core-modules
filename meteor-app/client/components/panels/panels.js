@@ -81,14 +81,14 @@ Parallels.Panels = {
 
       return "";
     }
-    
+
     var left;
     var bindings;
     var easeType;
 
     if (Session.equals('isShortcutsDisplayed', true)){
       // prepare to close
-      console.log("_toggleShortcutsPanel: close");
+      log.debug("_toggleShortcutsPanel: close");
 
       left = "-15em";
       bindings = _unbindShortcutEvents;
@@ -118,6 +118,6 @@ Parallels.Panels = {
       .add(bindings)
       .play();
   }
-  
+
 }
 

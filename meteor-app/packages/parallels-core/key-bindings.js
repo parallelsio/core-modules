@@ -15,7 +15,7 @@ Parallels.Keys = {
   bindActions: function () {
 
     // TODO: add 'except' param, convery this list into a map
-    console.log("keyCommand:bindActions");
+    log.debug("keyCommand:bindActions");
 
     this.bindDeleteBit();
     this.bindCreateSketchBit();
@@ -29,7 +29,7 @@ Parallels.Keys = {
   },
 
   unbindActions: function () {
-    console.log("keyCommand:disableActions");
+    log.debug("keyCommand:disableActions");
 
     // delete bit
     Mousetrap.unbind('d');
@@ -68,7 +68,7 @@ Parallels.Keys = {
       // TODO: clear + garbage collect timeline objects, handlers
       $('.shortcut').each(function () {
         $shortcut = $(this);
-        console.log('unbinding each shortcut: ', $shortcut);
+        log.debug('unbinding each shortcut: ', $shortcut);
       });
 
     });
@@ -76,11 +76,11 @@ Parallels.Keys = {
   },
 
   bindShortcuts: function () {
-    console.log("keyCommand:bindShortcuts");
+    log.debug("keyCommand:bindShortcuts");
     Session.set('isShortcutsDisplayed', false);
 
     Mousetrap.bind("1", function () {
-      console.log("pressed '1' key");
+      log.debug("pressed '1' key");
 
       Parallels.Panels.toggleShortcuts();
 
@@ -88,14 +88,14 @@ Parallels.Keys = {
   },
 
   bindDeleteBit: function () {
-    console.log("keyCommand:bindDeleteBit");
+    log.debug("keyCommand:bindDeleteBit");
 
     Mousetrap.bind("d", function () {
-      console.log("pressed 'd' key");
+      log.debug("pressed 'd' key");
       var bitHoveringId = Session.get('bitHoveringId');
 
       if (bitHoveringId) {
-        console.log("starting bit:delete on ", bitHoveringId);
+        log.debug("starting bit:delete on ", bitHoveringId);
         Parallels.Audio.player.play('fx-tri');
         Meteor.call('changeState', {
           command: 'deleteBit',
@@ -107,17 +107,17 @@ Parallels.Keys = {
       }
 
       else {
-        console.log('delete key ignored, not captured for a specific bit')
+        log.debug('delete key ignored, not captured for a specific bit')
       }
 
     });
   },
 
   bindImageBitPreview: function () {
-    console.log("keyCommand:bindImageBitPreview");
+    log.debug("keyCommand:bindImageBitPreview");
 
     Mousetrap.bind('space', function (event) {
-      console.log("pressed 'Space' key");
+      log.debug("pressed 'Space' key");
       var bitHoveringId = Session.get('bitHoveringId');
       var bitPreviewingId = Session.get('bitPreviewingId');
 
@@ -132,7 +132,7 @@ Parallels.Keys = {
       }
 
       if (bitPreviewingId) {
-        console.log("already previewing bit: ", bitPreviewingId);
+        log.debug("already previewing bit: ", bitPreviewingId);
         return false; // failcheck - end if we're somehow already previewing
       }
 
@@ -141,13 +141,13 @@ Parallels.Keys = {
       }
 
       else {
-        console.log('space key ignored, not captured for a specific bit')
+        log.debug('space key ignored, not captured for a specific bit')
       }
     });
   },
 
   bindBeginCreateParallel: function () {
-    console.log("keyCommand:bindBeginCreateParallel");
+    log.debug("keyCommand:bindBeginCreateParallel");
 
     Mousetrap.bind('shift', function () {
       var bitHoveringId = Session.get('bitHoveringId');
@@ -160,13 +160,13 @@ Parallels.Keys = {
       }
 
       // else if (bitHoveringId && (currentMode === 'create-parallel')) {
-      //   console.log('closing parallel with ', bitHoveringId);
+      //   log.debug('closing parallel with ', bitHoveringId);
       // }
     });
   },
 
   bindCreateSketchBit: function () {
-    console.log("keyCommand:bindCreateSketchBit");
+    log.debug("keyCommand:bindCreateSketchBit");
 
     Mousetrap.bind('s', function () {
       Meteor.call('changeState', {
@@ -177,10 +177,7 @@ Parallels.Keys = {
           content: [],
           opacity: 1,
           color: 'blue',
-          position: {
-            x: 50,
-            y: 80
-          }
+          position: pointerPosition
         }
       }, function (err, bit) {
         Session.set('bitEditingId', bit._id);
@@ -189,7 +186,7 @@ Parallels.Keys = {
   },
 
   bindCreateTextBit: function () {
-    console.log("keyCommand:bindCreateTextBit");
+    log.debug("keyCommand:bindCreateTextBit");
 
     Mousetrap.bind('t', function () {
       Meteor.call('changeState', {
@@ -208,10 +205,10 @@ Parallels.Keys = {
   },
 
   bindEditTextBit: function () {
-    console.log("keyCommand:bindEditTextBit");
+    log.debug("keyCommand:bindEditTextBit");
 
     Mousetrap.bind("e", function () {
-      console.log("pressed 'e' key");
+      log.debug("pressed 'e' key");
 
       var bitHoveringId = Session.get('bitHoveringId');
       if (bitHoveringId) {
@@ -222,20 +219,20 @@ Parallels.Keys = {
           Session.set('bitEditingId', bitHoveringId);
         }
         else {
-          console.log("bit:edit: bit not of type 'text'.");
+          log.debug("bit:edit: bit not of type 'text'.");
         }
       }
       else {
-        console.log('edit key ignored, not captured for a specific bit')
+        log.debug('edit key ignored, not captured for a specific bit')
       }
     });
   },
 
   bindEsc: function () {
-    console.log("keyCommand:bindEsc");
+    log.debug("keyCommand:bindEsc");
 
     Mousetrap.bindGlobal('esc', function () {
-      console.log("pressed 'Esc' key");
+      log.debug("pressed 'Esc' key");
       var currentMode = Session.get('currentMode');
 
       if (!currentMode) return;
@@ -244,7 +241,7 @@ Parallels.Keys = {
   },
 
   bindHistory: function () {
-    console.log("keyCommand:bindHistory");
+    log.debug("keyCommand:bindHistory");
 
     Mousetrap.bind('h', function () {
       var viewingEventLog = Session.get('viewingEventLog');
@@ -253,7 +250,7 @@ Parallels.Keys = {
   },
 
   bindUndo: function () {
-    console.log("keyCommand:bindUndo");
+    log.debug("keyCommand:bindUndo");
 
     Mousetrap.bind('mod+z', function () {
       Meteor.call('undoState', {canvasId: '1'});
@@ -261,7 +258,7 @@ Parallels.Keys = {
   },
 
   bindRedo: function () {
-    console.log("keyCommand:bindRedo");
+    log.debug("keyCommand:bindRedo");
 
     Mousetrap.bind('mod+shift+z', function () {
       Meteor.call('redoState', {canvasId: '1'});

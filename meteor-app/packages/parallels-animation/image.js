@@ -142,7 +142,7 @@ Parallels.Animation.Image = {
     }
 
     var timelineStart = function () {
-      console.log('bit:preview timeline starting ...');
+      log.debug('bit:preview timeline starting ...');
 
       // TODO: disable bit actions (drag, delete)
 
@@ -166,7 +166,7 @@ Parallels.Animation.Image = {
     };
 
     var timelineDone = function( direction ){
-      console.log("bit:preview: " , direction, " : tween done." );
+      log.debug("bit:preview: " , direction, " : tween done." );
     };
 
     var timeline = new TimelineMax({
@@ -181,11 +181,11 @@ Parallels.Animation.Image = {
       https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
     */
     if (options.direction === "expand") {
-      console.log("expanding...");
+      log.debug("expanding...");
 
       $("body").css( "overflow", "hidden"); // disabling scrolling
-      console.log("bitImgOptions: ", bitImgOptions);
-      console.log("bitContainerOptions: ", bitContainerOptions);
+      log.debug("bitImgOptions: ", bitImgOptions);
+      log.debug("bitContainerOptions: ", bitContainerOptions);
 
       timeline
         .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
@@ -201,7 +201,7 @@ Parallels.Animation.Image = {
     }
 
     else if (options.direction === "contract") {
-      console.log("contracting...");
+      log.debug("contracting...");
 
       $("body").css( "overflow", "visible"); // re-enabling scrolling
 

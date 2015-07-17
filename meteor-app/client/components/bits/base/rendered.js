@@ -4,7 +4,7 @@ Template.bit.onRendered(function (){
   var bit = template.data;
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
-  console.log("bit:render: ", bitDatabaseId);
+  log.debug("bit:render: ", bitDatabaseId);
 
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients
@@ -65,7 +65,7 @@ Template.bit.onRendered(function (){
 
   var resetBitSize = function(message){
     function timelineDone(bitDatabaseId){
-      console.log(message, bitDatabaseId);
+      log.debug(message, bitDatabaseId);
     }
 
     var timeline = new TimelineMax({
@@ -87,21 +87,21 @@ Template.bit.onRendered(function (){
     zIndexBoost:false,
 
     onDragStart:function(event){
-      // console.log("bit:drag:onDragStart", bitDatabaseId);
+      // log.debug("bit:drag:onDragStart", bitDatabaseId);
 
       var x = this.endX;
       var y = this.endY;
 
       // TODO: delay play so it's got time to 'breathe', and doesnt stutter ?
       // bitDragAudioInstance = Parallels.Audio.player.play('elasticStretch');
-      // console.log(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
+      // log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
 
       Parallels.Audio.player.play('fx-cinq-drop');
     },
 
     onPress: function(event){
       function timelineDone(bitDatabaseId){
-        // console.log("bit:drag:onPress", bitDatabaseId);
+        // log.debug("bit:drag:onPress", bitDatabaseId);
       }
 
       var timeline = new TimelineMax({
@@ -119,7 +119,7 @@ Template.bit.onRendered(function (){
     },
 
     onRelease: function(event){
-      // console.log("bit:drag:onrelease", bitDatabaseId);
+      // log.debug("bit:drag:onrelease", bitDatabaseId);
       resetBitSize("bit:drag:onRelease: animation end");
     },
 
@@ -128,21 +128,21 @@ Template.bit.onRendered(function (){
       var y = this.endY;
 
       // TODO: only display if changed from last reading's value
-      // console.log("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
+      // log.debug("bit:drag:onDrag: ", event.type, " : ", x, " : ", y, " : ", this.getDirection("start"), " : ", bitDragAudioInstance);
 
       // bitDragAudioInstance.set("elasticStretch.source.freq", x)
 
     },
 
     onDragEnd:function( event ) {
-      // console.log("bit:drag:onDragEnd", bitDatabaseId);
+      // log.debug("bit:drag:onDragEnd", bitDatabaseId);
 
 
       var x = this.endX;
       var y = this.endY;
 
       var mongoId = this.target.dataset.id;
-      // console.log(event.type + ": " + mongoId + " : " + x + " : " + y);
+      // log.debug(event.type + ": " + mongoId + " : " + x + " : " + y);
 
       Meteor.call('changeState', {
         command: 'updateBitPosition',
@@ -161,7 +161,7 @@ Template.bit.onRendered(function (){
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
       function timelineDone(bitDatabaseId){
-        console.log("bit:drag:end", bitDatabaseId);
+        log.debug("bit:drag:end", bitDatabaseId);
       }
 
       var timeline = new TimelineMax({

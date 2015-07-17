@@ -19,7 +19,7 @@ var npApiPlugin;
 Template.sketchBit.onRendered(function () {
   var template = this;
 
-  console.log("bit:sketch:render");
+  log.debug("bit:sketch:render");
 
   if (!npApiPlugin) {
     npApiPlugin = document.getElementById('wtPlugin');
@@ -94,16 +94,16 @@ Template.sketchBit.onRendered(function () {
   var mousetrap = new Mousetrap(template.firstNode);
 
   mousetrap.bind('c', function () {
-    console.log("pressed 'c' key");
+    log.debug("pressed 'c' key");
     if (sketchBit.isFocused()) {
-      console.log("clearing bit:sketch canvas on ", sketchBit._id);
+      log.debug("clearing bit:sketch canvas on ", sketchBit._id);
       Parallels.Audio.player.play('fx-pep');
       sketchBit.ploma.clear();
     }
   });
 
   mousetrap.bind('mod+z', function (event) {
-    console.log("pressed 'command/ctrl + z'");
+    log.debug("pressed 'command/ctrl + z'");
 
     if (sketchBit.isFocused()) {
       // remove the most recent stroke
@@ -117,12 +117,12 @@ Template.sketchBit.onRendered(function () {
   });
 
   mousetrap.bind('up', function (event) {
-    console.log("pressed 'up' key");
+    log.debug("pressed 'up' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    console.log("bit:sketch:opacity = ", opacity);
+    log.debug("bit:sketch:opacity = ", opacity);
 
     if (opacity < 1) {
       template.firstNode.style.opacity = opacity + 0.10;
@@ -136,12 +136,12 @@ Template.sketchBit.onRendered(function () {
   });
 
   mousetrap.bind('down', function (event) {
-    console.log("pressed 'down' key");
+    log.debug("pressed 'down' key");
     event.preventDefault();
 
     Parallels.Audio.player.play('fx-pep');
     var opacity = Number(template.firstNode.style.opacity);
-    console.log("bit:sketch:opacity = ", opacity);
+    log.debug("bit:sketch:opacity = ", opacity);
 
     if (opacity > 0.10) {
       template.firstNode.style.opacity = (opacity - 0.10);
