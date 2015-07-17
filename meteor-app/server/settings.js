@@ -1,8 +1,9 @@
 const ConfigurationOptions = {
   
-  displayIntroAnimation:      { key: 'DISPLAY_INTRO_ANIMATION', default: 'true', type: 'boolean'},
-  uploader:                   { key: 'UPLOADER', default: 'fileSystemUploader', type: 'string'},
-  isAudioEnabled:             { key: 'IS_AUDIO_ENABLED', default: 'true', type: 'boolean'}
+  displayIntroAnimation:        { key: 'DISPLAY_INTRO_ANIMATION',         default: 'true',                type: 'boolean'},
+  uploader:                     { key: 'UPLOADER',                        default: 'fileSystemUploader',  type: 'string'},
+  isAudioEnabled:               { key: 'IS_AUDIO_ENABLED',                default: 'true',                type: 'boolean'},
+  isMeteorHotCodePushEnabled:   { key: 'IS_METEOR_HOT_CODE_PUSH_ENABLED', default: 'true',                type: 'boolean'}
 };
 
 function stringToBool(string) {
