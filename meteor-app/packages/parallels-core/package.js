@@ -26,7 +26,7 @@ Package.onUse(function(api) {
     'vendor/verge/verge.js',
     'log.js',
     'namespace.js',
-    'no-reload.js',
+    'meteor-reload-config.js',
     'key-bindings.js',
     'markdown-config.js'
   ], 'client');
