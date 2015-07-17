@@ -4,7 +4,9 @@
   z-index:100;
   width: 100%;
   top: -100px; // hide off screen, onRender animates it into view
-  
+  height: 3em;
+  overflow: hidden; // temp hack until responsive design is in
+
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.05);
 }
@@ -15,7 +17,6 @@
   display: -ms-flexbox;   
   display: flex;
   float:left;
-  width: 25%;
   height: 3em;
   margin: 0;
   padding: 0 0 0 0.5em;
@@ -41,7 +42,6 @@
   display: -ms-flexbox;   
   display: flex;
   float: right;
-  width: 75%;
   height: 3em;
   margin: 0;
   padding: 0;

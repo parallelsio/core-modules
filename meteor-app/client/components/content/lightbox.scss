@@ -1,12 +1,9 @@
 .parallels-lightbox {
   position: absolute;
-  background-color: white;
-  height: 5000px; // make as document.height instead of hardcoding
-  width: 100vw;
-  top: 0;
-  overflow: hidden;
   z-index: 10000000; // should be higher than the nav panel
-    padding: 3em 15em;
+  top: 0;
+  background-color: white;
+  padding: 3em 15%;
 
 
   h1 {
@@ -23,11 +20,11 @@
 
   .caps { 
     text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.8em;
-  font-weight: bolder;
-  color: rgb(89, 89, 89);
-  margin: 0 0.4em;
+    letter-spacing: 0.1em;
+    font-size: 0.8em;
+    font-weight: bolder;
+    color: rgb(89, 89, 89);
+    margin: 0 0.4em;
   }
 
   ul { 

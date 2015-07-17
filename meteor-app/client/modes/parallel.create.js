@@ -278,6 +278,7 @@ Parallels.AppModes['create-parallel'] = {
       // reenable scrolling
       $("body").css( "overflow", "visible");
       $("body").css( "position", "static");
+      $(".map").css( "min-height", "initial");
 
       // put key commands back to normal
       Parallels.Keys.bindActions();

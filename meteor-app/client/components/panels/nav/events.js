@@ -1,7 +1,7 @@
 Template.navPanel.events({
 
   'click .nav-panel__primary': function (event, template) {
-    Mousetrap.trigger('1'); 
+    Parallels.Panels.toggleShortcuts();
   },
 
   'click .nav-panel__link__about': function (event, template) {
@@ -11,6 +11,10 @@ Template.navPanel.events({
       .addClass("parallels-lightbox")
       .addClass("parallels-lightbox__about")
       .appendTo($("body"));
+
+    $("body").css( "overflow", "visible");
+    $("body").css( "position", "static");
+
 
     // inject the content into it 
     Blaze.render(Template.aboutContent, _.first($(".parallels-lightbox__about")) );

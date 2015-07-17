@@ -43,7 +43,6 @@ Utilities = {
     };
   },
 
-
   getClass: function(object){
     // http://phpjs.org/functions/getClass
     // http://kevin.vanzonneveld.net
