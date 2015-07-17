@@ -12,6 +12,10 @@ $map-width: 5000px;
   width:100%;
 }
 
+.map__lightbox{
+  min-height: initial;
+  min-width: initial;
+}
 
 .mode--create-parallel{
   background: #7B7B7B;

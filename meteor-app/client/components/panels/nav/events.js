@@ -15,6 +15,9 @@ Template.navPanel.events({
     $("body").css( "overflow", "visible");
     $("body").css( "position", "static");
 
+    $(".map").addClass('map__lightbox');
+
+
     // inject the content into it 
     Blaze.render(Template.aboutContent, _.first($(".parallels-lightbox__about")) );
 
