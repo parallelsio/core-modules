@@ -13,7 +13,7 @@ Meteor.startup(function () {
   Parallels.Keys.bindEsc();
   Parallels.Keys.bindShortcuts();
 
-  var isAudioEnabled = Parallels.settings.get('PARALLELS_IS_AUDIO_ENABLED');
+  var isAudioEnabled = Parallels.settings.get('PARALLELS_IS_AUDIO_ENABLED') || "true";
   Session.set('isAudioEnabled', Parallels.utils.stringToBoolean(isAudioEnabled));
 
   Tracker.autorun(function () {

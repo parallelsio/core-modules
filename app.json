@@ -3,7 +3,7 @@
   "description": "",
   "scripts": {},
   "env": {
-    "UPLOADER": {
+    "PARALLELS_FILE_UPLOADER": {
       "required": true,
       "description": "Type of uploader to use for multimedia upload: (s3Uploader)"
     },

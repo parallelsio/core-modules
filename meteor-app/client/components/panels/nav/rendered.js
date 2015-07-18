@@ -1,6 +1,6 @@
 Template.navPanel.rendered = function() {
 
-  var displayIntro = Parallels.settings.get('PARALLELS_DISPLAY_INTRO_ANIMATION');
+  var displayIntro = Parallels.settings.get('PARALLELS_DISPLAY_INTRO_ANIMATION') || 'true';
   if (Parallels.utils.stringToBoolean(displayIntro)) {
 
     var timelineSequence = new TimelineMax({ paused: true });
