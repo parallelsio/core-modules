@@ -1,6 +1,5 @@
 Template.aboutContent.onDestroyed(function () {
   var template = this;
-  console.log('destroying about');
 
   if (template.waveInstance.rafHandle){
     Parallels.log.debug("about to cancelAnimationFrame on rafHandle:", template.waveInstance.rafHandle);
@@ -11,5 +10,6 @@ Template.aboutContent.onDestroyed(function () {
   $(template.waveInstance.canvas).width = 0;
   $(template.waveInstance.canvas).remove();
 
+  Parallels.Keys.bindActions();
 });
 

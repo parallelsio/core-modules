@@ -12,7 +12,7 @@ Template.navPanel.events({
       .addClass("parallels-lightbox__about")
       .appendTo($("body"));
 
-    $("body").css( "overflow", "hidden");
+    $("body").css( "overflow-x", "hidden");
     $("body").css( "position", "static");
 
     // inject the content into it 
@@ -20,7 +20,6 @@ Template.navPanel.events({
 
     $(".map").addClass('map__lightbox');
 
-    // TODO: start it hidden, morph animate from element size to full viewport size
   }
 
 });

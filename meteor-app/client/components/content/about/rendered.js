@@ -5,6 +5,8 @@ Template.aboutContent.onRendered(function () {
   var img = $(Utilities.getBitElement(bit._id)).find('img')
   img.css('width', '300px')
 
+  Parallels.Keys.unbindActions();
+
   template.waveInstance = Parallels.Animation.Image.waveSlice({
     $img: img,
     prependTo: ".wave-slice",
