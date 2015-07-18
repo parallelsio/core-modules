@@ -264,7 +264,6 @@ Parallels.AppModes['create-parallel'] = {
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
       // TODO: move handle to mapInstance
-      // if (Utilities.getMapTemplate().pixiInstance.rafHandle){
       if (wave.rafHandle){
         Parallels.log.debug("about to cancelAnimationFrame on rafHandle:", wave.rafHandle);
         cancelAnimationFrame(wave.rafHandle);

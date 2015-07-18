@@ -8,15 +8,18 @@ function closeAboutLightbox(event, template){
       console.log('done animating lightbox fade');
       Blaze.remove(template.view);
 
-      $('.map').removeClass('map__lightbox');
       $('.parallels-lightbox').remove();
-      $("body").css( "overflow", "initial");
-      // $("body").css( "position", "static");
+
+      // TODO: make Utility function
+      // reenable scrolling
+      $("body").css( "overflow", "visible");
+      $("body").css( "position", "static");
+      $('.map').removeClass('map__lightbox');
     },
     onCompleteParams:[ template ]
   });
 
-  timeline.to($about, 1, {  alpha: 0, display: "none",  ease: Expo.easeOut  });
+  timeline.to($about, 0.2, {  alpha: 0, display: "none",  ease: Expo.easeOut  });
 }
 
 
@@ -28,4 +31,5 @@ Template.aboutContent.events({
     event.stopPropagation();
   }
 });
+
 

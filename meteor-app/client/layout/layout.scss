@@ -52,3 +52,47 @@ a           { color: #8B8BF5; }
   border: 0;
   margin: 0;
 }
+
+ul { 
+  margin: 0 0 0 2em;
+}
+
+ul li { 
+  line-height: 1.5em;
+  list-style-type: circle;
+
+  i {   
+    font-size: 1.1em;
+  }
+}
+
+// font awesome icons that are inline with text
+.fa__inline {    
+  margin: 0 0.05em 0 0.5em;
+  
+}
+  
+// font awesome icons that are preceding text inside of an li
+.fa__leading-li { margin: 0 1.25em 0 0.25em;  }
+
+
+.close-button{
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  color: #A7A7A7;
+}
+
+.caps { 
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8em;
+  font-weight: bolder;
+  color: rgb(89, 89, 89);
+  margin: 0 0.4em;
+}
+

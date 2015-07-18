@@ -13,13 +13,14 @@ Template.navPanel.events({
       .appendTo($("body"));
 
     $("body").css( "overflow", "hidden");
-    // $("body").css( "position", "static");
+    $("body").css( "position", "static");
 
     // inject the content into it 
     Blaze.render(Template.aboutContent, _.first($(".parallels-lightbox__about")) );
 
     $(".map").addClass('map__lightbox');
 
+    // TODO: start it hidden, morph animate from element size to full viewport size
   }
 
 });
