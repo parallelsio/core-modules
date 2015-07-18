@@ -146,6 +146,7 @@ Parallels.Animation.Image = {
 
       // TODO: disable bit actions (drag, delete)
 
+      // TODO: combine vars into one Session obj
       if (options.direction === "expand") {
         Session.set('bitThumbHeight', bitThumbHeight);
         Session.set('bitThumbWidth', bitThumbWidth);

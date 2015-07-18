@@ -5,6 +5,15 @@
   background-color: white;
   padding: 3em 15%;
 
+  .close-button{
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    right: 0;
+    background-color: blue;
+    cursor: pointer;
+  }
+
   h1 {
     display: inline-block;
     font-weight: 600;

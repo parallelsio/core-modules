@@ -1,9 +1,14 @@
 Template.navPanel.rendered = function() {
 
+  // TODO: extract this choreographed sequence out of nav.
+  // doesnt belong here, but somewhere in Map: when Map/canvas open
+  // it triggers the nav + bits to be displayed
+  
   var displayIntro = Parallels.settings.get('PARALLELS_DISPLAY_INTRO_ANIMATION') || 'true';
   if (Parallels.utils.stringToBoolean(displayIntro)) {
 
     var timelineSequence = new TimelineMax({ paused: true });
+
 
     // Greensock .call is similar to its .add,
     // except .call lets us pass params to our function
