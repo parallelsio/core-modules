@@ -242,6 +242,10 @@ Parallels.Animation.Image = {
     OPTIONS/PARAMS:
       $img: a jquery obj of the img element to slice + animate
       prependTo: a jquery selector *string, of where to prepend canvas to
+
+      // effect is meant for use on the main canvas, where this effect, 
+      // once enabled, replaces the original static(non-animated) bit
+      replaceOriginalBit: true
     -----------------------------------------------------------
 
     TODO:
@@ -258,7 +262,7 @@ Parallels.Animation.Image = {
 
     // in pixels
     // TODO: make more robust for HiDi displays, Retina
-    var sliceWidth = 15;
+    var sliceWidth = 30;
 
     var imgWidth = parseInt(rect.width);
     var imgHeight = parseInt(rect.height);
@@ -271,7 +275,7 @@ Parallels.Animation.Image = {
      // well be accessing it many times a second, inside of the RequestAnimationLoop
     var yvalues = new Float32Array(numSlices);
 
-    // since wave oscillates up+down, the rendered slices will exceed the boounds
+    // since wave oscillates up+down, the rendered slices will exceed the bounds
     // of the original image. We add extra margin top+bottom to the canvas to
     // avoid clipping
     // TODO: align canvas tighter/closer to original image
@@ -284,7 +288,7 @@ Parallels.Animation.Image = {
     // Use a proportion of the imgWidth to
     // make the feeling consistent across diff image sizes
     var amplitude = Math.round(imgHeight * 0.1)   // Height of the wave
-    var period = Math.round(imgWidth * 0.8);      // How many pixels before the wave repeats
+    var period = Math.round(imgWidth * 1);      // How many pixels before the wave repeats
 
     // The delta (change) of x, the height, of each slice:
     // a function of period and sliceWidth
@@ -297,13 +301,14 @@ Parallels.Animation.Image = {
     canvas                = document.createElement('canvas');
     canvas.height         = imgHeight + spillover;
     canvas.width          = imgWidth;
-    canvas.style.border   = "1px dotted green";
-    canvas.style.position = "absolute";
 
     // TODO: replace with transform positioning for better perf
-    canvas.style.left     = parseInt(rect.left)  + "px";
-    canvas.style.top      = (parseInt(rect.top) - (spillover / 2)) + "px";
-    canvas.style.zIndex   = 1;
+    if (options.replaceOriginalBit){
+      canvas.style.position = "absolute";
+      canvas.style.left     = parseInt(rect.left)  + "px";
+      canvas.style.top      = (parseInt(rect.top) - (spillover / 2)) + "px";
+      canvas.style.zIndex   = 1;
+    }
 
     $(canvas).prependTo(options.prependTo);
 
@@ -327,7 +332,7 @@ Parallels.Animation.Image = {
     function calcWavePoints() {
 
       // increase value for faster wave surge/fall
-      theta += 0.2;
+      theta += 0.05;
 
       // For every x value, calculate a y value with sine function
       var x = theta;

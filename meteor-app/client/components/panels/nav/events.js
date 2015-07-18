@@ -15,17 +15,26 @@ Template.navPanel.events({
     $("body").css( "overflow", "visible");
     $("body").css( "position", "static");
 
-    $(".map").addClass('map__lightbox');
-
-
     // inject the content into it 
     Blaze.render(Template.aboutContent, _.first($(".parallels-lightbox__about")) );
+
+    var bit = Bits.findOne( { type: 'image' });
+    var img = $(Utilities.getBitElement(bit._id)).find('img')
+    img.css('width', '300px')
+
+    Parallels.Animation.Image.waveSlice({
+      $img: img,
+      prependTo: ".wave-slice",
+      replaceOriginalBit: false
+    })
+    
+    $(".map").addClass('map__lightbox');
 
     // render template into it
     // animate it in
     // .morph from element size to full viewport size
     // .shimmer in content, with X button
-    //.wire X button to close, with Blaze.remove()
+    // .wire X button to close, with Blaze.remove()
 
   }
 
