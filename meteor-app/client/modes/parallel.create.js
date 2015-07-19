@@ -94,7 +94,7 @@ Parallels.AppModes['create-parallel'] = {
         wave = Parallels.Animation.Image.waveSlice({
           $img: $destBit.find('img'),
           prependTo: ".map",
-          replaceOriginalBit: true
+          replaceBitOnCanvas: true
         });
 
         // TODO: set z-index, to move the canvas over on top of the DOM version

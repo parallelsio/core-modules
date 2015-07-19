@@ -1,10 +1,13 @@
 .parallels-lightbox {
-  position: absolute;
-  z-index: 10000000; // should be higher than the nav panel
+  position: fixed;
+  overflow-y: scroll;
+  z-index: 100; // should be higher than the nav panel
   top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background-color: white;
   padding: 3em 15%;
-
 
 
   h1 {
@@ -20,8 +23,6 @@
     line-height: 1.4em;
     margin: 0 0 0.5em 0;
   }
-
-
 
   .content__about {
     position: relative;

@@ -1,17 +1,17 @@
 Template.aboutContent.onRendered(function () {
   var template = this;
-
-  var bit = Bits.findOne( { type: 'image' });
-  var img = $(Utilities.getBitElement(bit._id)).find('img')
-  img.css('width', '300px')
+  var img = $("<img src='images/ui/about-cropped.png' class='about__wave-slice-image' width='200px'>");
+  img.appendTo('body');
 
   Parallels.Keys.unbindActions();
 
   template.waveInstance = Parallels.Animation.Image.waveSlice({
-    $img: img,
+    $img: $(img),
     prependTo: ".wave-slice",
-    replaceOriginalBit: false
+    replaceBitOnCanvas: false
   })
+
+  $('.about__wave-slice-image').remove();
 
   // .shimmer in content, with X button
   // bindscape e

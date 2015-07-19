@@ -246,7 +246,7 @@ Parallels.Animation.Image = {
 
       // effect is meant for use on the main canvas, where this effect, 
       // once enabled, replaces the original static(non-animated) bit
-      replaceOriginalBit: true
+      replaceBitOnCanvas: true
     -----------------------------------------------------------
 
     TODO:
@@ -304,7 +304,7 @@ Parallels.Animation.Image = {
     canvas.width          = imgWidth;
 
     // TODO: replace with transform positioning for better perf
-    if (options.replaceOriginalBit){
+    if (options.replaceBitOnCanvas){
       canvas.style.position = "absolute";
       canvas.style.left     = parseInt(rect.left)  + "px";
       canvas.style.top      = (parseInt(rect.top) - (spillover / 2)) + "px";
