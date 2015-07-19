@@ -192,6 +192,10 @@ app.on('activate-with-no-open-windows', function () {
   return false;
 });
 
+// Enable debugging from browser: visit http://127.0.0.1:8315 to use web debugging tools
+app.commandLine.appendSwitch('remote-debugging-port', '8315');
+app.commandLine.appendSwitch('host-rules', 'MAP * 127.0.0.1');
+
 // Emitted when Electron has done all of the initialization.
 app.on('ready', function () {
   start(function (url, nodeChild, mongoChild) {
