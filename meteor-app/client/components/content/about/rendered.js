@@ -16,5 +16,10 @@ Template.aboutContent.onRendered(function () {
   // .shimmer in content, with X button
   // bindscape e
 
+  // template.mousetrap = new Mousetrap(template);
+  //   mousetrap.bind('esc', function (event) { 
+  //   event.stopPropagation();
+  // });
+
 });
    

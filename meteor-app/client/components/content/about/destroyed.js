@@ -11,5 +11,7 @@ Template.aboutContent.onDestroyed(function () {
   $(template.waveInstance.canvas).remove();
 
   Parallels.Keys.bindActions();
+
+  // template.mousetrap.unbind('esc');
 });
 
