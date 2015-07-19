@@ -1,6 +1,6 @@
 Template.aboutContent.onRendered(function () {
   var template = this;
-  var img = $("<img src='images/ui/about-cropped.png' class='about__wave-slice-image' width='200px'>");
+  var img = $("<img src='images/ui/about-cropped.png' class='about__wave-slice-image' width='245px' height='230px'>");
   img.appendTo('body');
 
   Parallels.Keys.unbindActions();
