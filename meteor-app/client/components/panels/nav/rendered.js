@@ -3,24 +3,11 @@ Template.navPanel.rendered = function() {
   // TODO: extract this choreographed sequence out of nav.
   // doesnt belong here, but somewhere in Map: when Map/canvas open
   // it triggers the nav + bits to be displayed
-  
+
   var displayIntro = Parallels.settings.get('PARALLELS_DISPLAY_INTRO_ANIMATION') || 'true';
   if (Parallels.utils.stringToBoolean(displayIntro)) {
 
     var timelineSequence = new TimelineMax({ paused: true });
-
-
-    // Greensock .call is similar to its .add,
-    // except .call lets us pass params to our function
-    timelineSequence
-      .add(timelineMenu())
-      .call(
-      Parallels.Animation.General.shimmer,
-      [
-        { $elements: $(".map .bit") }
-      ],
-      "-=0.5")
-      .play();
 
     // TODO: extract into Animation class
     // adapted from: http://codepen.io/vdaguenet/pen/raXBKp
@@ -56,6 +43,18 @@ Template.navPanel.rendered = function() {
 
       return timeline;
     }
+
+    // Greensock .call is similar to its .add,
+    // except .call lets us pass params to our function
+    timelineSequence
+      .add(timelineMenu())
+      .call(
+      Parallels.Animation.General.shimmer,
+      [
+        { $elements: $(".map .bit") }
+      ],
+      "-=0.5")
+      .play();
 
   }
 
