@@ -32,8 +32,6 @@
     "matchdep": "^0.3.0",
     "meteor-stubs": "0.0.6",
     "mocha": "^2.2.5",
-    "selenium-standalone": "2.44.0-7",
-    "selenium-webdriver": "2.44.0",
     "shelljs": "^0.4.0",
     "sourced": "0.0.14",
     "sourced-repo-mongo": "^0.3.5",
