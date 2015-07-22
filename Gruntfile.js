@@ -196,13 +196,13 @@ module.exports = function (grunt) {
             middlewares.unshift(
               busboy(),
 
-              function setCORSHeaders (req, res, next) {
+              function setCORSHeaders(req, res, next) {
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader('Access-Control-Allow-Methods', '*');
                 return next();
               },
 
-              function uploadImageRoute (req, res, next) {
+              function uploadImageRoute(req, res, next) {
                 if (req.url !== '/upload') return next();
 
                 if (req.method === 'OPTIONS') {
@@ -265,8 +265,18 @@ module.exports = function (grunt) {
     }
   });
 
-  // Load all grunt tasks
-  require('matchdep').filterDev(['grunt-*', '!grunt-cli', '!grunt-template-jasmine-requirejs']).forEach(grunt.loadNpmTasks);
+  grunt.loadNpmTasks("grunt-concurrent");
+  grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-contrib-connect");
+  grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-contrib-jade");
+  grunt.loadNpmTasks("grunt-contrib-jasmine");
+  grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-crx");
+  grunt.loadNpmTasks("grunt-env");
+  grunt.loadNpmTasks("grunt-preprocess");
+  grunt.loadNpmTasks("grunt-sass");
 
   //chromeOptions needs the extension to be a Base64 encoded string
   //so encode it, then build a requirejs module for it
@@ -326,7 +336,7 @@ module.exports = function (grunt) {
     grunt.task.requires('env:dev');
     var done = this.async();
     shell.cd(grunt.config('config').webApp);
-    shell.exec('meteor run', {async:true}, function () {
+    shell.exec('meteor run', {async: true}, function () {
       done();
     });
   });
@@ -335,8 +345,8 @@ module.exports = function (grunt) {
   grunt.registerTask('desktopRun', function () {
     grunt.task.requires('env:dev');
     var done = this.async();
-    shell.exec('node desktop-app/setup.js', {async:true}, function () {
-      shell.exec('node desktop-app/run.js', {async:true}, function () {
+    shell.exec('node desktop-app/setup.js', {async: true}, function () {
+      shell.exec('node desktop-app/run.js', {async: true}, function () {
         done();
       });
     });
