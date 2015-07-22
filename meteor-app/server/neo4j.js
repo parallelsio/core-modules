@@ -1,4 +1,4 @@
-var N4JDB = new Meteor.Neo4j(process.env.GRAPHENEDB_URL);
+var N4JDB = new Meteor.Neo4j(process.env.GRAPHENEDB_URL || "http://localhost:7474");
 
 // todo: we should be listening for undo logic here as well:
 InfiniteUndo.EventStream.on('entity.bit.created', function (event) {
