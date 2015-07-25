@@ -45,7 +45,7 @@
     "server": "grunt server",
     "dropneo": "grunt env:dev neo4jDrop",
     "resetdb": "neo4j restart && grunt env:dev neo4jReset meteorReset",
-    "exportlog": "mongoexport --host localhost:3001 --db meteor --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json",
+    "exportlog": "grunt env:dev exportlog",
     "importlog": "curl -X POST http://localhost:3000/import-eventlog -H \"Content-Type: application/json\"",
     "test": "grunt env:dev jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
     "test:integration": "grunt env:dev meteorPackageIntegration",

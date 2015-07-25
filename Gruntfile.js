@@ -1,6 +1,11 @@
 'use strict';
 
-var fs = require('fs'), util = require('util'), busboy = require('connect-busboy'), shell = require('shelljs');
+var
+  fs = require('fs'),
+  util = require('util'),
+  busboy = require('connect-busboy'),
+  shell = require('shelljs'),
+  url = require('url');
 
 module.exports = function (grunt) {
 
@@ -384,6 +389,40 @@ module.exports = function (grunt) {
     ];
 
     grunt.task.run(tasks);
+  });
+
+  grunt.registerTask('exportlog', 'Export an event log for a Parallels canvas', function () {
+    grunt.task.requires('env:dev');
+
+    var mongoURL, authString = "", db;
+
+    if (!shell.which('mongoexport')) {
+      grunt.fail.fatal("This script requires mongoexport. Make sure you've installed mongo using a package manager (not just meteor's mongo instance) e.g. brew install mongo")
+    } else {
+      mongoURL = url.parse(process.env.MONGO_URL || "mongodb://127.0.0.1:3001");
+      grunt.log.writeln('connecting to: ' + mongoURL.host);
+
+      if (mongoURL.auth) {
+        var user = mongoURL.auth.split(':')[0];
+        grunt.log.writeln('mongodb user: ' + user);
+        var password = mongoURL.auth.split(':')[1];
+        grunt.log.writeln('mongodb password: ' + password);
+        authString = " --username " + user + " --password " + password
+      }
+
+      db = mongoURL.pathname || "meteor";
+      if (db.indexOf("\/") === 0) {
+        db = db.replace(/\//,'');
+      }
+
+      var cmd = "mongoexport --host " + mongoURL.host + authString + " --db " + db + " --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json";
+      grunt.log.writeln('running: ' + cmd);
+      var result = shell.exec(cmd);
+
+      if (result.code !== 0) {
+        grunt.fail.fatal("mongoexport command failed");
+      }
+    }
   });
 
   grunt.registerTask('default', 'server');
