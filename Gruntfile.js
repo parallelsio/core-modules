@@ -397,7 +397,7 @@ module.exports = function (grunt) {
     var mongoURL, authString = "", db;
 
     if (!shell.which('mongoexport')) {
-      grunt.fail.fatal("This script requires mongoexport. Make sure you've installed mongo using a package manager (not just meteor's mongo instance) e.g. brew install mongo")
+      grunt.fail.fatal("This script requires mongoexport. Make sure you've installed mongo using a package manager (not just meteor's mongo instance) e.g. brew install mongo");
     } else {
       mongoURL = url.parse(process.env.MONGO_URL || "mongodb://127.0.0.1:3001");
       grunt.log.writeln('connecting to: ' + mongoURL.host);
@@ -407,7 +407,7 @@ module.exports = function (grunt) {
         grunt.log.writeln('mongodb user: ' + user);
         var password = mongoURL.auth.split(':')[1];
         grunt.log.writeln('mongodb password: ' + password);
-        authString = " --username " + user + " --password " + password
+        authString = " --username " + user + " --password " + password;
       }
 
       db = mongoURL.pathname || "meteor";
