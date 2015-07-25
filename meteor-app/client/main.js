@@ -31,6 +31,7 @@ Meteor.startup(function () {
   };
 
   Session.set('bitEditingId', null);
+  Session.set('canvasId', '1');
 
   $.fn.focusWithoutScrolling = function(){
     var x = verge.scrollX(), y = verge.scrollY();

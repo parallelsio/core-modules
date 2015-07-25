@@ -36,7 +36,7 @@ Template.bit.onRendered(function (){
       Meteor.call('changeState', {
         command: 'deleteBit',
         data: {
-          canvasId: '1',
+          canvasId: Session.get('canvasId'),
           _id: bitDatabaseId
         }
       });
@@ -48,7 +48,7 @@ Template.bit.onRendered(function (){
       Meteor.call('changeState', {
         command: 'uploadImage',
         data: {
-          canvasId: '1',
+          canvasId: Session.get('canvasId'),
           _id: bitDatabaseId,
           imageSource: bitUpload.instructions.download,
           uploadKey: null

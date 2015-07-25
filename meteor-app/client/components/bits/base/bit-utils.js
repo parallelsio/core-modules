@@ -53,7 +53,7 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       Meteor.call('changeState', {
         command: 'updateBitPosition',
         data: {
-          canvasId: '1',
+          canvasId: Session.get('canvasId'),
           _id: mongoId,
           position: { x: x, y: y }
         }

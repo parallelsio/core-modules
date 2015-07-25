@@ -86,7 +86,7 @@ SketchBit.prototype.save = function () {
     Meteor.call('changeState', {
       command: 'updateBitContent',
       data: {
-        canvasId: '1',
+        canvasId: Session.get('canvasId'),
         _id: self._id,
         content: self.ploma.getStrokes(),
         opacity: self.opacity

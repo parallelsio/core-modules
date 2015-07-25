@@ -16,7 +16,7 @@ var createImageBit = function (file, downloadUrl, event, uploadKey, index) {
     Meteor.call('changeState', {
       command: 'createBit',
       data: {
-        canvasId: "1",
+        canvasId: Session.get('canvasId'),
         type: "image",
         position: {
           x: (event.clientX + xOffset) + (30 * index),

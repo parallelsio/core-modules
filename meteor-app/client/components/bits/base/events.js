@@ -33,7 +33,7 @@ Template.bit.events({
         Meteor.call('changeState', {
           command: 'updateBitContent',
           data: {
-            canvasId: '1',
+            canvasId: Session.get('canvasId'),
             _id: this._id,
             content: template.find('.editbit').value
           }
