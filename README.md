@@ -148,22 +148,14 @@
 
 
 
-#### Set up a config file
+#### Set up environment variables in a config file
 
 > We use a config file, his is a [12-factor app](http://12factor.net/config) pattern.
-> When running the project locally, settings are loaded into the app via a `.env` file located in the project root. This file is loaded by a gruntfile plugin that puts the values listed in it, into your local *nix environment before Meteor is loaded. In staging+production servers, these variables are set on the server, so this file is ignored. Thus, don't check this file in. 
+> When running the project locally, settings are loaded into the app via a `.env` file located in the project root. 
+> This file is loaded by a gruntfile plugin that puts the values listed in it, into your local *nix environment before Meteor is loaded. 
+> In staging+production servers, these variables are set on the server, so this file is ignored. Thus, don't check this file in. 
 
-> A sample file will look like: 
-
-> ```
-> GRAPHENEDB_URL="http://neo4j-local:x4G69Go@localhost:7474"
-> NEO4J_DB_PATH="/usr/local/Cellar/neo4j/2.2.1/libexec/data/graph.db”
-
-> ```
-
-> For the app to run successfully, you'll need at least the `GRAPHENEDB_URL` set. For this, update the username + password to match what is set on your local machine. In this example, `neo4j-local` is the neo4j user name, and `x4G69Go` is the password. 
-
-> The `NEO4J_DB_PATH` variable is used when running the `$npm run resetdb` task, to clear the neo4j database. To set this variable correctly, find your neo4j path by running `sudo find / -name graph.db`
+> Copy `.env.example` to your project root, as `.env`, remove all the comments and set your variables.
 
 
 
