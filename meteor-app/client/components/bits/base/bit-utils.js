@@ -72,8 +72,8 @@ makeBitDraggable = function makeBitDraggable($bitElement){
         { 
           'path' : closingBox
         }, 
-        100, // speed 
-        mina.easeinout // easing 
+        800, // speed 
+        mina.elastic // easing 
       );
 
       timeline.to(
