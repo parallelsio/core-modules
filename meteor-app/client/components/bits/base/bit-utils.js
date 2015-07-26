@@ -1,16 +1,30 @@
+/*
+
+  Elasticity explore TODO: 
+
+    * fix z-Index stack
+    * dynamically draw correct size of SVG mask
+       - based on computedStyle. 
+       - This should also fix bit hover region is too large
+       - center reduced size thumbnail so it feels even
+    * disable elasticity expand for text bits, doesnt make sense as content is truncated
+    * fix bit preview, by disabling mask, or rather, only enable mask on drag
+    * switch to either to GSAP or two.js for morphing animation - no sense to have 3 SVG libs, re-disable browserPolicy.eval
+
+*/
+
 
 makeBitDraggable = function makeBitDraggable($bitElement){
 
   var timeline = new TimelineMax();
-  
+
+  // adding elasticity effect to bits during dragging.  
   // Adapted from: http://tympanus.net/Development/ElasticSVGElements/drag.html
-
-  var zIndex = 0;
   var $shapeElement = $bitElement.find( '.morph-shape' )[0];
-
   var s = Snap( $shapeElement.querySelector( 'svg' ) );
   var pathElement = s.select( 'path' );
   var closingBox = pathElement.attr( 'd' ) 
+  var zIndex = 0;
 
   // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
@@ -64,7 +78,7 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       $bitElement.removeClass('is-dragging');
 
       // remove elastic stretch container
-      ++zIndex;// TODO: z-index hack: refactor
+      ++zIndex;// TODO: z-index hack: refactor, destructive process over time to z-index stack
       $bitElement.css('zIndex', zIndex);
 
       pathElement.stop().animate( 

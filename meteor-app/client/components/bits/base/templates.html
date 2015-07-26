@@ -12,8 +12,12 @@
     data-upload-key="{{ uploadKey }}"
   >
 
-    <div id="morph-shape" class="morph-shape" data-morph-active="M273,273c0,0-55.8,24-123,24c-78.2,0-123-24-123-24S3,235.3,3,150C3,79.936,27,27,27,27S72,3,150,3
-    c85,0,123,24,123,24s24,38.43,24,123C297,229.646,273,273,273,273z">
+    <div 
+      id="morph-shape" 
+      class="morph-shape" 
+      data-morph-active="M273,273c0,0-55.8,24-123,24c-78.2,0-123-24-123-24S3,235.3,3,150C3,79.936,27,27,27,27S72,3,150,3
+    c85,0,123,24,123,24s24,38.43,24,123C297,229.646,273,273,273,273z"
+    >
       <svg width="100%" height="100%" viewBox="0 0 300 300" preserveAspectRatio="none">
         <defs>
           <clipPath id="clipPath-{{ _id }}">
@@ -25,9 +29,9 @@
     </div>
 
 
-    <div class="content {{ color }}" style="-webkit-clip-path: url(#clipPath-{{ _id }});">
+    <div class="content {{ color }}" >
         {{#if imageSrc }}
-          <img class="bit-image" src="{{ imageSrc }}" alt="{{ filename }}" >
+          <img class="bit-image" src="{{ imageSrc }}" alt="{{ filename }}" style="-webkit-clip-path: url(#clipPath-{{ _id }});">
         {{/if}}
 
         {{#if isTextBit }} 
