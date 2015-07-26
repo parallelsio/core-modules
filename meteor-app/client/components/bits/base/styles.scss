@@ -23,20 +23,23 @@ $ui-header-height: 0.2em;
 }
 
 .morph-shape {
-  /*position: absolute;*/
+  position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  -webkit-filter: drop-shadow( 5px 5px 5px #aaa );
+          filter: drop-shadow( 5px 5px 5px #aaa ); /* Same syntax as box-shadow */
+
 }
 
 .morph-shape svg path {
-  fill: #44474D;
+  fill: white;
 }
 
 .drag-element:active .morph-shape svg path,
 .drag-element.is-dragging .morph-shape svg path {
-  fill: #484b51;
+  fill: white;
 }
 
 

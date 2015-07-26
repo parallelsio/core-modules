@@ -6,8 +6,7 @@ makeBitDraggable = function makeBitDraggable($bitElement){
   // Adapted from: http://tympanus.net/Development/ElasticSVGElements/drag.html
 
   var zIndex = 0;
-  var el = document.getElementById( 'drag-element-2' )
-  var $shapeElement = el.querySelector( 'span.morph-shape' );
+  var $shapeElement = $bitElement.find( '.morph-shape' )[0];
 
   var s = Snap( $shapeElement.querySelector( 'svg' ) );
   var pathElement = s.select( 'path' );
