@@ -1,5 +1,46 @@
 $ui-header-height: 0.2em;
 
+
+
+.drag-element {
+  width: 260px;
+  height: 260px;
+  /*margin: 10px;*/
+  /*position: relative;*/
+  /*float: left;*/
+}
+
+.drag-element:hover {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.drag-element:active,
+.drag-element.is-dragging {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.morph-shape {
+  /*position: absolute;*/
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.morph-shape svg path {
+  fill: #44474D;
+}
+
+.drag-element:active .morph-shape svg path,
+.drag-element.is-dragging .morph-shape svg path {
+  fill: #484b51;
+}
+
+
+
 .bit {
   display: none; // hide bits by default when map loads: animation functions display them 
   position: absolute;
@@ -42,6 +83,7 @@ $ui-header-height: 0.2em;
   }
 
   &.create-parallel--origin { border: 0.4em solid yellow; }  
+
 
 }
 

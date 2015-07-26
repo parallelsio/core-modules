@@ -1,6 +1,10 @@
 BrowserPolicy.framing.disallow();
 BrowserPolicy.content.disallowInlineScripts();
-BrowserPolicy.content.disallowEval();
+
+// TODO: enabled because of Snap.SVG. Can we just whitelist this lib? Open issue?
+// enabled because getting similar errors to https://github.com/Urigo/angular-meteor/issues/207
+BrowserPolicy.content.allowEval();
+
 BrowserPolicy.content.allowInlineStyles();
 BrowserPolicy.content.allowFontDataUrl();
 

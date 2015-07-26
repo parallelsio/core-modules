@@ -1,6 +1,17 @@
+
 makeBitDraggable = function makeBitDraggable($bitElement){
 
   var timeline = new TimelineMax();
+  
+  // Adapted from: http://tympanus.net/Development/ElasticSVGElements/drag.html
+
+  var zIndex = 0;
+  var el = document.getElementById( 'drag-element-2' )
+  var $shapeElement = el.querySelector( 'span.morph-shape' );
+
+  var s = Snap( $shapeElement.querySelector( 'svg' ) );
+  var pathElement = s.select( 'path' );
+  var closingBox = pathElement.attr( 'd' ) 
 
   // // Needs to happen after position set, or else positions
   // // via manual transforms get overwritten by Draggable
@@ -10,7 +21,7 @@ makeBitDraggable = function makeBitDraggable($bitElement){
     throwProps:false,
     zIndexBoost:false,
 
-    onDragStart:function(event){
+    onDragStart:function(){
 
       // var x = this.endX;
       // var y = this.endY;
@@ -18,11 +29,22 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       Parallels.Audio.player.play('fx-cinq-drop');
     },
 
-    onPress: function(event){
+    onPress: function(event, pathElement, $bitElement){
 
       // TODO: improve performance
       // use image asset instead of CSS shadow:
       // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
+
+      $bitElement.addClass('is-dragging');
+
+      // elastic stretch
+      $bitElement.css('zIndex', 9999); // TODO: HACK: refactor
+
+      pathElement.stop().animate( 
+        {  'path' : $shapeElement.getAttribute( 'data-morph-active' )   }, 
+        100, // speed 
+        mina.easeinout // easing 
+      );
 
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
@@ -33,7 +55,27 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       });
     },
 
-    onRelease: function(event){
+    onPressParams: [
+      event,
+      pathElement,
+      $bitElement
+    ],
+
+    onRelease: function(event, pathElement, $bitElement){
+      $bitElement.removeClass('is-dragging');
+
+      // remove elastic stretch container
+      ++zIndex;// TODO: z-index hack: refactor
+      $bitElement.css('zIndex', zIndex);
+
+      pathElement.stop().animate( 
+        { 
+          'path' : closingBox
+        }, 
+        100, // speed 
+        mina.easeinout // easing 
+      );
+
       timeline.to(
         $bitElement,
         0.1,
@@ -44,6 +86,12 @@ makeBitDraggable = function makeBitDraggable($bitElement){
         }
       );
     },
+
+    onReleaseParams: [
+      event,
+      pathElement,
+      $bitElement
+    ],
 
     onDragEnd:function( event ) {
       var x = this.endX;
@@ -63,7 +111,10 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
       timeline.to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
+
     }
+
+
   });
 
   return draggable;
