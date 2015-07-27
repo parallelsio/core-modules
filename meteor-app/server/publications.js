@@ -1,5 +1,5 @@
-Meteor.publish('bits', function() {
-  return Bits.find();
+Meteor.publish('bits', function(canvasId) {
+  return Bits.find({canvasId: canvasId});
 });
 
 Meteor.publish('errors', function() {

@@ -1,15 +1,28 @@
 Router.configure({
   layout: 'layout',
   loadingTemplate: 'loading',
-  waitOn: function() {
-    return Meteor.subscribe('bits');
-  },
   fastRender: true
-
 });
 
 Router.route('/', function () {
-  this.render('map');
+  this.redirect('/canvas/demo');
+});
+
+Router.route('/canvas/:canvasId', {
+
+  waitOn: function () {
+    // return one handle, a function, or an array
+    return Meteor.subscribe('bits', this.params.canvasId);
+  },
+
+  action: function () {
+    this.render('map');
+  },
+
+  onBeforeAction: function () {
+    Session.set('canvasId', this.params.canvasId);
+    this.next();
+  }
 });
 
 Router.onBeforeAction('loading');

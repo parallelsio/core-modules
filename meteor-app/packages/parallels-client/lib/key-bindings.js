@@ -100,7 +100,7 @@ Parallels.Keys = {
         Meteor.call('changeState', {
           command: 'deleteBit',
           data: {
-            canvasId: '1',
+            canvasId: Session.get('canvasId'),
             _id: bitHoveringId
           }
         });
@@ -172,7 +172,7 @@ Parallels.Keys = {
       Meteor.call('changeState', {
         command: 'createBit',
         data: {
-          canvasId: '1',
+          canvasId: Session.get('canvasId'),
           type: 'sketch',
           content: [],
           opacity: 1,
@@ -180,7 +180,9 @@ Parallels.Keys = {
           position: pointerPosition
         }
       }, function (err, bit) {
-        Session.set('bitEditingId', bit._id);
+        if (!err) {
+          Session.set('bitEditingId', bit._id);
+        }
       });
     });
   },
@@ -192,14 +194,16 @@ Parallels.Keys = {
       Meteor.call('changeState', {
         command: 'createBit',
         data: {
-          canvasId: '1',
+          canvasId: Session.get('canvasId'),
           type: 'text',
           content: '',
           color: 'white',
           position: pointerPosition
         }
       }, function (err, bit) {
-        Session.set('bitEditingId', bit._id);
+        if (!err) {
+          Session.set('bitEditingId', bit._id);
+        }
       });
     });
   },
@@ -253,7 +257,7 @@ Parallels.Keys = {
     Parallels.log.debug("keyCommand:bindUndo");
 
     Mousetrap.bind('mod+z', function () {
-      Meteor.call('undoState', {canvasId: '1'});
+      Meteor.call('undoState', {canvasId: Session.get('canvasId')});
     });
   },
 
@@ -261,7 +265,7 @@ Parallels.Keys = {
     Parallels.log.debug("keyCommand:bindRedo");
 
     Mousetrap.bind('mod+shift+z', function () {
-      Meteor.call('redoState', {canvasId: '1'});
+      Meteor.call('redoState', {canvasId: Session.get('canvasId')});
     });
   }
 

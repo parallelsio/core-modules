@@ -14,15 +14,19 @@ var _changeState = function (msg) {
     var commitRepo = Meteor.wrapAsync(canvasRepository.commit, canvasRepository);
 
     var canvas = getCanvas(msg.data.canvasId);
-    var canvasAction = canvas[msg.command];
-
-    if (canvasAction) {
-      var action = Meteor.wrapAsync(canvasAction, canvas);
-      var response = action(msg.data);
-      commitRepo(canvas, {/* forceSnapshot: true */});
-      return response;
+    if (canvas.isReadonly()) {
+      Parallels.log.warn("changeState: Command", msg.command, "not allowed on readonly canvas 'demo'");
+      throw new Meteor.Error("readonly-canvas", "Canvas is readonly");
     } else {
-      Parallels.log.warn("changeState: Command not recognized : ", msg.command);
+      var canvasAction = canvas[msg.command];
+      if (canvasAction) {
+        var action = Meteor.wrapAsync(canvasAction, canvas);
+        var response = action(msg.data);
+        commitRepo(canvas, {/* forceSnapshot: true */});
+        return response;
+      } else {
+        Parallels.log.warn("changeState: Command not recognized : ", msg.command);
+      }
     }
   }
 };

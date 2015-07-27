@@ -1,16 +1,14 @@
 Router.route('/import-eventlog', function(){
   var responseMessage, events;
 
-  events = JSON.parse(Assets.getText("data-backups/canvas.events.json"));
+  var importedEventsCollection = new Meteor.Collection("imported.events");
+  var importedEvents = importedEventsCollection.find({}, {sort: {version: 1}});
 
-  if (!events || !Array.isArray(events)) {
-    this.response.statusCode = 400;
-    responseMessage = "\n\nSomething is wrong with the data you are trying to import.\n\n"
-  } else if (events.length < 1) {
+  if (importedEvents.count() < 1) {
     this.response.statusCode = 400;
     responseMessage = "\n\nYou didn't give me any events to import.\n\n";
   } else {
-    events.forEach(function (event) {
+    importedEvents.forEach(function (event) {
       Meteor.call('changeState', {
         command: event.method,
         data: event.data

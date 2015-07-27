@@ -8,6 +8,7 @@ var BitsUI = {
 
     var newBit = {
       _id: bit._id,
+      canvasId: bit.canvasId,
       url: bit.url,
       title: bit.title,
       liftStatus: bit.liftStatus,
