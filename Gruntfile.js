@@ -400,7 +400,6 @@ module.exports = function (grunt) {
       grunt.fail.fatal("This script requires mongoexport. Make sure you've installed mongo using a package manager (not just meteor's mongo instance) e.g. brew install mongo");
     } else {
       mongoURL = url.parse(process.env.MONGO_URL || "mongodb://127.0.0.1:3001");
-      grunt.log.writeln('connecting to: ' + mongoURL.host);
 
       if (mongoURL.auth) {
         var user = mongoURL.auth.split(':')[0];
@@ -416,10 +415,13 @@ module.exports = function (grunt) {
       }
 
       var cmd = "mongoexport --host " + mongoURL.host + authString + " --db " + db + " --collection Canvas.events --jsonArray --sort '{version: 1}' --out meteor-app/private/data-backups/canvas.events.json";
-      grunt.log.writeln('running: ' + cmd);
+      grunt.log.writeln();
+      grunt.log.writeln('=============> ' + cmd);
+      grunt.log.writeln();
       var result = shell.exec(cmd);
 
       if (result.code !== 0) {
+        grunt.log.writeln();
         grunt.fail.fatal("mongoexport command failed");
       }
     }
@@ -434,7 +436,6 @@ module.exports = function (grunt) {
       grunt.fail.fatal("This script requires mongoimport. Make sure you've installed mongo using a package manager (not just meteor's mongo instance) e.g. brew install mongo");
     } else {
       mongoURL = url.parse(process.env.MONGO_URL || "mongodb://127.0.0.1:3001");
-      grunt.log.writeln('connecting to: ' + mongoURL.host);
 
       if (mongoURL.auth) {
         var user = mongoURL.auth.split(':')[0];
@@ -450,12 +451,35 @@ module.exports = function (grunt) {
       }
 
       var cmd = "mongoimport --host " + mongoURL.host + authString + " --db " + db + " --collection imported.events --jsonArray --drop --maintainInsertionOrder --file meteor-app/private/data-backups/canvas.events.json";
-      grunt.log.writeln('running: ' + cmd);
+      grunt.log.writeln();
+      grunt.log.writeln('=============> ' + cmd);
+      grunt.log.writeln();
       var result = shell.exec(cmd);
 
       if (result.code !== 0) {
+        grunt.log.writeln();
         grunt.fail.fatal("mongoimport command failed");
       }
+    }
+  });
+
+  grunt.registerTask('replayEvents', 'Execute an API request to kickoff event replay after importing an eventlog', function () {
+    var target = grunt.option('target') || 'localhost:3000';
+    var canvasIdOverride = grunt.option('canvasIdOverride');
+    var cmd;
+    if (canvasIdOverride) {
+      cmd = 'curl -X POST ' + target + '/import-eventlog?canvasIdOverride=' + canvasIdOverride;
+    } else {
+      cmd = 'curl -X POST ' + target + '/import-eventlog';
+    }
+    grunt.log.writeln();
+    grunt.log.writeln('=============> ' + cmd);
+    grunt.log.writeln();
+    var result = shell.exec(cmd);
+
+    if (result.code !== 0) {
+      grunt.log.writeln();
+      grunt.fail.fatal('Replay eventlog request failed');
     }
   });
 
