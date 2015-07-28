@@ -6,7 +6,7 @@
 
 Parallels.Audio.player = {
 
-  _folderPath: "sounds/",
+  _folderPath: "/sounds/",
 
   play: function(soundFileName){
 
