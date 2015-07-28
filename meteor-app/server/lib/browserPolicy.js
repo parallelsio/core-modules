@@ -6,10 +6,11 @@ BrowserPolicy.content.allowFontDataUrl();
 
 var trusted = [
   process.env.AWS_BUCKET + '.s3.amazonaws.com',
-  
+
   'fonts.gstatic.com',
   'fonts.googleapis.com',
   'placeholdit.imgix.net',
+  'placehold.it',
 
   'localhost:9000'
 ];
