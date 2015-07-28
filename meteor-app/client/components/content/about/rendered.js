@@ -1,6 +1,6 @@
 Template.aboutContent.onRendered(function () {
   var template = this;
-  var img = $("<img src='images/ui/about-cropped.png' class='about__wave-slice-image' width='245px' height='230px'>");
+  var img = $("<img src='/images/ui/about-cropped.png' class='about__wave-slice-image' width='245px' height='230px'>");
   img.appendTo('body');
 
   Parallels.Keys.unbindActions();
@@ -17,9 +17,9 @@ Template.aboutContent.onRendered(function () {
   // bindscape e
 
   // template.mousetrap = new Mousetrap(template);
-  //   mousetrap.bind('esc', function (event) { 
+  //   mousetrap.bind('esc', function (event) {
   //   event.stopPropagation();
   // });
 
 });
-   
+
