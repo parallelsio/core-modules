@@ -21,7 +21,7 @@ var FriendlyEventDescription = {
 
 Template.eventlog.helpers({
   events: function () {
-    return CanvasEvents.find({});
+    return CanvasEvents.find({}, {sort: {timestamp: -1}});
   }
 });
 
