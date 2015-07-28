@@ -7,5 +7,5 @@ Meteor.publish('errors', function() {
 });
 
 Meteor.publish('Canvas.events', function() {
-  return CanvasEvents.find();
+  return CanvasEvents.find({}, {sort: {timestamp: -1}, limit: 50});
 });
