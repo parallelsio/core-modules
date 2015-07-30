@@ -4,8 +4,8 @@ Template.navPanel.rendered = function() {
   // doesnt belong here, but somewhere in Map: when Map/canvas open
   // it triggers the nav + bits to be displayed
 
-  var displayIntro = Parallels.settings.get('PARALLELS_DISPLAY_INTRO_ANIMATION') || 'true';
-  if (Parallels.utils.stringToBoolean(displayIntro)) {
+  var displayIntro = Parallels.utils.stringToBoolean(Session.get('PARALLELS_DISPLAY_INTRO_ANIMATION') || true);
+  if (displayIntro) {
 
     var timelineSequence = new TimelineMax({ paused: true });
 

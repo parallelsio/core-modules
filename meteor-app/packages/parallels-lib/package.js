@@ -14,12 +14,15 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
 
   api.use([
+    'reactive-dict',
+    'session',
     "practicalmeteor:loglevel@1.2.0_1"
   ], ['client', 'server'], {weak: false, unordered: false});
 
   api.addFiles([
     'namespace.js',
     'lib/log.js',
+    'lib/settings.js',
     'lib/utils.js'
   ], ['server', 'client']);
 

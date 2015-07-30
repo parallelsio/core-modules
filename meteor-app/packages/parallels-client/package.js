@@ -15,6 +15,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
 
   api.use([
+    "session",
     "parallels-lib@0.0.1",
     "chuangbo:marked@0.3.2_4",
     "angelcabo:mousetrap@1.0.0"

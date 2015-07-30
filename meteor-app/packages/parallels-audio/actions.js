@@ -10,7 +10,8 @@ Parallels.Audio.player = {
 
   play: function(soundFileName){
 
-    if (Session.equals('isAudioEnabled', true)){
+    var isAudioEnabled = Parallels.utils.stringToBoolean(Session.get('PARALLELS_IS_AUDIO_ENABLED') || true);
+    if (isAudioEnabled){
       Parallels.log.debug("audio:play: via Howler: ", soundFileName);
       new Howl({ urls: [ this._folderPath + soundFileName + ".wav"] }).play();
     }

@@ -52,8 +52,7 @@ Template.map.events({
 
     var fileUploads = _.map(droppedFiles, function (file, index) {
       var uploadKey = Math.random().toString(36).slice(2);
-      var uploader = Parallels.settings.get('PARALLELS_FILE_UPLOADER') || 'fileSystemUploader';
-      var slingshotUploader = new Slingshot.Upload(uploader);
+      var slingshotUploader = new Slingshot.Upload(Session.get('PARALLELS_FILE_UPLOADER') || 'fileSystemUploader');
       slingshotUploader.send(file, function (error) {
         if (error) Parallels.log.debug({dateTimeStamp: Date.now(), action: 'Image Upload', message: error.message});
       });
