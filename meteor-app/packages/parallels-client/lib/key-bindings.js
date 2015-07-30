@@ -197,6 +197,8 @@ Parallels.Keys = {
           canvasId: Session.get('canvasId'),
           type: 'text',
           content: '',
+          width: '150',
+          height: '50',
           color: 'white',
           position: pointerPosition
         }

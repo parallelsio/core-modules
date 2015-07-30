@@ -4,8 +4,33 @@ Template.bit.onRendered(function (){
   var bit = template.data;
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
+  var $content = $bitElement.find('.content');
+  var $uiWidgetHeader = $(template.find('.ui-widget-header'));
 
-  makeBitDraggable($bitElement);
+  $content.css("height", bit.height);
+  $content.css("width", bit.width);
+  $content.resizable({
+    handles: {
+      se: '.ui-resizable-se',
+      e: '.ui-resizable-e',
+      s: '.ui-resizable-s'
+    },
+    stop: function (event, $resizable) {
+      var $editbitElement = $(template.find('.editbit'));
+      Meteor.call('changeState', {
+        command: 'updateBitContent',
+        data: {
+          canvasId: Session.get('canvasId'),
+          _id: bit._id,
+          content: $editbitElement.html(),
+          height: $resizable.size.height,
+          width: $resizable.size.width
+        }
+      });
+    }
+  });
+
+  makeBitDraggable($bitElement, $uiWidgetHeader);
 
 
   // When a Bit position is updated during a concurrent session (by someone else)

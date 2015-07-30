@@ -1,4 +1,4 @@
-makeBitDraggable = function makeBitDraggable($bitElement){
+makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
 
   var timeline = new TimelineMax();
 
@@ -6,7 +6,7 @@ makeBitDraggable = function makeBitDraggable($bitElement){
   // // via manual transforms get overwritten by Draggable
   // // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   var draggable = Draggable.create($bitElement, {
-
+    trigger: $uiWidgetHeader,
     throwProps:false,
     zIndexBoost:false,
 
@@ -16,9 +16,6 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       // var y = this.endY;
       // Parallels.log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
-    },
-
-    onPress: function(event){
 
       // TODO: improve performance
       // use image asset instead of CSS shadow:
@@ -33,7 +30,11 @@ makeBitDraggable = function makeBitDraggable($bitElement){
       });
     },
 
-    onRelease: function(event){
+    onDragEnd:function( event ) {
+      var x = this.endX;
+      var y = this.endY;
+      var mongoId = this.target.dataset.id;
+
       timeline.to(
         $bitElement,
         0.1,
@@ -43,12 +44,6 @@ makeBitDraggable = function makeBitDraggable($bitElement){
           ease: Expo.easeOut
         }
       );
-    },
-
-    onDragEnd:function( event ) {
-      var x = this.endX;
-      var y = this.endY;
-      var mongoId = this.target.dataset.id;
 
       Meteor.call('changeState', {
         command: 'updateBitPosition',

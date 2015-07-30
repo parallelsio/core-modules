@@ -1,5 +1,3 @@
-$ui-header-height: 0.2em;
-
 .bit {
   display: none; // hide bits by default when map loads: animation functions display them 
   position: absolute;
@@ -12,17 +10,26 @@ $ui-header-height: 0.2em;
     position: absolute;
   }
 
-
-  // ******** subclasses (type image, text) ************    
-  &.text {
-    padding: 0.1em;
-    background-color: white;
+  .editbit {
+    outline: none;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
   }
 
-  &.editing .content,
-  &.text .content {
-    padding: 1em;
-    background-color: #fff;
+  // ******** subclasses (type image, text) ************
+
+  .ui-resizable-se {
+    bottom: 5px;
+    right: 2px;
+    font-size: inherit;
+  }
+
+  .content, {
+    position: relative;
+    z-index: 10;
+    background-color: white;
   }
 
   &.image img {
@@ -34,11 +41,20 @@ $ui-header-height: 0.2em;
   // ************ states ***********
   &.hovering .ui-widget-header {
     display: block;
-    top: -$ui-header-height;
-    height: $ui-header-height;
-    width: 100%;
-    background-color: #3C9FFF;
+    top: -10px;
+    height: -moz-calc(100% + 60px);
+    height: -webkit-calc(100% + 60px);
+    height: calc(100% + 60px);
+    width: -moz-calc(100% + 20px);
+    width: -webkit-calc(100% + 20px);
+    width: calc(100% + 20px);
+    background-color: #C6CED8;
+    left: -10px;
+    backface-visibility: hidden;
     cursor: move;
+    box-shadow: 0 0 5px #535F6F;
+    -moz-box-shadow: 0 0 5px #535F6F;
+    -webkit-box-shadow: 0 0 5px #535F6F;
   }
 
   &.create-parallel--origin { border: 0.4em solid yellow; }  

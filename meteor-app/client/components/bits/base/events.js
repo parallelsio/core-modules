@@ -1,18 +1,43 @@
 BitEvents = {
 
-  hoverInBit: function (event, template) {
-    Session.set('bitHoveringId', template.data._id);
-    Parallels.Audio.player.play('fx-ting3');
+  //todo: clean this shit up
 
-    // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
-    var $bit = $(template.firstNode);
-    $bit.addClass('hovering');
+
+  hoverInBit: function (event, template) {
+    if (!Session.get('mousedown')) {
+      Session.set('bitHoveringId', template.data._id);
+      Session.set('bitEditingId', template.data._id);
+      Parallels.Audio.player.play('fx-ting3');
+
+      // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
+      var $bit = $(template.firstNode);
+      $bit.find('.editbit').focus();
+      $bit.addClass('hovering');
+    }
   },
 
   hoverOutBit: function (event, template){
-    Session.set('bitHoveringId', null);
-    var $bit = $(template.firstNode);
-    $bit.removeClass('hovering');
+    if (!Session.get('mousedown')) {
+      Session.set('bitHoveringId', null);
+      var $bit = $(template.firstNode);
+      $bit.removeClass('hovering');
+
+      var $editbitElement = $(template.find('.editbit'));
+      if (this.content != $editbitElement.html()) {
+        Meteor.call('changeState', {
+          command: 'updateBitContent',
+          data: {
+            canvasId: Session.get('canvasId'),
+            _id: this._id,
+            content: $editbitElement.html(),
+            height: $editbitElement.height(),
+            width: $editbitElement.width()
+          }
+        });
+
+        Parallels.Audio.player.play('fx-cha-ching');
+      }
+    }
   }
 };
 
@@ -25,28 +50,11 @@ Template.bit.events({
 
   'mouseleave .bit': BitEvents.hoverOutBit,
 
-  'keyup .bit': function (event, template) {
+  'mousedown .bit': function () {
+    Session.set('mousedown', true);
+  },
 
-    if(event.which === 13){
-
-      if (this.content != template.find('.editbit').value) {
-        Meteor.call('changeState', {
-          command: 'updateBitContent',
-          data: {
-            canvasId: Session.get('canvasId'),
-            _id: this._id,
-            content: template.find('.editbit').value
-          }
-        });
-      }
-
-      Parallels.Audio.player.play('fx-cha-ching');
-
-      Session.set('bitEditingId', null);
-    }
-
-    if (event.which === 27) {
-      Session.set('bitEditingId', null);
-    }
+  'mouseup .bit': function () {
+    Session.set('mousedown', false);
   }
 });
