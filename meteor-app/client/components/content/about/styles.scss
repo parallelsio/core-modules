@@ -24,7 +24,7 @@
     margin: 0 0 0.5em 0;
   }
 
-  .content__about {
+  .about__container {
     position: relative;
     top: -40px;
 
@@ -33,6 +33,9 @@
         height: 440px;
         margin: -50px 0;
     }
+
+    .about__link-menu           { display: none;}
+    .about__link-menu.selected  { display: block; }
   }
 
   .about__footer {

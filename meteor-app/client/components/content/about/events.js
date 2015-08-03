@@ -12,14 +12,14 @@ function closeAboutLightbox(event, template){
 
       // TODO: make Utility function
       // reenable scrolling
-      $("body").css( "overflow", "visible");
-      $("body").css( "position", "static");
+      $('body').css( 'overflow', 'visible');
+      $('body').css( 'position', 'static');
       $('.map').removeClass('map__lightbox');
     },
     onCompleteParams:[ template ]
   });
 
-  timeline.to($about, 0.2, {  alpha: 0, display: "none",  ease: Expo.easeOut  });
+  timeline.to($about, 0.2, {  alpha: 0, display: 'none',  ease: Expo.easeOut  });
 }
 
 
@@ -27,9 +27,16 @@ Template.aboutContent.events({
 
   'click .close-button': closeAboutLightbox,
 
-  'click .content__about': function(event, template) {
+  'click .about': function(event, template) {
     event.stopPropagation();
+  },
+
+  'click .about__content': function(event, template){
+    $( '.about__content-long' ).slideToggle( 'fast' );
+    $( '.about__content-short' ).slideToggle( 'fast' );
+    $(event.target).toggleClass('selected');
   }
+
 });
 
 
