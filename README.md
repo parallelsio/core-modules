@@ -2,19 +2,22 @@
 
 <img src="docs/github-readme-image.png" />
 
-##[Parallels](http://parallels.io) (working title): <br>A free tool for creativity + play. Designed for storytellers of all kinds, who think + work non-linearly
+##[Parallels](http://makeparallels.herokuapp.com) (working title): 
+<br>
+A free + open source tool designed to help your creativity flow: easily stitch together bits of media living across many devices + services, into creative works full of life.
 
 > We're a [diverse, distributed](https://hackpad.com/Parallels-Cast-Friends-XGzlw9Mxg39) community of designers, developers, artists + researchers interested in changing the way we organize and connect ideas. 
 
 ####4 design principles guide our vision:
 > * Flow - a system that responds in realtime, always remembers where you are, and lets you play without consequences
 > * Remixablity: anything can be asssembled, broken apart, recombined
-> * Parallels: create + connect ideas with links, or parallels, as we call them. This allows new ways of searching + organization
-> * Privacy by design- Only you have access to the data you generate, ie, [zero-knowledge](http://zeroknowledgeprivacy.org) philosophy. 
+> * Parallels: create + connect ideas with links, or parallels, as we call them. This opens up possibilities for new types of search + organization
+> * Private-by-design- Only you have access to the data you generate, ie, [zero-knowledge](http://zeroknowledgeprivacy.org) philosophy. 
 
 
 > * [Motivation, goals, open research questions](http://bit.ly/1JbkU4y)
 > * [Blog](http://parallels.ghost.io)
+> * [Playground](http://makeparallels.herokuapp.com). Add `/canvas/your-unique-canvas-name/` to the URL, to try your own canvas. For example: `http://makeparallels.herokuapp.com/canvas/alice-wild-ideas-for-encryption`. Your first visit to the URL you chose will boot up that canvas. Privacy currently via obfuscation: pick a unique canvas name and share it only with your collaborators. Data will be cleared periodically. No user account system yet. Please note we are using an Amazon s3 instance to host images for this playground, so upload content you expect will be publicly accessible.
 
 
 > This is an alpha version and a proof of concept. It's incomplete, with bugs and continuously changing code, design + features

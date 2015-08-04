@@ -23,6 +23,7 @@ function closeAboutLightbox(event, template){
 }
 
 
+
 Template.aboutContent.events({
 
   'click .close-button': closeAboutLightbox,
@@ -31,11 +32,27 @@ Template.aboutContent.events({
     event.stopPropagation();
   },
 
-  'click .about__content': function(event, template){
-    $( '.about__content-long' ).slideToggle( 'fast' );
-    $( '.about__content-short' ).slideToggle( 'fast' );
-    $(event.target).toggleClass('selected');
+  'click .about__menu-link': function(event, template){
+
+    var $link = $( event.target ).parent();
+
+    if ( $link.hasClass("detailed") ) {
+      $link.html('<span class=about__menu-link-arrow>▲</span><span class=about__menu-link-text>hide detailed</span>');
+      $link.removeClass('detailed');
+      $link.addClass('summary');
+    } 
+
+    else if ( $link.hasClass( "summary" )) {
+      $link.html('<span class=about__menu-link-arrow>▼</span><span class=about__menu-link-text>show detailed</span>');
+      $link.removeClass('summary');
+      $link.addClass('detailed');
+    }
+
+    $( '.about__content-detailed' ).slideToggle( 'fast' );
+    $( '.about__content-summary' ).slideToggle( 'fast' );
+
   }
+
 
 });
 

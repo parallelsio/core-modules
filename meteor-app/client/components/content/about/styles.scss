@@ -13,14 +13,14 @@
   h1 {
     display: inline-block;
     font-weight: 600;
-    margin: 1.5em 0 0.75em 0;
+    margin: 2em 0 0.75em 0;
     border-bottom: #BEBEBE solid 1px;
     padding: 0 2em 0.2em 0;
     line-height: 1.35em;
   }
 
   p { 
-    line-height: 1.4em;
+    line-height: 1.55em;
     margin: 0 0 0.5em 0;
   }
 
@@ -34,8 +34,17 @@
         margin: -50px 0;
     }
 
-    .about__link-menu           { display: none;}
-    .about__link-menu.selected  { display: block; }
+    .about__menu                  { display:block; }
+    .about__menu-link             { margin: 0 0 1.5em 0; display: block; text-decoration: none;}
+    .about__menu-link-arrow       { 
+      text-decoration: none;
+      font-size: 0.7em;
+      margin: 0 0.75em 0 0; 
+    }
+    .about__menu-link-text        { text-decoration: underline; color: #8B8BF5; }
+    .about__content-detailed          { display: none; }
+    
+
   }
 
   .about__footer {
