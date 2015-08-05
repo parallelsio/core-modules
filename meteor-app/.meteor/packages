@@ -22,7 +22,6 @@ npm-container
 ostrio:neo4jdriver
 momentjs:moment
 raix:ui-dropped-event
-aldeed:autoform
 cosmos:browserify
 cwaring:modernizr
 chuangbo:marked
@@ -36,3 +35,4 @@ peerlibrary:classy-test
 parallels-lib
 parallels-client
 parallels-server
+templates:forms
