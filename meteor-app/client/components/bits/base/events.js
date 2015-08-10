@@ -1,7 +1,6 @@
 BitEvents = {
 
-  //todo: clean this shit up
-
+  // TODO: clean up
 
   hoverInBit: function (event, template) {
     if (!Session.get('mousedown')) {
