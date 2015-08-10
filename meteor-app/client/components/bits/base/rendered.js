@@ -5,6 +5,7 @@ Template.bit.onRendered(function (){
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
   var $content = $bitElement.find('.bit__content');
+  var $editbitElement = $content.find('.bit__editing');
   var $dragHandle = $(template.find('.bit__drag-handle'));
 
   $content.css("height", bit.height);
@@ -14,7 +15,6 @@ Template.bit.onRendered(function (){
     handles: { se: '.ui-resizable-se' },
 
     stop: function (event, $resizable) {
-      var $editbitElement = $(template.find('.bit__editing'));
       Meteor.call('changeState', {
         command: 'updateBitContent',
         data: {
@@ -25,6 +25,22 @@ Template.bit.onRendered(function (){
           width: $resizable.size.width
         }
       });
+    }
+  });
+
+  $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
+    var scrollTo = null;
+
+    if (e.type == 'mousewheel') {
+      scrollTo = (e.originalEvent.wheelDelta * -1);
+    }
+    else if (e.type == 'DOMMouseScroll') {
+      scrollTo = 40 * e.originalEvent.detail;
+    }
+
+    if (scrollTo) {
+      e.preventDefault();
+      $(this).scrollTop(scrollTo + $(this).scrollTop());
     }
   });
 
