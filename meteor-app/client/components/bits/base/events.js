@@ -12,7 +12,7 @@ BitEvents = {
       var $bit = $(template.firstNode);
       $bit.find('.bit__editing').focus();
       $bit.addClass('hovering');
-      $bit.find('.bit__resize-triangle').show();
+      $bit.find('.bit__resize').show();
     }
   },
 
@@ -21,7 +21,7 @@ BitEvents = {
       Session.set('bitHoveringId', null);
       var $bit = $(template.firstNode);
       $bit.removeClass('hovering');
-      $bit.find('.bit__resize-triangle').hide();
+      $bit.find('.bit__resize').hide();
 
       var $editbitElement = $(template.find('.bit__editing'));
       if (this.content != $editbitElement.html()) {
