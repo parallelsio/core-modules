@@ -10,6 +10,10 @@ makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
     throwProps:false,
     zIndexBoost:false,
 
+    onPress: function(event){
+      timeline.to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, opacity: "0.1", ease: Expo.easeOut });
+    },
+
     onDragStart:function(event){
 
       // var x = this.endX;
@@ -23,11 +27,14 @@ makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
 
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
-      timeline.to($bitElement, 0.20, {
-        scale: 1.05,
-        boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
-        ease: Expo.easeOut
-      });
+      timeline
+        .to($bitElement, 0.20, {
+          scale: 1.05,
+          boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
+          ease: Expo.easeOut
+        });
+        // .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, opacity: "0.1", ease: Expo.easeOut })
+
     },
 
     onDragEnd:function( event ) {
@@ -57,7 +64,9 @@ makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
       // a random tone, in the mid-range of the scale
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
-      timeline.to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
+      timeline
+        .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
+        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, opacity: "1", ease: Expo.easeOut })
     }
   });
 

@@ -11,8 +11,9 @@ BitEvents = {
 
       // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
       var $bit = $(template.firstNode);
-      $bit.find('.editbit').focus();
+      $bit.find('.bit__editing').focus();
       $bit.addClass('hovering');
+      $bit.find('.bit__resize-triangle').show();
     }
   },
 
@@ -21,8 +22,9 @@ BitEvents = {
       Session.set('bitHoveringId', null);
       var $bit = $(template.firstNode);
       $bit.removeClass('hovering');
+      $bit.find('.bit__resize-triangle').hide();
 
-      var $editbitElement = $(template.find('.editbit'));
+      var $editbitElement = $(template.find('.bit__editing'));
       if (this.content != $editbitElement.html()) {
         Meteor.call('changeState', {
           command: 'updateBitContent',

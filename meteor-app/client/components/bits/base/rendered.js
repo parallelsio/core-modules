@@ -4,19 +4,17 @@ Template.bit.onRendered(function (){
   var bit = template.data;
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
-  var $content = $bitElement.find('.content');
-  var $uiWidgetHeader = $(template.find('.ui-widget-header'));
+  var $content = $bitElement.find('.bit__content');
+  var $dragHandle = $(template.find('.bit__drag-handle'));
 
   $content.css("height", bit.height);
   $content.css("width", bit.width);
+
   $content.resizable({
-    handles: {
-      se: '.ui-resizable-se',
-      e: '.ui-resizable-e',
-      s: '.ui-resizable-s'
-    },
+    handles: { se: '.ui-resizable-se' },
+
     stop: function (event, $resizable) {
-      var $editbitElement = $(template.find('.editbit'));
+      var $editbitElement = $(template.find('.bit__editing'));
       Meteor.call('changeState', {
         command: 'updateBitContent',
         data: {
@@ -30,7 +28,7 @@ Template.bit.onRendered(function (){
     }
   });
 
-  makeBitDraggable($bitElement, $uiWidgetHeader);
+  makeBitDraggable($bitElement, $dragHandle);
 
 
   // When a Bit position is updated during a concurrent session (by someone else)
@@ -55,7 +53,7 @@ Template.bit.onRendered(function (){
       /*
         AB: OQ: would show a friendly error message but the next line we remove the bit
         so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
-        $bitElement.find('.content')[0].classList.add('complete', 'error');
+        $bitElement.find('.bit__content')[0].classList.add('complete', 'error');
       */
       computation.stop();
       Meteor.call('changeState', {
