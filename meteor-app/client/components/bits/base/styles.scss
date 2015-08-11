@@ -19,7 +19,7 @@
 .bit__drag-handle {
   display: none;
   position: absolute;
-  margin: 1.25em -1.25em;
+  // margin: 1.25em -1.25em;
   z-index: 1;
 }
 
@@ -41,7 +41,8 @@
 .bit.text .bit__content {
   background: white;
   padding: 1.25em;
-  // z-index: 10;
+  min-height: 60px;
+  min-width: 150px;
 }
 
 
