@@ -51,15 +51,11 @@ Template.bit.events({
     event.stopPropagation() // so map doesnt register a double click
 
     var $bitElement = $(template.firstNode);
-    // var bitData = Blaze.getData(event.target);
-    if (template.data.type === "text" && Session.equals('textBitEditingId', null)){
+    if (template.data.type === "text" && !(Session.get('textBitEditingId'))) { 
       Session.set('textBitEditingId', template.data._id);
       Parallels.AppModes['edit-text-bit'].enter($bitElement, template);
     }
 
-    // else if (bitData.type === "sketch") {
-    //   Parallels.AppModes['sketch-bit'].
-    // }
   }
 
 });

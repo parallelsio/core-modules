@@ -5,31 +5,38 @@ Parallels.AppModes['edit-text-bit'] = {
 
     Parallels.log.debug("mode:edit-text-bit:enter");
 
-    // handle both pathways into this function:
-    // A: person hovers over a bit, presses key command  
-    // B: person double clicks the bit
-
-    // if (template){
-    //   var $bitElement = $(template.firstNode);
-    //   Session.set('textBitEditingId', template.data._id);
-    // }
-
-    // else {
-    //   var $bitElement = Utilities.getBitElement(Session.get('bitHoveringId'));
-    //   Session.set('textBitEditingId', Session.set('bitHoveringId'));
-    // }
-
     //   Session.set('currentMode', null);
+    Draggable.get( $bitElement ).disable(); // needs to happen before the resizeable is set, or else resizable wont work
 
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
 
     $editingElement.attr('contenteditable', 'true');
-    $content.resizable( "enable" );
+
+    $content.resizable({
+      handles: { se: '.ui-resizable-se' },
+
+      stop: function (event, $resizable) {
+        // getting weird behavior when trying to resize, 
+        // as this Session var remain 'stuck'. 
+        // Clear it as a hackfix
+        Session.set('mousedown', null);
+
+        Meteor.call('changeState', {
+          command: 'updateBitContent',
+          data: {
+            canvasId: Session.get('canvasId'),
+            _id: template.data._id,
+            content: $editingElement.html(),
+            height: $resizable.size.height,
+            width: $resizable.size.width
+          }
+        });
+      }
+    });
 
     $bitElement.addClass('bit--selected');
     $bitElement.find('.bit__resize').show();
-    Draggable.get( $bitElement ).disable();
     $editingElement.focus();
 
     Parallels.Audio.player.play('fx-temp-temp-subtle');
@@ -59,7 +66,7 @@ Parallels.AppModes['edit-text-bit'] = {
         command: 'updateBitContent',
         data: {
           canvasId: Session.get('canvasId'),
-          _id: this._id,
+          _id: template.data._id,
           content: $editingElement.html(),
           height: $content.height(),
           width: $content.width()

@@ -14,23 +14,6 @@ Template.bit.onRendered(function (){
     $content.css("height", bit.height);
     $content.css("width", bit.width);
 
-    $content.resizable({
-      handles: { se: '.ui-resizable-se' },
-
-      stop: function (event, $resizable) {
-        Meteor.call('changeState', {
-          command: 'updateBitContent',
-          data: {
-            canvasId: Session.get('canvasId'),
-            _id: bit._id,
-            content: $editbitElement.html(),
-            height: $resizable.size.height,
-            width: $resizable.size.width
-          }
-        });
-      }
-    });
-
       // TODO: reusable function
     $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
       var scrollTo = null;

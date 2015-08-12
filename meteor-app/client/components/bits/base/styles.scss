@@ -76,10 +76,10 @@
   // Since we are manually show/hiding this handle (vs using Jquery 'autohide' param)
   // we need to use important, to make this is hidden until
   // text bit is double clicked to edit. Then, we'll display this resize handle
-  display: none !important; 
+  display: none ; 
 
-  bottom: 15px;
-  right: 15px;
+  bottom: -1px;
+  right: -1px;
   height: 0; 
   width: 0; 
 
