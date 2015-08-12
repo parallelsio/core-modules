@@ -181,34 +181,15 @@ Parallels.Keys = {
         }
       }, function (err, bit) {
         if (!err) {
-          Session.set('bitEditingId', bit._id);
+          Session.set('textBitEditingId', bit._id);
         }
       });
     });
   },
 
-  bindCreateTextBit: function () {
-    Parallels.log.debug("keyCommand:bindCreateTextBit");
-
-    Mousetrap.bind('t', function () {
-      Meteor.call('changeState', {
-        command: 'createBit',
-        data: {
-          canvasId: Session.get('canvasId'),
-          type: 'text',
-          content: '',
-          width: '150',
-          height: '50',
-          color: 'white',
-          position: pointerPosition
-        }
-      }, function (err, bit) {
-        if (!err) {
-          Session.set('bitEditingId', bit._id);
-        }
-      });
-    });
-  },
+  // bindCreateTextBit: function () {
+    
+  // },
 
   bindEditTextBit: function () {
     Parallels.log.debug("keyCommand:bindEditTextBit");
@@ -217,17 +198,19 @@ Parallels.Keys = {
       Parallels.log.debug("pressed 'e' key");
 
       var bitHoveringId = Session.get('bitHoveringId');
+
       if (bitHoveringId) {
-        Parallels.Audio.player.play('fx-temp-temp-subtle');
         var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
         var bitData = Blaze.getData(bitTemplate);
         if (bitData.type === "text") {
-          Session.set('bitEditingId', bitHoveringId);
+          Parallels.AppModes['edit-text-bit'].enter($(event.target), bitTemplate);
         }
+
         else {
           Parallels.log.debug("bit:edit: bit not of type 'text'.");
         }
       }
+
       else {
         Parallels.log.debug('edit key ignored, not captured for a specific bit')
       }

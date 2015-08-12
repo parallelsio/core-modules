@@ -5,8 +5,7 @@ Template.bit.onRendered(function (){
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
   var $content = $bitElement.find('.bit__content');
-  var $editbitElement = $content.find('.bit__editing');
-  var $dragHandle = $(template.find('.bit__drag-handle'));
+  var $editbitElement = $content.find('.bit--editing');
 
   $content.css("height", bit.height);
   $content.css("width", bit.width);
@@ -28,6 +27,9 @@ Template.bit.onRendered(function (){
     }
   });
 
+  makeBitDraggable($bitElement);
+
+  // TODO: reusable function
   $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
     var scrollTo = null;
 
@@ -35,6 +37,7 @@ Template.bit.onRendered(function (){
       scrollTo = (e.originalEvent.wheelDelta * -1);
     }
     else if (e.type == 'DOMMouseScroll') {
+      // TODO: refactor '40' value to variable name for readability
       scrollTo = 40 * e.originalEvent.detail;
     }
 
@@ -43,8 +46,6 @@ Template.bit.onRendered(function (){
       $(this).scrollTop(scrollTo + $(this).scrollTop());
     }
   });
-
-  makeBitDraggable($bitElement, $dragHandle);
 
 
   // When a Bit position is updated during a concurrent session (by someone else)

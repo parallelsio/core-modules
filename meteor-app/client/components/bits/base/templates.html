@@ -1,3 +1,12 @@
+<!-- 
+  TODO: split template into:
+    bit:base
+
+    bit:image
+    bit:text
+    bit:sketch
+-->
+
 <template name="bit">
 
   <div
@@ -14,11 +23,13 @@
       {{/if}}
 
       {{#if isTextBit }}
-        {{{editor}}}
+        {{{ editor }}}
         
-        <div class="bit__resize ui-resizable-handle ui-resizable-se">
-          <div class="bit__resize__triangle-icon"></div>
-        </div>
+        <!--  using a tag, because Greensock Draggable ignores clicks on a elements
+              we do this because we dont want dragging, while person tries to resize -->
+        <a class="bit__resize ui-resizable-handle ui-resizable-se">
+            <span class="bit__resize__triangle-icon"></span>
+        </a>
 
       {{/if}}
 

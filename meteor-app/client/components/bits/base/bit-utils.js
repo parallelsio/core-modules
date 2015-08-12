@@ -1,4 +1,4 @@
-makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
+makeBitDraggable = function makeBitDraggable($bitElement){
 
   var timeline = new TimelineMax();
 
@@ -6,7 +6,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
   // // via manual transforms get overwritten by Draggable
   // // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   var draggable = Draggable.create($bitElement, {
-    trigger: $uiWidgetHeader,
     throwProps:false,
     zIndexBoost:false,
 
@@ -14,8 +13,11 @@ makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
       timeline.to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, opacity: "0.1", ease: Expo.easeOut });
     },
 
-    onDragStart:function(event){
+    onRelease: function(event){
+      timeline.to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, opacity: "1", ease: Expo.easeOut });
+    },
 
+    onDragStart:function(event){
       // var x = this.endX;
       // var y = this.endY;
       // Parallels.log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
@@ -65,8 +67,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $uiWidgetHeader){
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
       timeline
-        .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
-        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, opacity: "1", ease: Expo.easeOut })
+        .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut });
     }
   });
 

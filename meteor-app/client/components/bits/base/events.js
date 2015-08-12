@@ -3,40 +3,28 @@ BitEvents = {
   // TODO: clean up
 
   hoverInBit: function (event, template) {
+    // prevents bits that were under the bit person is dragging, from starting to highlight
+    // TODO: refactor to use GSAP built in methods, to test if something is being dragged?
     if (!Session.get('mousedown')) {
       Session.set('bitHoveringId', template.data._id);
-      Session.set('bitEditingId', template.data._id);
+
       Parallels.Audio.player.play('fx-ting3');
 
       // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
       var $bit = $(template.firstNode);
-      $bit.find('.bit__editing').focus();
       $bit.addClass('hovering');
-      $bit.find('.bit__resize').show();
     }
   },
 
   hoverOutBit: function (event, template){
     if (!Session.get('mousedown')) {
       Session.set('bitHoveringId', null);
+
       var $bit = $(template.firstNode);
       $bit.removeClass('hovering');
-      $bit.find('.bit__resize').hide();
 
-      var $editbitElement = $(template.find('.bit__editing'));
-      if (this.content != $editbitElement.html()) {
-        Meteor.call('changeState', {
-          command: 'updateBitContent',
-          data: {
-            canvasId: Session.get('canvasId'),
-            _id: this._id,
-            content: $editbitElement.html(),
-            height: $editbitElement.height(),
-            width: $editbitElement.width()
-          }
-        });
-
-        Parallels.Audio.player.play('fx-cha-ching');
+      if (Session.get('textBitEditingId')){
+        Parallels.AppModes['edit-text-bit'].exit($bit, template);
       }
     }
   }
@@ -57,5 +45,19 @@ Template.bit.events({
 
   'mouseup .bit': function () {
     Session.set('mousedown', false);
+  },
+
+  'dblclick .bit': function (event, template) {
+    event.stopPropagation() // so map doesnt register a double click
+
+    var bitData = Blaze.getData(event.target);
+    if (bitData.type === "text") {
+      Parallels.AppModes['edit-text-bit'].enter($(event.target), template);
+    }
+
+    // else if (bitData.type === "sketch") {
+    //   Parallels.AppModes['sketch-bit'].
+    // }
   }
+
 });

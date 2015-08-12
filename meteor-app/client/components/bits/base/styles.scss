@@ -9,6 +9,7 @@
   position: absolute;
   -webkit-font-smoothing: antialiased;
   outline: none;
+  border: 2px solid transparent;
 }
 
 .bit__content{
@@ -23,7 +24,10 @@
   z-index: 1;
 }
 
-
+.bit--selected {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px blue;
+}
 
 
 .hovering .bit__drag-handle {
@@ -49,8 +53,8 @@
 
 .bit.text.hovering .bit__drag-handle{
 
-  height: 90vh;
-  top: -25vh;
+  height: 1vh;
+  top: -1vh;
   
 
   // http://uigradients.com/#Earthly
@@ -63,8 +67,16 @@
 }
 
 
+
+
 .bit__resize{
   position: absolute;
+
+  // Jquery Resize UI automatically adds display:inline. 
+  // Since we are manually show/hiding this handle (vs using Jquery 'autohide' param)
+  // we need to use important, to make this is hidden until
+  // text bit is double clicked to edit. Then, we'll display this resize handle
+  display: none !important; 
 
   bottom: 15px;
   right: 15px;
@@ -78,6 +90,7 @@
 
 .bit__resize__triangle-icon{
   position: absolute;
+  display: block;
 
   bottom: 0;
   right: 0;
@@ -94,7 +107,7 @@
 }
 
 
-.bit__editing {
+.bit--editing {
   outline: none;
   border: 0;
   width: 100%;

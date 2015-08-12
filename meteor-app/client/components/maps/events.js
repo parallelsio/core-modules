@@ -78,5 +78,31 @@ Template.map.events({
         computation.stop();
       }
     });
-  }
+  },
+
+  'dblclick .map': function (event) {
+
+    Parallels.log.debug("keyCommand:bindCreateTextBit");
+
+    Meteor.call('changeState', {
+      command: 'createBit',
+      data: {
+        canvasId: Session.get('canvasId'),
+        type: 'text',
+        content: '',
+        width: '150',
+        height: '50',
+        color: 'white',
+        position: pointerPosition
+      }
+    }, function (err, bit) {
+      if (!err) {
+        var $bitElement = Utilities.getBitElement(bit._id);
+        Parallels.AppModes['edit-text-bit'].enter($bitElement);
+      }
+    });
+  
+
+  },
+
 });
