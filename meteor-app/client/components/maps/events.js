@@ -82,7 +82,7 @@ Template.map.events({
 
   'dblclick .map': function (event) {
 
-    Parallels.log.debug("keyCommand:bindCreateTextBit");
+    Parallels.log.debug("keyCommand:createBitViaMapDbleClick");
 
     Meteor.call('changeState', {
       command: 'createBit',

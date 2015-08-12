@@ -11,8 +11,8 @@ BitEvents = {
       Parallels.Audio.player.play('fx-ting3');
 
       // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
-      var $bit = $(template.firstNode);
-      $bit.addClass('hovering');
+      var $bitElement = $(template.firstNode);
+      $bitElement.addClass('hovering');
     }
   },
 
@@ -20,11 +20,11 @@ BitEvents = {
     if (!Session.get('mousedown')) {
       Session.set('bitHoveringId', null);
 
-      var $bit = $(template.firstNode);
-      $bit.removeClass('hovering');
+      var $bitElement = $(template.firstNode);
+      $bitElement.removeClass('hovering');
 
       if (Session.get('textBitEditingId')){
-        Parallels.AppModes['edit-text-bit'].exit($bit, template);
+        Parallels.AppModes['edit-text-bit'].exit($bitElement, template);
       }
     }
   }
@@ -50,10 +50,11 @@ Template.bit.events({
   'dblclick .bit': function (event, template) {
     event.stopPropagation() // so map doesnt register a double click
 
-    var bitData = Blaze.getData(event.target);
-    if (bitData.type === "text") {
+    var $bitElement = $(template.firstNode);
+    // var bitData = Blaze.getData(event.target);
+    if (template.data.type === "text" && Session.equals('textBitEditingId', null)){
       Session.set('textBitEditingId', template.data._id);
-      Parallels.AppModes['edit-text-bit'].enter($(event.target), template);
+      Parallels.AppModes['edit-text-bit'].enter($bitElement, template);
     }
 
     // else if (bitData.type === "sketch") {

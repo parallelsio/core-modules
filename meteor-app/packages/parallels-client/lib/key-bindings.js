@@ -191,31 +191,32 @@ Parallels.Keys = {
   },
 
   bindEditTextBit: function () {
-    Parallels.log.debug("keyCommand:bindEditTextBit");
+    // Parallels.log.debug("keyCommand:bindEditTextBit");
 
-    Mousetrap.bind("e", function () {
-      Parallels.log.debug("pressed 'e' key");
+    // Mousetrap.bind("e", function () {
+    //   Parallels.log.debug("pressed 'e' key");
 
-      var bitHoveringId = Session.get('bitHoveringId');
+    //   var bitHoveringId = Session.get('bitHoveringId');
 
-      if (bitHoveringId) {
-        var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
-        var bitData = Blaze.getData(bitTemplate);
-        
-        if (bitData.type === "text") {
-          Session.set('textBitEditingId', bitHoveringId);
-          Parallels.AppModes['edit-text-bit'].enter($(event.target), bitTemplate);
-        }
+    //   if (bitHoveringId) {
+    //     var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
+    //     var bitData = Blaze.getData(bitTemplate);
+    //     var $bitElement = Utilities.getBitElement(bitHoveringId);
 
-        else {
-          Parallels.log.debug("bit:edit: bit not of type 'text'.");
-        }
-      }
+    //     if (bitData.type === "text") {
+    //       Session.set('textBitEditingId', bitHoveringId);
+    //       Parallels.AppModes['edit-text-bit'].enter($bitElement, bitTemplate);
+    //     }
 
-      else {
-        Parallels.log.debug('edit key ignored, not captured for a specific bit')
-      }
-    });
+    //     else {
+    //       Parallels.log.debug("bit:edit: bit not of type 'text'.");
+    //     }
+    //   }
+
+    //   else {
+    //     Parallels.log.debug('edit key ignored, not captured for a specific bit')
+    //   }
+    // });
   },
 
   bindEsc: function () {

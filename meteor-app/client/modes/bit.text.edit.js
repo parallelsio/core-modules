@@ -54,7 +54,7 @@ Parallels.AppModes['edit-text-bit'] = {
     Session.set('textBitEditingId', null);
     $editingElement.blur();
 
-    if ($content != $editingElement.html()) {
+    if (template.data.content != $editingElement.html()) {
       Meteor.call('changeState', {
         command: 'updateBitContent',
         data: {
