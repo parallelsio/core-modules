@@ -16,6 +16,12 @@
       data-filename="{{ filename }}"
       data-upload-key="{{ uploadKey }}">
 
+    {{#if isTextBit }}
+      <div class="bit__controls-top noselect">
+        <i class="controls__icon controls__icon-delete icon-trash"></i> 
+      </div>
+    {{/if}}
+
     <div class="bit__content {{ color }}">
 
       {{#if imageSrc }}
@@ -32,6 +38,13 @@
       {{/if}}
 
     </div>
+
+    {{#if isTextBit }}
+      <div class="bit__controls-bottom noselect">
+        <i class="controls__icon controls__icon-edit icon-pencil"></i> 
+        <i class="controls__icon controls__icon-save icon-ok"></i> 
+      </div>
+    {{/if}}
 
     <div class="upload-status {{ uploadStatus }}">
 
@@ -74,6 +87,8 @@
         </svg>
       </div>
     </div>
+
+
 
     <p class="bit__drag-handle"></p>
 

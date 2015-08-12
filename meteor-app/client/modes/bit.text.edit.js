@@ -37,6 +37,9 @@ Parallels.AppModes['edit-text-bit'] = {
 
     $bitElement.addClass('bit--selected');
     $bitElement.find('.bit__resize').show();
+    $bitElement.find('.bit__controls-top').show();
+    $bitElement.find('.bit__controls-bottom').show();
+
     $editingElement.focus();
 
     Parallels.Audio.player.play('fx-temp-temp-subtle');
@@ -57,6 +60,9 @@ Parallels.AppModes['edit-text-bit'] = {
 
     $bitElement.removeClass('bit--selected');
     $bitElement.find('.bit__resize').hide();
+    $bitElement.find('.bit__controls-top').hide();
+    $bitElement.find('.bit__controls-bottom').hide();
+
     Draggable.get( $bitElement ).enable();
     Session.set('textBitEditingId', null);
     $editingElement.blur();

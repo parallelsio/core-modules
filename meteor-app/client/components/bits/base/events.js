@@ -22,14 +22,9 @@ BitEvents = {
 
       var $bitElement = $(template.firstNode);
       $bitElement.removeClass('hovering');
-
-      if (Session.get('textBitEditingId')){
-        Parallels.AppModes['edit-text-bit'].exit($bitElement, template);
-      }
     }
   }
 };
-
 
 
 // for more bit events see /client/lib/key-bindings.js
@@ -55,7 +50,33 @@ Template.bit.events({
       Session.set('textBitEditingId', template.data._id);
       Parallels.AppModes['edit-text-bit'].enter($bitElement, template);
     }
+  },
 
+  'click .controls__icon-save': function (event, template) {
+     if (Session.get('textBitEditingId')){
+      var $bitElement = $(template.firstNode);
+      Parallels.AppModes['edit-text-bit'].exit($bitElement, template);
+    }
+  },
+
+  'click .controls__icon-delete': function (event, template) {
+     var bitDeleteId = Session.get('textBitEditingId');
+
+     if (bitDeleteId){
+      Parallels.log.debug("starting bit:delete on ", bitDeleteId);
+      Parallels.Audio.player.play('fx-tri');
+
+        Meteor.call('changeState', {
+          command: 'deleteBit',
+          data: {
+            canvasId: Session.get('canvasId'),
+            _id: bitDeleteId
+          }
+        });
+
+      var $bitElement = $(template.firstNode);
+      Parallels.AppModes['edit-text-bit'].exit($bitElement, template);
+    }
   }
 
 });

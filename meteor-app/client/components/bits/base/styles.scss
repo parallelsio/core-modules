@@ -65,6 +65,45 @@
 
 }
 
+.bit__controls-top{
+  position: absolute;
+  display: none;
+  z-index: 2;
+  top: -2em;
+  padding: 0.5em;
+  right: 0;
+  /* opacity: 0.75; */
+  /* font-size: 1.5em; */
+  /* margin: 1.1em; */
+}
+
+.bit__controls-top:hover,
+.bit__controls-bottom:hover{
+
+}
+
+.controls__icon{
+  height: 2em;
+  bottom: -2em;
+  padding: 0.35em 0.75em 0.5em 0.75em;
+  font-size: 1.25em;
+  margin-right: 1em;
+}
+
+.controls__icon:hover{
+  background-color: #3C9FFF; 
+  color: white;
+  opacity: 0.75;
+}
+
+.bit__controls-bottom{
+  position: absolute;
+  display: none;
+  z-index: 2;
+  left: 0;
+  /* opacity: 0.75; */
+  // background-color: #FFF;
+}
 
 
 
