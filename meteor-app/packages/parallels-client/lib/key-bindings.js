@@ -39,7 +39,6 @@ Parallels.Keys = {
 
     // edit text bit
     Mousetrap.unbind('e');
-    Mousetrap.unbind('e');
 
     // preview
     Mousetrap.unbind('space');
@@ -181,15 +180,15 @@ Parallels.Keys = {
         }
       }, function (err, bit) {
         if (!err) {
-          Session.set('textBitEditingId', bit._id);
+          Session.set('sketchBitEditingId', bit._id);
         }
       });
     });
   },
 
-  // bindCreateTextBit: function () {
-    
-  // },
+  bindCreateTextBit: function () {
+    // TODO: 
+  },
 
   bindEditTextBit: function () {
     Parallels.log.debug("keyCommand:bindEditTextBit");
@@ -202,7 +201,9 @@ Parallels.Keys = {
       if (bitHoveringId) {
         var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
         var bitData = Blaze.getData(bitTemplate);
+        
         if (bitData.type === "text") {
+          Session.set('textBitEditingId', bitHoveringId);
           Parallels.AppModes['edit-text-bit'].enter($(event.target), bitTemplate);
         }
 

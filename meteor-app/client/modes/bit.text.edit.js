@@ -6,17 +6,18 @@ Parallels.AppModes['edit-text-bit'] = {
     Parallels.log.debug("mode:edit-text-bit:enter");
 
     // handle both pathways into this function:
-    // A: person double clicks the bit
-    if (template){
-      var $bitElement = $(template.firstNode);
-      Session.set('textBitEditingId', template.data._id);
-    }
+    // A: person hovers over a bit, presses key command  
+    // B: person double clicks the bit
 
-    // B: person hovers over a bit, presses key command 
-    else {
-      var $bitElement = Utilities.getBitElement(Session.get('bitHoveringId'));
-      Session.set('textBitEditingId', Session.set('bitHoveringId'));
-    }
+    // if (template){
+    //   var $bitElement = $(template.firstNode);
+    //   Session.set('textBitEditingId', template.data._id);
+    // }
+
+    // else {
+    //   var $bitElement = Utilities.getBitElement(Session.get('bitHoveringId'));
+    //   Session.set('textBitEditingId', Session.set('bitHoveringId'));
+    // }
 
     //   Session.set('currentMode', null);
 
@@ -39,17 +40,6 @@ Parallels.AppModes['edit-text-bit'] = {
 
   exit: function ($bitElement, template) {
     Parallels.log.debug("mode:edit-text-bit:exit");
-
-    // handle both pathways into this function:
-    // A: person double clicks the bit
-    if (template){
-      var $bitElement = $(template.firstNode);
-    }
-
-    // B: person hovers over a bit, presses key command 
-    else {
-      var $bitElement = Session.get('bitHoveringId');
-    }
 
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
@@ -80,6 +70,5 @@ Parallels.AppModes['edit-text-bit'] = {
     }
 
     Parallels.Keys.bindActions();
-
   }
 };

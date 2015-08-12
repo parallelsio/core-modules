@@ -97,12 +97,9 @@ Template.map.events({
       }
     }, function (err, bit) {
       if (!err) {
-        var $bitElement = Utilities.getBitElement(bit._id);
-        Parallels.AppModes['edit-text-bit'].enter($bitElement);
+        Session.set('textBitEditingId', bit._id);
       }
     });
-  
-
   },
 
 });

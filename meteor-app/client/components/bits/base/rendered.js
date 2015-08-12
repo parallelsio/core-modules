@@ -4,49 +4,58 @@ Template.bit.onRendered(function (){
   var bit = template.data;
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
-  var $content = $bitElement.find('.bit__content');
-  var $editbitElement = $content.find('.bit--editing');
-
-  $content.css("height", bit.height);
-  $content.css("width", bit.width);
-
-  $content.resizable({
-    handles: { se: '.ui-resizable-se' },
-
-    stop: function (event, $resizable) {
-      Meteor.call('changeState', {
-        command: 'updateBitContent',
-        data: {
-          canvasId: Session.get('canvasId'),
-          _id: bit._id,
-          content: $editbitElement.html(),
-          height: $resizable.size.height,
-          width: $resizable.size.width
-        }
-      });
-    }
-  });
 
   makeBitDraggable($bitElement);
 
-  // TODO: reusable function
-  $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
-    var scrollTo = null;
+  if (template.data.type === 'text'){
+    var $content = $bitElement.find('.bit__content');
+    var $editbitElement = $content.find('.bit--editing');
 
-    if (e.type == 'mousewheel') {
-      scrollTo = (e.originalEvent.wheelDelta * -1);
-    }
-    else if (e.type == 'DOMMouseScroll') {
-      // TODO: refactor '40' value to variable name for readability
-      scrollTo = 40 * e.originalEvent.detail;
-    }
+    $content.css("height", bit.height);
+    $content.css("width", bit.width);
 
-    if (scrollTo) {
-      e.preventDefault();
-      $(this).scrollTop(scrollTo + $(this).scrollTop());
-    }
-  });
+    $content.resizable({
+      handles: { se: '.ui-resizable-se' },
 
+      stop: function (event, $resizable) {
+        Meteor.call('changeState', {
+          command: 'updateBitContent',
+          data: {
+            canvasId: Session.get('canvasId'),
+            _id: bit._id,
+            content: $editbitElement.html(),
+            height: $resizable.size.height,
+            width: $resizable.size.width
+          }
+        });
+      }
+    });
+
+      // TODO: reusable function
+    $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
+      var scrollTo = null;
+
+      if (e.type == 'mousewheel') {
+        scrollTo = (e.originalEvent.wheelDelta * -1);
+      }
+      else if (e.type == 'DOMMouseScroll') {
+        // TODO: refactor '40' value to variable name for readability
+        scrollTo = 40 * e.originalEvent.detail;
+      }
+
+      if (scrollTo) {
+        e.preventDefault();
+        $(this).scrollTop(scrollTo + $(this).scrollTop());
+      }
+    });
+
+    if (Session.get('textBitEditingId')){
+      Parallels.AppModes['edit-text-bit'].enter($bitElement, template);
+    }
+    
+
+  }
+  
 
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients

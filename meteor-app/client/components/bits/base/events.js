@@ -52,6 +52,7 @@ Template.bit.events({
 
     var bitData = Blaze.getData(event.target);
     if (bitData.type === "text") {
+      Session.set('textBitEditingId', template.data._id);
       Parallels.AppModes['edit-text-bit'].enter($(event.target), template);
     }
 
