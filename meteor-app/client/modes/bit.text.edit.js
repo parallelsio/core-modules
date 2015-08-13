@@ -8,13 +8,11 @@ Parallels.AppModes['edit-text-bit'] = {
     // TODO: doesnt this auto wire up Esc key
     Session.set('currentMode', 'edit-text');
 
-    // needs to happen before the resizeable is set, or else resizable wont work
-    Draggable.get( $bitElement ).disable(); 
-
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
 
     $editingElement.attr('contenteditable', 'true');
+    $editingElement.attr('data-clickable', 'true');
 
     $content.resizable({
       handles: { se: '.ui-resizable-se' },
@@ -45,22 +43,18 @@ Parallels.AppModes['edit-text-bit'] = {
     $editingElement.focus();
 
     Parallels.Audio.player.play('fx-temp-temp-subtle');
-
     Parallels.Keys.unbindActions();
-
   },
 
-  exit: function ($bitElement, template) {
+  exit: function ($bitElement, template, withSave) {
     Parallels.log.debug("mode:edit-text-bit:exit");
 
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
     Session.set('currentMode', null);
 
-    $editingElement.attr('contenteditable', 'false')
-    // $content.resizable( "disable" );
-    Draggable.get( $bitElement ).enable();
-    
+    $editingElement.attr('contenteditable', 'false');
+    $editingElement.attr('data-clickable', 'false');
 
     $bitElement.removeClass('bit--selected');
     $bitElement.find('.bit__resize').hide();
@@ -69,7 +63,7 @@ Parallels.AppModes['edit-text-bit'] = {
     Session.set('textBitEditingId', null);
     $editingElement.blur();
 
-    if (template.data.content != $editingElement.html()) {
+    if ((template.data.content != $editingElement.html()) && withSave) {
       Meteor.call('changeState', {
         command: 'updateBitContent',
         data: {

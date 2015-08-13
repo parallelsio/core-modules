@@ -18,14 +18,14 @@
 
     {{#if isTextBit }}
       <div class="bit__controls-persistent  noselect">
-        <i class="controls__icon  controls__icon-edit  icon-pencil"></i> 
-        <i class="controls__icon  controls__icon-delete  icon-trash"></i> 
+        <i class="controls__icon  controls__icon-edit  icon-pencil" data-clickable="true"></i> 
+        <i class="controls__icon  controls__icon-delete  icon-trash" data-clickable="true"></i> 
       </div>
     {{/if}}
 
     {{#if isImageBit }}
       <div class="bit__controls-persistent  noselect">
-        <i class="controls__icon  controls__icon-delete  icon-trash"></i> 
+        <i class="controls__icon  controls__icon-delete  icon-trash" data-clickable="true"></i> 
       </div>
     {{/if}}
 
@@ -38,7 +38,7 @@
       {{#if isTextBit }}
         {{{ editor }}}
         
-        <div class="bit__resize ui-resizable-handle ui-resizable-se">
+        <div class="bit__resize ui-resizable-handle ui-resizable-se" data-clickable="true">
             <span class="bit__resize__triangle-icon"></span>
         </div>
 
@@ -48,8 +48,8 @@
 
     {{#if isTextBit }}
       <div class="bit__controls-edit  noselect">
-        <i class="controls__icon  controls__icon-save  icon-cancel"></i> 
-        <i class="controls__icon  controls__icon-save  icon-ok"></i> 
+        <i class="controls__icon  controls__icon-save  icon-cancel" data-clickable="true"></i> 
+        <i class="controls__icon  controls__icon-save  icon-ok" data-clickable="true"></i> 
       </div>
     {{/if}}
 

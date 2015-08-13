@@ -58,7 +58,8 @@ Template.bit.events({
   'click .controls__icon-save': function (event, template) {
      if (Session.get('textBitEditingId')){
       var $bitElement = $(template.firstNode);
-      Parallels.AppModes['edit-text-bit'].exit($bitElement, template);
+      var withSave = true;
+      Parallels.AppModes['edit-text-bit'].exit($bitElement, template, withSave);
     }
   },
 
@@ -78,8 +79,17 @@ Template.bit.events({
         });
 
       var $bitElement = $(template.firstNode);
-      Parallels.AppModes['edit-text-bit'].exit($bitElement, template);
+      var withSave = false;
+      Parallels.AppModes['edit-text-bit'].exit($bitElement, template, withSave);
     }
+  },
+
+  'click .controls__icon-cancel': function (event, template) {
+
+      // Parallels.Audio.player.play('fx-tri');
+      var $bitElement = $(template.firstNode);
+      var withSave = false;
+      Parallels.AppModes['edit-text-bit'].exit($bitElement, template, withSave);
   }
 
 });
