@@ -17,15 +17,15 @@
       data-upload-key="{{ uploadKey }}">
 
     {{#if isTextBit }}
-      <div class="bit__controls-persistent  noselect">
-        <i class="controls__icon  controls__icon-edit  icon-pencil" data-clickable="true"></i> 
-        <i class="controls__icon  controls__icon-delete  icon-trash" data-clickable="true"></i> 
+      <div class="bit__controls bit__controls-persistent  noselect">
+        <a class="controls__icon  controls__icon-edit  icon-pencil" data-clickable="true"></a> 
+        <a class="controls__icon  controls__icon-delete  icon-trash" data-clickable="true"></a> 
       </div>
     {{/if}}
 
     {{#if isImageBit }}
-      <div class="bit__controls-persistent  noselect">
-        <i class="controls__icon  controls__icon-delete  icon-trash" data-clickable="true"></i> 
+      <div class="bit__controls  bit__controls-persistent  noselect">
+        <a class="controls__icon  controls__icon-delete  icon-trash" data-clickable="true"></a> 
       </div>
     {{/if}}
 
@@ -47,9 +47,9 @@
     </div>
 
     {{#if isTextBit }}
-      <div class="bit__controls-edit  noselect">
-        <i class="controls__icon  controls__icon-save  icon-cancel" data-clickable="true"></i> 
-        <i class="controls__icon  controls__icon-save  icon-ok" data-clickable="true"></i> 
+      <div class="bit__controls  bit__controls-edit  noselect">
+        <a class="controls__icon  controls__icon-save  icon-cancel" data-clickable="true"></a> 
+        <a class="controls__icon  controls__icon-save  icon-ok" data-clickable="true"></a> 
       </div>
     {{/if}}
 

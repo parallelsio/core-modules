@@ -63,20 +63,22 @@
 
 }
 
-.bit__controls-persistent{
-
+.bit__controls{
   position: absolute;
   display: none;
+  text-align: center;
+  width:100%;  
+  z-index: 2;
+}
+
+
+.bit__controls-persistent{
   z-index: 2;
   top: -3em;
-  right: 0;
+
 }
 
 .bit__controls-edit{
-  position: absolute;
-  display: none;
-  z-index: 2;
-  left: 0;
 }
 
 .controls__icon{
@@ -86,6 +88,7 @@
   font-size: 1.25em;
   width: 2.5em;
   line-height: 2.5em;
+  color: #8a8a8a;
 }
 
 .controls__icon:hover{
@@ -93,7 +96,6 @@
   color: white;
   opacity: 0.75;
 }
-
 
 
 
@@ -208,6 +210,12 @@
   background:     -ms-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* IE10 */
   background:      -o-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Opera 11.10+ */
   background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
+}
+
+
+.bit.image .controls__icon-delete:hover{
+  background-color: #f9ffb7; 
+  color: #8a8a8a;
 }
 
 

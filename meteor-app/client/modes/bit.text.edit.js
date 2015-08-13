@@ -7,6 +7,7 @@ Parallels.AppModes['edit-text-bit'] = {
 
     // TODO: doesnt this auto wire up Esc key
     Session.set('currentMode', 'edit-text');
+    Draggable.get( $bitElement ).disable();
 
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
@@ -52,6 +53,7 @@ Parallels.AppModes['edit-text-bit'] = {
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
     Session.set('currentMode', null);
+    Draggable.get( $bitElement ).enable();
 
     $editingElement.attr('contenteditable', 'false');
     $editingElement.attr('data-clickable', 'false');
