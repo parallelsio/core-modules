@@ -9,7 +9,7 @@
   position: absolute;
   -webkit-font-smoothing: antialiased;
   outline: none;
-  border: 2px solid transparent;
+  // border: 2px solid transparent;
 }
 
 .bit__content{
@@ -20,23 +20,21 @@
 .bit__drag-handle {
   display: none;
   position: absolute;
-  // margin: 1.25em -1.25em;
   z-index: 1;
 }
 
 .bit--selected {
-  border-color: transparent;
-  box-shadow: 0 0 0 2px blue;
+  // border-color: transparent;
+  // box-shadow: 0 0 0 2px blue;
 }
 
-
 .hovering .bit__drag-handle {
-    display: block;
-    width: 100%;
-    background-color: #C6CED8;
-    backface-visibility: hidden;
-    cursor: move;
-  }
+  display: block;
+  width: 100%;
+  background-color: #C6CED8;
+  backface-visibility: hidden;
+  cursor: move;
+}
 
 
 
@@ -45,7 +43,7 @@
 .bit.text .bit__content {
   background: white;
   padding: 1.25em;
-  min-height: 60px;
+  min-height: 55px;
   min-width: 140px;
 }
 
@@ -65,29 +63,29 @@
 
 }
 
-.bit__controls-top{
+.bit__controls-persistent{
+
   position: absolute;
   display: none;
   z-index: 2;
-  top: -2em;
-  padding: 0.5em;
+  top: -3em;
   right: 0;
-  /* opacity: 0.75; */
-  /* font-size: 1.5em; */
-  /* margin: 1.1em; */
 }
 
-.bit__controls-top:hover,
-.bit__controls-bottom:hover{
-
+.bit__controls-edit{
+  position: absolute;
+  display: none;
+  z-index: 2;
+  left: 0;
 }
 
 .controls__icon{
-  height: 2em;
-  bottom: -2em;
-  padding: 0.35em 0.75em 0.5em 0.75em;
+  display: inline-block;
+  height: 2.5em;
+  padding: 0 .75em;
   font-size: 1.25em;
-  margin-right: 1em;
+  width: 2.5em;
+  line-height: 2.5em;
 }
 
 .controls__icon:hover{
@@ -96,14 +94,6 @@
   opacity: 0.75;
 }
 
-.bit__controls-bottom{
-  position: absolute;
-  display: none;
-  z-index: 2;
-  left: 0;
-  /* opacity: 0.75; */
-  // background-color: #FFF;
-}
 
 
 

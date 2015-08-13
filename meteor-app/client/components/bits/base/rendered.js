@@ -14,29 +14,27 @@ Template.bit.onRendered(function (){
     $content.css("height", bit.height);
     $content.css("width", bit.width);
 
-      // TODO: reusable function
-    $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
-      var scrollTo = null;
+    // // TODO: reusable function
+    // $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
+    //   var scrollTo = null;
 
-      if (e.type == 'mousewheel') {
-        scrollTo = (e.originalEvent.wheelDelta * -1);
-      }
-      else if (e.type == 'DOMMouseScroll') {
-        // TODO: refactor '40' value to variable name for readability
-        scrollTo = 40 * e.originalEvent.detail;
-      }
+    //   if (e.type == 'mousewheel') {
+    //     scrollTo = (e.originalEvent.wheelDelta * -1);
+    //   }
+    //   else if (e.type == 'DOMMouseScroll') {
+    //     // TODO: refactor '40' value to variable name for readability
+    //     scrollTo = 40 * e.originalEvent.detail;
+    //   }
 
-      if (scrollTo) {
-        e.preventDefault();
-        $(this).scrollTop(scrollTo + $(this).scrollTop());
-      }
-    });
+    //   if (scrollTo) {
+    //     e.preventDefault();
+    //     $(this).scrollTop(scrollTo + $(this).scrollTop());
+    //   }
+    // });
 
     if (Session.get('textBitEditingId')){
       Parallels.AppModes['edit-text-bit'].enter($bitElement, template);
     }
-    
-
   }
   
 

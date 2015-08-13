@@ -13,6 +13,7 @@ BitEvents = {
       // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
       var $bitElement = $(template.firstNode);
       $bitElement.addClass('hovering');
+      $bitElement.find('.bit__controls-persistent').show();
     }
   },
 
@@ -22,6 +23,8 @@ BitEvents = {
 
       var $bitElement = $(template.firstNode);
       $bitElement.removeClass('hovering');
+      $bitElement.find('.bit__controls-persistent').hide();
+
     }
   }
 };

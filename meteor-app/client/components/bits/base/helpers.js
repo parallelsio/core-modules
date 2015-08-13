@@ -4,6 +4,10 @@ Template.bit.helpers({
     return this.type === "text";
   },
 
+  isImageBit: function() {
+    return this.type === "image";
+  },
+  
   imageSrc: function () {
     return this.imageDataUrl || this.imageSource;
   },

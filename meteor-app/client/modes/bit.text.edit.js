@@ -5,8 +5,11 @@ Parallels.AppModes['edit-text-bit'] = {
 
     Parallels.log.debug("mode:edit-text-bit:enter");
 
-    //   Session.set('currentMode', null);
-    Draggable.get( $bitElement ).disable(); // needs to happen before the resizeable is set, or else resizable wont work
+    // TODO: doesnt this auto wire up Esc key
+    Session.set('currentMode', 'edit-text');
+
+    // needs to happen before the resizeable is set, or else resizable wont work
+    Draggable.get( $bitElement ).disable(); 
 
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
@@ -37,8 +40,7 @@ Parallels.AppModes['edit-text-bit'] = {
 
     $bitElement.addClass('bit--selected');
     $bitElement.find('.bit__resize').show();
-    $bitElement.find('.bit__controls-top').show();
-    $bitElement.find('.bit__controls-bottom').show();
+    $bitElement.find('.bit__controls-edit').show();
 
     $editingElement.focus();
 
@@ -53,17 +55,17 @@ Parallels.AppModes['edit-text-bit'] = {
 
     var $content = $bitElement.find('.bit__content');
     var $editingElement = $bitElement.find('.bit--editing');
-    //   Session.set('currentMode', null);
+    Session.set('currentMode', null);
 
     $editingElement.attr('contenteditable', 'false')
-    $content.resizable( "disable" );
+    // $content.resizable( "disable" );
+    Draggable.get( $bitElement ).enable();
+    
 
     $bitElement.removeClass('bit--selected');
     $bitElement.find('.bit__resize').hide();
-    $bitElement.find('.bit__controls-top').hide();
-    $bitElement.find('.bit__controls-bottom').hide();
+    $bitElement.find('.bit__controls-edit').hide();
 
-    Draggable.get( $bitElement ).enable();
     Session.set('textBitEditingId', null);
     $editingElement.blur();
 
