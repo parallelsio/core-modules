@@ -4,16 +4,14 @@
   position: fixed;
   z-index: 2147483647;
   bottom: -100px;
-  right: auto;
-  left: auto;
+  left: 0;
   width: 100%;
-  margin: 0 2em;
   background: #5B5B5B;
 
   iframe {
     border: none !important;
     width: 100%;
-    height: 67px;
+    height: 70px;
   }
 }
 
