@@ -12,6 +12,8 @@
     "default_icon": "images/cube.png"
   },
 
+  "options_page": "html/options.html",
+
   "content_scripts": [
     {
       "matches": [ "http://*/*", "https://*/*", "ftp://*/*" ],

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+  <link type="text/css" rel="stylesheet" href="../styles/compiled/main.css">
+
+  <title>Parallels Web Clipper</title>
+</head>
+  <body>
+
+  <div id="environment-select">
+    <label for="environment">Parallels Environment</label>
+    <select id="environment">
+      <option value="makeparallels.herokuapp.com">Production</option>
+      <option value="localhost:3000">Local</option>
+      <option value="">Custom</option>
+    </select>
+  </div>
+
+  <br/>
+
+  <div id="custom-server">
+    <label>
+      Custom Parallels Server:
+      <input style="width: 50%;" type="text" id="server">
+    </label>
+  </div>
+
+  <br/>
+
+  <div id="status"></div>
+  <button id="save">Save</button>
+
+  <script src="../scripts/options.js"></script>
+  </body>
+</html>
