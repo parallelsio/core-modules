@@ -4,7 +4,10 @@
   <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
   <link type="text/css" rel="stylesheet" href="../styles/compiled/main.css">
 
-  <title>Parallels Web Clipper</title>
+  <script src="../bower_components/requirejs/require.js"></script>
+  <script src="../scripts/lib/requireConfig.js"></script>
+
+  <title>Parallels Web Clipper - Options</title>
 </head>
   <body>
 
@@ -27,6 +30,15 @@
   </div>
 
   <br/>
+
+  <div id="canvas-configuration">
+    <label>
+      Default Canvas:
+      <input style="width: 50%;" type="text" id="canvas">
+    </label>
+  </div>
+
+  <br />
 
   <div id="status"></div>
   <button id="save">Save</button>

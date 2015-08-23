@@ -3,9 +3,8 @@
 requirejs.config({
   baseUrl: '/scripts',
   paths: {
-    'DDP': '../bower_components/ddp.js/src/ddp',
-    'Q': '../bower_components/q/q',
-    'Asteroid': '../bower_components/asteroid/dist/asteroid.chrome',
+    'DDP': '../bower_components/ddp.js/dist/ddp',
+    'wolfy87-eventemitter': '../bower_components/EventEmitter.js/EventEmitter',
     'jquery': '../bower_components/jquery/dist/jquery',
     'jquery.caret': 'lib/jquery.caret.min',
     'jquery.tag-editor': 'lib/jquery.tag-editor',

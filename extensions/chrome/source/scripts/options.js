@@ -1,22 +1,28 @@
-function save_options() {
-  var server = document.getElementById('server').value;
-  chrome.storage.sync.set({
-    parallelsServer: server
-  }, function() {
-    var status = document.getElementById('status');
-    status.textContent = 'Server configuration saved.';
-    setTimeout(function() {
-      status.textContent = '';
-    }, 750);
-  });
-}
+'use strict';
 
-function restore_options() {
-  chrome.storage.sync.get({
-    parallelsServer: 'makeparallels.herokuapp.com'
-  }, function(config) {
-    document.getElementById('server').value = config.parallelsServer;
+/**
+ * Collect configuration options to use while clipping web bits.
+ */
+requirejs(['modules/config'],
+  function (config) {
+    config.getServer(function (server) {
+      document.getElementById('server').value = server;
+    });
+
+    config.getCanvas(function (canvas) {
+      document.getElementById('canvas').value = canvas;
+    });
+
+    function saveOptions() {
+      config.setServer(document.getElementById('server').value);
+      config.setCanvas(document.getElementById('canvas').value);
+      var status = document.getElementById('status');
+      status.textContent = 'Configuration saved.';
+      setTimeout(function() {
+        status.textContent = '';
+      }, 750);
+    }
+
+    document.getElementById('save').addEventListener('click', saveOptions);
   });
-}
-document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click', save_options);
+

@@ -28,6 +28,14 @@ define(function () {
       chrome.storage.local.set(data, callback);
     },
 
+    getLocal: function (data, callback) {
+      var storedData = {};
+      storedData[data.key] = data.defaultValue;
+      chrome.storage.local.get(storedData, function (value) {
+        callback(value);
+      });
+    },
+
     notify: function (notification, callback) {
       var options = {
         type: 'basic',

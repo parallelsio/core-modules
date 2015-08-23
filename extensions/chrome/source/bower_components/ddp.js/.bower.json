@@ -1,13 +1,14 @@
 {
   "name": "ddp.js",
-  "main": "src/ddp.js",
-  "version": "0.6.0",
+  "main": "dist/ddp.js",
+  "version": "1.1.0",
   "homepage": "https://github.com/mondora/ddp.js",
   "authors": [
     "Paolo Scanferla <paolo.scanferla@mondora.com>"
   ],
-  "description": "A ddp client for the browser.",
+  "description": "ddp javascript client",
   "moduleType": [
+    "amd",
     "globals",
     "node"
   ],
@@ -20,17 +21,15 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "test"
   ],
-  "_release": "0.6.0",
+  "_release": "1.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.6.0",
-    "commit": "46a120b0e24020b1bb0b86d62922d61df63c305c"
+    "tag": "v1.1.0",
+    "commit": "d13b17dd9fd7a53e33fab2c5e518692390cdc9be"
   },
   "_source": "git://github.com/mondora/ddp.js.git",
-  "_target": "~0.6.0",
+  "_target": "1.1.0",
   "_originalSource": "ddp.js"
 }
