@@ -97,7 +97,7 @@ Template.map.events({
       }
     }, function (err, bit) {
       if (!err) {
-        Session.set('bitEditingId', bit._id);
+        Session.set('textBitEditingId', bit._id);
       }
     });
   }

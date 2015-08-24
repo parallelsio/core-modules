@@ -6,7 +6,7 @@ BitEvents = {
     if (!Session.get('mousedown')) {
       
       Session.set('bitHoveringId', template.data._id);
-      Session.set('bitEditingId', template.data._id);
+      Session.set('textBitEditingId', template.data._id);
 
       Parallels.Audio.player.play('fx-ting3');
 
@@ -84,7 +84,7 @@ Template.bit.events({
         }
       });
 
-    Session.set('bitEditingId', null);
+    Session.set('textBitEditingId', null);
   }
 
 });

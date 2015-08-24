@@ -176,7 +176,7 @@ Parallels.Keys = {
         }
       }, function (err, bit) {
         if (!err) {
-          Session.set('bitEditingId', bit._id);
+          Session.set('sketchBitEditingId', bit._id);
         }
       });
     });
@@ -199,7 +199,7 @@ Parallels.Keys = {
         }
       }, function (err, bit) {
         if (!err) {
-          Session.set('bitEditingId', bit._id);
+          Session.set('textBitEditingId', bit._id);
         }
       });
     });
