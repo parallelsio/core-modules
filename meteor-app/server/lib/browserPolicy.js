@@ -11,6 +11,7 @@ var trusted = [
   'fonts.googleapis.com',
   'placeholdit.imgix.net',
   'placehold.it',
+  'player.vimeo.com',
 
   'localhost:9000'
 ];
