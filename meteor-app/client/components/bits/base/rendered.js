@@ -5,7 +5,7 @@ Template.bit.onRendered(function (){
   var bitDatabaseId = bit._id;
   var $bitElement = $(template.firstNode);
   var $content = $bitElement.find('.bit__content');
-  var $editbitElement = $content.find('.bit__editing');
+  var $editbitElement = $content.find('.bit--editing');
 
   $content.css("height", bit.height);
   $content.css("width", bit.width);
