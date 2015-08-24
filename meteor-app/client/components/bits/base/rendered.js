@@ -6,7 +6,6 @@ Template.bit.onRendered(function (){
   var $bitElement = $(template.firstNode);
   var $content = $bitElement.find('.bit__content');
   var $editbitElement = $content.find('.bit__editing');
-  var $dragHandle = $(template.find('.bit__drag-handle'));
 
   $content.css("height", bit.height);
   $content.css("width", bit.width);
@@ -43,6 +42,14 @@ Template.bit.onRendered(function (){
       $(this).scrollTop(scrollTo + $(this).scrollTop());
     }
   });
+
+
+  // TODO: split out logic to independent rendered functions
+  var $dragHandle = null;
+
+  if (template.data.type === 'text'){
+    $dragHandle = $(template.find('.bit__drag-handle'));
+  }
 
   makeBitDraggable($bitElement, $dragHandle);
 
