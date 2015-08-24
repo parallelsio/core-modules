@@ -66,7 +66,7 @@ SketchBit.prototype.getEventPoint = function (event) {
 
 SketchBit.prototype.isFocused = function () {
   var self = this;
-  var currentlyEditingId = Session.get('bitEditingId');
+  var currentlyEditingId = Session.get('sketchBitEditingId');
   return currentlyEditingId && currentlyEditingId === self._id;
 };
 
