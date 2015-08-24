@@ -4,6 +4,10 @@ Template.bit.helpers({
     return this.type === "text";
   },
 
+  isImageBit: function() {
+    return this.type === "image";
+  },
+
   imageSrc: function () {
     return this.imageDataUrl || this.imageSource;
   },
@@ -28,6 +32,6 @@ Template.bit.helpers({
   // https://github.com/meteor/meteor/issues/3635
   // possible alternative workaround: https://github.com/eluck/contenteditable/commit/b406d83863341c376f21f7de5056fdc8d4100877
   editor: function () {
-    return '<div class="bit__editing" contenteditable="true">' + this.content + '</div>';
+    return '<div class="bit__editing" contenteditable="false">' + this.content + '</div>';
   }
 });

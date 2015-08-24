@@ -1,3 +1,11 @@
+<!-- 
+  TODO: split template into:
+    bit:base
+    bit:image
+    bit:text
+    bit:sketch
+-->
+
 <template name="bit">
 
   <div
@@ -7,16 +15,21 @@
       data-filename="{{ filename }}"
       data-upload-key="{{ uploadKey }}">
 
+    <div class="bit__controls  bit__controls-persistent">
+      <a class="controls__icon  controls__icon-delete  icon-trash noselect" data-clickable="true"></a> 
+    </div>
+
+
     <div class="bit__content {{ color }}">
 
-      {{#if imageSrc }}
+      {{#if isImageBit }}
         <img class="bit-image" src="{{ imageSrc }}" alt="{{ filename }}">
       {{/if}}
 
       {{#if isTextBit }}
         {{{editor}}}
         
-        <div class="bit__resize ui-resizable-handle ui-resizable-se">
+        <div class="bit__resize ui-resizable-handle ui-resizable-se" data-clickable="true">
           <div class="bit__resize__triangle-icon"></div>
         </div>
 

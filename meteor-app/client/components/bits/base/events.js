@@ -1,38 +1,50 @@
 BitEvents = {
 
-  // TODO: clean up
-
+  // prevents bits that were under the bit person is dragging, from starting to highlight
+  // TODO: refactor to use GSAP built in methods, to test if something is being dragged?
   hoverInBit: function (event, template) {
     if (!Session.get('mousedown')) {
+      
       Session.set('bitHoveringId', template.data._id);
       Session.set('bitEditingId', template.data._id);
+
       Parallels.Audio.player.play('fx-ting3');
 
       // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
-      var $bit = $(template.firstNode);
-      $bit.find('.bit__editing').focus();
-      $bit.addClass('hovering');
-      $bit.find('.bit__resize').show();
+      var $bitElement = $(template.firstNode);
+      $bitElement.find('.bit__editing').focus();
+      $bitElement.addClass('hovering');
+      $bitElement.find('.bit__resize').show();
+      $bitElement.find('.bit__controls-persistent').show();
+
+       var $editingElement = $bitElement.find('.bit__editing');
+      $editingElement.attr('contenteditable', 'true');
+      $editingElement.attr('data-clickable', 'true');
     }
   },
 
   hoverOutBit: function (event, template){
     if (!Session.get('mousedown')) {
       Session.set('bitHoveringId', null);
-      var $bit = $(template.firstNode);
-      $bit.removeClass('hovering');
-      $bit.find('.bit__resize').hide();
 
-      var $editbitElement = $(template.find('.bit__editing'));
-      if (this.content != $editbitElement.html()) {
+      var $bitElement = $(template.firstNode);
+      $bitElement.removeClass('hovering');
+      $bitElement.find('.bit__resize').hide();
+      $bitElement.find('.bit__controls-persistent').hide();
+
+      var $editingElement = $(template.find('.bit__editing'));
+      $editingElement.attr('contenteditable', 'false');
+      $editingElement.attr('data-clickable', 'false');
+
+      if (this.content != $editingElement.html()) {
         Meteor.call('changeState', {
           command: 'updateBitContent',
           data: {
             canvasId: Session.get('canvasId'),
             _id: this._id,
-            content: $editbitElement.html(),
-            height: $editbitElement.height(),
-            width: $editbitElement.width()
+            content: $editingElement.html(),
+            height: $editingElement.height(),
+            width: $editingElement.width()
           }
         });
 
@@ -57,5 +69,22 @@ Template.bit.events({
 
   'mouseup .bit': function () {
     Session.set('mousedown', false);
+  },
+
+  'click .controls__icon-delete': function (event, template) {
+
+    Parallels.log.debug("starting bit:delete on ", template.data._id);
+    Parallels.Audio.player.play('fx-tri');
+
+      Meteor.call('changeState', {
+        command: 'deleteBit',
+        data: {
+          canvasId: Session.get('canvasId'),
+          _id: template.data._id
+        }
+      });
+
+    Session.set('bitEditingId', null);
   }
+
 });

@@ -19,7 +19,6 @@
 .bit__drag-handle {
   display: none;
   position: absolute;
-  // margin: 1.25em -1.25em;
   z-index: 1;
 }
 
@@ -41,16 +40,16 @@
 .bit.text .bit__content {
   background: white;
   padding: 1.25em;
-  min-height: 60px;
-  min-width: 150px;
+  min-height: 65px;
+  min-width: 140px;
 }
 
 
 
 .bit.text.hovering .bit__drag-handle{
 
-  height: 90vh;
-  top: -25vh;
+  height: 70vh;
+  top: -20vh;
   
 
   // http://uigradients.com/#Earthly
@@ -62,12 +61,46 @@
 
 }
 
+.bit__controls{
+  position: absolute;
+  display: none;
+  text-align: center;
+  width:100%;  
+  z-index: 2;
+}
+
+.bit__controls-persistent{
+  z-index: 2;
+  top: -3em;
+}
+
+.controls__icon{
+  display: inline-block;
+  height: 2.5em;
+  padding: 0 .75em;
+  font-size: 1.25em;
+  width: 2.5em;
+  line-height: 2.5em;
+  color: #8a8a8a;
+}
+
+.controls__icon:hover{
+  background-color: #3C9FFF; 
+  color: white;
+  opacity: 0.75;
+}
 
 .bit__resize{
   position: absolute;
 
-  bottom: 15px;
-  right: 15px;
+  // Jquery Resize UI automatically adds display:inline. 
+  // Since we are manually show/hiding this handle (vs using Jquery 'autohide' param)
+  // we need to use important, to make this is hidden until
+  // text bit is double clicked to edit. Then, we'll display this resize handle
+  display: none ; 
+
+  bottom: -1px;
+  right: -1px;
   height: 0; 
   width: 0; 
 
@@ -78,6 +111,7 @@
 
 .bit__resize__triangle-icon{
   position: absolute;
+  // display: block;
 
   bottom: 0;
   right: 0;
@@ -88,8 +122,6 @@
 
   border-top: 20px solid transparent;
   border-right:20px solid #3C9FFF; 
-
-  // margin: -15px;
 
 }
 
@@ -169,6 +201,11 @@
   background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
 }
 
+
+.bit.image .controls__icon-delete:hover{
+  background-color: #f9ffb7; 
+  color: #8a8a8a;
+}
 
 // file upload animation
 @mixin keyframes($name) {

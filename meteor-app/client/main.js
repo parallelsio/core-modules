@@ -29,6 +29,7 @@ Meteor.startup(function () {
 
   Session.set('bitEditingId', null);
 
+  // TODO: make as util?
   $.fn.focusWithoutScrolling = function(){
     var x = verge.scrollX(), y = verge.scrollY();
     this.focus();
