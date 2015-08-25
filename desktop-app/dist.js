@@ -32,18 +32,19 @@ if (osName.indexOf('windows') !== -1) {
 }
 
 console.log('On Windows: ', onWindows);
+console.log('OS Name: ', osName);
+console.log('base: ', base);
 
-var npmPath = base + '/cache/node/bin/npm';
-var nodePath = base + '/cache/node/bin/node';
+var npmPath = base + '/desktop-app/cache/node/bin/npm';
+var nodePath = base + '/desktop-app/cache/node/bin/node';
 var projectVersion = require('../package.json').version;
 
-var distName = 'Electrometeor';
+var distName = 'Parallels';
 
 if (onWindows) {
   npmPath = path.join(base, '/cache/nodejs/npm');
   nodePath = path.join(base, '/cache/nodejs/node.exe');
 }
-
 
 echo('-----> Building bundle from Meteor app, this may take a few minutes');
 
@@ -70,7 +71,7 @@ function buildDist (os, name) {
       console.log('Windows build');
 
       app = name + '.exe';
-      cp('-R', './cache/electron', './dist/windows');
+      cp('-R', './desktop-app/cache/electron', './dist/windows');
       mv('./dist/windows/electron', './dist/windows/' + name);
       mv('./dist/windows/' + name + '/electron.exe', './dist/windows/' + name + '/' + app);
       mkdir('./dist/windows/' + name + '/resources/app');
@@ -80,7 +81,7 @@ function buildDist (os, name) {
       console.log('Linux build');
 
       app = name;
-      cp('-R', './cache/electron', './dist/linux');
+      cp('-R', './desktop-app/cache/electron', './dist/linux');
       mv('./dist/linux/electron', './dist/linux/' + name);
       mv('./dist/linux/' + name + '/electron', './dist/linux/' + name + '/' + app);
       mkdir('dist/linux/' + name + '/resources/app');
@@ -90,7 +91,7 @@ function buildDist (os, name) {
       console.log('Mac build');
 
       app = name + '.app';
-      cp('-R', './cache/electron/Electron.app', './dist/' + osName);
+      cp('-R', './desktop-app/cache/electron/Electron.app', './dist/' + osName);
       mv('./dist/osx/Electron.app', './dist/osx/' + app);
       mv('./dist/osx/' + app + '/Contents/MacOS/Electron', './dist/osx/' + app + '/Contents/MacOS/' + name);
       mkdir('dist/osx/' + app + '/Contents/Resources/app');
@@ -145,12 +146,12 @@ function copyBinaryFiles (os, name) {
     case 'windows':
     case 'linux':
       mkdir('./dist/' + os + '/' + name + '/resources/app/resources');
-      cp('./resources/*', './dist/' + os + '/' + name + '/resources/app/resources/');
+      cp('./desktop-app/resources/*', './dist/' + os + '/' + name + '/resources/app/resources/');
       break;
 
     case 'osx':
       mkdir('./dist/osx/' + name + '.app/Contents/Resources/app/resources');
-      cp('./resources/*', './dist/osx/' + name + '.app/Contents/Resources/app/resources/');
+      cp('./desktop-app/resources/*', './dist/osx/' + name + '.app/Contents/Resources/app/resources/');
       break;
 
     default:
