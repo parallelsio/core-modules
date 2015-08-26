@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/parallelsio/core-modules.svg?branch=master)](https://travis-ci.org/parallelsio/core-modules)
 
-<img src="docs/github-readme-image.png" />
+<a href="https://player.vimeo.com/video/136997295" target="_blank"><img src="docs/github-readme-image.png" /></a>
 
 ##[Parallels](http://makeparallels.herokuapp.com) (working title): 
 <br>
@@ -20,8 +20,6 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 > * [Playground](http://makeparallels.herokuapp.com). Add `/canvas/your-unique-canvas-name/` to the URL, to try your own canvas. For example: `http://makeparallels.herokuapp.com/canvas/alice-wild-ideas-for-encryption`. Your first visit to the URL you chose will boot up that canvas. Privacy currently via obfuscation: pick a unique canvas name and share it only with your collaborators. Data will be cleared periodically. No user account system yet. Please note we are using an Amazon s3 instance to host images for this playground, so upload content you expect will be publicly accessible.
 
 > This is an alpha version and a proof of concept. It's incomplete, with bugs and continuously changing code, design + features
-
-> <iframe src="https://player.vimeo.com/video/136997295?byline=0&portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 ### License
 
