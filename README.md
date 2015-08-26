@@ -59,17 +59,17 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 > 
 > [/meteor-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - the reactive, web app running in modern browsers: a digital canvas enabling you to create, remix + share digital collections of media. Built on [Meteor JS](http://www.meteor.com)
 > 
-> [/desktop-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - a wrapper for the Meteor application, letting you use Parallels as an installable app on MacOSX, Windows and Linux. Built on [Electron](http://electron.atom.io)
+> [/desktop-app](https://github.com/parallelsio/core-modules/tree/master/meteor-app) - a wrapper for the Meteor application, letting you use Make Parallels as an installable app on MacOSX, Windows and Linux. Built on [Electron](http://electron.atom.io)
 > 
-> [/extensions/chrome/source](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome/source) - a Chrome extension, enabling you to easily save+tag content found on the web to your Parallels canvas
+> [/extensions/chrome/source](https://github.com/parallelsio/core-modules/tree/master/extensions/chrome/source) - a Chrome extension, enabling you to easily save+tag content found on the web to your Make Parallels canvas
 
 
 
 ### Privacy Notice
 
-> All of the data you create while running Parallels locally during development, (on your computer) stays private to you. Unlike other systems, any action you've taken in Parallels since the beginning of time is accessible, even if deleted. This is by design, as our project aims to be a [PIMS](http://cacm.acm.org/magazines/2015/5/186024-managing-your-digital-life/fulltext). We've already started the core work in the app to support this functionality, but have not yet designed the UI to intuitively make this characteristic evident. Since this is running locally on your machine, there is little to be concerned about in terms of data privacy.
+> All of the data you create while running Make Parallels locally during development, (on your computer) stays private to you. Unlike other systems, any action you've taken in Parallels since the beginning of time is accessible, even if deleted. This is by design, as our project aims to be a [PIMS](http://cacm.acm.org/magazines/2015/5/186024-managing-your-digital-life/fulltext). We've already started the core work in the app to support this functionality, but have not yet designed the UI to intuitively make this characteristic evident. Since this is running locally on your machine, there is little to be concerned about in terms of data privacy.
 
-> **However, if you contribute to this project by submitting a Pull Request, and/or are submitting a bug or issue, and include an export of your database activity, all of your Parallels activity is included, even if some content was previously deleted**. You can see what is in your Event history at any time by pressing the `H` key when running the web canvas. 
+> **However, if you contribute to this project by submitting a Pull Request, and/or are submitting a bug or issue, and include an export of your database activity, all of your Make Parallels activity is included, even if some content was previously deleted**. You can see what is in your Event history at any time by pressing the `H` key when running the web canvas. 
 
 > If you have any questions or concerns, please contact us **before** posting your data.
 
