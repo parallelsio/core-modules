@@ -135,6 +135,7 @@ function start (callback) {
               userEnv.DIR = dirname;
               userEnv.NODE_ENV = 'production';
               userEnv.NODE_PATH = path.join(dirname, 'node_modules');
+              userEnv.GRAPHENEDB_URL = "http://neo4j:local@localhost:7474";
 
               var nodePath = path.join(dirname, 'resources', 'node');
               var nodeArgs = path.join(dirname, 'bundle', 'main.js');
