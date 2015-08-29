@@ -19,7 +19,7 @@ Template.bit.onRendered(function (){
         data: {
           canvasId: Session.get('canvasId'),
           _id: bit._id,
-          content: $editbitElement.html(),
+          content: $bitElement.find('.bit__content').find('.bit--editing').html(),
           height: $resizable.size.height,
           width: $resizable.size.width
         }
