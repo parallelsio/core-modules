@@ -13,10 +13,13 @@ var trusted = [
   'placehold.it',
   'player.vimeo.com',
 
-  'localhost:9000'
+  'localhost:9000',
+  'localhost:3000'
 ];
 
 _.each(trusted, function(origin) {
   BrowserPolicy.content.allowOriginForAll("https://" + origin);
   BrowserPolicy.content.allowOriginForAll("http://" + origin);
 });
+
+
