@@ -80,7 +80,6 @@ npm-container@1.1.0
 npm-mongo@1.5.46
 observe-sequence@1.0.12
 ordered-dict@1.0.8
-ostrio:neo4jdriver@1.0.2
 ovcharik:howler@1.1.26
 parallels-animation@0.0.1
 parallels-audio@0.0.1

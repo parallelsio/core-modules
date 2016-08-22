@@ -51,5 +51,8 @@
     "test": "grunt env:dev jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
     "test:integration": "grunt env:dev meteorPackageIntegration",
     "test:server": "grunt env:dev meteorPackagesTestServer"
+  },
+  "dependencies": {
+    "meteor-node-stubs": "^0.2.3"
   }
 }
