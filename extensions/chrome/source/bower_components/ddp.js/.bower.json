@@ -30,7 +30,7 @@
     "tag": "v0.6.0",
     "commit": "46a120b0e24020b1bb0b86d62922d61df63c305c"
   },
-  "_source": "git://github.com/mondora/ddp.js.git",
+  "_source": "https://github.com/mondora/ddp.js.git",
   "_target": "~0.6.0",
   "_originalSource": "ddp.js"
 }

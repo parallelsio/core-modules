@@ -38,7 +38,7 @@
     "tag": "v0.6.1",
     "commit": "20126bcac59f9cf8f68e2da1d65e4c7791ac61bf"
   },
-  "_source": "git://github.com/mondora/asteroid.git",
+  "_source": "https://github.com/mondora/asteroid.git",
   "_target": "~0.6.1",
   "_originalSource": "asteroid"
 }

@@ -48,16 +48,18 @@
 
 .bit.text.hovering .bit__drag-handle{
 
-  height: 70vh;
-  top: -20vh;
+  // height: 70vh;
+  // top: -20vh;
   
 
-  // http://uigradients.com/#Earthly
-  background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* IE10 */
-  background:      -o-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Opera 11.10+ */
-  background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */ 
+  border: 5px solid #85D2B5;
+  
+  // // http://uigradients.com/#Earthly
+  // background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
+  // background:    -moz-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* FF3.6+ */
+  // background:     -ms-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* IE10 */
+  // background:      -o-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Opera 11.10+ */
+  // background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */ 
 
 }
 

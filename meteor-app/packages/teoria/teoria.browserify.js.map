@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": [
-    "../../../../../../../.meteor/packages/cosmos_browserify/.0.5.0.5gbvud++os+web.browser+web.cordova/plugin.CosmosBrowserify.os/npm/CosmosBrowserify/node_modules/browserify/node_modules/browser-pack/_prelude.js",
+    "../../../../../../../.meteor/packages/cosmos_browserify/.0.5.0.1zvmtz++os+web.browser+web.cordova/plugin.CosmosBrowserify.os/npm/node_modules/meteor/CosmosBrowserify/CosmosBrowserify/node_modules/browserify/node_modules/browser-pack/_prelude.js",
     "_stream_0.js",
     "node_modules/teoria/index.js",
     "node_modules/teoria/lib/chord.js",

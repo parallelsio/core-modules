@@ -17,7 +17,7 @@
     "tag": "v0.2.0",
     "commit": "d64da2d32b7f8cf67964c8573275b0c3df09535f"
   },
-  "_source": "git://github.com/iammerrick/Squire.js.git",
+  "_source": "https://github.com/iammerrick/Squire.js.git",
   "_target": "~0.2.0",
   "_originalSource": "squire"
 }

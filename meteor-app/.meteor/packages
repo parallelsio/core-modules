@@ -4,8 +4,7 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-insecure
+insecure@1.0.7
 iron:router
 parallels-animation
 parallels-audio
@@ -19,7 +18,6 @@ angelcabo:infinite-undo
 parallels-canvas-manager
 meteorhacks:npm
 npm-container
-ostrio:neo4jdriver
 momentjs:moment
 raix:ui-dropped-event
 cosmos:browserify
@@ -30,9 +28,26 @@ msavin:jetsetter
 msavin:mongol
 angelcabo:mousetrap
 mquandalle:autofocus
-browser-policy
+browser-policy@1.0.9
 peerlibrary:classy-test
 parallels-lib
 parallels-client
 parallels-server
 templates:forms
+meteor-base@1.0.4
+mobile-experience@1.0.4
+mongo@1.1.11
+blaze-html-templates@1.0.4
+session@1.1.6
+jquery@1.11.9
+tracker@1.1.0
+logging@1.1.15
+reload@1.1.10
+random@1.0.10
+ejson@1.0.12
+spacebars@1.0.12
+check@1.2.3
+standard-minifier-css@1.2.0
+standard-minifier-js@1.2.0
+ostrio:neo4jdriver@1.0.2
+shell-server
