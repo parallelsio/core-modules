@@ -28,7 +28,6 @@ msavin:jetsetter
 msavin:mongol
 angelcabo:mousetrap
 mquandalle:autofocus
-browser-policy@1.0.9
 peerlibrary:classy-test
 parallels-lib
 parallels-client
@@ -50,3 +49,4 @@ check@1.2.3
 standard-minifier-css@1.2.0
 standard-minifier-js@1.2.0
 shell-server
+browser-policy

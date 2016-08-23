@@ -23,3 +23,9 @@ _.each(trusted, function(origin) {
 });
 
 
+// https://stackoverflow.com/questions/32600469/meteor-browser-policy-local-camera-not-allowed
+BrowserPolicy.content.allowImageOrigin("blob:");
+var constructedCsp = BrowserPolicy.content._constructCsp();
+BrowserPolicy.content.setPolicy(constructedCsp +" media-src blob:;");
+
+
