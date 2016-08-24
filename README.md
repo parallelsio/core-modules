@@ -2,11 +2,11 @@
 
 <a href="https://player.vimeo.com/video/136997295" target="_blank"><img src="docs/github-readme-image.png" /></a>
 
-##[Parallels](http://makeparallels.herokuapp.com) (working title): 
+##Make Parallels (working title): 
 <br>
-A free + open source tool designed to help your creativity flow: easily stitch together bits of media living across many devices + services, into creative works full of life.
+A free + open source digital notebook with a canvas, for creatively organizing + remixing bits of media.
 
-> We're a [diverse, distributed](https://hackpad.com/Parallels-Cast-Friends-XGzlw9Mxg39) community of designers, developers, artists + researchers interested in changing the way we organize and connect ideas. 
+> We're a [distributed](https://hackpad.com/Parallels-Cast-Friends-XGzlw9Mxg39) community of designers, developers, artists + researchers interested in changing the way we organize and connect ideas. 
 
 ####4 design principles guide our vision:
 > * Flow - a system that responds in realtime, always remembers where you are, and lets you play without consequences
@@ -16,8 +16,6 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 
 
 > * [Blog](http://parallels.ghost.io)
-
-> * [Playground](http://makeparallels.herokuapp.com). Add `/canvas/your-unique-canvas-name/` to the URL, to try your own canvas. For example: `http://makeparallels.herokuapp.com/canvas/alice-wild-ideas-for-encryption`. Your first visit to the URL you chose will boot up that canvas. Privacy currently via obfuscation: pick a unique canvas name and share it only with your collaborators. Data will be cleared periodically. No user account system yet. Please note we are using an Amazon s3 instance to host images for this playground, so upload content you expect will be publicly accessible.
 
 > This is an alpha version and a proof of concept. It's incomplete, with bugs and continuously changing code, design + features
 
@@ -32,7 +30,7 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 
 > * Twitter: [@makeparallels](http://www.twitter.com/makeparallels)
 
-> * [Slack](http://parallelsio.slack.com) for realtime chat + collaboration. [Email](mailto:steven@parallels.io) or [tweet](http://www.twitter.com/makeparallels) for access
+> * [Slack](http://parallelsio.slack.com) for realtime chat + collaboration. [Email](mailto:lifeinchords@gmail.com) or [tweet](http://www.twitter.com/lifeinchords) for access
 
 > * [Trello](https://trello.com/b/XtenDuNO/parallels-design-dev) for keeping track of stories (units of design + development work)
 
@@ -44,8 +42,6 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 
 
 ### Special thanks for free licenses + support from:
-
-> * [Screenhero](https://www.screenhero.com), for remote screenshare / pairing
 
 > * [Doodle](https://www.doodle.com), great for scheduling team meetings across time zones
 
@@ -67,9 +63,9 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 
 ### Privacy Notice
 
-> All of the data you create while running Make Parallels locally during development, (on your computer) stays private to you. Unlike other systems, any action you've taken in Parallels since the beginning of time is accessible, even if deleted. This is by design, as our project aims to be a [PIMS](http://cacm.acm.org/magazines/2015/5/186024-managing-your-digital-life/fulltext). We've already started the core work in the app to support this functionality, but have not yet designed the UI to intuitively make this characteristic evident. Since this is running locally on your machine, there is little to be concerned about in terms of data privacy.
+> All of the data you create while running Make Parallels locally during development, (on your computer) stays private to you. Unlike other systems, any action you've taken in Parallels since the beginning of time is accessible, even if deleted. Since this is running locally on your machine, there is little to be concerned about in terms of data privacy.
 
-> **However, if you contribute to this project by submitting a Pull Request, and/or are submitting a bug or issue, and include an export of your database activity, all of your Make Parallels activity is included, even if some content was previously deleted**. You can see what is in your Event history at any time by pressing the `H` key when running the web canvas. 
+> **If you contribute to this project, either by submitting a Pull Request or are submitting a bug or issue and include an export of your database activity, all of your activity history is included, even if some content was previously deleted**. You can see what is in your history at any time by pressing the `H` key when running the web canvas. 
 
 > If you have any questions or concerns, please contact us **before** posting your data.
 
@@ -77,7 +73,7 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 ### Requirements + Dependencies
 
 > * OSX / Linux (Windows dev may work, but it has not been tested)
-> * [Node.js](https://nodejs.org) (0.10.38) Server Runtime [Meteor requires the latest .10.x, no higher](https://forums.meteor.com/t/meteor-nodejs-0-12/2769/3)
+> * [Node.js](https://nodejs.org) (4.4.7) 
 > * [NVM](https://github.com/creationix/nvm) (Node version manager). Optional, but recommended
 > * [NPM](https://www.npmjs.com) (Node package manager)
 > * [Meteor JS](https://www.meteor.com) platform
@@ -86,11 +82,6 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 > * [git](https://git-scm.herokuapp.com) distributed version control system
 > * [Evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers) (self-updating, modern) browsers: Chrome, Firefox, Safari, FireFox, IE10+
  
-
-
-### Setup
-
-> Having any trouble at all? Ping us on Twitter [@makeparallels](http://www.twitter.com/makeparallels), or [email](mailto:steven@parallels.io) us to arrange for a remote pairing session to set you up!
 
 
 
@@ -103,9 +94,9 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 > After installing NVM, install the version of node required by Meteor and set it as the default
 
 > ```
-> $ nvm install 0.10.38
-> $ nvm use 0.10.38
-> $ nvm alias default 0.10.38
+> $ nvm install 4.4.7
+> $ nvm use 4.4.7
+> $ nvm alias default 4.4.7
 > ```
 
 ##### - - - OR - - - 
@@ -241,7 +232,7 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 ### More Workflow Task Scripts
 > We've added more tasks to make ease development:
 
-> `$ npm runn postinstall`: 
+> `$ npm run postinstall`: 
 
 <br>
 #### Testing tasks
@@ -282,9 +273,9 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 > 
 >-  have a look at many common questions + answers at the [FAQ](https://github.com/parallelsio/core-modules/wiki/FAQ) Wiki. 
 
->- Tweet to us [@makeparallels](http://www.twitter.com/makeparallels)
+>- Tweet to us [@makeparallels](http://www.twitter.com/lifeinchords)
 
->- [email](mailto:steven@parallels.io) us
+>- [email](mailto:lifeinchords@gmail.com) us
 
 
 > Interested in learning more about our stack + tools? Check out our [Contributor Onboarding Resources](https://github.com/parallelsio/core-modules/wiki/Onboarding-Resources) Wiki
@@ -316,7 +307,7 @@ A free + open source tool designed to help your creativity flow: easily stitch t
 
 >-  Map-based coordinate system for layout/content
 ><br>
->-  Designing a realtime, multi-client environment that supports simultaneous collaboration
+>-  Designing a multi-client environment that supports realtime collaboration
 ><br>
 >-  Storing, modeling documents in a combination of databases used for different purposes (aka polyglot database architecture)
 ><br>
