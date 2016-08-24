@@ -1,12 +1,12 @@
 Package.describe({
   name: 'angelcabo:meteor-gsap',
   summary: 'GreenSock Animation Platform : Professional-Grade HTML5 Animation.',
-  version: "1.16.0",
+  version: "1.16.2",
   git: "https://github.com/angelcabo/meteor-gsap/"
 });
 
 Package.on_use(function (api) {
-  api.versionsFrom("METEOR@1.0");
+  api.versionsFrom('METEOR@1.4.1');
 
   api.add_files([
     'header.js'

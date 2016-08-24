@@ -4,49 +4,52 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-insecure@1.0.7
+meteor-base@1.0.4             # Packages every Meteor app needs to have
+mobile-experience@1.0.4       # Packages for a great mobile UX
+mongo@1.1.11                   # The database Meteor supports right now
+blaze-html-templates@1.0.4    # Compile .html files into Meteor Blaze views
+reactive-var@1.0.10            # Reactive variable for tracker
+jquery@1.11.9                  # Helpful client-side library
+tracker@1.1.0                 # Meteor's client-side reactive programming library
+
+standard-minifier-css@1.2.0   # CSS minifier run for production mode
+standard-minifier-js@1.2.0    # JS minifier run for production mode
+ecmascript@0.5.8              # Enable ECMAScript2015+ syntax in app code
+shell-server@0.2.1            # Server-side component of the `meteor shell` command
+
+
+# templates:forms
+# logging@1.1.15
+# reload@1.1.10
+# random@1.0.10
+# ejson@1.0.12
+# spacebars@1.0.12
+
+browser-policy@1.0.9
 iron:router
-parallels-animation
-parallels-audio
-lifeinchords:teoria
-practicalmeteor:loglevel
 edgee:slingshot
-stevezhu:lodash
-fourseven:scss
-angelcabo:meteor-gsap
-angelcabo:infinite-undo
-parallels-canvas-manager
-meteorhacks:npm
-npm-container
-momentjs:moment
-raix:ui-dropped-event
-cosmos:browserify
-cwaring:modernizr
-chuangbo:marked
-fortawesome:fontawesome
-msavin:jetsetter
-msavin:mongol
-angelcabo:mousetrap
-mquandalle:autofocus
-peerlibrary:classy-test
 parallels-lib
 parallels-client
 parallels-server
-templates:forms
-meteor-base@1.0.4
-mobile-experience@1.0.4
-mongo@1.1.11
-blaze-html-templates@1.0.4
+parallels-audio
+parallels-animation
+angelcabo:meteor-gsap
+angelcabo:infinite-undo
+parallels-canvas-manager
+practicalmeteor:loglevel
+fourseven:scss
+momentjs:moment
+raix:ui-dropped-event
+cwaring:modernizr
+chuangbo:marked
+fortawesome:fontawesome
+angelcabo:mousetrap
+mquandalle:autofocus
+peerlibrary:classy-test
+meteortoys:allthings
 session@1.1.6
-jquery@1.11.9
-tracker@1.1.0
-logging@1.1.15
-reload@1.1.10
-random@1.0.10
-ejson@1.0.12
-spacebars@1.0.12
 check@1.2.3
-standard-minifier-css@1.2.0
-standard-minifier-js@1.2.0
-shell-server
-browser-policy
+random@1.0.10
+lifeinchords:teoria
+cosmos:browserify
+meteor-tool

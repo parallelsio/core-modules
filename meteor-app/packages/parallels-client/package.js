@@ -1,6 +1,6 @@
 Package.describe({
   name: 'parallels-client',
-  version: '0.0.1',
+  version: '0.0.2',
   // Brief, one-line summary of the package.
   summary: '',
   // URL to the Git repository containing the source code for this package.
@@ -12,13 +12,13 @@ Package.describe({
 
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
+  api.versionsFrom('1.4.1');
 
   api.use([
     "session",
-    "parallels-lib@0.0.1",
-    "chuangbo:marked@0.3.2_4",
-    "angelcabo:mousetrap@1.0.0"
+    "parallels-lib@0.0.2",
+    "chuangbo:marked@0.3.5_1",
+    "angelcabo:mousetrap@1.0.2"
   ], 'client', {weak: false, unordered: false});
 
   api.addFiles([

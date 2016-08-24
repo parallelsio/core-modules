@@ -1,4 +1,4 @@
-// TODO: refactor out inheritance:
+// TODO: refactor out inheritance, towards BEM
 // from:  .bit.text .bit__content { }
 // to:    .bit--text__content { }
 
@@ -22,6 +22,9 @@
   z-index: 1;
 }
 
+.bit.image button:focus {
+  outline: 0;
+}
 
 
 
@@ -67,7 +70,7 @@
   position: absolute;
   display: none;
   text-align: center;
-  width:100%;  
+  width: 100%;  
   z-index: 2;
 }
 
@@ -186,9 +189,6 @@
 
 // ******************** IMAGE BITS *************
 
-.bit.image img  {
-  width: 200px;
-}
 
 
 .bit.image.hovering .bit__drag-handle {

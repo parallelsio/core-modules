@@ -29,7 +29,7 @@
 
 Package.describe({
   name: 'lifeinchords:teoria',
-  version: '0.0.1',
+  version: '0.0.2',
   summary: 'Meteor wrapper for teoria, which provides music theory objects: notes, chords, scales + intervals',
 
   // local package
@@ -43,7 +43,7 @@ Package.describe({
 
 // Declare NPM modules for Meteor to download into .npm/package
 Npm.depends({
-  'teoria':'1.9.0'  
+  'teoria':'2.2.0'  
 });
 
 
@@ -53,7 +53,7 @@ Package.onUse(function(api) {
 
   // OQ: is this necessary? 
   // TODO: check if this version # updates automatically, when `meteor update` is run to upgrade Meteor version
-  api.versionsFrom('1.1.0.2');  
+  api.versionsFrom('1.4.1');  
  
   // since we havent added any custom logic to 'Meteorize' the original teoria lib
   // we dont need any Meteor packages via api.use here
@@ -61,7 +61,7 @@ Package.onUse(function(api) {
   // https://github.com/meteor/meteor/tree/devel/packages
   // api.use(['minimongo', 'mongo-livedata', 'templating'], 'client'); 
 
-  api.use(['cosmos:browserify@0.3.0'], 'client'); 
+  api.use(['cosmos:browserify@0.10.0'], 'client'); 
 
   api.addFiles([
     'teoria.browserify.js'

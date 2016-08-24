@@ -1,6 +1,6 @@
 Package.describe({
   name: "angelcabo:infinite-undo",
-  version: "0.0.1",
+  version: "0.0.2",
   summary: "Adds a command design pattern coupled with event sourcing for infinite undo/redo capability in a Meteor App",
   git: "",
   documentation: "README.md"
@@ -13,7 +13,7 @@ Npm.depends({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom("1.1.0.2");
+  api.versionsFrom("1.4.1");
   api.use(["underscore"]);
 
   api.addFiles([

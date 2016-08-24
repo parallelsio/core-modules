@@ -1,5 +1,5 @@
 Meteor.startup(function () {
-
+  
   Parallels.log.debug("Meteor.startup begin.");
 
   // we enable the core *actions, ie
@@ -36,5 +36,5 @@ Meteor.startup(function () {
     this.focus();
     window.scrollTo(x, y);
     return this;
-  };
+  };  
 });

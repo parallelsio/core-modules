@@ -1,3 +1,8 @@
+var maxRenderPixels = {
+  height: 200,
+  width: 200
+}
+
 Template.bit.helpers({
 
   isTextBit: function() {
@@ -8,8 +13,23 @@ Template.bit.helpers({
     return this.type === "image";
   },
 
+  // TODO: should probably put this somewhere when saving the file vs here
+  pixelHeight: function() {
+    return Utilities.calcAspectRatioFit(this.nativeWidth, this.nativeHeight, maxRenderPixels.width, maxRenderPixels.height).height;
+  },
+
+  pixelWidth: function() {
+    return Utilities.calcAspectRatioFit(this.nativeWidth, this.nativeHeight, maxRenderPixels.width, maxRenderPixels.height).width;
+  },
+
   imageSrc: function () {
     return this.imageDataUrl || this.imageSource;
+  },
+
+  isImageTypeGif: function (){
+    if (this.filename.toUpperCase().split('.').pop() === 'GIF') {
+      return true;
+    }
   },
 
   uploadProgress: function () {

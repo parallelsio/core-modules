@@ -23,7 +23,15 @@
     <div class="bit__content {{ color }}">
 
       {{#if isImageBit }}
-        <img class="bit-image" src="{{ imageSrc }}" alt="{{ filename }}">
+        {{#if isImageTypeGif }}
+          <img class="bit-image" 
+                data-gifffer="{{ imageSrc }}" 
+                data-gifffer-width="{{ pixelWidth }}" 
+                data-gifffer-height="{{ pixelHeight }}" 
+                alt="{{ filename }}">
+        {{else}}
+          <img class="bit-image" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}">
+        {{/if}}
       {{/if}}
 
       {{#if isTextBit }}

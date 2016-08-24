@@ -1,3 +1,6 @@
+import Gifffer from 'Gifffer';
+
+
 Template.bit.onRendered(function (){
 
   var template = this;
@@ -109,6 +112,12 @@ Template.bit.onRendered(function (){
     $(this).attr('src', 'http://placehold.it/850x650&text=' + bit.filename);
   });
 
+  // TODO: this doesnt appear to be causing any issues, but 
+  // ideally we're only calling this when it's an *animated GIF
+  // to detect this is quite complex, and some cross domain limitations
+  if (bit.filename.toUpperCase().split('.').pop() === "GIF"){
+    Gifffer(); 
+  }
 
 });
 

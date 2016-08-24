@@ -1,6 +1,6 @@
 // use lodash instead of underscore
 // https://github.com/meteor/meteor/issues/1009
-_ = lodash;
+import * as _ from 'lodash';
 
 Utilities = {
 
@@ -94,6 +94,24 @@ Utilities = {
       x: verge.viewportW() / 2,
       y: verge.viewportH() / 2
     }
+  },
+
+  /**
+  * from: https://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
+  *
+  * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
+  * images to fit into a certain area.
+  *
+  * @param {Number} srcWidth Source area width
+  * @param {Number} srcHeight Source area height
+  * @param {Number} maxWidth Fittable area maximum available width
+  * @param {Number} maxHeight Fittable area maximum available height
+  * @return {Object} { width, heigth }
+  */
+  calcAspectRatioFit: function(srcWidth, srcHeight, maxWidth, maxHeight) {
+    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+    return { width: srcWidth * ratio, height: srcHeight * ratio };
   }
+
 
 };
