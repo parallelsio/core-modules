@@ -9,6 +9,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
     trigger: $dragHandle,
     throwProps:false,
     zIndexBoost:false,
+    autoScroll: 1,
 
     onPress: function(event){
     
