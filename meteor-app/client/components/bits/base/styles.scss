@@ -11,6 +11,11 @@
   outline: none;
 }
 
+.bit--near {
+   border-color: transparent; /* remove the border's colour */
+   box-shadow: 0 0 0 4px lightblue; /* emulate the border */
+}
+
 .bit__content{
   position: relative;
   z-index: 2; // should be above the hovered .bit__drag-handle
@@ -26,15 +31,25 @@
   outline: 0;
 }
 
+.grab {
+  cursor: grab;
+  cursor: -webkit-grab; 
+  cursor:-moz-grab;
+}
+
+.grabbing {
+  cursor: grabbing;
+  cursor: -webkit-grabbing; 
+  cursor:-moz-grabbing;
+}
 
 
 .hovering .bit__drag-handle {
-    display: block;
-    width: 100%;
-    background-color: #C6CED8;
-    backface-visibility: hidden;
-    cursor: move;
-  }
+  display: block;
+  width: 100%;
+  background-color: #C6CED8;
+  backface-visibility: hidden;
+}
 
 
 
