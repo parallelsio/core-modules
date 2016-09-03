@@ -69,11 +69,9 @@ Parallels.Animation.Image = {
        When expanding, we use up the most of the viewport space
        to preview, as is available, after leaving some margin from the edges.
        We save the bit's thumbnail image height+width, and original x,y position in a session var
-       so we can easily animate back on the contract.
+       so we can animate back on the contract
     */
     if (options.direction === "expand") {
-      // padding for top and bottom
-      // TODO: left + right, for very wide images
 
       // faster than jQuery(window).width() via http://ryanve.com/lab/dimensions
       var availableHeight = document.documentElement.clientHeight;
@@ -110,9 +108,11 @@ Parallels.Animation.Image = {
 
           Move the container (and thus the previewed image),
           to the center of the viewport
+
+          Also, account for scroll position in both directions
         */
-        x: (verge.viewportW() / 2) - (previewWidth / 2),
-        y: (verge.viewportH() / 2) - (previewHeight / 2)
+        x: ((verge.viewportW() / 2) - (previewWidth / 2)) + verge.scrollX(),
+        y: ((verge.viewportH() / 2) - (previewHeight / 2)) + verge.scrollY()
       };
     }
 
@@ -180,8 +180,9 @@ Parallels.Animation.Image = {
       timeline
         .set(options.$bit, { zIndex: 10 })
         .set($('.wipe.bit-preview'), { alpha: 1, display: "block" })
-        .to(mask,  0.30, { opacity: 1,  x: 0, ease: Ease.circOut } )
 
+        .set(mask,  { y: verge.scrollY(), x: verge.scrollX() }) // move mask into position outside the canvas
+        .to(mask,  0.30, { opacity: 1,  x: verge.scrollX(), ease: Ease.circOut } )
 
         // blow up image from thumbnail size up to fit the viewport height
         // and move its container (and it) to position. Run simultaneously
@@ -195,7 +196,7 @@ Parallels.Animation.Image = {
       $("body").css( "overflow", "visible"); // re-enabling scrolling
 
       timeline
-        .to(mask,   0.30, { opacity: 0, x: 0,  ease: Ease.circOut }, 0.15 )
+        .to(mask,   0.30, { opacity: 0, x: 0, ease: Ease.circOut }, 0.15 )
 
         // contract image from viewport height down to original thumbnail size
         // run at the same time
