@@ -126,7 +126,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
       timeline
         .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
-        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, opacity: "1", ease: Expo.easeOut })
+        .to($bitElement.find('.bit__drag-handle'), 0.05, { scale: 1, opacity: "1", ease: Expo.easeOut })
 
       $('.bit--near').removeClass("bit--near");
       $bitElement.addClass('grabbing');

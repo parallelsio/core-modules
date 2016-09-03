@@ -13,7 +13,11 @@
 
 .bit--near {
    border-color: transparent; /* remove the border's colour */
-   box-shadow: 0 0 0 4px lightblue; /* emulate the border */
+
+   // Emulate the border. Using this technique so bit isn't shifted by border
+   // !important is needed, because bit drag/drop via Greensock Draggable
+   // sets box-shadow via inline style, and we want this to take precedence 
+   box-shadow: 0 0 0 4px lightblue !important; 
 }
 
 .bit__content{
@@ -34,15 +38,18 @@
 .grab {
   cursor: grab;
   cursor: -webkit-grab; 
-  cursor:-moz-grab;
+  cursor: -moz-grab;
 }
 
 .grabbing {
   cursor: grabbing;
   cursor: -webkit-grabbing; 
-  cursor:-moz-grabbing;
+  cursor: -moz-grabbing;
 }
 
+.hovering {
+  @extend .grabbing;
+}
 
 .hovering .bit__drag-handle {
   display: block;
@@ -57,8 +64,8 @@
 
 .bit.text .bit__content {
   background: white;
-  padding: 1.25em;
-  line-height: 1.3rem;
+  padding: 1em;
+  line-height: 1.4rem;
   min-height: 65px;
   min-width: 140px;
 }
@@ -67,11 +74,10 @@
 
 .bit.text.hovering .bit__drag-handle {
 
-  // height: 70vh;
-  // top: -20vh;
+  height: 30vh;
+  top: -5rem;
   
-
-  border: 5px solid #85D2B5;
+  // border: 5px solid #85D2B5;
   
   // // http://uigradients.com/#Earthly
   // background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
@@ -82,7 +88,7 @@
 
 }
 
-.bit__controls{
+.bit__controls {
   position: absolute;
   display: none;
   text-align: center;
@@ -90,12 +96,12 @@
   z-index: 2;
 }
 
-.bit__controls-persistent{
+.bit__controls-persistent {
   z-index: 2;
   top: -3em;
 }
 
-.controls__icon{
+.controls__icon {
   display: inline-block;
   height: 2.5em;
   padding: 0 .75em;
@@ -105,13 +111,13 @@
   color: #8a8a8a;
 }
 
-.controls__icon:hover{
+.controls__icon:hover {
   background-color: #3C9FFF; 
   color: white;
   opacity: 0.75;
 }
 
-.bit__resize{
+.bit__resize {
   position: absolute;
 
   // Jquery Resize UI automatically adds display:inline. 
@@ -130,7 +136,7 @@
   z-index: 1000;
 }
 
-.bit__resize__triangle-icon{
+.bit__resize__triangle-icon {
   position: absolute;
   // display: block;
 
@@ -160,10 +166,10 @@
 // ******************** SKETCH BITS *************
 
 
-.bit.sketch.hovering .bit__drag-handle{
-  height: 100vh;
-  top: -25vh;
-  left: 80px;
+.bit.sketch.hovering .bit__drag-handle {
+  height: 70vh;
+  top: -20vh;
+  // left: 80px;
 
   // adapted from uigradients.com/Reef
   background: -webkit-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
@@ -189,6 +195,8 @@
 
 
 /*
+  TODO: remove, no longer relevant
+
   Binds the HTML Dom element to the JS drawing engine via ploma.js.
   Doesn't need to be seen by person,
   but can't be hidden, as then JS lib can't attach to it.
@@ -208,15 +216,15 @@
 
 
 .bit.image.hovering .bit__drag-handle {
-  height: 70vh;
-  top: -20vh;
-  
+  height: 4rem;
+  top: -1rem;
+
   // adapted from uigradients.com/Influenza
-  background: -webkit-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* IE10 */
-  background:      -o-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Opera 11.10+ */
-  background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
+  background: -webkit-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* IE10 */
+  background:      -o-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* Opera 11.10+ */
+  background:         linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* W3C */  
 }
 
 
