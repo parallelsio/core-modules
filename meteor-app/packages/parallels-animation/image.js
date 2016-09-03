@@ -59,8 +59,7 @@ Parallels.Animation.Image = {
     var bitThumbX       = options.$bit.position().left;
     var bitThumbY       = options.$bit.position().top;
 
-    var maskLeft         = $('.wipe.bit-preview.side-to-side .mask.left');
-    var maskRight        = $('.wipe.bit-preview.side-to-side .mask.right');
+    var mask            = $('.wipe.bit-preview .mask');
 
     var documentWidth  = $(document).width();
 
@@ -189,11 +188,10 @@ Parallels.Animation.Image = {
       Parallels.log.debug("bitContainerOptions: ", bitContainerOptions);
 
       timeline
-        .set($('.wipe.bit-preview.side-to-side'), { alpha: 1, display: "block" })
-        .fromTo(maskRight,  0.20, { x:  documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.15 )
-        .fromTo(maskLeft,   0.20, { x: -documentWidth / 2, ease: Expo.easeOut }, { x: 0 }, 0.15 )
-
         .set(options.$bit, { zIndex: 10 })
+        .set($('.wipe.bit-preview'), { alpha: 1, display: "block" })
+        .to(mask,  0.30, { opacity: 1,  x: 0, ease: Ease.circOut } )
+
 
         // blow up image from thumbnail size up to fit the viewport height
         // and move its container (and it) to position. Run simultaneously
@@ -207,8 +205,7 @@ Parallels.Animation.Image = {
       $("body").css( "overflow", "visible"); // re-enabling scrolling
 
       timeline
-        .fromTo(maskLeft,   0.20, { x: 0 }, { x: -documentWidth / 2, ease: Expo.easeOut }, 0.15 )
-        .fromTo(maskRight,  0.20, { x: 0 }, { x:  documentWidth / 2, ease: Expo.easeOut }, 0.15 )
+        .to(mask,   0.30, { opacity: 0, x: 0,  ease: Ease.circOut }, 0.15 )
 
         // contract image from viewport height down to original thumbnail size
         // run at the same time
@@ -216,7 +213,7 @@ Parallels.Animation.Image = {
         .to(options.$bit, 0.20, bitContainerOptions, "-=0.20" )
 
         .set(options.$bit, { zIndex: 1 })
-        .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" });
+        .set($('.wipe.bit-preview'), { alpha: 0, display: "none" });
     }
   },
 

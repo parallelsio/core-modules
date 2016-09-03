@@ -102,13 +102,15 @@ $color-second: #C7F464;
   background: $color-first;
 }
 
-.wipe.bit-preview.side-to-side {
-  display:none;
-  opacity:0;
+
+.wipe.bit-preview {
+  display: none;
+  opacity: 0;
 }
 
-.wipe.bit-preview.side-to-side .mask {
-  width: calc(50%) !important; // overwrite the line in the middle, not needed here
+.wipe.bit-preview .mask {
   background: #222;
+  width: 100%;
+  height: 100%;
 }
 
