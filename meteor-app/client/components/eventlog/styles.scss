@@ -93,7 +93,10 @@ $blue:#8B8BF5;
     transition: background ease-out 0.3s;
 
     .activity__dot { 
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      top: 0.15rem;
+
+      position: relative;
       color: $blue; 
       border: 0;
       transition: background ease-in 0.3s;
