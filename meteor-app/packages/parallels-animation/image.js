@@ -74,15 +74,9 @@ Parallels.Animation.Image = {
     if (options.direction === "expand") {
       // padding for top and bottom
       // TODO: left + right, for very wide images
-      var edgePadding = 20;
 
-      /*
-        using d.d.c faster than jQuery(window).width()
-        http://ryanve.com/lab/dimensions
-        TODO: refactor to use Verge lib. available as Meteor package?
-        calc the height available, accounting for space for image to breathe from edges
-      */
-      var availableHeight = document.documentElement.clientHeight - (edgePadding * 2);
+      // faster than jQuery(window).width() via http://ryanve.com/lab/dimensions
+      var availableHeight = document.documentElement.clientHeight;
 
       // use availableHeight to determine previewWidth
       if ((options.bit.nativeHeight > bitThumbHeight) &&
@@ -175,11 +169,7 @@ Parallels.Animation.Image = {
       onCompleteParams:[ options.direction ]
     });
 
-    /*
-      Run the animations
-      Settings + sequencing inspired by the Zelda 'wipes'
-      https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-    */
+
     if (options.direction === "expand") {
       Parallels.log.debug("expanding...");
 
