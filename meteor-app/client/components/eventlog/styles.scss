@@ -1,43 +1,13 @@
 $blue:#8B8BF5;
 
- // **************************************************************
-    // TODO: extract to app wide level for reuse?
-    // TODO: convert to BEM
-
-  .bg-white           { background-color: #FFF; }
-  .inline-block       { display: inline-block; }
-  .left               { float:left; }
-  .right              { float:right; }
-  .clear-both         { clear:both; }
-
-  .p-1                { padding: 1rem; }
-  .p-lr-1             { padding-left: 1rem; padding-right: 1rem; }
-  .p-lr-075           { padding-left: 0.75em; padding-right: 0.75em; }
-  .p-tb-1             { padding-top: 1em; padding-bottom: 1em; }
-  .p-b-025            { padding-bottom: 0.25em; }
-  .p-l-2              { padding-left: 1rem; }
-
-  .m-t-025            { margin-top: 0.25em; }
-  .m-r-15             { margin-right: 1.5rem; }
-
-  .bold               { font-weight: bold; }
-  .uppercase          { text-transform: uppercase; }
-  .letter-wide        { letter-spacing: 0.05em;  }
-  .italic             { font-style: italic; }
-
-  .border-b-dotted    { border-bottom: 2px dotted #E7E7FF; }
-  .border-b-solid     { border-bottom: 1px solid #f3f4f5; }
-  // **************************************************************
-
-
 .eventlog {
   position: fixed;
-  z-index: 10;
-  top: 3em;
+  z-index: 100;
   right: 0;
   width: 26.2em;
   height: 100vh;
   overflow: auto;
+  background-color: #FFF;
 
   .controls__icon.icon-clock {
     display: inline-block;
@@ -50,38 +20,86 @@ $blue:#8B8BF5;
 
   .timeline { position: relative; }
 
+  // vertical timeline line
   .timeline:before {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 13px;
-    width: 4px;
-    background-color: #f3f4f5;
-    z-index: 0;
+    left: 9.75%;
+    width: 2px;
+    background-color: lightgray;
+    z-index: 1;
   }
 
-  .icon               { font-size: .8em; }
+  .activity__header { 
+    display: block;
+    position: relative;
 
-  // TODO: refactor to more general, HTML headers, mixins
-  .activity--description {
-    font-size: 0.85em;
-    color: #A3A3A3;
-  }  
-  
-  .activity--time {
-    color: #BEBEBE;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: lightcoral;
+    padding: 2rem 0 2rem 5.3rem;
+    border-bottom: 1px solid #f3f4f5;
+  }
+
+  .activity__item {  
+    display: flex;
+    padding: 1rem 0;
+  }
+
+  .activity__position {
+    // background: lightcoral;
+    width: 20%;
+    text-align: center;
+  }
+
+  .activity__desc { 
+    display: inline-block;
+    width: 80%;
+    // background: lightblue;
     font-size: 0.85em;
   }
-  
-  .activity--dot { color:#C5C5C5; font-size: 0.8em;  }
 
-  .activity--container:hover{
-    background: #F5F5F5;
+  .activity__time {     
+    font-weight: 100;
+    color: #c9c9c9;
+    font-size: 0.9rem;
+    margin: 0.4rem 0;
+    font-style: italic;
+  }
+  
+  .activity__dot { 
+    position: relative;
+    z-index: 2;
+    // top: -1.5rem;
+
+    color: white;
+    font-size: 0.6rem;
+    border: 2px solid lightgray;
+
+    // TODO: fix pixel rendering, not quite right, showing part of the timeline line beneath
+    border-radius: 50%;  
+
+    transition: border-color ease-out 0.2s;
+  }
+
+  .activity__item:hover {
     
-    .activity--dot{ color: $blue;}
+    color: #A3A3A3;
+    background: #f2f2f2;
+    transition: background ease-out 0.3s;
+
+    .activity__dot { 
+      font-size: 1.2rem;
+      color: $blue; 
+      border: 0;
+      transition: background ease-in 0.3s;
+    }
   }
 
-  .activity--header{ padding:1em 3em; }
+
 
 }
