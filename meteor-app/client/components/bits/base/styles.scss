@@ -18,10 +18,10 @@
 
 .bit--near { box-shadow: 0 0 0 4px blue !important;  border-color: transparent; /* remove the border's colour */ }
 
-.near--top    { box-shadow: inset 0 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-.near--right  { box-shadow: inset -4px 0 0 blue !important;  border-color: transparent; /* remove the border's colour */ }
-.near--bottom { box-shadow: inset 0 -4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-.near--left   { box-shadow: inset 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
+.near--bottom    { box-shadow: 0 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
+.near--top { box-shadow: 0 -4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
+.near--left  { box-shadow: -4px 0 0 blue !important;  border-color: transparent; /* remove the border's colour */ }
+.near--right   { box-shadow: 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
 
 
 .bit__content{
