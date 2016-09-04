@@ -47,9 +47,9 @@
   cursor: -moz-grabbing;
 }
 
-.hovering {
-  @extend .grabbing;
-}
+// .hovering {
+//   @extend .grabbing;
+// }
 
 .hovering .bit__drag-handle {
   display: block;
@@ -213,11 +213,14 @@
 
 // ******************** IMAGE BITS *************
 
-
+.bit.image img { mix-blend-mode: multiply; }
 
 .bit.image.hovering .bit__drag-handle {
-  height: 4rem;
-  top: -1rem;
+  height: 120%;
+  width: 100%;
+  top: 0;
+  z-index: 20;
+
 
   // adapted from uigradients.com/Influenza
   background: -webkit-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* Chrome 10+, Saf5.1+ */
@@ -225,10 +228,14 @@
   background:     -ms-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* IE10 */
   background:      -o-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* Opera 11.10+ */
   background:         linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* W3C */  
+
+  // background-image: url(face.jpg);
+  // background-color: red;
+  mix-blend-mode: multiply;
 }
 
 
-.bit.image .controls__icon-delete:hover{
+.bit.image .controls__icon-delete:hover {
   background-color: #f9ffb7; 
   color: #8a8a8a;
 }

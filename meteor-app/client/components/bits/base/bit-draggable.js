@@ -12,6 +12,8 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
     throwProps:false,
     zIndexBoost:false,
     autoScroll: 1,
+    cursor: "inherit",
+
     // bounds:,
     // edgeResistance:0.65,
     // type:"x,y", // default?
@@ -129,7 +131,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         .to($bitElement.find('.bit__drag-handle'), 0.05, { scale: 1, opacity: "1", ease: Expo.easeOut })
 
       $('.bit--near').removeClass("bit--near");
-      $bitElement.addClass('grabbing');
+      $bitElement.removeClass('grabbing');
 
     }
 
