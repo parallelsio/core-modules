@@ -10,7 +10,6 @@ Template.bit.onRendered(function (){
   var $content = $bitElement.find('.bit__content');
   var $editbitElement = $content.find('.bit--editing');
 
-  // TODO: split out logic to independent rendered functions
   var $dragHandle = null;
 
   if (template.data.type === 'text'){
@@ -128,11 +127,15 @@ Template.bit.onRendered(function (){
     $(this).attr('src', 'http://placehold.it/850x650&text=' + bit.filename);
   });
 
-  // TODO: this doesnt appear to be causing any issues, but 
-  // ideally we're only calling this when it's an *animated GIF
-  // to detect this is quite complex, and some cross domain limitations
+  // TODO: this doesnt appear to be causing any issues 
   if (bit.filename.toUpperCase().split('.').pop() === "GIF"){
     Gifffer(); 
+    $bitElement.addClass('bit--gif');
+
+    // TODO:
+    // detect if a GIF is animated https://www.npmjs.com/package/animated-gif-detector. 
+    // If not animated, convert + save as JPG. This is so it doesnt get a Play button incorrectly via Gifffer, 
+    // which isnt smart enough to know
   }
 
 });
