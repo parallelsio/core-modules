@@ -17,7 +17,7 @@
    // Emulate the border. Using this technique so bit isn't shifted by border
    // !important is needed, because bit drag/drop via Greensock Draggable
    // sets box-shadow via inline style, and we want this to take precedence 
-   box-shadow: 0 0 0 4px lightblue !important; 
+   box-shadow: 0 0 0 4px blue !important; 
 }
 
 .bit__content{
@@ -74,17 +74,19 @@
 
 .bit.text.hovering .bit__drag-handle {
 
-  height: 30vh;
-  top: -5rem;
-  
-  // border: 5px solid #85D2B5;
-  
-  // // http://uigradients.com/#Earthly
-  // background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
-  // background:    -moz-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* FF3.6+ */
-  // background:     -ms-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* IE10 */
-  // background:      -o-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Opera 11.10+ */
-  // background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */ 
+  height: calc(100% + 4em);
+  width: 100%;
+  top: 0;
+  // z-index: 20;
+
+  // mix-blend-mode: multiply;
+
+  // http://uigradients.com/#Earthly
+  background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* IE10 */
+  background:      -o-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Opera 11.10+ */
+  background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */ 
 
 }
 
@@ -167,9 +169,9 @@
 
 
 .bit.sketch.hovering .bit__drag-handle {
-  height: 70vh;
-  top: -20vh;
-  // left: 80px;
+  height: calc(100% + 4em);
+  width: 100%;
+  top: 0;
 
   // adapted from uigradients.com/Reef
   background: -webkit-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
@@ -213,25 +215,19 @@
 
 // ******************** IMAGE BITS *************
 
-.bit.image img { mix-blend-mode: multiply; }
-
 .bit.image.hovering .bit__drag-handle {
-  height: 120%;
+  height: calc(100% + 4em);
   width: 100%;
   top: 0;
-  z-index: 20;
-
 
   // adapted from uigradients.com/Influenza
-  background: -webkit-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* IE10 */
-  background:      -o-linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* Opera 11.10+ */
-  background:         linear-gradient(0deg, #DE6262 -50%, #FFB88C 90%); /* W3C */  
+  background: -webkit-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* IE10 */
+  background:      -o-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Opera 11.10+ */
+  background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
 
-  // background-image: url(face.jpg);
-  // background-color: red;
-  mix-blend-mode: multiply;
+  // mix-blend-mode: multiply;
 }
 
 
