@@ -6,9 +6,8 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
   var timeline = new TimelineMax();
   var $bits = $(".bit");
   var overlapThreshold = "0%"; 
-  var nearBit;
+  var nearBitElement;
   var snapThreshold = 60; // in pixels
-  // var dragSnapSelectedId;
 
   // Needs to happen after position set, or else positions
   // via manual transforms get overwritten by Draggable
@@ -53,8 +52,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
     onDragStart:function(event){
 
-      // var x = this.endX;
-      // var y = this.endY;
       // Parallels.log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
 
@@ -65,13 +62,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
       // timeline
-      //   .to($bitElement, 0.20, {
-      //     scale: 1.05,
-      //     boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
-      //     ease: Expo.easeOut
-      //   });
-
-        // .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, opacity: "0.1", ease: Expo.easeOut })
 
     },
 
@@ -85,58 +75,47 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       for(var i = 0; i < $bits.length; i++){
     
         if (this.hitTest($bits[i], overlapThreshold))  {
-          // if (!dragSnapSelectedId) { bits[i].id };
-          showSnapGuides($bits[i], this.target);
-          nearBit = $bits[i];
-          
-          var nearBitRect = $(nearBit)[0].getClientRects()[0];
+          nearBitElement = $bits[i];
           nearBitCount = nearBitCount + 1;
+          showSnapGuides();
         }
       }
 
-      if (nearBitCount > 1){
+      if (nearBitCount === 0){
+        nearBitElement = null;
+        clearAllGuides();
+      }
+
+      else if (nearBitCount > 1){
         // TODO: handle this case, clear nearBit?
         console.log('more than 1');
+        clearAllGuides();
       }
     },
 
 
 
     onDragEnd:function( event ) {
-      // dragSnapSelectedId = null;
-
       var x = this.endX;
       var y = this.endY;
-      if (nearBit) {
-        var nearBitRect = $(nearBit)[0].getClientRects()[0];
+      if (nearBitElement) {
+        var nearBitRect = $(nearBitElement)[0].getClientRects()[0];
       }
-
-      var dragBitRect = $($bitElement)[0].getClientRects()[0];
+      var dragBitRect = $bitElement[0].getClientRects()[0];
 
       // snap to nearest bit
       // via http://greensock.com/forums/topic/9265-draggable-snapping-to-specific-points-with-sensitivity/
 
-      // // TODO: only pick one, if multiple
-      // // snap to axis depending on if above/below center line, left/r from cross line
-      // // var snapMade = false;
-      // for(var i = 0; i < $bits.length;i++){
-      //   if(this.hitTest($bits[i], overlapThreshold)){
-      //     var rect = $($bits[i])[0].getClientRects()[0];
-      //     // snapMade = true;
-      //     x = rect.left + rect.width;
-      //     y = rect.top + rect.height;
-      //   }
-      // }
 
       // if snapping was set, get the new snap position
-      if ($(nearBit).hasClass('near--top')){
+      if ($(nearBitElement).hasClass('near--top')){
         y = (nearBitRect.top - dragBitRect.height) + verge.scrollY();
-        $('.near--top').removeClass("near--top");
+        $(nearBitElement).removeClass("near--top");
       }
 
-      else if ($(nearBit).hasClass('near--bottom')){
+      else if ($(nearBitElement).hasClass('near--bottom')){
         y = (nearBitRect.bottom + 1) + verge.scrollY();
-        $('.near--bottom').removeClass("near--bottom");
+        $(nearBitElement).removeClass("near--bottom");
       }
 
       TweenLite.to($bitElement, 0.1, { x: parseInt(x), y: parseInt(y), ease: Circ.easeOut });
@@ -171,71 +150,43 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         .to($bitElement.find('.bit__drag-handle'), 0.05, { scale: 1, opacity: "1", ease: Expo.easeOut })
 
       $bitElement.removeClass('dragging');
+      nearBitElement = null;
+      clearAllGuides();
     }
 
   });
 
   return draggable;
 
+  function clearAllGuides(){
+    $(".near--bottom").removeClass("near--bottom");
+    $(".near--top").removeClass("near--top");
+    $(".near--left").removeClass("near--left");
+    $(".near--right").removeClass("near--right");
+  }
 
-  function showSnapGuides(nearBitElement, dragBitElement){
-    var nearBitRect = nearBitElement.getClientRects()[0];
-    var dragBitRect = dragBitElement.getClientRects()[0];
-
-    // function centerPoint(rect){
-    //   return { 
-    //     x: parseInt((rect.left + rect.right) / 2),
-    //     y: parseInt((rect.top + rect.bottom) / 2)
-    //   } 
-    // }
-
-
-    // var resultY = _.inRange(dragBitRect.top, centerPoint(nearBitRect).y, nearBitRect.bottom);
-
-    // if (resultY){
-    //   console.log('bottom side');
-    //   $(nearBitElement).removeClass("near--top near--right near--left");
-    //   $(nearBitElement).addClass("near--bottom");
-    // }
+  function showSnapGuides(){
+    var nearBitRect = $(nearBitElement)[0].getClientRects()[0];
+    var dragBitRect = $bitElement[0].getClientRects()[0];
 
     // console.log('-----------');
     // console.log("nearbit: ", nearBitElement.id, " : ", nearBitRect);
-    // console.log("dragBit: ", dragBitElement.id, " : ", dragBitRect);
+    // console.log("dragBit: ", $bitElement.id, " : ", dragBitRect);
     // console.log('-----------');
 
-
- 
-    function snapVertical (dragBitRect, nearBitElement){
-
-      // snap to the bottom
-      if (dragBitRect.top > (nearBitRect.bottom - snapThreshold)){
-        $(nearBitElement).addClass("near--bottom");
-        $(nearBitElement).removeClass("near--top");
-        return parseInt(nearBitRect.bottom + 1);
-      }
-
-      // else{
-      //   $(nearBitElement).removeClass("near--bottom");
-      // }
-
-      // snap to the top
-      if (dragBitRect.bottom < (nearBitRect.top + snapThreshold)){
-        $(nearBitElement).addClass("near--top");
-        $(nearBitElement).removeClass("near--bottom");
-        return parseInt(nearBitRect.top - dragBitRect.height);
-      }
-
-      // else {
-      //   $(nearBitElement).removeClass("near--top");
-      // }
+    // show bottom snap guide
+    if (dragBitRect.top > (nearBitRect.bottom - snapThreshold)){
+      $(nearBitElement).addClass("near--bottom");
+      $(nearBitElement).removeClass("near--top");
     }
+
+    // show top snap guide
+    if (dragBitRect.bottom < (nearBitRect.top + snapThreshold)){
+      $(nearBitElement).addClass("near--top");
+      $(nearBitElement).removeClass("near--bottom");
+    }
+
   
-    var newY = snapVertical(dragBitRect, nearBitElement);
-    console.log("newY: ", newY);
-
-    // var resultX = _.inRange(dragBitRect.left, centerPoint(nearBitRect).x, nearBitRect.right);
-
-
   }
 
 
