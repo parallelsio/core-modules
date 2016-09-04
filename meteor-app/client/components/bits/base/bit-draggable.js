@@ -107,7 +107,10 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
       var x = this.endX;
       var y = this.endY;
-      var nearBitRect = $(nearBit)[0].getClientRects()[0];
+      if (nearBit) {
+        var nearBitRect = $(nearBit)[0].getClientRects()[0];
+      }
+
       var dragBitRect = $($bitElement)[0].getClientRects()[0];
 
       // snap to nearest bit
@@ -127,12 +130,12 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
       // if snapping was set, get the new snap position
       if ($(nearBit).hasClass('near--top')){
-        y = nearBitRect.top - dragBitRect.height;
+        y = (nearBitRect.top - dragBitRect.height) + verge.scrollY();
         $('.near--top').removeClass("near--top");
       }
 
       else if ($(nearBit).hasClass('near--bottom')){
-        y = nearBitRect.bottom + 1;
+        y = (nearBitRect.bottom + 1) + verge.scrollY();
         $('.near--bottom').removeClass("near--bottom");
       }
 
@@ -211,9 +214,9 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         return parseInt(nearBitRect.bottom + 1);
       }
 
-      else{
-        $(nearBitElement).removeClass("near--bottom");
-      }
+      // else{
+      //   $(nearBitElement).removeClass("near--bottom");
+      // }
 
       // snap to the top
       if (dragBitRect.bottom < (nearBitRect.top + snapThreshold)){
@@ -222,9 +225,9 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         return parseInt(nearBitRect.top - dragBitRect.height);
       }
 
-      else {
-        $(nearBitElement).removeClass("near--top");
-      }
+      // else {
+      //   $(nearBitElement).removeClass("near--top");
+      // }
     }
   
     var newY = snapVertical(dragBitRect, nearBitElement);

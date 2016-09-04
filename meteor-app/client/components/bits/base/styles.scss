@@ -12,16 +12,20 @@
   cursor: auto;
 }
 
+
+// .near--bottom  { border-bottom: blue 4px solid; }
+// .near--top     { border-top: blue 4px solid; }
+// .near--left    { border-left: blue 4px solid; }
+// .near--right   { border-right: blue 4px solid; }
+
 // Emulate the border. Using this technique so bit isn't shifted by border
 // !important is needed, because bit drag/drop via Greensock Draggable
 // sets box-shadow via inline style, and we want this to take precedence 
+.near--bottom  { box-shadow: 0 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
+.near--top     { box-shadow: 0 -4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
+.near--left    { box-shadow: -4px 0 0 blue !important;  border-color: transparent; /* remove the border's colour */ }
+.near--right   { box-shadow: 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
 
-.bit--near { box-shadow: 0 0 0 4px blue !important;  border-color: transparent; /* remove the border's colour */ }
-
-.near--bottom  { border-bottom: blue 4px solid; }
-.near--top     { border-top: blue 4px solid; }
-.near--left    { border-left: blue 4px solid; }
-.near--right   { border-right: blue 4px solid; }
 
 .bit__content{
   position: relative;
