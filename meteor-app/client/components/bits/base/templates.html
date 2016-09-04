@@ -24,13 +24,13 @@
 
       {{#if isImageBit }}
         {{#if isImageTypeGif }}
-          <img class="bit-image" 
+          <img class="bit__image" 
                 data-gifffer="{{ imageSrc }}" 
                 data-gifffer-width="{{ pixelWidth }}" 
                 data-gifffer-height="{{ pixelHeight }}" 
                 alt="{{ filename }}">
         {{else}}
-          <img class="bit-image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}">
+          <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}">
         {{/if}}
       {{/if}}
 

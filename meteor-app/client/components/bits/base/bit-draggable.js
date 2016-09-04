@@ -67,7 +67,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
     onDrag: function(e) {
       var dragBitRect = $($bitElement)[0].getClientRects()[0];
-      console.log(dragBitRect);
+      // console.log(dragBitRect);
 
       // loop through all bits, and run a hit test on each one against dragging bit
       // TODO: restrict search to only what's visible in viewport, via Verge?
@@ -88,7 +88,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
       else if (nearBitCount > 1){
         // TODO: handle this case, clear nearBit?
-        console.log('more than 1');
+        console.log('more than 1 bit to snap: not sure which to pick');
         clearAllGuides();
       }
     },

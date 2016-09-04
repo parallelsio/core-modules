@@ -224,7 +224,8 @@
 
 // ******************** IMAGE BITS *************
 
-.bit.image img {
+.bit__image {
+  display: block;
   @extend .grabbable;
 }
 
