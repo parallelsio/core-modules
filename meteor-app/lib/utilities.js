@@ -96,6 +96,13 @@ Utilities = {
     }
   },
 
+  getElementCenter: function(rect){
+    return { 
+      x: parseInt((rect.left + rect.right) / 2),
+      y: parseInt((rect.top + rect.bottom) / 2)
+    }     
+  },
+
   /**
   * from: https://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
   *
