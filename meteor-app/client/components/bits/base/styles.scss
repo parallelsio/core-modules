@@ -18,11 +18,10 @@
 
 .bit--near { box-shadow: 0 0 0 4px blue !important;  border-color: transparent; /* remove the border's colour */ }
 
-.near--bottom    { box-shadow: 0 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-.near--top { box-shadow: 0 -4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-.near--left  { box-shadow: -4px 0 0 blue !important;  border-color: transparent; /* remove the border's colour */ }
-.near--right   { box-shadow: 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-
+.near--bottom  { border-bottom: blue 4px solid; }
+.near--top     { border-top: blue 4px solid; }
+.near--left    { border-left: blue 4px solid; }
+.near--right   { border-right: blue 4px solid; }
 
 .bit__content{
   position: relative;
@@ -37,6 +36,15 @@
 
 .bit.image button:focus {
   outline: 0;
+}
+
+.blend--multiply {
+  mix-blend-mode: multiply;
+}
+
+.dragging {
+  // @extend .blend--multiply;
+  @extend .grabbable;
 }
 
 .grabbable {
@@ -81,8 +89,6 @@
   width: 100%;
   top: 0;
   // z-index: 20;
-
-  // mix-blend-mode: multiply;
 
   // http://uigradients.com/#Earthly
   background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
@@ -230,7 +236,6 @@
   background:      -o-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Opera 11.10+ */
   background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
 
-  // mix-blend-mode: multiply;
 }
 
 
