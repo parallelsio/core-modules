@@ -10,65 +10,64 @@ Template.bit.onRendered(function (){
   var $content = $bitElement.find('.bit__content');
   var $editbitElement = $content.find('.bit--editing');
 
-  $content.css("height", bit.height);
-  $content.css("width", bit.width);
-
-  $content.resizable({
-    handles: { se: '.ui-resizable-se' },
-    autoHide: true,
-
-    stop: function (event, $resizable) {
-
-      // TODO: refactor, should be identical code with BitEvents.hoverOutBit(), for text bits
-      Session.set('textBitEditingId', null);
-      Session.set('bitHoveringId', null);
-      Session.set('mousedown', false);
-
-      $bitElement.find('.bit__resize').hide();
-      $bitElement.removeClass('hovering');
-      $bitElement.find('.bit__controls-persistent').hide();
-
-      $editbitElement.attr('contenteditable', 'false');
-      $editbitElement.attr('data-clickable', 'false');
-
-      Meteor.call('changeState', {
-        command: 'updateBitContent',
-        data: {
-          canvasId: Session.get('canvasId'),
-          _id: bit._id,
-          content: $editbitElement.html(),
-          height: $resizable.size.height,
-          width: $resizable.size.width
-        }
-      });
-
-      Parallels.Audio.player.play('fx-cha-ching');
-    }
-
-  });
-
-  $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
-    var scrollTo = null;
-
-    if (e.type == 'mousewheel') {
-      scrollTo = (e.originalEvent.wheelDelta * -1);
-    }
-    else if (e.type == 'DOMMouseScroll') {
-      scrollTo = 40 * e.originalEvent.detail;
-    }
-
-    if (scrollTo) {
-      e.preventDefault();
-      $(this).scrollTop(scrollTo + $(this).scrollTop());
-    }
-  });
-
-
   // TODO: split out logic to independent rendered functions
   var $dragHandle = null;
 
   if (template.data.type === 'text'){
     $dragHandle = $(template.find('.bit__drag-handle'));
+
+    $content.css("height", bit.height);
+    $content.css("width", bit.width);
+
+    $content.resizable({
+      handles: { se: '.ui-resizable-se' },
+      autoHide: true,
+
+      stop: function (event, $resizable) {
+
+        // TODO: refactor, should be identical code with BitEvents.hoverOutBit(), for text bits
+        Session.set('textBitEditingId', null);
+        Session.set('bitHoveringId', null);
+        Session.set('mousedown', false);
+
+        $bitElement.find('.bit__resize').hide();
+        $bitElement.removeClass('hovering');
+        $bitElement.find('.bit__controls-persistent').hide();
+
+        $editbitElement.attr('contenteditable', 'false');
+        $editbitElement.attr('data-clickable', 'false');
+
+        Meteor.call('changeState', {
+          command: 'updateBitContent',
+          data: {
+            canvasId: Session.get('canvasId'),
+            _id: bit._id,
+            content: $editbitElement.html(),
+            height: $resizable.size.height,
+            width: $resizable.size.width
+          }
+        });
+
+        Parallels.Audio.player.play('fx-cha-ching');
+      }
+
+    });
+
+    $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
+      var scrollTo = null;
+
+      if (e.type == 'mousewheel') {
+        scrollTo = (e.originalEvent.wheelDelta * -1);
+      }
+      else if (e.type == 'DOMMouseScroll') {
+        scrollTo = 40 * e.originalEvent.detail;
+      }
+
+      if (scrollTo) {
+        e.preventDefault();
+        $(this).scrollTop(scrollTo + $(this).scrollTop());
+      }
+    });
   }
 
   makeBitDraggable($bitElement, $dragHandle);
