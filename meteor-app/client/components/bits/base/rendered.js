@@ -15,19 +15,36 @@ Template.bit.onRendered(function (){
 
   $content.resizable({
     handles: { se: '.ui-resizable-se' },
+    autoHide: true,
 
     stop: function (event, $resizable) {
+
+      // TODO: refactor, should be identical code with BitEvents.hoverOutBit(), for text bits
+      Session.set('textBitEditingId', null);
+      Session.set('bitHoveringId', null);
+      Session.set('mousedown', false);
+
+      $bitElement.find('.bit__resize').hide();
+      $bitElement.removeClass('hovering');
+      $bitElement.find('.bit__controls-persistent').hide();
+
+      $editbitElement.attr('contenteditable', 'false');
+      $editbitElement.attr('data-clickable', 'false');
+
       Meteor.call('changeState', {
         command: 'updateBitContent',
         data: {
           canvasId: Session.get('canvasId'),
           _id: bit._id,
-          content: $bitElement.find('.bit__content').find('.bit--editing').html(),
+          content: $editbitElement.html(),
           height: $resizable.size.height,
           width: $resizable.size.width
         }
       });
+
+      Parallels.Audio.player.play('fx-cha-ching');
     }
+
   });
 
   $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {

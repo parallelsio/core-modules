@@ -121,12 +121,7 @@
 
 .bit__resize {
   position: absolute;
-
-  // Jquery Resize UI automatically adds display:inline. 
-  // Since we are manually show/hiding this handle (vs using Jquery 'autohide' param)
-  // we need to use important, to make this is hidden until
-  // text bit is double clicked to edit. Then, we'll display this resize handle
-  display: none ; 
+  display: none; 
 
   bottom: -1px;
   right: -1px;
@@ -146,11 +141,11 @@
   right: 0;
   height: 0; 
 
-  height: 20px;
-  width: 20px;
-
-  border-top: 20px solid transparent;
-  border-right:20px solid #3C9FFF; 
+  height: 30px;
+  width: 30px;
+  
+  border-top: 30px solid transparent;
+  border-right: 30px solid #8ec2f4;
 
 }
 

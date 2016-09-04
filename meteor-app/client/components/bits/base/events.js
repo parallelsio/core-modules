@@ -4,51 +4,58 @@ BitEvents = {
   // TODO: refactor to use GSAP built in methods, to test if something is being dragged?
   hoverInBit: function (event, template) {
     if (!Session.get('mousedown')) {
-      
+      // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
+      var $bitElement = $(template.firstNode);
+      $bitElement.addClass('hovering');
+      $bitElement.find('.bit__controls-persistent').show();
       Session.set('bitHoveringId', template.data._id);
-      Session.set('textBitEditingId', template.data._id);
 
       Parallels.Audio.player.play('fx-ting3');
 
-      // SD: OQ/TODO: this fails on bit:delete, how can we reuse this function?
-      var $bitElement = $(template.firstNode);
-      $bitElement.find('.bit--editing').focus();
-      $bitElement.addClass('hovering');
-      $bitElement.find('.bit__resize').show();
-      $bitElement.find('.bit__controls-persistent').show();
+      if (template.data.type === 'text'){
+        Session.set('textBitEditingId', template.data._id);
+        $bitElement.find('.bit--editing').focus();
+        $bitElement.find('.bit__resize').show();
 
-       var $editingElement = $bitElement.find('.bit--editing');
-      $editingElement.attr('contenteditable', 'true');
-      $editingElement.attr('data-clickable', 'true');
+        var $editingElement = $bitElement.find('.bit--editing');
+        $editingElement.attr('contenteditable', 'true');
+        $editingElement.attr('data-clickable', 'true');
+      }
+
     }
   },
 
   hoverOutBit: function (event, template){
+
     if (!Session.get('mousedown')) {
       Session.set('bitHoveringId', null);
 
       var $bitElement = $(template.firstNode);
       $bitElement.removeClass('hovering');
-      $bitElement.find('.bit__resize').hide();
       $bitElement.find('.bit__controls-persistent').hide();
 
-      var $editingElement = $(template.find('.bit--editing'));
-      $editingElement.attr('contenteditable', 'false');
-      $editingElement.attr('data-clickable', 'false');
+      if (template.data.type === 'text'){
+        Session.set('textBitEditingId', null);
+        $bitElement.find('.bit__resize').hide();
 
-      if (this.content != $editingElement.html()) {
-        Meteor.call('changeState', {
-          command: 'updateBitContent',
-          data: {
-            canvasId: Session.get('canvasId'),
-            _id: this._id,
-            content: $editingElement.html(),
-            height: $editingElement.height(),
-            width: $editingElement.width()
-          }
-        });
+        var $editingElement = $(template.find('.bit--editing'));
+        $editingElement.attr('contenteditable', 'false');
+        $editingElement.attr('data-clickable', 'false');
 
-        Parallels.Audio.player.play('fx-cha-ching');
+        if (this.content != $editingElement.html()) {
+          Meteor.call('changeState', {
+            command: 'updateBitContent',
+            data: {
+              canvasId: Session.get('canvasId'),
+              _id: this._id,
+              content: $editingElement.html(),
+              height: $editingElement.height(),
+              width: $editingElement.width()
+            }
+          });
+
+          Parallels.Audio.player.play('fx-cha-ching');
+        }
       }
     }
   }
