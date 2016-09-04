@@ -86,7 +86,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         clearAllGuides();
       }
 
-      else if (nearBitCount > 1){
+      else if (nearBitCount > 1) {
         // TODO: handle this case, clear nearBit?
         console.log('more than 1 bit to snap: not sure which to pick');
         clearAllGuides();
@@ -114,7 +114,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       }
 
       else if ($(nearBitElement).hasClass('near--bottom')){
-        y = (nearBitRect.bottom + 1) + verge.scrollY();
+        y = (nearBitRect.bottom) + verge.scrollY();
         $(nearBitElement).removeClass("near--bottom");
       }
 
@@ -185,8 +185,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       $(nearBitElement).addClass("near--top");
       $(nearBitElement).removeClass("near--bottom");
     }
-
-  
   }
 
 
