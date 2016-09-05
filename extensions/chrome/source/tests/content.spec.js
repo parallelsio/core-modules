@@ -17,16 +17,16 @@ define(['Squire', 'browser', 'jquery'], function(Squire, browser, $) {
       Content.loadClipperIframe($('body'));
     });
 
-    it('should animate open', function() {
-      Content.showClipper();
-      expect($('#parallels-dialog-iframe-wrapper').length).toEqual(1);
-    });
+    // it('should animate open', function() {
+    //   Content.showClipper();
+    //   expect($('#parallels-dialog-iframe-wrapper').length).toEqual(1);
+    // });
 
-    it('should animate closed', function() {
-      Content.showClipper();
-      Content.closeClipper();
-      expect($('#parallels-dialog-iframe-wrapper').length).toEqual(1);
-    });
+    // it('should animate closed', function() {
+    //   Content.showClipper();
+    //   Content.closeClipper();
+    //   expect($('#parallels-dialog-iframe-wrapper').length).toEqual(1);
+    // });
 
   });
 });

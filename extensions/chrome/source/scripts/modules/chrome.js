@@ -33,7 +33,7 @@ define(function () {
         type: 'basic',
         title: notification.title,
         message: notification.message,
-        iconUrl: '../images/cube.png'
+        iconUrl: notification.iconUrl
       };
 
       chrome.notifications.create('', options, function(id) {

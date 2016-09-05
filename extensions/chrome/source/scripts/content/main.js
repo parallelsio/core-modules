@@ -26,7 +26,7 @@ define(['browser', 'jquery', 'Quint', 'TimelineLite'],
     var showClipper = function () {
       var tl = new TimelineLite();
       tl.pause()
-        .to(clipperContainer, 0.25, {bottom: '0', ease: Quint.easeOut})
+        .fromTo(clipperContainer, 0.20, { opacity: 0 }, { bottom: '0', ease: Quint.easeOut, opacity: 1 })
         .call(function () {
           console.log('Parallels clipper: done animating dialog into host-content DOM.');
         })

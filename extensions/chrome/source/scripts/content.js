@@ -6,8 +6,8 @@
  *  - wiring up messages to actions using the messenger layer
  *  - relaying messages between the clipper iframe in the DOM and the background scripts
  */
-requirejs(['browser', 'content/main', 'modules/messenger', 'mousetrap' ],
-  function (browser, content, messenger, Mousetrap) {
+requirejs(['browser', 'content/main', 'modules/messenger' ],
+  function (browser, content, messenger) {
 
     var saveBit = function (data) {
       console.log('inject:saveBit');
@@ -23,20 +23,20 @@ requirejs(['browser', 'content/main', 'modules/messenger', 'mousetrap' ],
     };
 
     messenger.registerEvent('iframe-loaded', onIframeLoaded);
-    messenger.registerEvent('show-clipper', content.showClipper);
+    // messenger.registerEvent('show-clipper', content.showClipper);
     messenger.registerEvent('submit-bit', saveBit);
-    messenger.registerEvent('close-clipper', content.closeClipper);
+    // messenger.registerEvent('close-clipper', content.closeClipper);
 
     content.loadClipperIframe(document.body);
 
-    Mousetrap.bind('shift+d', function() {
-      console.log('content: pressed shift+d, starting clipper');
-      var data = {event: 'open-dialog-via-key-command'};
-      browser.sendMessageToBackground({data: data});
-    });
+    // Mousetrap.bind('shift+d', function() {
+    //   console.log('content: pressed shift+d, starting clipper');
+    //   var data = {event: 'open-dialog-via-key-command'};
+    //   browser.sendMessageToBackground({data: data});
+    // });
 
-    Mousetrap.bind('esc', function() {
-      console.log('content: pressed escape, closing clipper.');
-      content.closeClipper();
-    });
+    // Mousetrap.bind('esc', function() {
+    //   console.log('content: pressed escape, closing clipper.');
+    //   content.closeClipper();
+    // });
   });

@@ -56,8 +56,13 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
     };
 
     HTMLParser.subscribe('bg-init', function() {
-      browser.notify({title: 'Bit Lift Received', message: 'Page Saved'}, function () {
-        console.log('ok to close the browser');
+      browser.notify({
+          title: 'Starting tab save...', 
+          message: 'Working in the background, ok to close.',
+          iconUrl: '../images/notification--paper-clip.png'
+        },
+        function () {
+          console.log('ok to close the browser');
       });
     });
 
@@ -82,14 +87,21 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
       var updatedBit = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
       var response = server.updateBit(updatedBit);
       response.result.then(function(data) {
-        browser.notify({title: 'Bit Lift Complete', message: 'Page processed'}, function () {
-          console.log('update is complete');
-          console.log(data);
-          delete localBits[pageIdentifier];
-        });
+        browser.notify({
+            title: 'Tab saved!', 
+            message: '',
+            iconUrl: '../images/notification--check.png'
+          }, 
+
+          function () {
+            console.log('Bit lift/update/save Complete');
+            console.log(data);
+            delete localBits[pageIdentifier];
+          }
+        );
       });
       response.result.fail(function(err) {
-        console.log('update is complete');
+        console.log('Bit lift/update failed');
         console.log(err);
       });
     });

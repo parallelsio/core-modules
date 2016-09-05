@@ -9,7 +9,7 @@
   },
 
   "browser_action": {
-    "default_icon": "images/cube.png"
+    "default_icon": "images/notification--paper-clip.png"
   },
 
   "content_scripts": [
