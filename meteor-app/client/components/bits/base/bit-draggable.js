@@ -27,6 +27,10 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
     
       Parallels.Keys.unbindActions();
       Parallels.Keys.bindSnapToggle();
+      Parallels.Keys.bindCatchSpace();
+
+    // Session.set('isSnapEnabled', false);
+
 
       // TODO: improve performance
       // use image asset instead of CSS shadow:
@@ -46,6 +50,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
     onRelease: function(event){
       Parallels.Keys.unbindSnapToggle();
+      Parallels.Keys.unbindCatchSpace();
       Parallels.Keys.bindActions();
 
       timeline

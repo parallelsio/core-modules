@@ -248,13 +248,12 @@ Parallels.Keys = {
   // to enable snapping. Not part of the group of bind/unbind, since it's an exception
   bindSnapToggle: function(){
     Parallels.log.debug("keyCommand:bindSnapToggle");
-    Session.set('snappToggle', false);
 
     Mousetrap.bind(
       'shift', 
       function (event) {
         Parallels.log.debug("drag toggle via Shift: on");
-        Session.set('snappToggle', true);
+        Session.set('isSnapEnabled', true);
       },
       "keydown"
     );
@@ -263,7 +262,7 @@ Parallels.Keys = {
       'shift', 
       function (event) {
         Parallels.log.debug("drag toggle via Shift: off");
-        Session.set('snappToggle', true);
+        Session.set('isSnapEnabled', false);
       },
       "keyup"
     );
@@ -271,19 +270,17 @@ Parallels.Keys = {
 
   unbindSnapToggle: function(){
     Parallels.log.debug("keyCommand:unbindSnapToggle");
-    Session.set('snappToggle', false);
+    Session.set('isSnapEnabled', false);
 
     Mousetrap.unbind('shift', 'keyup');
     Mousetrap.unbind('shift', 'keydown');
   },
   
 
-  catchSpace: function(){
+  bindCatchSpace: function(){
     Parallels.log.debug("keyCommand:catchSpace");
 
     Mousetrap.bind('space', function (event) {
-      Parallels.log.debug("pressed 'shift' key");
-      Session.set('snappToggle', true);
 
       try {
         event.stopPropagation();
@@ -299,7 +296,6 @@ Parallels.Keys = {
 
   unbindCatchSpace: function(){
     Parallels.log.debug("keyCommand:unbindCatchSpace");
-
     Mousetrap.unbind('space');
   }
   
