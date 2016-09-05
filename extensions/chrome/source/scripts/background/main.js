@@ -76,7 +76,8 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
     HTMLParser.subscribe('process-end', function(message) {
       console.log('finished parsing HTML');
       var pageIdentifier = btoa(message.data.url);
-      localBits[pageIdentifier].html = message.data.content.substring(0,16777216);
+      //localBits[pageIdentifier].html = message.data.content;
+      localBits[pageIdentifier].html = '';
       localBits[pageIdentifier].liftStatus = 'complete';
       var updatedBit = JSON.parse(JSON.stringify(localBits[pageIdentifier]));
       var response = server.updateBit(updatedBit);
