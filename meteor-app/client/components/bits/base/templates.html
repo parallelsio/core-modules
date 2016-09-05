@@ -43,6 +43,10 @@
 
       {{/if}}
 
+      {{#if isWebBit }}
+          <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ title }}">
+      {{/if}}
+
     </div>
 
     <div class="upload-status {{ uploadStatus }}">

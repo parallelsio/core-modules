@@ -13,6 +13,10 @@ Template.bit.helpers({
     return this.type === "image";
   },
 
+  isWebBit: function() {
+    return this.type === "webpage";
+  },
+
   // TODO: should probably put this somewhere when saving the file vs here
   pixelHeight: function() {
     return Utilities.calcAspectRatioFit(this.nativeWidth, this.nativeHeight, maxRenderPixels.width, maxRenderPixels.height).height;

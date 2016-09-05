@@ -4,17 +4,6 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
 
   var bit;
 
-  var initialize = function () {
-    console.log('parallels:init');
-    $('button.cancel').on('click', onCancel);
-    $('button.submit').on('click', onSubmit);
-    $('.bit-tags').tagEditor({
-      delimiter: ',;', // comma, semicolon
-      placeholder: 'Enter tags ...'
-    });
-    messenger.sendEvent('iframe-loaded', {});
-  };
-
   var onCancel = function () {
     console.log('parallels:onCancel');
     messenger.sendEvent('close-clipper', {});
@@ -28,6 +17,17 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
     bit.tags = $('.bit-tags').tagEditor('getTags')[0].tags;
 
     messenger.sendEvent('submit-bit', {bit: bit});
+  };
+
+  var initialize = function () {
+    console.log('parallels:init');
+    $('button.cancel').on('click', onCancel);
+    $('button.submit').on('click', onSubmit);
+    $('.bit-tags').tagEditor({
+      delimiter: ',;', // comma, semicolon
+      placeholder: 'Enter tags ...'
+    });
+    messenger.sendEvent('iframe-loaded', {});
   };
 
   var onClipperActivated = function (data) {

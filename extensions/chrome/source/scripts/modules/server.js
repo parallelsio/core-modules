@@ -15,7 +15,7 @@ define(['modules/config', '../../bower_components/ddp.js/src/ddp', '../../bower_
     saveBit: function (bit, cb) {
       console.log('saving to meteor');
       console.log(bit);
-      bit.canvasId = '1';
+      bit.canvasId = 'demo';
       var promise = ddp.call('changeState', {
         command: 'createBit',
         data: bit
