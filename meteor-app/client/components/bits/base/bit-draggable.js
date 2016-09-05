@@ -29,9 +29,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       Parallels.Keys.bindSnapToggle();
       Parallels.Keys.bindCatchSpace();
 
-    // Session.set('isSnapEnabled', false);
-
-
+    
       // TODO: improve performance
       // use image asset instead of CSS shadow:
       // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
@@ -80,28 +78,31 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       var dragBitRect = $($bitElement)[0].getClientRects()[0];
       // console.log(dragBitRect);
 
-      // loop through all bits, and run a hit test on each one against dragging bit
-      // TODO: restrict search to only what's visible in viewport, via Verge?
-      var nearBitCount = 0;
-      for(var i = 0; i < $bits.length; i++){
-    
-        if (this.hitTest($bits[i], overlapThreshold))  {
-          nearBitElement = $bits[i];
-          nearBitCount = nearBitCount + 1;
-          showSnapGuides();
+      if (Session.equals('isSnapEnabled', true)){
+
+        // loop through all bits, and run a hit test on each one against dragging bit
+        // TODO: restrict search to only what's visible in viewport, via Verge?
+        var nearBitCount = 0;
+        for(var i = 0; i < $bits.length; i++){
+      
+          if (this.hitTest($bits[i], overlapThreshold))  {
+            nearBitElement = $bits[i];
+            nearBitCount = nearBitCount + 1;
+            showSnapGuides();
+          }
         }
-      }
 
-      if (nearBitCount === 0){
-        nearBitElement = null;
-        clearAllGuides();
-      }
+        if (nearBitCount === 0){
+          nearBitElement = null;
+          clearAllGuides();
+        }
 
-      else if (nearBitCount > 1) {
-        // TODO: handle this case, clear nearBit?
-        console.log('more than 1 bit to snap: not sure which to pick');
-        clearAllGuides();
-      }
+        else if (nearBitCount > 1) {
+          // TODO: handle this case, clear nearBit?
+          console.log('more than 1 bit to snap: not sure which to pick');
+          clearAllGuides();
+        }
+      } 
     },
 
 
@@ -117,30 +118,22 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       // snap to nearest bit
       // via http://greensock.com/forums/topic/9265-draggable-snapping-to-specific-points-with-sensitivity/
 
+      if (Session.equals('isSnapEnabled', true)){
 
-      // if snapping was set, get the new snap position
-      if ($(nearBitElement).hasClass('near--top')){
-        y = (nearBitRect.top - dragBitRect.height) + verge.scrollY();
-        $(nearBitElement).removeClass("near--top");
-      }
+        // if snapping was set, get the new snap position
+        if ($(nearBitElement).hasClass('near--top')){
+          y = (nearBitRect.top - dragBitRect.height) + verge.scrollY();
+          $(nearBitElement).removeClass("near--top");
+        }
 
-      else if ($(nearBitElement).hasClass('near--bottom')){
-        y = (nearBitRect.bottom) + verge.scrollY();
-        $(nearBitElement).removeClass("near--bottom");
+        else if ($(nearBitElement).hasClass('near--bottom')){
+          y = (nearBitRect.bottom) + verge.scrollY();
+          $(nearBitElement).removeClass("near--bottom");
+        }
       }
 
       TweenLite.to($bitElement, 0.1, { x: parseInt(x), y: parseInt(y), ease: Circ.easeOut });
       var mongoId = this.target.dataset.id;
-
-      // timeline.to(
-      //   $bitElement,
-      //   0.1,
-      //   {
-      //     scale: 1,
-      //     boxShadow: "0",
-      //     ease: Expo.easeOut
-      //   }
-      // );
 
       // save new position to db
       Meteor.call('changeState', {
@@ -163,6 +156,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       $bitElement.removeClass('dragging');
       nearBitElement = null;
       clearAllGuides();
+      Session.set('isSnapEnabled', false);
     }
 
   });

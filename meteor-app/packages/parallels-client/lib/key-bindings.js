@@ -270,7 +270,6 @@ Parallels.Keys = {
 
   unbindSnapToggle: function(){
     Parallels.log.debug("keyCommand:unbindSnapToggle");
-    Session.set('isSnapEnabled', false);
 
     Mousetrap.unbind('shift', 'keyup');
     Mousetrap.unbind('shift', 'keydown');
