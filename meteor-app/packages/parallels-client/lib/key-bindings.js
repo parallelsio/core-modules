@@ -240,6 +240,68 @@ Parallels.Keys = {
     Mousetrap.bind('mod+shift+z', function () {
       Meteor.call('redoState', {canvasId: Session.get('canvasId')});
     });
+  },
+
+  ////////////////////////////////////////////////////
+
+  // this should be activated only during bit:drag, as a toggle/modifier
+  // to enable snapping. Not part of the group of bind/unbind, since it's an exception
+  bindSnapToggle: function(){
+    Parallels.log.debug("keyCommand:bindSnapToggle");
+    Session.set('snappToggle', false);
+
+    Mousetrap.bind(
+      'shift', 
+      function (event) {
+        Parallels.log.debug("drag toggle via Shift: on");
+        Session.set('snappToggle', true);
+      },
+      "keydown"
+    );
+
+    Mousetrap.bind(
+      'shift', 
+      function (event) {
+        Parallels.log.debug("drag toggle via Shift: off");
+        Session.set('snappToggle', true);
+      },
+      "keyup"
+    );
+  },
+
+  unbindSnapToggle: function(){
+    Parallels.log.debug("keyCommand:unbindSnapToggle");
+    Session.set('snappToggle', false);
+
+    Mousetrap.unbind('shift', 'keyup');
+    Mousetrap.unbind('shift', 'keydown');
+  },
+  
+
+  catchSpace: function(){
+    Parallels.log.debug("keyCommand:catchSpace");
+
+    Mousetrap.bind('space', function (event) {
+      Parallels.log.debug("pressed 'shift' key");
+      Session.set('snappToggle', true);
+
+      try {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      catch (err) {
+        /*  Try/Catch is here for integration tests:
+         https://github.com/ccampbell/mousetrap/issues/257
+         */
+      }
+    });
+  },
+
+  unbindCatchSpace: function(){
+    Parallels.log.debug("keyCommand:unbindCatchSpace");
+
+    Mousetrap.unbind('space');
   }
+  
 
 };
