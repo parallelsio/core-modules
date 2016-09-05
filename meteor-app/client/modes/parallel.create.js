@@ -84,7 +84,6 @@ Parallels.AppModes['create-parallel'] = {
         $originBit.removeClass('create-parallel--origin');
 
 
-
         // TODO: prep images for slicing
         // query Neo4j for image bits that are connected, by X number of hops
         // also, spatially: K-nearest algo?

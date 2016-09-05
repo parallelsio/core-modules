@@ -58,10 +58,11 @@ Parallels.Animation.Image = {
     var bitThumbWidth   = $bitImg.width();
     var bitThumbX       = options.$bit.position().left;
     var bitThumbY       = options.$bit.position().top;
+    var bitThumbZIndex  = options.$bit.zIndex();
 
     var mask            = $('.wipe.bit-preview .mask');
 
-    var documentWidth  = $(document).width();
+    var documentWidth   = $(document).width();
 
     /*
        Set up + calc the vars needed to animate
@@ -130,7 +131,8 @@ Parallels.Animation.Image = {
       var bitContainerOptions = {
         ease: Power4.easeOut,
         x: Session.get('bitThumbX'),
-        y: Session.get('bitThumbY')
+        y: Session.get('bitThumbY'),
+        zIndex: Session.get('bitThumbZIndex')
       };
     }
 
@@ -145,6 +147,7 @@ Parallels.Animation.Image = {
         Session.set('bitThumbWidth', bitThumbWidth);
         Session.set('bitThumbX', bitThumbX);
         Session.set('bitThumbY', bitThumbY);
+        Session.set('bitThumbZIndex', bitThumbZIndex);
 
         Parallels.Audio.player.play('fx-quad-ripple');
       }
@@ -154,6 +157,7 @@ Parallels.Animation.Image = {
         Session.set('bitThumbHeight', null);
         Session.set('bitThumbX', null);
         Session.set('bitThumbY', null);
+        Session.set('bitThumbZIndex', null);
 
         Parallels.Audio.player.play('fx-temp-temp');
       }
@@ -178,7 +182,7 @@ Parallels.Animation.Image = {
       Parallels.log.debug("bitContainerOptions: ", bitContainerOptions);
 
       timeline
-        .set(options.$bit, { zIndex: 10 })
+        .set(options.$bit, { zIndex: 10000 })
         .set($('.wipe.bit-preview'), { alpha: 1, display: "block" })
 
         .set(mask,  { y: verge.scrollY(), x: verge.scrollX() }) // move mask into position outside the canvas
@@ -203,7 +207,7 @@ Parallels.Animation.Image = {
         .to($bitImg, 0.20, bitImgOptions )
         .to(options.$bit, 0.20, bitContainerOptions, "-=0.20" )
 
-        .set(options.$bit, { zIndex: 1 })
+        .set(options.$bit, { zIndex: bitContainerOptions.zIndex })
         .set($('.wipe.bit-preview'), { alpha: 0, display: "none" });
     }
   },
