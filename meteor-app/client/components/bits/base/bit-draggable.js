@@ -25,6 +25,8 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
     onPress: function(event){
     
+      Parallels.Keys.unbindActions();
+
       // TODO: improve performance
       // use image asset instead of CSS shadow:
       // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
@@ -42,6 +44,9 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
     },
 
     onRelease: function(event){
+
+      Parallels.Keys.bindActions();
+      
       timeline
         .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
         .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, opacity: "1", ease: Expo.easeOut }), "-=0.10";

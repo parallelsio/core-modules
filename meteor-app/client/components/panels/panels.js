@@ -21,7 +21,7 @@ Parallels.Panels = {
         if (isSequenceKeyCommand) {
           timeline
             .to($cursor, 0.3, {left: "2em", top: "1.5em", ease: Power2.easeIn, y: 0, opacity: 1})
-            .to($minibit, 0, {borderTop: "0.3em solid #8B8BF5"}, "-=0.075")
+            .to($minibit, 0, {borderBottom: "0.3em solid lightcoral"}, "-=0.075")
             .call(Parallels.Audio.player.play, ['fx-ting3'], "-=0.3")
             .to($key, 0, {left: "3px", top: "3px"}, "+=0.3")
             .to($key, 0, {left: 0, top: 0}, "+=0.75")

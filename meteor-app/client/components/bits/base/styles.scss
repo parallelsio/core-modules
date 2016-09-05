@@ -48,21 +48,20 @@
 
 .dragging {
   // @extend .blend--multiply;
-  @extend .grabbable;
 }
 
 .grabbable {
     cursor: move !important; /* fallback if grab cursor is unsupported */
-    cursor: grab !important;
     cursor: -moz-grab !important;
     cursor: -webkit-grab !important;
+    cursor: grab !important;
 }
 
  /* (Optional) Apply a "closed-hand" cursor during drag operation. */
 .grabbable:active { 
-    cursor: grabbing !important;
     cursor: -moz-grabbing !important;
     cursor: -webkit-grabbing !important;
+    cursor: grabbing !important;
 }
 
 .hovering .bit__drag-handle {
@@ -245,8 +244,8 @@
 
 
 .bit.image .controls__icon-delete:hover {
-  background-color: #f9ffb7; 
-  color: #8a8a8a;
+  background-color: lightcoral; 
+  color: white;
 }
 
 // file upload animation
