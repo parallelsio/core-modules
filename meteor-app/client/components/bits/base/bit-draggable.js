@@ -15,7 +15,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
   var draggable = Draggable.create($bitElement, {
     trigger: $dragHandle,
     throwProps: false,
-    zIndexBoost: false,
+    zIndexBoost: true,
     autoScroll: 1,
     cursor: "inherit",
 
