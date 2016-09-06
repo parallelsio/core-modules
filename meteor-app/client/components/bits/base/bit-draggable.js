@@ -150,6 +150,16 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       // a random tone from the series, in the mid-range of the scale
       Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
 
+      // animate out dragging shadow, and play snap sound if snap was toggled on
+     if (Session.equals('isSnapEnabled', true)){
+        Parallels.Audio.player.play("sdrums--placeholder--0008_bongo_01_high");
+        Parallels.Audio.player.play("sdrums--placeholder--0041_perc_11_1");
+        Parallels.Audio.player.play("fx-ping-2x");
+
+
+        Parallels.log.debug("bit:snap" );
+      }
+
       // animate out dragging shadow
       timeline
         .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })

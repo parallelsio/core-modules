@@ -6,17 +6,21 @@ Template.drawer.onRendered(function () {
 
   console.log('drawer: rendered.');
 
+  var template = this;
+  var mapElement = template.find('.map');
+
+  // Parallels.Audio.player.play("sdrums--placeholder--0040_static3");
+
   timeline
     .fromTo(
       $drawer, 
-      0.75, 
+      0.5, 
       {
         opacity: 0.25
       },
       { 
         opacity: 1,
         autoAlpha: 1,
-        boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", 
         ease: Expo.easeOut
       }
     )
