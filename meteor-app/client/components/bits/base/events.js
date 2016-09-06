@@ -78,6 +78,10 @@ Template.bit.events({
     Session.set('mousedown', false);
   },
 
+  'dblclick .bit': function(e){
+    e.stopPropagation();
+  },
+
   'click .controls__icon-delete': function (event, template) {
 
     Parallels.log.debug("starting bit:delete on ", template.data._id);

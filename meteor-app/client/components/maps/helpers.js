@@ -12,6 +12,10 @@ Template.map.helpers({
 
   viewingEventLog: function () {
     return Session.get('viewingEventLog');
+  },
+
+  viewingDrawer: function () {
+    return Session.get('viewingDrawer');
   }
 
 });

@@ -22,7 +22,8 @@ Parallels.Keys = {
     this.bindCreateTextBit();
     this.bindBeginCreateParallel();
     this.bindImageBitPreview();
-    this.bindHistory();
+    this.bindHistoryToggle();
+    this.bindDrawerToggle();
     this.bindUndo();
     this.bindRedo();
   },
@@ -42,7 +43,7 @@ Parallels.Keys = {
     // create-parallel
     Mousetrap.unbind('shift');
 
-    // history dialog, for undo/redo
+    // history dialog, for timeline/eventlog/activity stream
     Mousetrap.unbind('h');
 
     // undo last action
@@ -67,6 +68,9 @@ Parallels.Keys = {
       });
 
     });
+
+    // bit drawer
+    Mousetrap.unbind('2');
 
   },
 
@@ -217,12 +221,22 @@ Parallels.Keys = {
     });
   },
 
-  bindHistory: function () {
-    Parallels.log.debug("keyCommand:bindHistory");
+  bindHistoryToggle: function () {
+    Parallels.log.debug("keyCommand:bindHistoryToggle");
 
     Mousetrap.bind('h', function () {
       var viewingEventLog = Session.get('viewingEventLog');
       Session.set('viewingEventLog', !viewingEventLog);
+    });
+  },
+
+  bindDrawerToggle: function () {
+    Parallels.log.debug("keyCommand:bindDrawerToggle");
+
+    Mousetrap.bind('2', function () {
+      Parallels.log.debug("pressed '2' key: drawer toggle");
+      var viewingDrawer = Session.get('viewingDrawer');
+      Session.set('viewingDrawer', !viewingDrawer);
     });
   },
 

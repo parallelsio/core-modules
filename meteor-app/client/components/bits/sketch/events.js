@@ -30,5 +30,10 @@ Template.sketchBit.events({
 
   'mouseup .bit': function () {
     Session.set('mousedown', false);
-  }
+  },
+
+  'dblclick .bit': function(e){
+    e.stopPropagation();
+  },
+
 });

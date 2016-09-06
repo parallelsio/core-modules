@@ -6,8 +6,12 @@
 
   {{> navPanel }}
 
-  {{#if viewingEventLog}}
+  {{#if viewingEventLog }}
     {{> eventlog }}
+  {{/if}}
+
+  {{#if viewingDrawer }}
+    {{> drawer }}
   {{/if}}
 
   <div class="map noselect">
