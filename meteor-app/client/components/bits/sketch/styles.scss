@@ -2,3 +2,45 @@
   padding: 0;
   background-color: white;
 }
+
+
+.bit.sketch.hovering .bit__drag-handle {
+  height: calc(100% + 5em);
+  width: 100%;
+  top: -5rem;
+
+  // adapted from uigradients.com/Reef
+  background: -webkit-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: -moz-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: -ms-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: -o-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+
+  // adapted from uigradients.com/Reef
+  // background: -webkit-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* Chrome 10+, Saf5.1+ */
+  // background:    -moz-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* FF3.6+ */
+  // background:     -ms-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* IE10 */
+  // background:      -o-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* Opera 11.10+ */
+  // background:         linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* W3C */
+
+
+}
+
+
+
+/*
+  TODO: remove, no longer relevant
+
+  Binds the HTML Dom element to the JS drawing engine via ploma.js.
+  Doesn't need to be seen by person,
+  but can't be hidden, as then JS lib can't attach to it.
+  Since different browsers render the object element
+  in different ways, the easiest thing is to just
+  make it have no h/w
+*/
+#wtPlugin{
+  display: block;
+  width: 0;
+  height: 0;
+}
+

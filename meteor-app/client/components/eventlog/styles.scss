@@ -32,6 +32,7 @@ $blue:#8B8BF5;
     z-index: 1;
   }
 
+
   .activity__header { 
     display: block;
     position: relative;
@@ -43,6 +44,15 @@ $blue:#8B8BF5;
     color: lightcoral;
     padding: 2rem 0 2rem 5.3rem;
     border-bottom: 1px solid #f3f4f5;
+
+   .icon-clock-1{
+     left: -3px;
+      position: relative;
+      display: inline-block;
+      opacity: 0.4;
+      top: 1px;
+      margin-right: 9px;
+    }
   }
 
   .activity__item {  

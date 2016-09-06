@@ -1,6 +1,6 @@
 <template name="eventlog">
   <div class="eventlog">
-    <div class="activity__header">Activity Stream</div>
+    <div class="activity__header"><span class="icon-clock-1"> </span> Activity Stream </div>
     <div class="timeline">
       {{ #each events }}
         {{> event }}
@@ -24,5 +24,52 @@
       <p class="activity__time
                 italic">{{ time }}</p>
     </div>
+  </div>
+</template>
+
+
+<template name="icons">
+  <div class="icons">
+    <div class="icon icon-cup" > &nbsp;</div>
+    <div class="icon icon-search" > &nbsp;</div>
+    <div class="icon icon-heart" > &nbsp;</div>
+    <div class="icon icon-pencil" > &nbsp;</div>
+    <div class="icon icon-cc" > &nbsp;</div>
+    <div class="icon icon-twitter" > &nbsp;</div>
+    <div class="icon icon-vimeo" > &nbsp;</div>
+    <div class="icon icon-flow-branch" > &nbsp;</div>
+    <div class="icon icon-clock" > &nbsp;</div>
+    <div class="icon icon-hourglass" > &nbsp;</div>
+    <div class="icon icon-ok" > &nbsp;</div>
+    <div class="icon icon-cancel" > &nbsp;</div>
+    <div class="icon icon-undo" > &nbsp;</div>
+    <div class="icon icon-up" > &nbsp;</div>
+    <div class="icon icon-right" > &nbsp;</div>
+    <div class="icon icon-left" > &nbsp;</div>
+    <div class="icon icon-down" > &nbsp;</div>
+    <div class="icon icon-popup" > &nbsp;</div>
+    <div class="icon icon-cw" > &nbsp;</div>
+    <div class="icon icon-clock-1" > &nbsp;</div>
+    <div class="icon icon-doc" > &nbsp;</div>
+    <div class="icon icon-volume-up" > &nbsp;</div>
+    <div class="icon icon-volume-off" > &nbsp;</div>
+    <div class="icon icon-trash" > &nbsp;</div>
+    <div class="icon icon-ok-1" > &nbsp;</div>
+    <div class="icon icon-cancel-1" > &nbsp;</div>
+    <div class="icon icon-torso" > &nbsp;</div>
+    <div class="icon icon-search-1" > &nbsp;</div>
+    <div class="icon icon-picture" > &nbsp;</div>
+    <div class="icon icon-tag" > &nbsp;</div>
+    <div class="icon icon-wrench" > &nbsp;</div>
+    <div class="icon icon-left-open" > &nbsp;</div>
+    <div class="icon icon-right-open" > &nbsp;</div>
+    <div class="icon icon-backward" > &nbsp;</div>
+    <div class="icon icon-forward" > &nbsp;</div>
+    <div class="icon icon-desktop" > &nbsp;</div>
+    <div class="icon icon-lock" > &nbsp;</div>
+    <div class="icon icon-lock-open" > &nbsp;</div>
+    <div class="icon icon-lock-1" > &nbsp;</div>
+    <div class="icon icon-basket" > &nbsp;</div>
+    <div class="icon icon-attach" > &nbsp;</div>
   </div>
 </template>

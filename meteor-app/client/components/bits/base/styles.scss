@@ -13,18 +13,51 @@
 }
 
 
-// .near--bottom  { border-bottom: blue 4px solid; }
-// .near--top     { border-top: blue 4px solid; }
-// .near--left    { border-left: blue 4px solid; }
-// .near--right   { border-right: blue 4px solid; }
+// .near--bottom  { border-bottom: #3f75ff 6px solid; }
+// .near--top     { border-top: #3f75ff 6px solid; }
+// .near--left    { border-left: #3f75ff 6px solid; }
+// .near--right   { border-right: #3f75ff 6px solid; }
 
 // Emulate the border. Using this technique so bit isn't shifted by border
 // !important is needed, because bit drag/drop via Greensock Draggable
 // sets box-shadow via inline style, and we want this to take precedence 
-.near--bottom  { box-shadow: 0 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-.near--top     { box-shadow: 0 -4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
-.near--left    { box-shadow: -4px 0 0 blue !important;  border-color: transparent; /* remove the border's colour */ }
-.near--right   { box-shadow: 4px 0 0 blue !important; border-color: transparent; /* remove the border's colour */ }
+.near--bottom  { border-color: transparent; /* remove the border's colour */  @extend .ripple--bottom; }
+.near--top     { border-color: transparent; /* remove the border's colour */ @extend .ripple--top; }
+.near--left    { box-shadow: -6px 0 0 #3f75ff !important;  border-color: transparent; /* remove the border's colour */  @extend .ripple--left; }
+.near--right   { box-shadow: 6px 0 0 #3f75ff !important; border-color: transparent; /* remove the border's colour */  @extend .ripple--right; }
+
+.ripple--bottom, 
+.ripple--left,
+.ripple--right {
+  animation-name: rippleBottom;
+  animation-duration: 0.65s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+}
+
+.ripple--top {
+  animation-name: rippleTop;
+  animation-duration: 0.65s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+}
+
+// adapted from: https://www.viget.com/uploads/file/boxshadows#
+@-webkit-keyframes rippleBottom{ 
+  0%   { box-shadow: 0 4px 0 0 rgba(63,117,255, 1.0) }
+  15%  { box-shadow: 0 5px 0 0 rgba(63,117,255, 0.8) }
+  50%  { box-shadow: 0 7px 0 0 rgba(63,117,255, 0.7) }
+  100% { box-shadow: 0 4px 0 0 rgba(63,117,255, 0.9) }
+}
+
+@-webkit-keyframes rippleTop{ 
+  0%   { box-shadow: 0 -4px 0 0 rgba(63,117,255, 1.0) }
+  15%  { box-shadow: 0 -5px 0 0 rgba(63,117,255, 0.8) }
+  50%  { box-shadow: 0 -7px 0 0 rgba(63,117,255, 0.7) }
+  100% { box-shadow: 0 -4px 0 0 rgba(63,117,255, 0.9) }
+}
 
 
 .bit__content{
@@ -170,56 +203,6 @@
   height: 100%;
   overflow: scroll;
 }
-
-
-
-// ******************** SKETCH BITS *************
-
-
-.bit.sketch.hovering .bit__drag-handle {
-  height: calc(100% + 4em);
-  width: 100%;
-  top: 0;
-
-  // adapted from uigradients.com/Reef
-  background: -webkit-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
-  background: -moz-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
-  background: -ms-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
-  background: -o-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
-  background: linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
-
-  // adapted from uigradients.com/Reef
-  // background: -webkit-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* Chrome 10+, Saf5.1+ */
-  // background:    -moz-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* FF3.6+ */
-  // background:     -ms-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* IE10 */
-  // background:      -o-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* Opera 11.10+ */
-  // background:         linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* W3C */
-
-  // adapted from uigradients.com/Influenza
-  // background: -webkit-linear-gradient(0deg, #C04848 10%, #480048 90%); /* Chrome 10+, Saf5.1+ */
-  // background:    -moz-linear-gradient(0deg, #C04848 10%, #480048 90%); /* FF3.6+ */
-  // background:     -ms-linear-gradient(0deg, #C04848 10%, #480048 90%); /* IE10 */
-  // background:      -o-linear-gradient(0deg, #C04848 10%, #480048 90%); /* Opera 11.10+ */
-  // background:         linear-gradient(0deg, #C04848 10%, #480048 90%); /* W3C */
-}
-
-
-/*
-  TODO: remove, no longer relevant
-
-  Binds the HTML Dom element to the JS drawing engine via ploma.js.
-  Doesn't need to be seen by person,
-  but can't be hidden, as then JS lib can't attach to it.
-  Since different browsers render the object element
-  in different ways, the easiest thing is to just
-  make it have no h/w
-*/
-#wtPlugin{
-  width:0;
-  height:0;
-}
-
-
 
 // ******************** IMAGE BITS *************
 
@@ -422,6 +405,31 @@
     }
   }
 }
+
+
+
+
+
+
+.bit.webpage.hovering .bit__drag-handle {
+  height: calc(100% + 4em);
+  width: 100%;
+  top: 2rem;
+
+  background: -webkit-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* FF3.6+ */
+  background:     -ms-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* IE10 */
+  background:      -o-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* Opera 11.10+ */
+  background:         linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* W3C */  
+}
+
+
+.bit.webpage .controls__icon-delete:hover {
+  background-color: #fff279; 
+  color: #caaf6d;
+}
+
+
 
 
 

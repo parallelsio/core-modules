@@ -28,7 +28,7 @@
                 data-gifffer="{{ imageSrc }}" 
                 data-gifffer-width="{{ pixelWidth }}" 
                 data-gifffer-height="{{ pixelHeight }}" 
-                alt="{{ filename }}">
+                alt="{{ filename }}-{{ title }}">
         {{else}}
           <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}">
         {{/if}}
@@ -44,7 +44,7 @@
       {{/if}}
 
       {{#if isWebBit }}
-          <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ title }}">
+          <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}-{{ title }}">
       {{/if}}
 
     </div>
