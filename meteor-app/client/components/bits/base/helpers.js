@@ -3,6 +3,11 @@ var maxRenderPixels = {
   width: 200
 }
 
+// Template.registerHelper( 'isTextBit', function() {
+//   return this.type === "text";
+// });
+
+
 Template.bit.helpers({
 
   isTextBit: function() {

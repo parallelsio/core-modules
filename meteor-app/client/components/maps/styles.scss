@@ -1,6 +1,11 @@
 $map-height: 5000px;
 $map-width: 5000px;
 
+.scroll--vertical-only {
+  overflow-y: "scroll";
+  overflow-x: 'hidden';
+}
+
 
 .map {	  
 

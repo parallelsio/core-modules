@@ -4,4 +4,49 @@
 	height: 100%;
 	background: lightcoral;
 	z-index: 1000;
+
+	.hovering .bit__drag-handle,
+	.bit__controls,
+	.bit__controls-persistent,
+	.controls__icon
+	{
+		display: none !important;
+	}
 }
+
+// TODO: overriding regular bits. Need to refactor this
+.drawer-bits .bits {
+	display: block !important; 
+	opacity: 0;
+	transform: 0 !important;
+	position: relative !important;
+	margin: 0 0 10px 300px;
+}
+
+.drawer-bits .bits:hovering {
+	width: 0;
+	height: 0;
+}
+
+.drawer__header { 
+  display: block;
+  position: relative;
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2rem 0 2rem 5.3rem;
+  border-bottom: 1px solid #f3f4f5;
+  color: white;
+
+ .icon-pencil {
+  	color: white;
+    left: -3px;
+    position: relative;
+    display: inline-block;
+    opacity: 0.4;
+    top: 1px;
+    margin-right: 9px;
+  }
+}
+

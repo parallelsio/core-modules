@@ -3,9 +3,9 @@
   <div class="drawer">
     <div class="drawer__header"><span class="icon-pencil"> </span> Bit Drawer</div>
     
-    <div class="">
+    <div class="drawer-bits">
       {{ #each bits }}
-        {{> drawerBit }}
+        {{> bit }}
       {{/each }}
     </div>
 
@@ -13,49 +13,3 @@
 </template>
 
 
-<template name="drawerBit">
-
-  <div
-      class="bit {{ type }}"
-      data-id="{{ _id }}"
-      data-title="{{ title }}"
-      data-filename="{{ filename }}"
-      data-upload-key="{{ uploadKey }}">
-
-  <!--   <div class="bit__controls  bit__controls-persistent">
-      <a class="controls__icon  controls__icon-delete  icon-trash noselect" data-clickable="true"></a> 
-    </div> -->
-
-
-    <div class="bit__content {{ color }}">
-
-      {{#if isImageBit }}
-        {{#if isImageTypeGif }}
-          <img class="bit__image" 
-                data-gifffer="{{ imageSrc }}" 
-                data-gifffer-width="{{ pixelWidth }}" 
-                data-gifffer-height="{{ pixelHeight }}" 
-                alt="{{ filename }}-{{ title }}">
-        {{else}}
-          <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}">
-        {{/if}}
-      {{/if}}
-
-      {{#if isTextBit }}
-        {{{editor}}}
-        
-        <div class="bit__resize ui-resizable-handle ui-resizable-se grab" data-clickable="true">
-          <div class="bit__resize__triangle-icon"></div>
-        </div>
-
-      {{/if}}
-
-      {{#if isWebBit }}
-          <img class="bit__image grab" width="{{ pixelWidth }}" height="{{ pixelHeight }}" src="{{ imageSrc }}" alt="{{ filename }}-{{ title }}">
-      {{/if}}
-
-    </div>
-
-
-  </div>
-</template>
