@@ -268,6 +268,7 @@ Parallels.Keys = {
       function (event) {
         Parallels.log.debug("drag toggle via Shift: on");
         Session.set('isSnapEnabled', true);
+        Parallels.Audio.player.play("sdrums--placeholder--0039_perc_10_1");
       },
       "keydown"
     );
@@ -277,6 +278,7 @@ Parallels.Keys = {
       function (event) {
         Parallels.log.debug("drag toggle via Shift: off");
         Session.set('isSnapEnabled', false);
+        Parallels.Audio.player.play("sdrums--placeholder--0040_perc_10_2");
       },
       "keyup"
     );
