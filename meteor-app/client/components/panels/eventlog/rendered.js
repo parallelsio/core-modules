@@ -1,13 +1,23 @@
+import _ from 'lodash';
+
 Template.eventlog.onRendered(function () {
   var $eventLog = $(this.firstNode);
   var timeline = new TimelineMax();
 
-  timeline.to(
-    $eventLog, 0.05, { 
-      alpha: 1,
-      boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", 
-      ease: Expo.easeOut
-  });
+  timeline
+    .fromTo(
+      $eventLog, 
+      0.75, 
+      {
+        opacity: 0.25
+      },
+      { 
+        opacity: 1,
+        autoAlpha: 1,
+        boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0", 
+        ease: Expo.easeOut
+      }
+    )
 
   $eventLog.bind('mousewheel DOMMouseScroll', function(e) {
     var scrollTo = null;

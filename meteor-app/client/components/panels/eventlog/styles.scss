@@ -1,4 +1,4 @@
-$blue:#8B8BF5;
+$blue: #8B8BF5;
 
 .eventlog {
   position: fixed;
@@ -84,8 +84,6 @@ $blue:#8B8BF5;
   .activity__dot { 
     position: relative;
     z-index: 2;
-    // top: -1.5rem;
-
     color: white;
     font-size: 0.6rem;
     border: 2px solid lightgray;
