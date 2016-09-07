@@ -14,11 +14,11 @@ $shortcut-height: 3em;
 
 .shortcut {
   position: relative;
-  padding: 0.25em 0.6em 0.25em 1em;
+  padding: 1rem 1rem;
   height: $shortcut-height;
 }
 
-.shortcut:hover{
+.shortcut:hover {
   background-color: #FFF;
 }
 
@@ -26,45 +26,97 @@ $shortcut-height: 3em;
   display: inline-block;
   position: relative;
   z-index: 1;
-  width: 2.7em;
-  height: 1.8em;
-  top: 0.5em;
+  width: 3.4em;
+  height: 2.3em;
+  top: -0.4em;
   background: #C6C6C6;
+  margin-left: 0.8rem;
+  margin-bottom: -0.7rem;
 }
 
 .shortcut__cursor {
-  position: absolute;
+  position: relative;
   z-index: 100;
   transform: rotate(55deg);
-  left: 3em;
-  top: 3em;
+  left: -2em;
+  top: 1em;
   color: #646464;
   opacity: 0;
 }
 
-.shortcut__flyout{
+.shortcut__icon {
+  margin-right: 0.7rem;
+}
+
+.shortcut__flyout {
   position: absolute;
-  display:none;
-  width:40vw;
-  height:40vh;
+  display: none;
+  width: 40vw;
+  min-height: 40vh;
   background: white;
   left: $shortcuts-width;
   top: -$shortcut-height;
+  padding: 2rem;
+  margin-top: 3rem;
+
+
+  // .icon:before{
+  //   font-size: 1.3rem;
+  //   text-align: center;
+  //   width: 100%;
+  //   padding-top: 0.15rem;
+  // }
+
 }
 
-.flyout__h1{
-  font-size: 1em;
-  letter-spacing: -1px;
-  margin: 4em 0 0 2em;
+.flyout__h1 {
+  font-size: 1.1em;
+  webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #f7eded;
+  width: 100%;
+  padding-bottom: 1rem;
+  margin: 2rem 0 0 0;
+  padding-right: 2rem;
+  padding-left: 0.9rem;
+  color: #a1a1ff;
 }
 
-.flyout__bit-type{
+.flyout__list {
+  list-style: none;
+}
+
+.flyout__list__item {
+  counter-increment: item;
+  margin: 1.7rem 0;
+ }
+
+
+ .flyout__list__item:before {
+  display: inline-block;
+  margin-right: 0.85rem;
+  content: counter(item);
+  background: lightblue;
+  border-radius: 100%;
+  color: white;
+  width: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  height: 1rem;
+  vertical-align: middle;
+  padding: 0.4rem;
+  line-height: 1rem;
+  top: -0.075rem;
+  position: relative;
+ }
+
+.flyout__bit-type {
   font-size: 0.8em;
   font-weight:bold;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 
 .shortcut__key {
   display: inline-block;
@@ -81,11 +133,10 @@ $shortcut-height: 3em;
 }
 
 .shortcut__key--sequence {
-
+  position: relative;
 }
 
 .shortcut__key--solo {
   position: relative;
-  margin-left: 3em;
 
 }

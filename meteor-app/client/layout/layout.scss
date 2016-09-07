@@ -110,3 +110,15 @@ hr{
   margin: 0 0.4em;
 }
 
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loading__text {
+  max-width: 50%;
+  font-size: 1.5rem;
+}
