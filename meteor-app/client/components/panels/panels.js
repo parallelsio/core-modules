@@ -20,8 +20,8 @@ Parallels.Panels = {
 
         if (isSequenceKeyCommand) {
           timeline
-            .to($cursor, 0.3, { left: "-1em", top: "-1.5em", ease: Power2.easeIn, y: 0, opacity: 1} )
-            .to($minibit, 0, { borderBottom: "0.6em solid lightcoral"}, "-=0.075")
+            // .to($cursor, 0.3, { left: "-1em", top: "-1.5em", ease: Power2.easeIn, y: 0, opacity: 1} )
+            // .to($minibit, 0, { borderBottom: "0.6em solid lightcoral"}, "-=0.075")
             // .call(Parallels.Audio.player.play, ['fx-ting3'], "-=0.3")
             .to($key[0], 0, { left: "3px", top: "3px" }, "+=0.3")
             .to($key[0], 0, { left: 0, top: 0 }, "+=0.75")
