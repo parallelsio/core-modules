@@ -20,7 +20,7 @@ Parallels.Keys = {
     this.bindDeleteBit();
     this.bindCreateSketchBit();
     this.bindCreateTextBit();
-    this.bindBeginCreateParallel();
+    // this.bindBeginCreateParallel();
     this.bindImageBitPreview();
     this.bindHistoryToggle();
     this.bindDrawerToggle();
@@ -40,8 +40,8 @@ Parallels.Keys = {
     // preview
     Mousetrap.unbind('space');
 
-    // create-parallel
-    Mousetrap.unbind('shift');
+    // // create-parallel
+    // Mousetrap.unbind('shift');
 
     // history dialog, for timeline/eventlog/activity stream
     Mousetrap.unbind('h');
@@ -145,24 +145,24 @@ Parallels.Keys = {
     });
   },
 
-  bindBeginCreateParallel: function () {
-    Parallels.log.debug("keyCommand:bindBeginCreateParallel");
+  // bindBeginCreateParallel: function () {
+  //   Parallels.log.debug("keyCommand:bindBeginCreateParallel");
 
-    Mousetrap.bind('shift', function () {
-      var bitHoveringId = Session.get('bitHoveringId');
-      var currentMode = Session.get('currentMode');
+  //   Mousetrap.bind('shift', function () {
+  //     var bitHoveringId = Session.get('bitHoveringId');
+  //     var currentMode = Session.get('currentMode');
 
-      // begin craete parallel,
-      // bitHoveringId is the origin/source bit
-      if (bitHoveringId && (!currentMode)) {
-        Parallels.AppModes['create-parallel'].enter();
-      }
+  //     // begin craete parallel,
+  //     // bitHoveringId is the origin/source bit
+  //     if (bitHoveringId && (!currentMode)) {
+  //       Parallels.AppModes['create-parallel'].enter();
+  //     }
 
-      // else if (bitHoveringId && (currentMode === 'create-parallel')) {
-      //   Parallels.log.debug('closing parallel with ', bitHoveringId);
-      // }
-    });
-  },
+  //     // else if (bitHoveringId && (currentMode === 'create-parallel')) {
+  //     //   Parallels.log.debug('closing parallel with ', bitHoveringId);
+  //     // }
+  //   });
+  // },
 
   bindCreateSketchBit: function () {
     Parallels.log.debug("keyCommand:bindCreateSketchBit");

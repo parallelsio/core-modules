@@ -48,6 +48,14 @@ $shortcut-height: 3em;
   margin-right: 0.7rem;
 }
 
+.shortcut__icon--nav {
+    display: inline-block;
+    width: 15%;
+    margin-right: 0.4rem;
+    margin-left: 0.4rem;
+}
+
+
 .shortcut__flyout {
   position: absolute;
   display: none;
@@ -55,7 +63,7 @@ $shortcut-height: 3em;
   min-height: 40vh;
   background: white;
   left: $shortcuts-width;
-  top: -$shortcut-height;
+  top: -6rem;
   padding: 2rem;
   margin-top: 3rem;
 
@@ -88,12 +96,17 @@ $shortcut-height: 3em;
 }
 
 .flyout__list__item {
+  margin: 1rem 0 0 2.3rem;
+}
+    
+
+
+.flyout__list__item--numbered {
   counter-increment: item;
   margin: 1.7rem 0;
  }
 
-
- .flyout__list__item:before {
+ .flyout__list__item--numbered:before {
   display: inline-block;
   margin-right: 0.85rem;
   content: counter(item);
