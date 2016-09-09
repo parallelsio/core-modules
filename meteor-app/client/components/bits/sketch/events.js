@@ -21,11 +21,15 @@ BitEvents = {
   }
 };
 
+
 Template.sketchBit.events({
   'mouseenter .bit': BitEvents.hoverInBit,
   'mouseleave .bit': BitEvents.hoverOutBit,
   'mousedown .bit': function () {
     Session.set('mousedown', true);
+
+    // avoid interference with making marquee/select bits
+    event.stopPropagation(); 
   },
 
   'mouseup .bit': function () {
