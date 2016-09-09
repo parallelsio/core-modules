@@ -16,6 +16,11 @@ Template.map.helpers({
 
   viewingDrawer: function () {
     return Session.get('viewingDrawer');
+  },
+
+  selectedBitsCount: function () {
+    return Session.get('selectedBitsCount');
   }
 
 });
+

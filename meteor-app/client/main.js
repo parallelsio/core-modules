@@ -29,6 +29,7 @@ Meteor.startup(function () {
 
   Session.set('textBitEditingId', null);
   Session.set('sketchBitEditingId', null);
+  Session.set('selectedBitsCount', 0);
 
   // TODO: make as util?
   $.fn.focusWithoutScrolling = function(){

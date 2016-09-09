@@ -119,3 +119,28 @@ $color-second: #C7F464;
   height: 100%;
 }
 
+///////////////////
+
+
+.marquee-select {
+  position: absolute !important;
+  display: none;
+  z-index: 9000;
+  cursor: default !important;
+}
+
+
+.marquee-active {
+  display: block !important;
+}
+
+.marquee-select > span {
+  background-color: rgba(239, 28, 190, 0.6);
+  border: 1px solid #b20e8c;
+  width: 100%;
+  height: 100%;
+  float: left;
+}
+
+
+

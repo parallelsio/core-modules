@@ -25,6 +25,7 @@
 .near--top     { border-color: transparent; /* remove the border's colour */ @extend .ripple--top; }
 .near--left    { box-shadow: -6px 0 0 #3f75ff !important;  border-color: transparent; /* remove the border's colour */  @extend .ripple--left; }
 .near--right   { box-shadow: 6px 0 0 #3f75ff !important; border-color: transparent; /* remove the border's colour */  @extend .ripple--right; }
+.near          { box-shadow: 6px 0 6px #3f75ff !important; border-color: transparent; /* remove the border's colour */  @extend .ripple--top; @extend .ripple--bottom; }
 
 .ripple--bottom, 
 .ripple--left,

@@ -72,6 +72,9 @@ Template.bit.events({
 
   'mousedown .bit': function () {
     Session.set('mousedown', true);
+
+    // avoid interference with making marquee/select bits
+    event.stopPropagation(); 
   },
 
   'mouseup .bit': function () {
