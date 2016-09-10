@@ -53,6 +53,7 @@
     "test:server": "grunt env:dev meteorPackagesTestServer"
   },
   "dependencies": {
+    "chroma": "0.0.1",
     "meteor-node-stubs": "^0.2.3"
   }
 }
