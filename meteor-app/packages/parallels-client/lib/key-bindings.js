@@ -64,7 +64,7 @@ Parallels.Keys = {
       // TODO: clear + garbage collect timeline objects, handlers
       $('.shortcut').each(function () {
         $shortcut = $(this);
-        Parallels.log.debug('unbinding each shortcut: ', $shortcut);
+        // Parallels.log.debug('unbinding each shortcut: ', $shortcut);
       });
 
     });
@@ -87,7 +87,7 @@ Parallels.Keys = {
   },
 
   bindDeleteBit: function () {
-    Parallels.log.debug("keyCommand:bindDeleteBit");
+    // Parallels.log.debug("keyCommand:bindDeleteBit");
 
     Mousetrap.bind("d", function () {
       Parallels.log.debug("pressed 'd' key");
@@ -113,7 +113,7 @@ Parallels.Keys = {
   },
 
   bindImageBitPreview: function () {
-    Parallels.log.debug("keyCommand:bindImageBitPreview");
+    // Parallels.log.debug("keyCommand:bindImageBitPreview");
 
     Mousetrap.bind('space', function (event) {
       Parallels.log.debug("pressed 'Space' key");
@@ -165,7 +165,7 @@ Parallels.Keys = {
   // },
 
   bindCreateSketchBit: function () {
-    Parallels.log.debug("keyCommand:bindCreateSketchBit");
+    // Parallels.log.debug("keyCommand:bindCreateSketchBit");
 
     Mousetrap.bind('s', function () {
       Meteor.call('changeState', {
@@ -187,7 +187,7 @@ Parallels.Keys = {
   },
 
   bindCreateTextBit: function () {
-    Parallels.log.debug("keyCommand:bindCreateTextBit");
+    // Parallels.log.debug("keyCommand:bindCreateTextBit");
 
     Mousetrap.bind('t', function () {
       Meteor.call('changeState', {
@@ -210,7 +210,7 @@ Parallels.Keys = {
   },
 
   bindEsc: function () {
-    Parallels.log.debug("keyCommand:bindEsc");
+    // Parallels.log.debug("keyCommand:bindEsc");
 
     Mousetrap.bindGlobal('esc', function () {
       Parallels.log.debug("pressed 'Esc' key");
@@ -222,7 +222,7 @@ Parallels.Keys = {
   },
 
   bindHistoryToggle: function () {
-    Parallels.log.debug("keyCommand:bindHistoryToggle");
+    // Parallels.log.debug("keyCommand:bindHistoryToggle");
 
     Mousetrap.bind('h', function () {
       var viewingEventLog = Session.get('viewingEventLog');
@@ -231,7 +231,7 @@ Parallels.Keys = {
   },
 
   bindDrawerToggle: function () {
-    Parallels.log.debug("keyCommand:bindDrawerToggle");
+    // Parallels.log.debug("keyCommand:bindDrawerToggle");
 
     Mousetrap.bind('2', function () {
       Parallels.log.debug("pressed '2' key: drawer toggle");
@@ -242,7 +242,7 @@ Parallels.Keys = {
   },
 
   bindUndo: function () {
-    Parallels.log.debug("keyCommand:bindUndo");
+    // Parallels.log.debug("keyCommand:bindUndo");
 
     Mousetrap.bind('mod+z', function () {
       Meteor.call('undoState', {canvasId: Session.get('canvasId')});
@@ -250,7 +250,7 @@ Parallels.Keys = {
   },
 
   bindRedo: function () {
-    Parallels.log.debug("keyCommand:bindRedo");
+    // Parallels.log.debug("keyCommand:bindRedo");
 
     Mousetrap.bind('mod+shift+z', function () {
       Meteor.call('redoState', {canvasId: Session.get('canvasId')});
@@ -262,7 +262,7 @@ Parallels.Keys = {
   // this should be activated only during bit:drag, as a toggle/modifier
   // to enable snapping. Not part of the group of bind/unbind, since it's an exception
   bindSnapToggle: function(){
-    Parallels.log.debug("keyCommand:bindSnapToggle");
+    // Parallels.log.debug("keyCommand:bindSnapToggle");
 
     Mousetrap.bind(
       'shift', 
@@ -286,7 +286,7 @@ Parallels.Keys = {
   },
 
   unbindSnapToggle: function(){
-    Parallels.log.debug("keyCommand:unbindSnapToggle");
+    // Parallels.log.debug("keyCommand:unbindSnapToggle");
 
     Mousetrap.unbind('shift', 'keyup');
     Mousetrap.unbind('shift', 'keydown');
@@ -294,7 +294,7 @@ Parallels.Keys = {
   
 
   bindCatchSpace: function(){
-    Parallels.log.debug("keyCommand:catchSpace");
+    // Parallels.log.debug("keyCommand:catchSpace");
 
     Mousetrap.bind('space', function (event) {
 
@@ -311,7 +311,7 @@ Parallels.Keys = {
   },
 
   unbindCatchSpace: function(){
-    Parallels.log.debug("keyCommand:unbindCatchSpace");
+    // Parallels.log.debug("keyCommand:unbindCatchSpace");
     Mousetrap.unbind('space');
   }
   

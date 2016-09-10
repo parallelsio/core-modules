@@ -42,7 +42,7 @@ Parallels.Animation.General = {
       var offset = parseFloat(position.top) + parseFloat(position.left);
       var delay = parseFloat(offset * delayMultiplier).toFixed(2);
 
-      Parallels.log.debug("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay);
+      // Parallels.log.debug("shimmer:in: ", Utilities.getBitDataId($element), " : delay of ", delay);
 
       /* TODO:
        calc a sound frequency to use as a parameter for the sound played

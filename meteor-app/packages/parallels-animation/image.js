@@ -178,8 +178,8 @@ Parallels.Animation.Image = {
       Parallels.log.debug("expanding...");
 
       $("body").css( "overflow", "hidden"); // disabling scrolling
-      Parallels.log.debug("bitImgOptions: ", bitImgOptions);
-      Parallels.log.debug("bitContainerOptions: ", bitContainerOptions);
+      // Parallels.log.debug("bitImgOptions: ", bitImgOptions);
+      // Parallels.log.debug("bitContainerOptions: ", bitContainerOptions);
 
       timeline
         .set(options.$bit, { zIndex: 10000 })
