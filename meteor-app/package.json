@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
+    "chroma-js": "^1.2.1",
     "gifffer": "^1.4.0",
+    "granim": "^1.0.31",
     "lodash": "^4.15.0",
     "meteor-node-stubs": "^0.2.3",
     "neo4j": "1.1.1"
