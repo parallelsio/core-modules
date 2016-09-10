@@ -17,6 +17,8 @@
     "granim": "^1.0.31",
     "lodash": "^4.15.0",
     "meteor-node-stubs": "^0.2.3",
-    "neo4j": "1.1.1"
+    "neo4j": "1.1.1",
+    "node-vibrant": "^2.1.2",
+    "vibrant": "0.0.1"
   }
 }
