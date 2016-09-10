@@ -50,7 +50,8 @@
     "importlog": "grunt env:dev importlog replayEvents",
     "test": "grunt env:dev jshint connect:clipperTestServer jasmine:clipperUnitTests && ./test-scripts/bin/run_meteor_package_units.sh",
     "test:integration": "grunt env:dev meteorPackageIntegration",
-    "test:server": "grunt env:dev meteorPackagesTestServer"
+    "test:server": "grunt env:dev meteorPackagesTestServer",
+    "clipper": "grunt env:dev connect:clipperServer watch"
   },
   "dependencies": {
     "chroma": "0.0.1",
