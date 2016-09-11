@@ -32,16 +32,21 @@ wireColorExplore = function wireColorExplore(){
   // });
 
 
-  var $img = Utilities.getBitElement('S3cBvZX7KL5MjoDnZ');
-  var img = $img.find('img')[0];
+  // var $bit = $('.bit.image').first();
+  
+  var img = document.querySelector('.bit.image img')
 
   img.addEventListener('load', function() {
       console.log('loaded');
-      var vibrant = new Vibrant(img);
-      var swatches = vibrant.swatches()
-      for (var swatch in swatches)
-          if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-              console.log(swatch, swatches[swatch].getHex())
+
+    
+    var vibrant = new Vibrant(img);
+    var swatches = vibrant.swatches();
+    console.log(swatches['Vibrant'].getHex());
+
+      // for (var swatch in swatches)
+      //     if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+      //         console.log(swatch, swatches[swatch].getHex())
 
       /*
        * Results into:
@@ -52,5 +57,63 @@ wireColorExplore = function wireColorExplore(){
        * LightVibrant #f3ccb4
        */
   })
+
+
+  // var img = $bit.find('img')[0];
+
+
+// var imgs = [document.querySelector('#image1'), document.querySelector('#image2'), document.querySelector('#image3')];
+// var bgs = [
+//   document.querySelector('.background-0'),
+//   document.querySelector('.background-1'),
+//   document.querySelector('.background-2')
+// ];
+// var selected = 0;
+// var colors = [];
+// var imgContainer = document.querySelector('.images');
+
+// function processColors(img) {
+//   
+//   
+  
+
+
+//   document.querySelector(
+//     '.background-' + imgs.indexOf(img)
+//   ).style.backgroundColor = 
+// }
+// for(img of imgs) {
+//   console.log(img);
+//   if(img.complete) {
+//     processColors(img);
+//   } else {
+//     img.addEventListener('load', function() {
+//       processColors(img);
+//     });
+//   }
+// }
+
+
+
+
+
+
+  // img.addEventListener('load', function() {
+  //     console.log('loaded');
+  //     var vibrant = new Vibrant(img);
+  //     var swatches = vibrant.swatches()
+  //     // for (var swatch in swatches)
+  //     //     if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+  //     //         console.log(swatch, swatches[swatch].getHex())
+
+  //     /*
+  //      * Results into:
+  //      * Vibrant #7a4426
+  //      * Muted #7b9eae
+  //      * DarkVibrant #348945
+  //      * DarkMuted #141414
+  //      * LightVibrant #f3ccb4
+  //      */
+  // })
 };
       
