@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "chroma": "0.0.1",
-    "meteor-node-stubs": "^0.2.3"
+    "meteor-node-stubs": "^0.2.3",
+    "node-vibrant": "^2.1.2"
   }
 }

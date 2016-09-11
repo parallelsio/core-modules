@@ -14,3 +14,4 @@ tmp
 meteor-app/private/data-backups/canvas.events.json
 desktop-app/cache
 desktop-app/resources
+bower_components

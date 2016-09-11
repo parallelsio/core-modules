@@ -1,6 +1,6 @@
 import chroma from 'chroma-js';
 import Granim from 'granim';
-import Vibrant from 'vibrant';
+// cant figure out how to load vibrant via import, using vendored minified js file
 
 wireColorExplore = function wireColorExplore(){
 
@@ -32,21 +32,22 @@ wireColorExplore = function wireColorExplore(){
   // });
 
 
-  // var $bit = $('.bit.image').first();
-  
-  var img = document.querySelector('.bit.image img')
+    var img = $('.bit.image img').first()[0];
+    img.setAttribute('crossOrigin', 'anonymous');
 
-  img.addEventListener('load', function() {
+    img.addEventListener('load', function() {
       console.log('loaded');
 
-    
-    var vibrant = new Vibrant(img);
-    var swatches = vibrant.swatches();
-    console.log(swatches['Vibrant'].getHex());
+      var vibranta = new Vibrant(img);
+      console.log(img);
+      console.log(vibranta);
 
-      // for (var swatch in swatches)
-      //     if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-      //         console.log(swatch, swatches[swatch].getHex())
+      var swatches = vibranta.swatches();
+      console.log(swatches['Vibrant'].getHex());
+
+      for (var swatch in swatches)
+          if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+              console.log(swatch, swatches[swatch].getHex())
 
       /*
        * Results into:
@@ -59,61 +60,5 @@ wireColorExplore = function wireColorExplore(){
   })
 
 
-  // var img = $bit.find('img')[0];
-
-
-// var imgs = [document.querySelector('#image1'), document.querySelector('#image2'), document.querySelector('#image3')];
-// var bgs = [
-//   document.querySelector('.background-0'),
-//   document.querySelector('.background-1'),
-//   document.querySelector('.background-2')
-// ];
-// var selected = 0;
-// var colors = [];
-// var imgContainer = document.querySelector('.images');
-
-// function processColors(img) {
-//   
-//   
-  
-
-
-//   document.querySelector(
-//     '.background-' + imgs.indexOf(img)
-//   ).style.backgroundColor = 
-// }
-// for(img of imgs) {
-//   console.log(img);
-//   if(img.complete) {
-//     processColors(img);
-//   } else {
-//     img.addEventListener('load', function() {
-//       processColors(img);
-//     });
-//   }
-// }
-
-
-
-
-
-
-  // img.addEventListener('load', function() {
-  //     console.log('loaded');
-  //     var vibrant = new Vibrant(img);
-  //     var swatches = vibrant.swatches()
-  //     // for (var swatch in swatches)
-  //     //     if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-  //     //         console.log(swatch, swatches[swatch].getHex())
-
-  //     /*
-  //      * Results into:
-  //      * Vibrant #7a4426
-  //      * Muted #7b9eae
-  //      * DarkVibrant #348945
-  //      * DarkMuted #141414
-  //      * LightVibrant #f3ccb4
-  //      */
-  // })
 };
       
