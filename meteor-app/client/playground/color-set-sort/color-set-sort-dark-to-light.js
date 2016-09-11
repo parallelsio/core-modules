@@ -24,31 +24,37 @@ wireColorExplore = function wireColorExplore(){
 
     var mostUsedColor = _.maxBy(swatchArray, 'population');
 
-    var sortedSwatchArray = _.sortBy(swatchArray, ['population']);
-    // console.log("# colors:", sortedSwatchArray.length);
+    var vibrantColorsArray = _.sortBy(swatchArray, ['population']);
 
-    _.each(sortedSwatchArray, function(value) {
+    _.each(vibrantColorsArray, function(value) {
       console.log(value.name, ": ", value.name);
     });
 
-    // figure out the scale between the 2 endpoints
+    // figure out the scale between the 2 endpoints that Vibrant returned
     // https://gka.github.io/palettes/#colors=lightgreen,tomato|steps=9|bez=1|coL=1
     // https://github.com/gka/chroma.js/wiki/Color-Scales
     // newest docs: https://gka.github.io/chroma.js/
-    var scale = chroma.scale([_.first(sortedSwatchArray), _.last(sortedSwatchArray)]).domain([0, 1], 10);
+    
+    // option 1: use endpoints of vibrant to muted to make the scale
+    var vibrantHexArray = _.map(swatchArray, 'hex');
+    var scale = chroma.bezier(vibrantHexArray).scale();
+
+    // option 2: use all the sampled colors vibrant found to make the scale
+    // since vibrant returns a variable number of colors, by giving the endpoints to the chroma
+    // function, it just fills in the rest later when we ask for a set number of color stops along the scale
+    // var scale = chroma.bezier([ _.first(vibrantColorsArray).hex, _.last(vibrantColorsArray).hex ]).scale();
 
     return {
-      sortedSwatchArray: sortedSwatchArray, // sorted by most used to least used (population)
+      vibrantColorsArray: vibrantColorsArray, // sorted by most used to least used (population)
       mostUsedColor: mostUsedColor,
-      scale: scale
+      chromaColorsScale: scale
     }
   }
 
 
 
   // load an image and 
-  // var img = $('.bit.image img').first()[0];
-  var $bit = Utilities.getBitElement('S3cBvZX7KL5MjoDnZ');
+  var $bit = Utilities.getBitElement('peMXKjPoj3HADFHNo');
   var img = $bit.find('img').first()[0];
 
   // necessary for Vibrant to work because image is on :9000 and server is on :3000
@@ -57,12 +63,37 @@ wireColorExplore = function wireColorExplore(){
 
   // make sure image is ready + loaded before trying to process
   img.addEventListener('load', function() {
-    console.log('loaded image: S3cBvZX7KL5MjoDnZ');
+    console.log('loaded image');
 
-    var colors = sampleColors(img);
-    console.log(colors);
+    var sample = sampleColors(img);
+    console.log(sample);
 
-    // animate between the scale
+     var $chromaColorsScale = $('<div>').addClass('bit--chroma-scale');
+     var scaleColors = sample.chromaColorsScale.colors(10);
+
+     _.each(scaleColors, function(value, key) {
+      console.log('key: ', key);
+
+      var $swatch = $('<div>', {
+        // src: '//player.vimeo.com/video/' + vimeoId +'/?byline=1&portrait=0',
+        class: 'bit--swatch' ,
+        css: {
+            backgroundColor: sample.chromaColorsScale(key * 0.1).hex()
+        }
+        // height: 40,
+        // width: 40
+      });
+
+      console.log($swatch);
+
+      $chromaColorsScale.prepend($swatch);
+    });
+
+    $('body').prepend($chromaColorsScale);
+    // $('.some-div').replaceWith($swatch);
+
+
+    // animate between colors in scale
     var granimInstance = new Granim({
       element: '.granim__canvas',
       name: 'basic-gradient',
@@ -72,9 +103,9 @@ wireColorExplore = function wireColorExplore(){
       states : {
         "default-state": {
             gradients: [
-                [ _.first(colors.sortedSwatchArray).hex , _.last(colors.sortedSwatchArray).hex ],
-                [ _.last(colors.sortedSwatchArray).hex, _.first(colors.sortedSwatchArray).hex  ]
-                // [ colors[3].hex , colors[4].hex ]
+                [ _.first(sample.vibrantColorsArray).hex , _.last(sample.vibrantColorsArray).hex ],
+                [ _.last(sample.vibrantColorsArray).hex, _.first(sample.vibrantColorsArray).hex  ]
+                // [ sample[3].hex , sample[4].hex ]
 
                 // [ scale(0).hex() , scale(1).hex() ]
                 //, [ scale(0.5).hex() , scale(0.75).hex() ]
@@ -84,6 +115,9 @@ wireColorExplore = function wireColorExplore(){
         }
       }
     });
+
+
+
   });
 
 

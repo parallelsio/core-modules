@@ -8,3 +8,16 @@
   bottom: 0;
   left: 0;
 }
+
+.bit--swatch {
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+}
+
+.bit--chroma-scale {
+	position: relative;
+	margin: 3rem;
+	top: 400px;
+	z-index: 10000;
+}
