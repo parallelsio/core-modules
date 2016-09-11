@@ -16,7 +16,9 @@ wireColorExplore = function wireColorExplore(){
   var colorMostUsed;
 
   // load an image and 
-    var img = $('.bit.image img').first()[0];
+    // var img = $('.bit.image img').first()[0];
+    var $bit = Utilities.getBitElement('S3cBvZX7KL5MjoDnZ');
+    var img = $bit.find('img').first()[0];
 
     // necessary for Vibrant to work because image is on :9000 and server is on :3000
     // probably can come out on production
@@ -41,27 +43,39 @@ wireColorExplore = function wireColorExplore(){
       }
 
       colorMostUsed = _.maxBy(swatchArray, 'population');
-      console.log('colorMostUsed: ', colorMostUsed);
-  });
+      console.log('img: ', img);
 
+      var sortedSwatchArray = _.sortBy(swatchArray, ['population']);
+      console.log("# colors:", sortedSwatchArray.size);
 
-  // animate between the scale
-  var granimInstance = new Granim({
-    element: '.granim__canvas',
-    name: 'basic-gradient',
-    direction: 'diagonal',
-    opacity: [1, 1],
-    isPausedWhenNotInView: true,
-    states : {
-        "default-state": {
-            gradients: [
-                [ scale(0).hex() , scale(1).hex() ]
-                //, [ scale(0.5).hex() , scale(0.75).hex() ]
-            ],
-            transitionSpeed: 5000,
-            loop: false
+      _.each(sortedSwatchArray, function(value) {
+        console.log(value.name, ": ", value.name);
+      });
+
+      // animate between the scale
+      var granimInstance = new Granim({
+        element: '.granim__canvas',
+        name: 'basic-gradient',
+        direction: 'diagonal',
+        opacity: [1, 1],
+        isPausedWhenNotInView: true,
+        states : {
+            "default-state": {
+                gradients: [
+                    [ _.first(sortedSwatchArray).hex , _.last(sortedSwatchArray).hex ],
+                    [ sortedSwatchArray[3].hex , sortedSwatchArray[4].hex ]
+                    // [ scale(0).hex() , scale(1).hex() ]
+                    //, [ scale(0.5).hex() , scale(0.75).hex() ]
+                ],
+                transitionSpeed: 1000,
+                loop: true
+            }
         }
-    }
+      });
+
+
+
+
   });
 
 
