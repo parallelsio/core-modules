@@ -118,7 +118,32 @@ Utilities = {
   calcAspectRatioFit: function(srcWidth, srcHeight, maxWidth, maxHeight) {
     var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
     return { width: srcWidth * ratio, height: srcHeight * ratio };
+  },
+
+
+  // https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
+  // https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+  // were not expecting 0's, explicitly removing them from the input
+  // transform this number, into the range
+  scaleNumberToRange: function(p){
+
+    var oldRange = p.oldMax - p.oldMin;
+    var newRange = p.newMax - p.newMin;
+    var newNumber;
+
+    if (oldRange > 0){
+      newRange = p.newMax - p.newMin;  
+      newNumber = (((p.oldNumber - p.oldMin) * newRange) / oldRange) + p.newMin;
+    }
+
+    else {
+      // TODO: really, discard
+      newNumber = p.newMin;
+  }    
+
+    return newNumber;
   }
+
 
 
 };
