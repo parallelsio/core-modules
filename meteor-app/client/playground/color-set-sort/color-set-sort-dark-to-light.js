@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 wireColorExplore = function wireColorExplore(){
 
-  var bitId = 'S46TENgeLdodXmPBv'; 
+  var bitId = 'S3cBvZX7KL5MjoDnZ'; 
   var chromaNumStops = 10;
   
   function sampleColors(img){

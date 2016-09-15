@@ -5,7 +5,7 @@ Template.map.onRendered(function () {
 
   Parallels.Audio.player.play("fx-welcome-v2");
 
-  wireColorExplore();
+  // wireColorExplore();
 
   mapElement._uihooks = {
 

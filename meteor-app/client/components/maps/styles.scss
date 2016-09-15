@@ -140,5 +140,12 @@ $color-second: #C7F464;
   float: left;
 }
 
-
+.selected-count {
+  position: fixed;
+  display: inline-block;
+  bottom: 0;
+  background: #d6d5d5;
+  color: #676773;
+  padding: 1rem;
+}
 
