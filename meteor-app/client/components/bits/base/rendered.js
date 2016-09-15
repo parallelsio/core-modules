@@ -71,6 +71,9 @@ Template.bit.onRendered(function (){
 
   makeBitDraggable($bitElement, $dragHandle);
 
+  if (template.data.type === 'image'){
+    var sample = classifyColors (template); 
+  }
 
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients
