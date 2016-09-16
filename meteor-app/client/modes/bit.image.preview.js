@@ -23,7 +23,6 @@ Parallels.AppModes['preview-bit'] = {
       Session.set('bitPreviewingId', bitPreviewingId);
 
       Parallels.log.debug("bit:image:preview: " + bitPreviewingId);
-
       Parallels.Keys.unbindActions();
 
       var options = {
@@ -35,6 +34,20 @@ Parallels.AppModes['preview-bit'] = {
 
       Parallels.Animation.Image.morph(options);
       Draggable.get( $bit ).disable();
+
+      var tl = new TimelineMax();
+      tl
+        .set( $bit.find('.scale__container'), { display: 'block', opacity: 0 })
+        .to( 
+          $bit.find('.scale__container'), 
+          1, 
+          { 
+            opacity: 1, 
+            autoAlpha: 1, 
+            ease: Power4.easeOut 
+          }
+        );
+      
       // TODO: disable bitHover too
 
     }
@@ -53,6 +66,10 @@ Parallels.AppModes['preview-bit'] = {
     var bitTemplate = Utilities.getBitTemplate(bitPreviewingId);
     var bit = Blaze.getData(bitTemplate);
 
+    var tl = new TimelineMax();
+    tl
+      .to( $bit.find('.scale__container'), 0.25, { opacity: 0, autoAlpha: 0, ease: Power4.easeOut })
+      .set( $bit.find('.scale__container'), { display: 'none' });
 
     if (bitPreviewingId) {
       // TODO: pass the assignment/resetting of these
@@ -64,7 +81,7 @@ Parallels.AppModes['preview-bit'] = {
       Session.set('bitPreviewingId', null);
 
       Parallels.Keys.bindActions();
-
+      
       var options = {
         bit: bit,
         $bit: $bit,

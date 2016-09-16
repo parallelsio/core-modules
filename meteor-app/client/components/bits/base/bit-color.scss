@@ -1,15 +1,21 @@
+.scale__container {
+  display: none;
+  width: 400px;
+  margin: 0 auto;
+}
+
 .scale--chroma {
-  position: relative;
-  margin: 3rem;
-  top: 400px;
+  position: absolute;
   z-index: 10000;
+  width: 400px;
+  top: 0;  
 }
 
 .scale--vibrant {
-  position: relative;
-  margin: 3rem;
-  top: 420px;
+  position: absolute;
   z-index: 10000;
+  width: 400px;
+  top: 50px;
 }
 
 .swatch--chroma {
@@ -19,8 +25,10 @@
 }
 
 .swatch--vibrant {
-  display: inline-block;
+  display: block;
+  padding: 0.5rem 0;
   height: 40px;
+  color: white;
   // width: // variable, depends on population (# of pixels this color has), calc'ed by JS
 }
 

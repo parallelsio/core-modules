@@ -1,7 +1,9 @@
 import chroma from 'chroma-js';
 import Granim from 'granim';
 import _ from 'lodash';
-// cant figure out how to load vibrant via import, using vendored minified js file
+import nameThisColor from 'name-this-color';
+
+// depends on vibrant.js, vendored. TODO: refactor via import
 
 classifyColors = function classifyColors(template){
 
@@ -14,11 +16,13 @@ classifyColors = function classifyColors(template){
 
     // sample the image for key colors
     var swatches = vibrant.swatches();
+    var populationSum = 0;
 
     for (var swatch in swatches){
       // some swatches have 0 population, skip them
       if (swatches.hasOwnProperty(swatch) && swatches[swatch] && swatches[swatch].population){
-        console.log(swatch, ": ", swatches[swatch].getHex(), ": ", swatches[swatch].population);
+        // Parallels.log.debug(swatch, ": ", swatches[swatch].getHex(), ": ", swatches[swatch].population);
+        populationSum = populationSum + swatches[swatch].population;
         vibSwatchesArray.push( { 
           name: swatch, 
           hex: swatches[swatch].getHex(), 
@@ -36,14 +40,14 @@ classifyColors = function classifyColors(template){
 
        var options = {
         oldNumber: value.population, 
-        oldMin: _.minBy(vibSwatchesArray, 'population').population, // most used 
-        oldMax: _.maxBy(vibSwatchesArray, 'population').population, // least used color
+        oldMin: 0,               
+        oldMax: populationSum, 
         newMin: 0, 
         newMax: 1
       }
 
       value.scaledPopulation = Utilities.scaleNumberToRange(options);
-      console.log("value.scaledPopulation: ", value.scaledPopulation);
+      // Parallels.log.debug("value.scaledPopulation: ", value.scaledPopulation);
     });
 
     var vibSortedSwatches = _.sortBy(vibSwatchesArray, ['population']);
@@ -82,10 +86,12 @@ classifyColors = function classifyColors(template){
 
   // make sure image is ready + loaded before trying to process
   img.addEventListener('load', function() {
-    // console.log('loaded image');
+    // Parallels.log.debug('loaded image');
 
     var sample = sampleColors(img);
-    console.log(sample);
+    // Parallels.log.debug(sample);
+
+    var $scaleContainer = $('<div>').addClass('scale__container');
 
     //////////////////////
     //////////////////////
@@ -106,7 +112,6 @@ classifyColors = function classifyColors(template){
       $chromaScale.prepend($swatch);
     });
 
-    $bitElement.prepend($chromaScale);
 
     //////////////////////
     //////////////////////
@@ -119,21 +124,27 @@ classifyColors = function classifyColors(template){
       var $swatch = $('<div>', {
         class: 'swatch--vibrant vibrant--' + value.name ,
         css: {
-            backgroundColor: value.hex,
-            text: value.name + ':' + value.population
+            backgroundColor: value.hex
         },
         // figure the % this color represents from the total
         // then make the width of this box 
         // TODO: adjust for small %
-        width: colorPercent
+        width: colorPercent + "%"
       });
       
-      $swatch.text(value.name, ':', colorPercent);
+      var colorName = nameThisColor(value.hex)[0].title;
+      var colorText = value.name + ':' + colorPercent + ':' + colorName;
+      // console.log('swatch color: ', colorName);
+      // console.log('iteration', key);
+      // console.log(colorText);
+
+      $swatch.text(colorText);
       $vibrantScale.prepend($swatch);
     });
 
-    $bitElement.prepend($vibrantScale);
-
+    $scaleContainer.prepend($chromaScale);
+    $scaleContainer.prepend($vibrantScale);
+    $bitElement.prepend($scaleContainer);
   });
 
 };

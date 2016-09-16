@@ -21,7 +21,6 @@ BitEvents = {
         $editingElement.attr('contenteditable', 'true');
         $editingElement.attr('data-clickable', 'true');
       }
-
     }
   },
 
