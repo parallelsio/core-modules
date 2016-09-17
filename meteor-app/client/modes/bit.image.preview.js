@@ -29,24 +29,46 @@ Parallels.AppModes['preview-bit'] = {
         bit: bit,
         $bit: $bit,
         bitTemplate: bitTemplate,
-        direction: "expand"
+        direction: "expand",
+        displayScale: true,
+        paused: true
       };
 
-      Parallels.Animation.Image.morph(options);
-      Draggable.get( $bit ).disable();
+      var sample = classifyColors($bit); 
 
-      var tl = new TimelineMax();
+      var tl = Parallels.Animation.Image.morph(options);
+
       tl
-        .set( $bit.find('.scale__container'), { display: 'block', opacity: 0 })
         .to( 
           $bit.find('.scale__container'), 
-          1, 
+          0.25, 
           { 
+            width: 400,
+            height: "100%",
             opacity: 1, 
             autoAlpha: 1, 
-            ease: Power4.easeOut 
-          }
-        );
+            ease: Circ.easeIn 
+          },
+          "-=0.1"
+        )
+        
+        .staggerTo(
+          $bit.find('.scale__container .swatch'),
+          0.1,
+          {
+            opacity: 1,
+            autoAlpha: 1,
+            ease: Circ.easeIn 
+          },
+          0.05,
+          "-=0.25"
+        )
+      
+      tl.play();
+
+      Draggable.get( $bit ).disable();
+      // $bit.removeClass('hovering');
+      // Session.set('bitHoveringId', null);
       
       // TODO: disable bitHover too
 
@@ -66,11 +88,6 @@ Parallels.AppModes['preview-bit'] = {
     var bitTemplate = Utilities.getBitTemplate(bitPreviewingId);
     var bit = Blaze.getData(bitTemplate);
 
-    var tl = new TimelineMax();
-    tl
-      .to( $bit.find('.scale__container'), 0.25, { opacity: 0, autoAlpha: 0, ease: Power4.easeOut })
-      .set( $bit.find('.scale__container'), { display: 'none' });
-
     if (bitPreviewingId) {
       // TODO: pass the assignment/resetting of these
       // into Animation.scale,
@@ -81,15 +98,35 @@ Parallels.AppModes['preview-bit'] = {
       Session.set('bitPreviewingId', null);
 
       Parallels.Keys.bindActions();
-      
+
       var options = {
         bit: bit,
         $bit: $bit,
         bitTemplate: bitTemplate,
-        direction: "contract"
+        direction: "contract",
+        paused: true
       };
 
-      Parallels.Animation.Image.morph(options);
+      var tl = Parallels.Animation.Image.morph(options);
+
+      tl
+        .to( 
+          $bit.find('.scale__container'), 
+          0.1, 
+          { 
+            opacity: 0, 
+            height: 0, 
+            width: 0, 
+            autoAlpha: 0, 
+            ease: Power4.easeOut 
+          }, 
+          "-=0.4"
+        )
+
+        .set ($bit.find('.scale__container .swatch'), { opacity: 0, autoAlpha: 0 }  )
+      
+      tl.play();
+
       Draggable.get( $bit ).enable();
     }
 

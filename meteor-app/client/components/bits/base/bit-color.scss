@@ -1,7 +1,9 @@
 .scale__container {
-  display: none;
-  width: 400px;
-  margin: 0 auto;
+  position: absolute;
+  margin: 2rem;
+  height: 0;
+  width: 0;
+  opacity: 0;
 }
 
 .scale--chroma {
@@ -16,6 +18,10 @@
   z-index: 10000;
   width: 400px;
   top: 50px;
+}
+
+.swatch {
+  opacity: 0;
 }
 
 .swatch--chroma {

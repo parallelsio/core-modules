@@ -170,9 +170,9 @@ Parallels.Animation.Image = {
     var timeline = new TimelineMax({
       onStart: timelineStart,
       onComplete: timelineDone,
-      onCompleteParams:[ options.direction ]
+      onCompleteParams:[ options.direction ],
+      paused: options.paused
     });
-
 
     if (options.direction === "expand") {
       Parallels.log.debug("expanding...");
@@ -210,6 +210,8 @@ Parallels.Animation.Image = {
         .set(options.$bit, { zIndex: bitContainerOptions.zIndex })
         .set($('.wipe.bit-preview'), { alpha: 0, display: "none" });
     }
+
+    return timeline;
   },
 
 
