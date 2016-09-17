@@ -13,76 +13,98 @@ import nameThisColor from 'name-this-color';
 classifyColors = function classifyColors($bitElement){
 
   var chromaNumStops = 10;
+
+  // load an image  
+  var imgElement = $bitElement.find('img').first()[0];
+
+  // necessary for Vibrant to work because image is on :9000 and server is on :3000
+  // probably can come out on production
+  // TODO: not working reliably. only every 3rd refresh? 
+  imgElement.setAttribute('crossOrigin', 'anonymous');
+
+  var sample = sampleColorsWithVibrant(imgElement);
+  // var sample = sampleColorsWithKMeans(imgElement);
+
+
   
   // TODO: Currently broken because of browser content policy, intermittently + and unreliably working.
   // Also, results are not great: washed out colors, because Vibrant.js quantizes colors before sampling
   // K-means method gives better colors, re: perception. 
   // Vibrant has useful population function though, which lets us show the ratio of colors.
-  // function sampleColorsWithVibrant(imgElement){
-  //   var vibSwatchesArray = [];
-  //   var vibrant = new Vibrant(imgElement);
+  function sampleColorsWithVibrant(imgElement){
+    var vibSwatchesArray = [];
+    var vibrant;
 
-  //   // sample the image for key colors
-  //   var swatches = vibrant.swatches();
-  //   var populationSum = 0;
+    try {
+      vibrant = new Vibrant(imgElement);
+    } 
 
-  //   for (var swatch in swatches){
-  //     // some swatches have 0 population, skip them
-  //     if (swatches.hasOwnProperty(swatch) && swatches[swatch]){
-  //       // Parallels.log.debug(swatch, ": ", swatches[swatch].getHex(), ": ", swatches[swatch].population);
-  //       populationSum = populationSum + swatches[swatch].population;
-  //       vibSwatchesArray.push( { 
-  //         name: swatch, 
-  //         hex: swatches[swatch].getHex(), 
-  //         population: swatches[swatch].population
-  //       })
-  //     }
+    catch (e) {
+      console.log("Tainted canvas exception: aborting: ", e);
+      return;
+    }
 
-  //     // console.log(swatches[swatch].getHex());
-  //   }
+    // sample the image for key colors
+    var swatches = vibrant.swatches();
+    var populationSum = 0;
 
-  //   // transform the vibrant population given, into a range between 0 and 1
-  //   // so we can later make predictably sized visualizations of color proportions  
-  //   // save each new population within range as a new property into each swatch
+    for (var swatch in swatches){
+      // some swatches have 0 population, skip them
+      if (swatches.hasOwnProperty(swatch) && swatches[swatch]){
+        // Parallels.log.debug(swatch, ": ", swatches[swatch].getHex(), ": ", swatches[swatch].population);
+        populationSum = populationSum + swatches[swatch].population;
+        vibSwatchesArray.push( { 
+          name: swatch, 
+          hex: swatches[swatch].getHex(), 
+          population: swatches[swatch].population
+        })
+      }
 
-  //   // TODO: adjust for small % if less than 5%, show as 5% so it's visible
-  //   _.each(vibSwatchesArray, function(value, key) {
+      // console.log(swatches[swatch].getHex());
+    }
 
-  //      var options = {
-  //       oldNumber: value.population, 
-  //       oldMin: 0,               
-  //       oldMax: populationSum, 
-  //       newMin: 0, 
-  //       newMax: 1
-  //     }
+    // transform the vibrant population given, into a range between 0 and 1
+    // so we can later make predictably sized visualizations of color proportions  
+    // save each new population within range as a new property into each swatch
 
-  //     value.scaledPopulation = Utilities.scaleNumberToRange(options);
-  //     // Parallels.log.debug("value.scaledPopulation: ", value.scaledPopulation);
-  //   });
+    // TODO: adjust for small % if less than 5%, show as 5% so it's visible
+    _.each(vibSwatchesArray, function(value, key) {
 
-  //   var vibSortedSwatches = _.sortBy(vibSwatchesArray, ['population']);
+       var options = {
+        oldNumber: value.population, 
+        oldMin: 0,               
+        oldMax: populationSum, 
+        newMin: 0, 
+        newMax: 1
+      }
 
-  //   // use Chroma.js to create a color scale with the sampled colors
-  //   // https://gka.github.io/palettes/#colors=lightgreen,tomato|steps=9|bez=1|coL=1
-  //   // https://github.com/gka/chroma.js/wiki/Color-Scales
-  //   // newest docs: https://gka.github.io/chroma.js/
+      value.scaledPopulation = Utilities.scaleNumberToRange(options);
+      // Parallels.log.debug("value.scaledPopulation: ", value.scaledPopulation);
+    });
 
-  //   // option 1: use first + last from Vibrant sampled colors as endpoints for our scale
-  //   // Chroma will interpolate the rest in between
-  //   // var scale = chroma.bezier([ _.first(vibSortedSwatches).hex, _.last(vibSortedSwatches).hex ]).scale();
+    var vibSortedSwatches = _.sortBy(vibSwatchesArray, ['population']);
 
-  //   // option 2: use all the sampled colors vibrant gave us to make the scale
-  //   // since vibrant returns a variable number of colors, we pass the full array and let Chroma figure out how
-  //   // to make/interpolate them in a nice order (?)
-  //   var vibHexArray = _.map(vibSortedSwatches, 'hex');
-  //   var scale = chroma.bezier(vibHexArray).scale();
+    // use Chroma.js to create a color scale with the sampled colors
+    // https://gka.github.io/palettes/#colors=lightgreen,tomato|steps=9|bez=1|coL=1
+    // https://github.com/gka/chroma.js/wiki/Color-Scales
+    // newest docs: https://gka.github.io/chroma.js/
 
-  //   return {
-  //     vibSortedSwatches: vibSortedSwatches, // sorted by most used to least used (population)
-  //     vibHexArray: vibHexArray,
-  //     chromaScale: scale
-  //   }
-  // }
+    // option 1: use first + last from Vibrant sampled colors as endpoints for our scale
+    // Chroma will interpolate the rest in between
+    // var scale = chroma.bezier([ _.first(vibSortedSwatches).hex, _.last(vibSortedSwatches).hex ]).scale();
+
+    // option 2: use all the sampled colors vibrant gave us to make the scale
+    // since vibrant returns a variable number of colors, we pass the full array and let Chroma figure out how
+    // to make/interpolate them in a nice order (?)
+    var vibHexArray = _.map(vibSortedSwatches, 'hex');
+    var scale = chroma.bezier(vibHexArray).scale();
+
+    return {
+      vibSortedSwatches: vibSortedSwatches, // sorted by most used to least used (population)
+      vibHexArray: vibHexArray,
+      chromaScale: scale
+    }
+  }
 
   // TODO: add population function
   function sampleColorsWithKMeans(imgElement){
@@ -90,7 +112,8 @@ classifyColors = function classifyColors($bitElement){
     var $canvas = $('<canvas>')
       .css({
         width: 0,
-        height: 0
+        height: 0,
+        position: 'absolute'
       })
       .attr('crossOrigin', 'anonymous');
       
@@ -105,10 +128,14 @@ classifyColors = function classifyColors($bitElement){
     ctxImg.setAttribute('crossOrigin', 'anonymous');
     ctxImg.src = imgElement.src;
     ctxImg.onload = function() {
-      var kMeansColorsArray = processImage(ctxImg, ctx);
+      var kMeansColorsArray;
+
+      // TODO: move this to async function
+      // TODO: process a smaller version of the image
+      kMeansColorsArray = processImage(ctxImg, ctx);
       scale = chroma.bezier(kMeansColorsArray).scale(); 
       console.log(scale);
-      
+
       makeAndShowChromaScale();
     }
 
@@ -233,19 +260,6 @@ classifyColors = function classifyColors($bitElement){
   }
 
 
-  // load an image  
-  var imgElement = $bitElement.find('img').first()[0];
-
-  // necessary for Vibrant to work because image is on :9000 and server is on :3000
-  // probably can come out on production
-  // TODO: not working reliably. only every 3rd refresh? 
-  imgElement.setAttribute('crossOrigin', 'anonymous');
-
-  // var sample = sampleColorsWithVibrant(imgElement);
-  var sample = sampleColorsWithKMeans(imgElement);
-
-
-
   function makeAndShowChromaScale(){
 
     var $chromaScale = $('<div>').addClass('scale--chroma');
@@ -269,38 +283,38 @@ classifyColors = function classifyColors($bitElement){
     $bitElement.prepend($scaleContainer);  
   }
 
-  // function makeAndShowVibrantScale(){
-  //   var $vibrantScale = $('<div>').addClass('scale--vibrant');
+  function makeAndShowVibrantScale(){
+    var $vibrantScale = $('<div>').addClass('scale--vibrant');
 
-  //   _.each(sample.vibSortedSwatches, function(value, key) {
+    _.each(sample.vibSortedSwatches, function(value, key) {
 
-  //     var colorPercent = _.toString(_.round(value.scaledPopulation, 2) * 100);
-  //     var $swatch = $('<div>', {
-  //       class: 'swatch swatch--vibrant vibrant--' + value.name ,
-  //       css: {
-  //           backgroundColor: value.hex
-  //       },
-  //       // figure the % this color represents from the total
-  //       // then make the width of this box 
-  //       // TODO: adjust for small %
-  //       width: colorPercent + "%"
-  //     });
+      var colorPercent = _.toString(_.round(value.scaledPopulation, 2) * 100);
+      var $swatch = $('<div>', {
+        class: 'swatch swatch--vibrant vibrant--' + value.name ,
+        css: {
+            backgroundColor: value.hex
+        },
+        // figure the % this color represents from the total
+        // then make the width of this box 
+        // TODO: adjust for small %
+        width: colorPercent + "%"
+      });
       
-  //     var colorName = nameThisColor(value.hex)[0].title;
-  //     var colorText = value.name + ':' + colorPercent + ':' + colorName;
-  //     // console.log('swatch color: ', colorName);
-  //     // console.log('iteration', key);
-  //     // console.log(colorText);
+      var colorName = nameThisColor(value.hex)[0].title;
+      var colorText = value.name + ':' + colorPercent + ':' + colorName;
+      // console.log('swatch color: ', colorName);
+      // console.log('iteration', key);
+      // console.log(colorText);
 
-  //     $swatch.text(colorText);
-  //     $vibrantScale.prepend($swatch);
-  //   });
+      $swatch.text(colorText);
+      $vibrantScale.prepend($swatch);
+    });
 
-  //   var $scaleContainer = $('<div>').addClass('scale__container');
-  //   $scaleContainer.prepend($vibrantScale);
-  //   $bitElement.prepend($scaleContainer);    
+    var $scaleContainer = $('<div>').addClass('scale__container');
+    $scaleContainer.prepend($vibrantScale);
+    $bitElement.prepend($scaleContainer);    
 
-  // }
+  }
 
 
 };
