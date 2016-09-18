@@ -34,8 +34,6 @@ Parallels.AppModes['preview-bit'] = {
         paused: true
       };
 
-      var sample = classifyColors($bit); 
-
       var tl = Parallels.Animation.Image.morph(options);
 
       tl
@@ -65,13 +63,11 @@ Parallels.AppModes['preview-bit'] = {
         )
       
       tl.play();
-
       Draggable.get( $bit ).disable();
+      classifyColors($bit); 
+
       // $bit.removeClass('hovering');
       // Session.set('bitHoveringId', null);
-      
-      // TODO: disable bitHover too
-
     }
 
     else {

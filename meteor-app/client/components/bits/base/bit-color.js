@@ -20,7 +20,8 @@ classifyColors = function classifyColors($bitElement){
   // necessary for Vibrant to work because image is on :9000 and server is on :3000
   // probably can come out on production
   // TODO: not working reliably. only every 3rd refresh? 
-  imgElement.setAttribute('crossOrigin', 'anonymous');
+  // imgElement.setAttribute('crossOrigin', 'anonymous');
+  imgElement.crossOrigin = 'anonymous';
 
   var sample = sampleColorsWithVibrant(imgElement);
   // var sample = sampleColorsWithKMeans(imgElement);
