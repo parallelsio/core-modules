@@ -1,5 +1,9 @@
-Meteor.publish('bits', function(canvasId) {
-  return Bits.find({canvasId: canvasId});
+Meteor.publish('drawer-bits', function() {
+  return Bits.find( {}, { sort: { timestamp: -1 }, limit: 50 });
+});
+
+Meteor.publish('canvas-bits', function(canvasId) {
+  return Bits.find({ canvasId: canvasId });
 });
 
 Meteor.publish('errors', function() {
@@ -7,5 +11,6 @@ Meteor.publish('errors', function() {
 });
 
 Meteor.publish('Canvas.events', function() {
-  return CanvasEvents.find({}, {sort: {timestamp: -1}, limit: 50});
+  return CanvasEvents.find( {}, { sort: { timestamp: -1 }, limit: 50 });
 });
+

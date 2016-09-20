@@ -1,15 +1,11 @@
 Template.drawer.helpers({
 
-  bits: function(){
-    return Bits.find();
+  drawerBits: function(){
+    return Bits.find({}, {sort: {timestamp: -1}, limit: 50});
   }
 
 
-  // isSketch: function () {
-  //   return this.type === 'sketch';
-  // },
-
-
 });
+
 
 

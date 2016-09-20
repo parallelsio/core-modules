@@ -1,13 +1,14 @@
 import _ from 'lodash';
 
 Template.drawer.onRendered(function () {
+  var template = this;
   var $drawer = $(this.firstNode);
   var timeline = new TimelineMax();
 
-  console.log('drawer: rendered.');
+  // this.subscribe( 'drawer-bits');
 
-  var template = this;
-  var drawerElement = template.find('.drawer');
+  console.log('drawer: rendered.', $drawer);
+
 
   Parallels.Audio.player.play("fx-drdrrt");
 
