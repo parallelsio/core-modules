@@ -3,5 +3,5 @@
 // the server one gets records once publish is called
 // the client gets filled once the subscribe is wired.
 
-Bits = new Meteor.Collection("bits");
-CanvasEvents = new Meteor.Collection("Canvas.events");
+Bits = new Mongo.Collection("bits");
+CanvasEvents = new Mongo.Collection("Canvas.events");

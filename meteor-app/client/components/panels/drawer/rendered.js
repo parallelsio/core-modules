@@ -5,10 +5,7 @@ Template.drawer.onRendered(function () {
   var $drawer = $(this.firstNode);
   var timeline = new TimelineMax();
 
-  // this.subscribe( 'drawer-bits');
-
   console.log('drawer: rendered.', $drawer);
-
 
   Parallels.Audio.player.play("fx-drdrrt");
 
@@ -54,7 +51,7 @@ Template.drawer.onRendered(function () {
 
     var tl = new TimelineMax();
     tl
-      .set($drawerBits, { position: "relative", transform: "initial" })
+      // .set($drawerBits, { position: "relative", transform: "initial" })
       .staggerTo(
         $drawerBits,
         0.5,

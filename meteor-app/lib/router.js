@@ -12,7 +12,7 @@ Router.route('/canvas/:canvasId', {
 
   waitOn: function () {
     // return one handle, a function, or an array
-    return Meteor.subscribe('canvas-bits', this.params.canvasId);
+    return Meteor.subscribe('Canvas.bits', this.params.canvasId);
   },
 
   action: function () {

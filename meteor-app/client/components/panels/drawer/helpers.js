@@ -1,9 +1,11 @@
 Template.drawer.helpers({
 
   drawerBits: function(){
-    return Bits.find({}, {sort: {timestamp: -1}, limit: 50});
-  }
+    // return Template.instance().drawerBitsNow;
+  	// return Bits.find( {}, { sort: { createdAt: -1 }, limit: 50 });
+  	return Bits.find( {}, { sort: { createdAt: -1 } });
 
+  }
 
 });
 

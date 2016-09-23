@@ -14,16 +14,18 @@
 	}
 }
 
+$padding: 10%;
+
 // TODO: overriding regular bits. Need to refactor this
-.drawer-bits .bits {
+.drawer-bits .bit {
 	display: block !important; 
-	opacity: 0;
-	transform: 0 !important;
 	position: relative !important;
-	margin: 1rem 0;
+	opacity: 1;
+	transform: initial !important;
+	margin: 1rem $padding;
 }
 
-.drawer-bits .bits:hovering {
+.drawer-bits .bit:hovering {
 	width: 0;
 	height: 0;
 }
@@ -35,7 +37,7 @@
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  padding: 2rem 0 2rem 5.3rem;
+  padding: 2rem 0 2rem $padding;
   border-bottom: 1px solid #f3f4f5;
   color: white;
 

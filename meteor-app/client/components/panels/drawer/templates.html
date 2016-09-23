@@ -4,9 +4,18 @@
     <div class="drawer__header"><span class="icon-pencil"> </span> Bit Drawer</div>
     
     <div class="drawer-bits">
-      {{ #each drawerBits }}
-        {{> bit }}
-      {{/each }}
+
+			  {{#if Template.subscriptionsReady}}
+
+			    {{#each drawerBits }}
+			      {{> bit}}
+			    {{/each}}
+			 
+			  {{else}}
+			    Loading...
+			 
+			  {{/if}}
+
     </div>
 
   </div>

@@ -1,8 +1,8 @@
-Meteor.publish('drawer-bits', function() {
-  return Bits.find( {}, { sort: { timestamp: -1 }, limit: 50 });
+Meteor.publish('Drawer.bits', function() {
+  return Bits.find( {}, { sort: { createdAt: -1 } });
 });
 
-Meteor.publish('canvas-bits', function(canvasId) {
+Meteor.publish('Canvas.bits', function(canvasId) {
   return Bits.find({ canvasId: canvasId });
 });
 
