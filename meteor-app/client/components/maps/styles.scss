@@ -157,6 +157,7 @@ $half-height: $face-height / 2;
 }
 
 // adapted from https://davidwalsh.name/css-cube
+// https://www.smashingmagazine.com/2016/07/front-end-challenge-accepted-css-3d-cube/
 .cube-wrap {
   position: fixed;
   bottom: 0;
@@ -174,6 +175,10 @@ $half-height: $face-height / 2;
   transform-style: preserve-3d;
   transform-origin: 0 $half-height;
   transform: rotateX(0deg);
+
+  // TODO: transitioning opacity doesn't seem to work together with transform.
+  // known bug: https://stackoverflow.com/questions/23369440/google-chrome-is-unable-to-apply-opacity-transition-on-a-3d-transformed-element
+  // but even opacity: 0.1 doesn't seem to work 
   transition: transform 0.2s cubic-bezier(.42,1.82,.91,.91);
 }
 
