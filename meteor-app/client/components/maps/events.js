@@ -134,6 +134,8 @@ function selectedBits(e) {
 
         // add animated border to show what's selected
          $checkingBit.addClass('near');
+        $(".cube").addClass("cube--show");
+
       }
   });
   
@@ -272,6 +274,7 @@ Template.map.events({
 
     // TODO: stagger/glimmer animate
     $(".marquee-select").addClass("marquee-active");
+    $(".cube").removeClass("cube--show");
 
     // TODO: refactor to use CSS transforms vs top/left for better rendering performance?
     $(".marquee-select").css({

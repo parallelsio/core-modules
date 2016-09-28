@@ -4,7 +4,6 @@ Template.drawer.helpers({
     // return Template.instance().drawerBitsNow;
   	// return Bits.find( {}, { sort: { createdAt: -1 }, limit: 50 });
   	return Bits.find( {}, { sort: { createdAt: -1 } });
-
   }
 
 });

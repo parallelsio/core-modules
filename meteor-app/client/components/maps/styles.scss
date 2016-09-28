@@ -140,6 +140,13 @@ $color-second: #C7F464;
   float: left;
 }
 
+
+
+/////////////////////////
+
+$face-height: 60px;
+$half-height: $face-height / 2;
+
 .selected-count {
   position: fixed;
   display: inline-block;
@@ -149,3 +156,77 @@ $color-second: #C7F464;
   border-top: 1px solid #b4b4b4
 }
 
+// adapted from https://davidwalsh.name/css-cube
+.cube-wrap {
+  position: fixed;
+  bottom: 0;
+  perspective: 800px;
+  webkit-perspective: 800px;
+  perspective-origin: 50% $half-height;
+  -webkit-perspective-origin: 50%;
+}
+
+.cube {
+  position: relative;
+  min-width: $face-height;
+  height: $face-height;
+  margin: 0 auto; /* keeps the cube centered */
+  transform-style: preserve-3d;
+  transform-origin: 0 $half-height;
+  transform: rotateX(0deg);
+  transition: transform 0.2s cubic-bezier(.42,1.82,.91,.91);
+}
+
+.cube--show {
+  transform: rotateX(-90deg);
+}
+
+.cube div {
+  position: absolute;
+  min-width: $face-height;
+  height: $face-height;
+  font-size: 20px;
+  text-align: center;
+  line-height: $face-height;
+  width: 123px;
+  padding: 0 1.7rem;
+}
+
+.back-pane {
+  transform: translateZ(-$half-height) rotateY(180deg);
+  // background-color: yellow;
+}
+
+.right-pane {
+  transform: rotateY(-270deg) translateX($half-height);
+  transform-origin: top right;
+  // background-color: green;
+
+}
+
+.left-pane {
+  transform: rotateY(270deg) translateX(-$half-height);
+  transform-origin: center left;
+  // background-color: green;
+}
+
+.top-pane {
+  transform: rotateX(-270deg) translateY(-$half-height);
+  transform-origin: top center;
+  background-color: white;
+}
+
+.bottom-pane {
+  transform: rotateX(-90deg) translateY($half-height);
+  transform-origin: bottom center;
+  // background-color: purple;
+}
+
+.front-pane {
+  transform: translateZ($half-height);
+  background-color: #e7e4e4;
+}
+
+
+
+.top-panel h1 { display: inline-block; font-weight:bold; margin-right: 0.25rem;  }

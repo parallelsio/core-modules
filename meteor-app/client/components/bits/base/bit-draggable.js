@@ -31,7 +31,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       Parallels.Keys.bindSnapToggle();
       Parallels.Keys.bindCatchSpace();
 
-    
       // TODO: improve performance
       // use image asset instead of CSS shadow:
       // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
@@ -63,7 +62,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
     onDragStart:function(event){
 
-      // Parallels.log.debug(event.type, " : dragStart: ", x, " : ", y, " : ", this.getDirection("start"), " : ");
+      Parallels.log.debug(event.type, " : dragStart: ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
 
       // TODO: improve performance
@@ -73,7 +72,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       // TODO: ensure this happens only when in Draggable and mouse is held down
       // and not on regular taps/clicks of bit
       // timeline
-
     },
 
     onDrag: function(e) {
@@ -155,7 +153,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         Parallels.Audio.player.play("sdrums--placeholder--0008_bongo_01_high");
         Parallels.Audio.player.play("sdrums--placeholder--0041_perc_11_1");
         Parallels.Audio.player.play("fx-ping-2x");
-
 
         Parallels.log.debug("bit:snap" );
       }

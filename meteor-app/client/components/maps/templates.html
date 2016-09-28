@@ -16,8 +16,22 @@
 
   <div class="map noselect">
 
-    <div class="selected-count"><span>{{ selectedBitsCount }}</span> bits selected</div>
     <div class="marquee-select"><span></span></div>
+
+    <div class="cube-wrap vertical">
+      <div class="cube depth">
+        <div class="front-pane"></div>
+        <div class="back-pane"></div>
+        <div class="top-pane">
+          <h1>{{ selectedBitsCount }} <span>selected</span></h1> 
+        </div>
+        <div class="bottom-pane"></div>
+        <div class="left-pane"></div>
+        <div class="right-pane"></div>
+      </div>
+    </div>
+
+
 
     <!-- {{> colorSortSet }} -->
 
