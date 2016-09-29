@@ -29,6 +29,7 @@ Utilities = {
   // Usually, we'd just use jQuery's .position method.
   // In situations where the element is display:none, we can use the transform 
   // property, if it's set, to get the position 
+  // TODO: refactor to use GSAP's _getTransform method:? https://codepen.io/GreenSock/pen/zIvnl
   getTransformedPosition: function(element){
     var cssTransform = element.style["transform"] || element.style["webkitTransform"];
     var pattern = /[,();]|(px)|(em)|(rem)|(translate)|(matrix)|(3d)/gi;

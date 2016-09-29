@@ -10,10 +10,20 @@ Template.drawer.onCreated(function () {
 
   // 2. Autorun
   // // will re-run when the "limit" reactive variables changes
-  // instance.autorun(function () {
-  //   // var data = Template.currentData();
-  //   var subscription = instance.subscribe('Drawer.bits');
-  // });
+  instance.autorun(function() {
+    // var data = Template.currentData();
+    var subscription = instance.subscribe('Drawer.bits');
+
+      // TODO: why doesnt this work?
+      // Related?: https://github.com/meteor/meteor/issues/3194
+      // https://stackoverflow.com/questions/34777586/template-subscriptionsready-disables-onrendered-functionality
+    //   if (instance.subscriptionsReady()) {
+    //     console.log('ready with drawer bits', $(".drawer-bits .bit"), " : ", $(".drawer-bits .bit").length);
+    //     $(".drawer-bits .bit").show();
+    // }
+  });
+
+
 
   // instance.drawerBitsNow = new ReactiveVar();
   

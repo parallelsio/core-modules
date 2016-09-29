@@ -3,7 +3,8 @@
 Template.map.helpers({
 
   bits: function(){
-    return Bits.find();
+    // return Bits.find();
+    return Bits.find({ canvasId: Session.get('canvasId') });
   },
 
   isSketch: function () {
