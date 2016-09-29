@@ -1,24 +1,31 @@
 <template name="drawer">
 
-  <div class="drawer">
+  <div class="drawer" >
     <div class="drawer__header"><span class="icon-pencil"> </span> Bit Drawer</div>
     
-    <div class="drawer-bits">
+    <div class="drawer-bits" >
 
-			  {{#if Template.subscriptionsReady}}
+	    	<!-- TODO: why doesnt this work? 
+						https://dweldon.silvrback.com/template-instance#disqus_thread
+	    			template: {{ Template.instance.bgColor.get }} -->
+	    	
+	    	<!-- color: {{ currentColor }} -->
+	
+			  {{#if Template.subscriptionsReady }}
 
 			    {{#each drawerBits }}
-			      {{> bit}}
-			    {{/each}}
+			      {{> bit }}
+			    {{/each }}
 			 
 			  {{else}}
 			    Loading...
-			 
 			  {{/if}}
 
     </div>
 
   </div>
 </template>
+
+
 
 

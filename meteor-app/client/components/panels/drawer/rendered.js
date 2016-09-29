@@ -9,6 +9,10 @@ Template.drawer.onRendered(function () {
 
   Parallels.Audio.player.play("fx-drdrrt");
 
+  var $drawerBits = ($(".drawer-bits .bit"));
+  // for non-destructively reversing
+  // var $tempBits = $drawerBits.get().map(Array.apply.bind(Array, null));
+
   timeline
     .set('.drawer', { height: $(document).height() } )
     .fromTo(
@@ -26,7 +30,23 @@ Template.drawer.onRendered(function () {
         autoAlpha: 1,
         ease: Expo.easeOut
       }
+    )
+
+    // .set($drawerBits, { position: "relative", transform: "initial" })
+    .staggerTo(
+      $drawerBits,
+      0.4,
+      {
+        x: 300,
+        opacity: 1,
+        autoAlpha: 1,
+        display: "flex",
+      },
+      0.1,
+      "-=0.25"
     );
+
+
 
     //////////////////////////////////////
 
@@ -44,25 +64,8 @@ Template.drawer.onRendered(function () {
 
     // var spacer = 20;
     // var notchesArray = _.range(0, 100, spacer);
-    var $drawerBits = ($(".drawer-bits .bit"));
 
-    // for non-destructively reversing
-    // var $tempBits = $drawerBits.get().map(Array.apply.bind(Array, null));
-
-    var tl = new TimelineMax();
-    tl
-      // .set($drawerBits, { position: "relative", transform: "initial" })
-      .staggerTo(
-        $drawerBits,
-        0.5,
-        {
-          x: 300,
-          opacity: 1,
-          autoAlpha: 1,
-          display: "flex",
-        },
-        0.05
-    )
+ 
 
 
 });

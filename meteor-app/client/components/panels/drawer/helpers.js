@@ -1,10 +1,15 @@
 Template.drawer.helpers({
 
   drawerBits: function(){
-    // return Template.instance().drawerBitsNow;
-  	// return Bits.find( {}, { sort: { createdAt: -1 }, limit: 50 });
-  	return Bits.find( {}, { sort: { createdAt: -1 } });
-  }
+  	// using a fetch here, because we don't need reactivity for this view.
+  	// limited to a low number, and person can infinitely scroll for more results
+  	return Bits.find( {}, { sort: { createdAt: -1 }, limit: 10 }).fetch();
+}
+
+	// ,
+	// currentColor: function(){
+	// 	return Template.instance().bgColor.get() ;
+	// }   
 
 });
 
