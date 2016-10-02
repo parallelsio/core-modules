@@ -4,8 +4,6 @@ import _ from "lodash";
 Template.navPanel.rendered = function() {
 
   // TODO: wire up for reactivity, so map re-generates as bits are added/removed
-  // maybe move to a worker, not sure how CPU intensive this is
-  // This demo shows benchmarks: http://jsclipper.sourceforge.net/6.2.1.0
   function drawSetOutline(){
     var $bits = $(".bit");
     var subjectPaths = [];
@@ -29,6 +27,7 @@ Template.navPanel.rendered = function() {
 
     // we don't need clipPaths for the union of the shapes
     var clipPaths = [
+    //    example format:
     //   [{X:50,Y:50},{X:150,Y:50},{X:150,Y:150},{X:50,Y:150} ],
     //   [{X:60,Y:60},{X:60,Y:140},{X:140,Y:140},{X:140,Y:60}]
     ];
