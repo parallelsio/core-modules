@@ -225,31 +225,39 @@ $half-height: $face-height / 2;
   position: fixed;
   overflow: hidden;
   z-index: 1000; // TODO: use z-index util to calc highest *used z-index instead of hardcoding.
-  width: 500px;
-  height: 500px;
+  width: 100px;
+  height: 100px;
   bottom: 0;
   right: 0;
-  margin: 1rem;
-  pointer-events: none;
-  opacity: 0.3;
-  transition: opacity 0.25s;
-}
-  
-.outline__container:after {
-  background: #5a5acc;
-  position: absolute;
-  content: "";
-  left: 0;
-  right: 0;
-  height: 500px;
-  top: 500px;
+  margin: 0.25rem;
+  transform-origin: bottom right;
+
+  // border: 1px solid #c5c3c3;
+  // transition: border 0.35s ease-out, 
+  //             transform 0.1s ease-out;
+
+  transition: transform 0.1s ease-out;
+
+  .outline__svg__path {
+    fill: none;
+    stroke: #717171;
+    stroke-width: 2.5%; 
+  }
 }
 
-.outline__container:hover { opacity: 1; }
-.outline__container:active { pointer-events: none; }
+.outline__container:hover { 
+  transform: scale(4);
+  // border: 1px solid #c5c3c3;
+
+  .outline__svg__path {
+    stroke-width: 1.5%;
+  }
+ }
 
 .outline__svg {
   position: absolute;
   width: 100%; 
   height: 100%; 
 }
+
+

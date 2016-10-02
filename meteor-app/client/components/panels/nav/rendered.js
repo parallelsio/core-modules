@@ -11,8 +11,16 @@ Template.navPanel.rendered = function() {
     var mapWidth = Session.get('mapWidth');
     var mapHeight = Session.get('mapHeight');
 
+    var maxX = 0;
+    var maxY = 0;
+
     _.forEach($bits, function(value, key) {
       var rect = value.getBoundingClientRect();
+
+      // keep track of most bottom, most right x/y, to calc
+      // the bounds of the outline for the SVG later
+      if (rect.right > maxX) maxX = rect.right; 
+      if (rect.bottom > maxY) maxY = rect.bottom; 
 
       var bitPoints = []; 
       bitPoints.push( { X: _.round(rect.left, 2),     Y: _.round(rect.top, 2)} );
@@ -53,10 +61,14 @@ Template.navPanel.rendered = function() {
       ClipperLib.PolyFillType.pftNonZero   // clipFillType
     );
 
-    var viewBox = "0 0 " + mapWidth + " " + mapHeight; 
+    // show the full map bounds, including whitespace
+    // var viewBox = "0 0 " + mapWidth + " " + mapHeight; 
 
-    var svg = '<svg class="outline__svg" viewbox="' + viewBox + '" preserveAspectRatio="xMinYMax meet" >'; 
-    svg += '<path stroke="black" fill="yellow" stroke-width="5" d="' + paths2string(solutionPaths, scale) + '"/>';
+    // figure out most bottom, most right bit, and use that to calc the bounds
+    var viewBox = "0 0 " + maxX + " " + maxY; 
+
+    var svg = '<svg class="outline__svg" viewbox="' + viewBox + '" preserveAspectRatio="xMidYMid meet" >'; 
+    svg += '<path class="outline__svg__path" d="' + paths2string(solutionPaths, scale) + '"/>';
     svg += '</svg>';
 
     document.getElementsByClassName("outline__container")[0].innerHTML = svg;
