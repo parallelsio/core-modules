@@ -1,4 +1,80 @@
+import ClipperLib from "js-clipper";
+import _ from "lodash";
+
 Template.navPanel.rendered = function() {
+
+  // TODO: wire up for reactivity, so map re-generates as bits are added/removed
+  // maybe move to a worker, not sure how CPU intensive this is
+  // This demo shows benchmarks: http://jsclipper.sourceforge.net/6.2.1.0/main_demo.html
+  function drawSetOutline(){
+    var $bits = $(".bit");
+    var subjectPaths = [];
+
+    _.forEach($bits, function(value, key) {
+      var rect = value.getBoundingClientRect();
+
+      var bitPoints = []; 
+      bitPoints.push( { X: _.round(rect.top, 2),    Y: _.round(rect.left, 2)} );
+      bitPoints.push( { X: _.round(rect.bottom, 2), Y: _.round(rect.left, 2)} );
+      bitPoints.push( { X: _.round(rect.bottom, 2), Y: _.round(rect.right, 2)} );
+      bitPoints.push( { X: _.round(rect.top, 2),    Y: _.round(rect.right, 2)} );
+
+      subjectPaths.push(bitPoints);
+    });
+
+    // we don't need clipPaths for the union of the shapes
+    var clipPaths = [
+    //   // [{X:50,Y:50},{X:150,Y:50},{X:150,Y:150},{X:50,Y:150} ],
+    //   // [{X:60,Y:60},{X:60,Y:140},{X:140,Y:140},{X:140,Y:60}]
+    ];
+
+    var cpr = new ClipperLib.Clipper();
+
+    // TODO: why doesn't this work? scale the paths?
+    // resorting to scaling the SVG via CSS
+    var scale = 100;
+    ClipperLib.JS.ScaleUpPaths(subjectPaths, scale);
+    // ClipperLib.JS.ScaleUpPaths(clipPaths, scale);
+
+    cpr.AddPaths(subjectPaths, ClipperLib.PolyType.ptSubject, true);  // true means closed path
+    cpr.AddPaths(clipPaths, ClipperLib.PolyType.ptClip, true);
+
+    var solutionPaths = new ClipperLib.Paths();
+
+    // drawing the union of all the bits
+    // TODO: trace edge, like https://graphicdesign.stackexchange.com/questions/50697/how-can-i-trace-the-edge-of-a-svg-file-using-inkscape-without-rasterizing-the-im
+    var succeeded = cpr.Execute(
+      ClipperLib.ClipType.ctUnion, 
+      solutionPaths, 
+      ClipperLib.PolyFillType.pftNonZero, 
+      ClipperLib.PolyFillType.pftNonZero
+    );
+
+    // Scale down coordinates and draw
+    var svg = '<svg class="outline__svg" viewBox="0 0 5000 5000" preserveAspectRatio="xMinYMax meet" >'; 
+    svg += '<path stroke="black" fill="yellow" stroke-width="5" d="' + paths2string(solutionPaths, scale) + '"/>';
+    svg += '</svg>';
+
+    document.getElementsByClassName("outline__container")[0].innerHTML = svg;
+
+    // Converts Paths to SVG path string
+    // and scales down the coordinates
+    function paths2string (paths, scale) {
+      var svgpath = "", i, j;
+      if (!scale) scale = 1;
+      for(i = 0; i < paths.length; i++) {
+        for(j = 0; j < paths[i].length; j++){
+          if (!j) svgpath += "M";
+          else svgpath += "L";
+          svgpath += (paths[i][j].X / scale) + ", " + (paths[i][j].Y / scale);
+        }
+        svgpath += "Z";
+      }
+      if (svgpath=="") svgpath = "M0,0";
+      return svgpath;
+    }
+
+  }
 
   // TODO: extract this choreographed sequence out of nav.
   // doesnt belong here, but somewhere in Map: when Map/canvas open
@@ -47,14 +123,26 @@ Template.navPanel.rendered = function() {
     // Greensock .call is similar to its .add,
     // except .call lets us pass params to our function
     timelineSequence
+
       .add(timelineMenu())
+    
       .call(
-      Parallels.Animation.General.shimmer,
-      [
-        { $elements: $(".map .bit") }
-      ],
-      "-=0.5")
+        Parallels.Animation.General.shimmer,
+        [
+          { $elements: $(".map .bit") }
+        ],
+        "-=0.5"
+      )
+
       .play();
+
+    // TODO: Meteor timeout is a hack, because the bits are not yet rendered.
+    Meteor.setTimeout(function(){
+      drawSetOutline();
+      }, 
+      3000
+    );
+
 
   }
 

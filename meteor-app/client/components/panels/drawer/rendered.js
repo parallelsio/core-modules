@@ -4,7 +4,6 @@ Template.drawer.onRendered(function () {
   var template = this;
   var $drawer = $(this.firstNode);
 
-
   Parallels.Audio.player.play("fx-drdrrt");
 
   var $drawerBits = ($(".drawer-bits .bit"));
@@ -39,7 +38,6 @@ Template.drawer.onRendered(function () {
   // TODO: Meteor timeout is a hack, because the subscription is not ready.
   Meteor.setTimeout(function(){
      
-
     var timeline = new TimelineMax();
     timeline.staggerTo(
       ".drawer-bits .bit",
@@ -47,8 +45,7 @@ Template.drawer.onRendered(function () {
       {
         x: 300,
         opacity: 1,
-        autoAlpha: 1,
-        display: "flex"
+        autoAlpha: 1
       },
       0.1
     );

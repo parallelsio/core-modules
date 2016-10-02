@@ -18,17 +18,17 @@ $padding: 10%;
 
 // TODO: overriding regular bits. Need to refactor this
 .drawer-bits .bit {
-	display: block !important; 
+	display: inline-flex !important; 
 	position: relative !important;
 	opacity: 0;
 	transform: initial !important;
-	margin: 1rem $padding;
+	margin: 1rem;
 }
 
-.drawer-bits .bit:hovering {
-	width: 0;
-	height: 0;
-}
+// .drawer-bits .bit:hovering {
+// 	width: 0;
+// 	height: 0;
+// }
 
 .drawer__header { 
   display: block;

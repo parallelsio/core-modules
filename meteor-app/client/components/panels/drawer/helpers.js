@@ -4,7 +4,7 @@ Template.drawer.helpers({
   	// using a fetch here, because we don't need reactivity for this view.
   	// limited to a low number, and person can infinitely scroll for more results
   	return Bits.find( {}, { sort: { createdAt: -1 }, limit: 20 }).fetch();
-}
+	}
 
 	// ,
 	// currentColor: function(){

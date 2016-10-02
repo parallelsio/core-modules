@@ -11,16 +11,16 @@ $map-width: 5000px;
 	min-height: $map-height;
 	min-width: $map-width;
 	
-	height:100%;
-  width:100%;
+	height: 100%;
+  width: 100%;
 }
 
-.map__lightbox{
+.map__lightbox {
   min-height: initial;
   min-width: initial;
 }
 
-.mode--create-parallel{
+.mode--create-parallel {
   background: #7B7B7B;
 }
 
@@ -232,6 +232,25 @@ $half-height: $face-height / 2;
   background-color: #e7e4e4;
 }
 
-
-
 .top-panel h1 { display: inline-block; font-weight:bold; margin-right: 0.25rem;  }
+
+
+/////////
+
+
+.outline__container {
+  position: fixed;
+  overflow: hidden;
+  z-index: 1000; // TODO: use z-index util to calc highest *used z-index instead of hardcoding.
+  width: 200px;
+  height: 200px;
+  bottom: 0;
+  right: 0;
+  margin: 1rem;
+}
+
+.outline__svg {
+  position: absolute;
+  width: 100%; 
+  height: 100%; 
+}
