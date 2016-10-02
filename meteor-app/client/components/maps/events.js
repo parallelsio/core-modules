@@ -81,9 +81,11 @@ function selectedBits(e) {
     var maxX = 0;
     var maxY = 0;
 
+
     // TODO: sync up with doc size?
-    var minX = 5000;
-    var minY = 5000;
+    
+    var minX = Session.get("mapHeight");
+    var minY = Session.get("mapWidth");
 
     // TODO: Optimize. Do we need to iterate through all bits on canvas? 
     // or maybe just ones in viewport?

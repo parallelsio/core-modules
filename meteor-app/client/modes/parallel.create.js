@@ -152,9 +152,10 @@ Parallels.AppModes['create-parallel'] = {
     lineContainer = document.createElement('div');
     $(lineContainer)
       .addClass("create-parallel--line")
-      .height( 5000 )
-      .width( 5000)
+      .height( Session.get("mapHeight") )
+      .width( Session.get("mapWidth") )
       .prependTo(".map");
+
 
     params = {
       fullscreen: true,

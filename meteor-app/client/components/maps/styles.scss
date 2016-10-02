@@ -1,16 +1,4 @@
-$map-height: 5000px;
-$map-width: 5000px;
-
-.scroll--vertical-only {
-  overflow-y: scroll !important;
-  overflow-x: hidden !important;
-}
-
 .map {	  
-	// required to get dble click/ bit:new text to show
-	min-height: $map-height;
-	min-width: $map-width;
-	
 	height: 100%;
   width: 100%;
 }
@@ -37,10 +25,7 @@ $map-width: 5000px;
 
 #corner-sparks--particles {  
   position: absolute;
-  height: $map-height;
-  width: $map-width;
 }
-
 
 .create-parallel--line {    
   position: absolute;
@@ -234,20 +219,34 @@ $half-height: $face-height / 2;
 
 .top-panel h1 { display: inline-block; font-weight:bold; margin-right: 0.25rem;  }
 
-
 /////////
-
 
 .outline__container {
   position: fixed;
   overflow: hidden;
   z-index: 1000; // TODO: use z-index util to calc highest *used z-index instead of hardcoding.
-  width: 200px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
   bottom: 0;
   right: 0;
   margin: 1rem;
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.25s;
 }
+  
+.outline__container:after {
+  background: #5a5acc;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  height: 500px;
+  top: 500px;
+}
+
+.outline__container:hover { opacity: 1; }
+.outline__container:active { pointer-events: none; }
 
 .outline__svg {
   position: absolute;

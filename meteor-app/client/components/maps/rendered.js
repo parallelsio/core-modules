@@ -2,6 +2,8 @@ Template.map.onRendered(function () {
 
   var template = this;
   var mapElement = template.find('.map');
+  mapElement.style.minHeight = Session.get("mapHeight") + "px";
+  mapElement.style.minWidth = Session.get("mapWidth") + "px";
 
   Parallels.Audio.player.play("fx-welcome-v2");
 

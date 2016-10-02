@@ -5,53 +5,58 @@ Template.navPanel.rendered = function() {
 
   // TODO: wire up for reactivity, so map re-generates as bits are added/removed
   // maybe move to a worker, not sure how CPU intensive this is
-  // This demo shows benchmarks: http://jsclipper.sourceforge.net/6.2.1.0/main_demo.html
+  // This demo shows benchmarks: http://jsclipper.sourceforge.net/6.2.1.0
   function drawSetOutline(){
     var $bits = $(".bit");
     var subjectPaths = [];
+
+    var mapWidth = Session.get('mapWidth');
+    var mapHeight = Session.get('mapHeight');
 
     _.forEach($bits, function(value, key) {
       var rect = value.getBoundingClientRect();
 
       var bitPoints = []; 
-      bitPoints.push( { X: _.round(rect.top, 2),    Y: _.round(rect.left, 2)} );
-      bitPoints.push( { X: _.round(rect.bottom, 2), Y: _.round(rect.left, 2)} );
-      bitPoints.push( { X: _.round(rect.bottom, 2), Y: _.round(rect.right, 2)} );
-      bitPoints.push( { X: _.round(rect.top, 2),    Y: _.round(rect.right, 2)} );
+      bitPoints.push( { X: _.round(rect.left, 2),     Y: _.round(rect.top, 2)} );
+      bitPoints.push( { X: _.round(rect.right, 2),    Y: _.round(rect.top, 2)} );
+      bitPoints.push( { X: _.round(rect.right, 2),    Y: _.round(rect.bottom, 2)} );
+      bitPoints.push( { X: _.round(rect.left, 2),     Y: _.round(rect.bottom, 2)} );
 
       subjectPaths.push(bitPoints);
     });
 
+    // console.log("subject: ", JSON.stringify(subjectPaths));
+
     // we don't need clipPaths for the union of the shapes
     var clipPaths = [
-    //   // [{X:50,Y:50},{X:150,Y:50},{X:150,Y:150},{X:50,Y:150} ],
-    //   // [{X:60,Y:60},{X:60,Y:140},{X:140,Y:140},{X:140,Y:60}]
+    //   [{X:50,Y:50},{X:150,Y:50},{X:150,Y:150},{X:50,Y:150} ],
+    //   [{X:60,Y:60},{X:60,Y:140},{X:140,Y:140},{X:140,Y:60}]
     ];
 
     var cpr = new ClipperLib.Clipper();
 
-    // TODO: why doesn't this work? scale the paths?
-    // resorting to scaling the SVG via CSS
-    var scale = 100;
-    ClipperLib.JS.ScaleUpPaths(subjectPaths, scale);
+    var scale = 1;
+    // ClipperLib.JS.ScaleUpPaths(subjectPaths, scale);
     // ClipperLib.JS.ScaleUpPaths(clipPaths, scale);
 
-    cpr.AddPaths(subjectPaths, ClipperLib.PolyType.ptSubject, true);  // true means closed path
-    cpr.AddPaths(clipPaths, ClipperLib.PolyType.ptClip, true);
+    // .AddPaths( paths, ClipperLib.JoinType.jtMiter, ClipperLib.EndType.etClosedPolygon);
+    cpr.AddPaths(subjectPaths, ClipperLib.PolyType.ptSubject, true);  
+    // cpr.AddPaths(clipPaths, ClipperLib.PolyType.ptClip, true);
 
     var solutionPaths = new ClipperLib.Paths();
-
+    
     // drawing the union of all the bits
     // TODO: trace edge, like https://graphicdesign.stackexchange.com/questions/50697/how-can-i-trace-the-edge-of-a-svg-file-using-inkscape-without-rasterizing-the-im
     var succeeded = cpr.Execute(
       ClipperLib.ClipType.ctUnion, 
       solutionPaths, 
-      ClipperLib.PolyFillType.pftNonZero, 
-      ClipperLib.PolyFillType.pftNonZero
+      ClipperLib.PolyFillType.pftNonZero,  // subjFillType
+      ClipperLib.PolyFillType.pftNonZero   // clipFillType
     );
 
-    // Scale down coordinates and draw
-    var svg = '<svg class="outline__svg" viewBox="0 0 5000 5000" preserveAspectRatio="xMinYMax meet" >'; 
+    var viewBox = "0 0 " + mapWidth + " " + mapHeight; 
+
+    var svg = '<svg class="outline__svg" viewbox="' + viewBox + '" preserveAspectRatio="xMinYMax meet" >'; 
     svg += '<path stroke="black" fill="yellow" stroke-width="5" d="' + paths2string(solutionPaths, scale) + '"/>';
     svg += '</svg>';
 
@@ -70,10 +75,22 @@ Template.navPanel.rendered = function() {
         }
         svgpath += "Z";
       }
-      if (svgpath=="") svgpath = "M0,0";
+      if (svgpath == "") svgpath = "M0,0";
       return svgpath;
     }
 
+    // adapted from: https://stackoverflow.com/questions/29002472/find-svg-viewbox-that-trim-whitespace-around
+    // redraw the map outline, removing all unused whitespace from the map
+    // TODO: doing so also rescales to fit, so the preview gets really big
+    // on maps with small surface area. Need to figure out a solution that works
+    // consistently across map sizes
+    // function setViewbox(svg) {
+    //   var bB = svg.getBBox();
+    //   svg.setAttribute('viewBox', bB.x + ',' + bB.y + ',' + bB.width + ',' + bB.height);
+    // }
+
+    // this overwrites the standard way    
+    // setViewbox($('.outline__svg')[0]);
   }
 
   // TODO: extract this choreographed sequence out of nav.

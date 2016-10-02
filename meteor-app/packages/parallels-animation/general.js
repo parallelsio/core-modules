@@ -179,8 +179,8 @@ Parallels.Animation.General = {
     var particles = document.createElement('div');
     $(particles)
       .attr("id", "corner-sparks--particles")
-      .height(5000)
-      .width(5000)
+      .height(Session.get("mapHeight"))
+      .width(Session.get("mapWidth"))
       .prependTo(options.prependTo);
 
     var setupAndPlayCornerSpark = function (corner) {

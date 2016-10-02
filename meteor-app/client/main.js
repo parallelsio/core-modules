@@ -30,6 +30,8 @@ Meteor.startup(function () {
   Session.set('textBitEditingId', null);
   Session.set('sketchBitEditingId', null);
   Session.set('selectedBitsCount', 0);
+  Session.set('mapWidth', 5000); // pixels
+  Session.set('mapHeight', 5000); // pixels
 
   // TODO: make as util?
   $.fn.focusWithoutScrolling = function(){
