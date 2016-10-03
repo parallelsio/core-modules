@@ -13,13 +13,13 @@ Meteor.startup(function () {
   Parallels.Keys.bindEsc();
   Parallels.Keys.bindShortcuts();
 
-  Tracker.autorun(function () {
-    Parallels.log.debug(Bits.find().count() + ' bits, via Tracker:autorun');
-  });
+  // Tracker.autorun(function () {
+  //   Parallels.log.debug(Bits.find().count() + ' bits, via Tracker:autorun');
+  // });
 
-  Tracker.autorun(function () {
-    Parallels.log.debug('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
-  });
+  // Tracker.autorun(function () {
+  //   Parallels.log.debug('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
+  // });
 
   var center = Utilities.getViewportCenter();
   pointerPosition = {
