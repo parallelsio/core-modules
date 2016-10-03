@@ -1,0 +1,17 @@
+{
+  "name": "parallels",
+  "version": "0.0.1",
+  "description": "The Make Parallels desktop app",
+  "author": "Angel Balcarcel <angelcabo3@gmail.com>",
+  "private": true,
+  "main": "main.js",
+  "dependencies": {
+    "chrome-native-messaging": "^0.2.0",
+    "font-awesome": "^4.6.3",
+    "lodash": "^4.16.2",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "searchkit": "^0.10.1",
+    "source-map-support": "^0.4.3"
+  }
+}

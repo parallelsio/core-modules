@@ -1,17 +1,44 @@
-*.crx
+# Misc
+tmp
+
+# Logs
 *.log
-.DS_Store
+
+# Runtime data
+.env
+
+# Grunt intermediate storage
 .grunt/
-.idea
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+node_modules
+bower_components
 .npm/
+
+# OSX
+.DS_Store
+
+# Chrome Extension
+*.crx
 _SpecRunner.html
 extensions/chrome/build/
 chromeprofile/
 extensions/chrome/source/bower_components
-node_modules
-tmp
-.env
+
+# Data backups
 meteor-app/private/data-backups/canvas.events.json
+
+# App packaged
+dist
+desktop-app/release
+desktop-app/main.js
+desktop-app/main.js.map
+desktop-app/out/
+
+# (Old) App packaged
 desktop-app/cache
 desktop-app/resources
-bower_components

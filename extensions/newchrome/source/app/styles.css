@@ -1,0 +1,75 @@
+.options-howto {
+  position: fixed;
+  top: 0;
+  right: 120px;
+  text-align: right;
+}
+
+#hints {
+  border-top: 1px solid #bfbfbf;
+  margin-top: 15px;
+  padding-top: 5px;
+}
+
+.options-howto .lead {
+  width: 170px;
+  margin: 10px 40px 0 0;
+}
+
+.options-login-help {
+  margin-top: 10px;
+}
+
+.options-hint {
+  padding-top: 10px;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+.title .glyphicon {
+  vertical-align: top;
+}
+
+.state-control {
+  padding-top: 30px;
+}
+
+.state-control .message {
+  padding: 2px 5px;
+}
+
+.highlight {
+  margin-top: 8px;
+  padding: 9px 14px;
+  background-color: #f7f7f9;
+  height: 100%;
+}
+
+#container {
+  padding-top: 10px;
+}
+
+.advanced-content {
+}
+
+.glyphicon-inline-icon {
+  margin-right: 3px;
+}
+
+.quiet {
+  opacity: 0.75;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.container.narrow {
+  max-width: 550px;
+}
+
+.container.extra-narrow {
+  max-width: 450px;
+}

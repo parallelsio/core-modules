@@ -1,0 +1,18 @@
+{
+  "background": {
+    "persistent": true,
+    "scripts": [ "app/background.js" ]
+  },
+  "content_scripts": [ {
+    "js": [ "app/inject.js" ],
+    "matches": [ "*://*/*" ],
+    "run_at": "document_end"
+  } ],
+  "description": "Tag + save any tab's content to your parallels server",
+  "homepage_url": "http://makeparallels.herokuapp.com",
+  "manifest_version": 2,
+  "name": "Parallels Web Clipper",
+  "permissions": [ "nativeMessaging" ],
+  "short_name": "Parallels",
+  "version": "0.0.1"
+}
