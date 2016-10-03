@@ -65,6 +65,19 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       Parallels.log.debug(event.type, " : dragStart: ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
 
+      if (Session.equals('viewingDrawer'), true) {
+        TweenMax.to(
+          ".drawer",
+          0.5,
+          { 
+            x: 1000,
+            opacity: 0,
+            autoAlpha: 0,
+            ease: Circ.easeOut
+          }
+        )
+      }
+
       // TODO: improve performance
       // use image asset instead of CSS shadow:
       // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
