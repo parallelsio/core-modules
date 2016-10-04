@@ -9,7 +9,7 @@
 // This might be a solution: http://meteorpatterns.com/Sewdn/query-collections
 
 Meteor.publish('Drawer.bits', function() {
-  return Bits.find( {}, { limit: 20 }); 
+  return Bits.find( {}, { limit: 100 }); 
 });
 
 Meteor.publish('Canvas.bits', function(canvasId) {

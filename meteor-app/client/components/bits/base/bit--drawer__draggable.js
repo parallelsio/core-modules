@@ -70,8 +70,7 @@ function showSetPicker($bitElement){
   var $modalContainer = $(".modal--set-container");
   var $modalSets = $(".modal__sets");
 
-  $("body").removeClass('u--scroll--vertical-only');
-  $("body").addClass('u--scroll--none');
+  $("body").toggleClass('u--scroll--vertical-only');
 
   TweenMax.fromTo(
     $modalContainer,
@@ -93,8 +92,7 @@ function showSetPicker($bitElement){
 }
 
 function hideSetPicker(){
-  $("body").addClass('u--scroll--vertical-only');
-  $("body").removeClass('u--scroll--none');
+  $("body").toggleClass('u--scroll--vertical-only');
 
   TweenMax.to(
     ".modal--set-container",
