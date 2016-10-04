@@ -82,10 +82,17 @@ Template.bit.onRendered(function (){
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients
   Tracker.autorun(function() {
+    // for tracking canvas bits, since it already exists
+    // TODO: should probably make this more explicit that it's bits inside the map, not the drawer
+
     var bit = Bits.findOne(bitDatabaseId);
 
-    // only if it's a bit that's on the canvas
-    if (bit && (bit.parents('.drawer').length)) {
+    // this utility function is scoped to the drawer   
+    // if nothing is found, this will be empty
+    var $drawerBit = Utilities.getDrawerBitElement(bit._id);
+
+    // only if it's a bit that's on the canvas, not in the drawer
+    if (bit && !$drawerBit.length) {
       var timeline = new TimelineMax();
       timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
     }

@@ -14,6 +14,10 @@ Utilities = {
     return $("[data-id='" + bitDatabaseId + "']");
   },
 
+  getDrawerBitElement: function (bitDatabaseId){
+    return $(".drawer [data-id='" + bitDatabaseId + "']");
+  },
+
   getBitTemplate: function (bitId){
     var $bit = this.getBitElement(bitId);
     return Blaze.getView( _.first($bit) );
