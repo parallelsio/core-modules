@@ -69,13 +69,23 @@ Template.bit.onRendered(function (){
     });
   }
 
-  makeBitDraggable($bitElement, $dragHandle);
+  // TODO: probably a more elegant way of doing this
+  // maybe pass a param in the template, if that's possible with Meteor Spacebars
+  if (Session.equals('viewingDrawer'), true) {
+    makeDrawerBitDraggable($bitElement, $dragHandle);
+  }
+
+  else {
+    makeBitDraggable($bitElement, $dragHandle);
+  }
 
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients
   Tracker.autorun(function() {
     var bit = Bits.findOne(bitDatabaseId);
-    if (bit) {
+
+    // only if it's a bit that's on the canvas
+    if (bit && (bit.parents('.drawer').length)) {
       var timeline = new TimelineMax();
       timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
     }

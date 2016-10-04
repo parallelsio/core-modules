@@ -122,7 +122,11 @@ hr{
   font-size: 1.5rem;
 }
 
-.scroll--vertical-only {
+.u--scroll--vertical-only {
   overflow-y: scroll !important;
   overflow-x: hidden !important;
+}
+
+.u--scroll--none {
+  overflow: hidden;
 }

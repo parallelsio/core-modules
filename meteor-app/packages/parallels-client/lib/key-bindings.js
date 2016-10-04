@@ -237,7 +237,7 @@ Parallels.Keys = {
       Parallels.log.debug("pressed '2' key: drawer toggle");
       var viewingDrawer = Session.get('viewingDrawer');
       Session.set('viewingDrawer', !viewingDrawer);
-       $('body').toggleClass('scroll--vertical-only');
+       $('body').toggleClass('u--scroll--vertical-only');
     });
   },
 

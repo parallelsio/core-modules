@@ -2,14 +2,24 @@
 
   <div class="drawer" >
     <div class="drawer__header"><span class="icon-pencil"> </span> Bit Drawer</div>
-    
+
+    <div class="modal--set-container">
+   		<div class="modal__sets">
+   			
+   				<div id="drop-area" class="drop-area">
+						<div class="drop-area__item"></div>
+						<div class="drop-area__item"></div>
+					</div>
+
+   		</div>
+   	</div>
+
     <div class="drawer-bits" >
 
 	    	<!-- TODO: why doesnt this work? 
 						https://dweldon.silvrback.com/template-instance#disqus_thread
 	    			template: {{ Template.instance.bgColor.get }} -->
 	    	<!-- and this does: {{ currentColor }} -->
-	
 	
 			  {{#if Template.subscriptionsReady }}
 
@@ -23,6 +33,8 @@
 
     </div>
 
+
+   	
   </div>
 </template>
 

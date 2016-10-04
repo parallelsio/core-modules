@@ -11,6 +11,8 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
   var nearBitElement;
   var snapThreshold = 60; // in pixels
 
+  console.log ('wiring canvas bit for drag: ', $bitElement);
+
   // Needs to happen after position set, or else positions
   // via manual transforms get overwritten by Draggable
   // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
@@ -42,7 +44,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
             boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
             ease: Expo.easeOut
         })
-        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, opacity: "0.1", ease: Expo.easeOut }), "-=0.10";
+        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, autoAlpha: "0.1", ease: Expo.easeOut }), "-=0.10";
 
         $bitElement.addClass('dragging');
     },
@@ -54,7 +56,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
       timeline
         .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
-        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, opacity: "1", ease: Expo.easeOut }), "-=0.10";
+        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, autoAlpha: "1", ease: Expo.easeOut }), "-=0.10";
    
       $bitElement.removeClass('dragging');
 
@@ -64,19 +66,6 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
 
       Parallels.log.debug(event.type, " : dragStart: ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
-
-      if (Session.equals('viewingDrawer'), true) {
-        TweenMax.to(
-          ".drawer",
-          0.5,
-          { 
-            x: 1000,
-            opacity: 0,
-            autoAlpha: 0,
-            ease: Circ.easeOut
-          }
-        )
-      }
 
       // TODO: improve performance
       // use image asset instead of CSS shadow:
@@ -117,6 +106,8 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
         }
       } 
     },
+
+
 
 
 
@@ -173,7 +164,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
       // animate out dragging shadow
       timeline
         .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
-        .to($bitElement.find('.bit__drag-handle'), 0.05, { scale: 1, opacity: "1", ease: Expo.easeOut })
+        .to($bitElement.find('.bit__drag-handle'), 0.05, { scale: 1, autoAlpha: "1", ease: Expo.easeOut })
 
       $bitElement.removeClass('dragging');
       nearBitElement = null;

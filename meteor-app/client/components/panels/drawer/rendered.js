@@ -7,6 +7,11 @@ Template.drawer.onRendered(function () {
   Parallels.Audio.player.play("fx-drdrrt");
 
   var $drawerBits = ($(".drawer-bits .bit"));
+
+  //  _.forEach($drawerBits, function(value, key) {
+  //   TweenLite.set(value, {clearProps: "transform"}); 
+  // });
+
   // for non-destructively reversing
   // var $tempBits = $drawerBits.get().map(Array.apply.bind(Array, null));
 

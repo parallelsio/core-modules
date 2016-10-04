@@ -14,6 +14,28 @@
 	}
 }
 
+.modal--set-container {
+  display: flex;
+	position: absolute;
+  z-index: 10000;
+  background: rgba(27, 27, 27, 0.8);
+	height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+	z-index: 2000;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.modal__sets {
+	opacity: 1;
+	width: 50%;
+	height: 50%;
+	background: white;
+	pointer-events: none;
+}
+
 $padding: 10%;
 
 // TODO: overriding regular bits. Need to refactor this
@@ -21,7 +43,6 @@ $padding: 10%;
 	display: inline-flex !important; 
 	position: relative !important;
 	opacity: 0;
-	transform: initial !important;
 	margin: 1rem;
 }
 
@@ -31,7 +52,7 @@ $padding: 10%;
 // }
 
 .drawer__header { 
-  display: block;
+  display: none;
   position: relative;
   font-size: 0.85rem;
   font-weight: bold;
@@ -51,4 +72,108 @@ $padding: 10%;
     margin-right: 9px;
   }
 }
+
+
+
+
+.modal--set-container {
+  display: flex;
+	position: absolute;
+  z-index: 10000;
+  background: rgba(27, 27, 27, 0.8);
+	height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+	z-index: 2000;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.modal__sets {
+	opacity: 1;
+	width: 50%;
+	height: 50%;
+	background: white;
+}
+
+
+
+
+
+
+
+
+
+.drop-area {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	padding: 2em;
+	z-index: 99;
+	background: #fff;
+	border-radius: 5px;
+	text-align: center;
+	opacity: 0;
+	transition: transform 0.3s, opacity 0.3s;
+	transform: translate3d(-50%,-50%,0) scale3d(1.1,1.1,1);
+	pointer-events: none;
+}
+
+.drop-area.show {
+	opacity: 1;
+	transform: translate3d(-50%,-50%,0) scale3d(1,1,1);
+	pointer-events: auto;
+}
+
+.drop-area__item {
+	position: relative;
+	display: inline-block;
+	width: 15em;
+	height: 15em;
+	margin: 1em;
+	border-radius: 6px;
+	background: rgba(0,0,0,0.05);
+	transition: transform 0.3s, background 0.3s;
+}
+
+.drop-area__item.highlight {
+	background: rgba(128,168,204,0.3);
+	transform: scale3d(1.08,1.08,1);
+}
+
+.drop-area__item::before,
+.drop-area__item::after {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	color: #6C7A89;
+	font-size: 2em;
+	margin-top: -0.3em;
+	font-family: FontAwesome;
+	pointer-events: none;
+}
+
+.drop-area__item::before {
+	content: '\f01c';
+}
+
+.drop-area__item:nth-child(2)::before {
+	content: '\f187';
+}
+
+.drop-feedback.drop-area__item::before {
+	opacity: 0;
+	transform: scale3d(0,0,1);
+}
+
+.drop-area__item::after {
+	content: '\f00c';
+	opacity: 0;
+	transition: opacity 0.3s, transform 0.3s;
+	transform: scale3d(2,2,1);
+}
+
+
 
