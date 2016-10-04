@@ -46,13 +46,12 @@ Template.drawer.onRendered(function () {
     var timeline = new TimelineMax();
     timeline.staggerTo(
       ".drawer-bits .bit",
-      1,
+      0.25,
       {
-        x: 300,
         opacity: 1,
         autoAlpha: 1
       },
-      0.1
+      0.05
     );
 
   }, 

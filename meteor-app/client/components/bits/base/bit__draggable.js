@@ -11,7 +11,7 @@ makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
   var nearBitElement;
   var snapThreshold = 60; // in pixels
 
-  console.log ('wiring canvas bit for drag: ', $bitElement);
+  // console.log ('wiring canvas bit for drag: ', $bitElement);
 
   // Needs to happen after position set, or else positions
   // via manual transforms get overwritten by Draggable

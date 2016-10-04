@@ -73,18 +73,18 @@ function showSetPicker($bitElement){
   $("body").removeClass('u--scroll--vertical-only');
   $("body").addClass('u--scroll--none');
 
-  // TweenMax.fromTo(
-  //   $modalContainer,
-  //   0.25,
-  //   {
-  //     scale: 1.1
-  //   },
-  //   { 
-  //     scale: 1,
-  //     autoAlpha: 1,
-  //     ease: Circ.easeOut
-  //   }
-  // )
+  TweenMax.fromTo(
+    $modalContainer,
+    0.25,
+    {
+      scale: 1.1
+    },
+    { 
+      scale: 1,
+      autoAlpha: 1,
+      ease: Circ.easeOut
+    }
+  )
 
   // allow bit to be dragged over the drop area, to indicate which set to add it to
   $bitElement.zIndex = $modalContainer.zIndex() + 1;
@@ -117,7 +117,7 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
   var nearBitElement;
   var snapThreshold = 60; // in pixels
 
-  console.log ('wiring drawer bit for drag: ', $bitElement);
+  // console.log ('wiring drawer bit for drag: ', $bitElement);
 
   // Needs to happen after position set, or else positions
   // via manual transforms get overwritten by Draggable
