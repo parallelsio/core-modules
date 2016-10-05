@@ -10,7 +10,7 @@ Utilities = {
     return $(bitHtmlElement).data('id');
   },
 
-  getBitElement: function (bitDatabaseId){
+  getSetBitElement: function (bitDatabaseId){
     return $("[data-id='" + bitDatabaseId + "']");
   },
 
@@ -19,7 +19,7 @@ Utilities = {
   },
 
   getBitTemplate: function (bitId){
-    var $bit = this.getBitElement(bitId);
+    var $bit = this.getSetBitElement(bitId);
     return Blaze.getView( _.first($bit) );
   },
 

@@ -43,7 +43,7 @@ Parallels.AppModes['create-parallel'] = {
 
     var originBitId       = Session.get('bitHoveringId');
     Session.set('originBitId', originBitId);
-    $originBit            = Utilities.getBitElement(originBitId);
+    $originBit            = Utilities.getSetBitElement(originBitId);
     var originBitData     = Blaze.getData($originBit[0]);
     var originBitCenterX  = originBitData.position.x + ($originBit[0].clientWidth / 2)
     var originBitCenterY  = originBitData.position.y + ($originBit[0].clientHeight / 2)
@@ -62,7 +62,7 @@ Parallels.AppModes['create-parallel'] = {
 
       if (destBitId && (destBitId != originBitId)) {
 
-        $destBit = Utilities.getBitElement(destBitId);
+        $destBit = Utilities.getSetBitElement(destBitId);
 
         // stop heartbeat animation
         // TODO: after one cycle is done. reset to original size

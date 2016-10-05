@@ -74,7 +74,7 @@ wireColorExplore = function wireColorExplore(){
   }
 
   // load an image and 
-  var $bit = Utilities.getBitElement(bitId);
+  var $bit = Utilities.getSetBitElement(bitId);
   var img = $bit.find('img').first()[0];
 
   // necessary for Vibrant to work because image is on :9000 and server is on :3000

@@ -11,7 +11,7 @@ Parallels.AppModes['preview-bit'] = {
     Parallels.log.debug("mode:preview-bit:enter");
 
     bitHoveringId = Session.get('bitHoveringId');
-    $bit = Utilities.getBitElement(bitHoveringId);
+    $bit = Utilities.getSetBitElement(bitHoveringId);
     bitTemplate = Utilities.getBitTemplate(bitHoveringId);
     bit = Blaze.getData(bitTemplate);
 
@@ -80,7 +80,7 @@ Parallels.AppModes['preview-bit'] = {
 
     // refactor: get rid of dep on these vars.
     var bitPreviewingId = Session.get('bitPreviewingId');
-    $bit = Utilities.getBitElement(bitPreviewingId);
+    $bit = Utilities.getSetBitElement(bitPreviewingId);
     var bitTemplate = Utilities.getBitTemplate(bitPreviewingId);
     var bit = Blaze.getData(bitTemplate);
 

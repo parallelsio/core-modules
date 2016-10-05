@@ -17,7 +17,7 @@
 
 //   // load an image and 
 //     // var img = $('.bit.image img').first()[0];
-//     var $bit = Utilities.getBitElement('S3cBvZX7KL5MjoDnZ');
+//     var $bit = Utilities.getSetBitElement('S3cBvZX7KL5MjoDnZ');
 //     var img = $bit.find('img').first()[0];
 
 //     // necessary for Vibrant to work because image is on :9000 and server is on :3000

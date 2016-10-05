@@ -76,7 +76,7 @@ Template.bit.onRendered(function (){
   }
 
   else {
-    makeBitDraggable($bitElement, $dragHandle);
+    makeSetBitDraggable($bitElement, $dragHandle);
   }
 
   // When a Bit position is updated during a concurrent session (by someone else)

@@ -3,7 +3,7 @@ import _ from 'lodash';
 Draggable.zIndex = 5;
 
 
-makeBitDraggable = function makeBitDraggable($bitElement, $dragHandle){
+makeSetBitDraggable = function makeSetBitDraggable($bitElement, $dragHandle){
 
   var timeline = new TimelineMax();
   var $bits = $(".bit");

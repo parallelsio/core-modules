@@ -27,7 +27,7 @@ Template.sketchBit.onRendered(function () {
 
   var sketchBit = new SketchBit($bitElement, this.data, npApiPlugin);
 
-  var draggable = makeBitDraggable($bitElement);
+  var draggable = makeSetBitDraggable($bitElement);
 
   // track the sketch bit's coordinates and opacity from mongo for concurrent session editing
   Tracker.autorun(function () {
