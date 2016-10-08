@@ -8,10 +8,6 @@ Template.drawer.onRendered(function () {
 
   var $drawerBits = ($(".drawer-bits .bit"));
 
-  //  _.forEach($drawerBits, function(value, key) {
-  //   TweenLite.set(value, {clearProps: "transform"}); 
-  // });
-
   // for non-destructively reversing
   // var $tempBits = $drawerBits.get().map(Array.apply.bind(Array, null));
 
@@ -21,11 +17,11 @@ Template.drawer.onRendered(function () {
   var timeline = new TimelineMax();
 
   timeline
-    .set('.drawer', { height: $(document).height() } )
+    .set('.drawer', { minHeight: $(document).height() } )
     
     .fromTo(
       $drawer, 
-      0.4, 
+      0.3, 
       {
         x: -500 +  verge.scrollX(),
         y: verge.scrollY(),

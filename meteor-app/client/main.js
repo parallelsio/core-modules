@@ -32,6 +32,7 @@ Meteor.startup(function () {
   Session.set('selectedBitsCount', 0);
   Session.set('mapWidth', 5000); // pixels
   Session.set('mapHeight', 5000); // pixels
+  Session.set('viewingDrawer', false); 
 
   // TODO: make as util?
   $.fn.focusWithoutScrolling = function(){

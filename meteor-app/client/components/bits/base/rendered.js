@@ -71,7 +71,7 @@ Template.bit.onRendered(function (){
 
   // TODO: probably a more elegant way of doing this
   // maybe pass a param in the template, if that's possible with Meteor Spacebars
-  if (Session.equals('viewingDrawer'), true) {
+  if (Session.equals('viewingDrawer', true)) {
     makeDrawerBitDraggable($bitElement, $dragHandle);
   }
 

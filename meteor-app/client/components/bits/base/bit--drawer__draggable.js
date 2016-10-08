@@ -63,54 +63,14 @@ import _ from 'lodash';
 
 // Draggable.zIndex = 5;
 
-// terrible, terrible code.
-// TODO: merge into one function. Reuse speed of animation, ease type, scale value
-// Inspired by: http://tympanus.net/Development/DragDropInteractions/modal.html
-function showSetPicker($bitElement){
-  var $modalContainer = $(".modal--set-container");
-  var $modalSets = $(".modal__sets");
 
-  $("body").toggleClass('u--scroll--vertical-only');
-
-  TweenMax.fromTo(
-    $modalContainer,
-    0.25,
-    {
-      scale: 1.1
-    },
-    { 
-      scale: 1,
-      autoAlpha: 1,
-      ease: Circ.easeOut
-    }
-  )
-
-  // allow bit to be dragged over the drop area, to indicate which set to add it to
-  $bitElement.zIndex = $modalContainer.zIndex() + 1;
-  $modalContainer.css("pointer-events", "all" );
-  $modalSets.css("pointer-events", "all");
-}
-
-function hideSetPicker(){
-  $("body").toggleClass('u--scroll--vertical-only');
-
-  TweenMax.to(
-    ".modal--set-container",
-    0.25,
-    { 
-      scale: 1.1,
-      autoAlpha: 0,
-      ease: Circ.easeOut
-    }
-  )
-}
 
 
 
 makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandle){
 
   var timeline = new TimelineMax();
-  var $bits = $(".drawer .bit");
+  var $drawerBits = $(".drawer .bit");
   var overlapThreshold = "0%"; 
   var nearBitElement;
   var snapThreshold = 60; // in pixels
@@ -137,41 +97,61 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
       Parallels.Keys.bindSnapToggle();
       // Parallels.Keys.bindCatchSpace();
 
-      // TODO: improve performance
-      // use image asset instead of CSS shadow:
-      // https://stackoverflow.com/questions/16504281/css3-box-shadow-inset-painful-performance-killer
-      timeline
-        .to($bitElement, 
-          0.10, 
-          {
-            scale: 1.05,
-            boxShadow: "rgba(0, 0, 0, 0.2) 0 16px 32px 0",
-            ease: Expo.easeOut
-        })
-        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1.5, autoAlpha: "0.1", ease: Expo.easeOut }), "-=0.10";
+      $bitElement.addClass('dragging');
+      $bitElement.toggleClass('near');
 
-        $bitElement.addClass('dragging');
-      
-      showSetPicker($bitElement);
+      // allow bit to be dragged over the drop area, to indicate which set to add it to
+      $bitElement.zIndex = $modalContainer.zIndex() + 1;
+      $modalContainer.css("pointer-events", "all" );
+      $modalSets.css("pointer-events", "all");
     },
 
     onRelease: function(event){
       // Parallels.Keys.unbindSnapToggle();
       // Parallels.Keys.unbindCatchSpace();
       Parallels.Keys.bindActions();
-
-      timeline
-        .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
-        .to($bitElement.find('.bit__drag-handle'), 0.1, { scale: 1, autoAlpha: "1", ease: Expo.easeOut }), "-=0.10";
-   
       $bitElement.removeClass('dragging');
-
+      $drawerBits.removeClass('near');
     },
 
     onDragStart:function(event){
 
       Parallels.log.debug(event.type, " : dragStart: ", this.getDirection("start"), " : ");
       Parallels.Audio.player.play('fx-cinq-drop');
+
+      // if more than 1 is selected, collect into a stack
+
+
+
+
+      ///////////// SHOW SET MODAL, WIRE EVENTS FOR PICKER
+      // TODO: merge into show/hide into one toggle function. Reuse speed of animation, ease type, scale value
+      // Inspired by: http://tympanus.net/Development/DragDropInteractions/modal.html
+      var $modalContainer = $(".modal--set-container");
+      var $modalSets = $(".modal__sets");
+
+      $("body").addClass('u--scroll--vertical-only');
+      $("body").removeClass('u--scroll--none');
+
+      TweenMax.set($modalContainer, 
+      { 
+        x: verge.scrollX(),
+        y: verge.scrollY()
+      });
+
+      TweenMax.fromTo(
+        $modalContainer,
+        0.25,
+        {
+          scale: 1.1
+        },
+        { 
+          scale: 1,
+          autoAlpha: 1,
+          ease: Circ.easeOut
+        }
+      )
+
     },
 
     onDrag: function(e) {
@@ -183,10 +163,10 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
       //   // loop through all bits, and run a hit test on each one against dragging bit
       //   // TODO: restrict search to only what's visible in viewport, via Verge?
       //   var nearBitCount = 0;
-      //   for(var i = 0; i < $bits.length; i++){
+      //   for(var i = 0; i < $drawerBits.length; i++){
       
-      //     if (this.hitTest($bits[i], overlapThreshold))  {
-      //       nearBitElement = $bits[i];
+      //     if (this.hitTest($drawerBits[i], overlapThreshold))  {
+      //       nearBitElement = $drawerBits[i];
       //       nearBitCount = nearBitCount + 1;
       //       showSnapGuides();
       //     }
@@ -218,39 +198,25 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
       // snap to nearest bit
       // via http://greensock.com/forums/topic/9265-draggable-snapping-to-specific-points-with-sensitivity/
 
-      hideSetPicker();
+      $("body").removeClass('u--scroll--vertical-only');
+      $("body").addClass('u--scroll--none');
 
-      // TODO: save bit into selected set here. 
-      // Where do we insert it in the set canvas? how do we indicate it's new?       
+      $drawerBits.removeClass('near');
+      
+      TweenMax.to(
+        ".modal--set-container",
+        0.25,
+        { 
+          scale: 1.1,
+          autoAlpha: 0,
+          ease: Circ.easeOut
+        }
+      )
 
-
-      // if (Session.equals('isSnapEnabled', true)){
-
-      //   // if snapping was set, get the new snap position
-      //   if ($(nearBitElement).hasClass('near--top')){
-      //     y = (nearBitRect.top - dragBitRect.height) + verge.scrollY();
-      //     $(nearBitElement).removeClass("near--top");
-      //   }
-
-      //   else if ($(nearBitElement).hasClass('near--bottom')){
-      //     y = (nearBitRect.bottom) + verge.scrollY();
-      //     $(nearBitElement).removeClass("near--bottom");
-      //   }
-      // }
 
       TweenLite.to($bitElement, 0.1, { x: parseInt(x), y: parseInt(y), ease: Circ.easeOut });
 
-      // var mongoId = this.target.dataset.id;
-
-      // // save new position to db
-      // Meteor.call('changeState', {
-      //   command: 'updateBitPosition',
-      //   data: {
-      //     canvasId: Session.get('canvasId'),
-      //     _id: mongoId,
-      //     position: { x: x, y: y }
-      //   }
-      // });
+    
 
       // a random tone from the series, in the mid-range of the scale
       // Parallels.Audio.player.play('tone--aalto-dubtechno-mod-' + _.random(4, 8));
@@ -264,49 +230,13 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
      //    Parallels.log.debug("bit:snap" );
      //  }
 
-      // animate out dragging shadow
-      timeline
-        .to($bitElement, 0.1, { scale: 1, boxShadow: "0", ease: Expo.easeOut })
-        .to($bitElement.find('.bit__drag-handle'), 0.05, { scale: 1, autoAlpha: "1", ease: Expo.easeOut })
-
       $bitElement.removeClass('dragging');
-      // nearBitElement = null;
-      // clearAllGuides();
-      // Session.set('isSnapEnabled', false);
+
     }
 
   });
 
   return draggable;
-
-  // function clearAllGuides(){
-  //   $(".near--bottom").removeClass("near--bottom");
-  //   $(".near--top").removeClass("near--top");
-  //   $(".near--left").removeClass("near--left");
-  //   $(".near--right").removeClass("near--right");
-  // }
-
-  // function showSnapGuides(){
-  //   var nearBitRect = $(nearBitElement)[0].getClientRects()[0];
-  //   var dragBitRect = $bitElement[0].getClientRects()[0];
-
-  //   // console.log('-----------');
-  //   // console.log("nearbit: ", nearBitElement.id, " : ", nearBitRect);
-  //   // console.log("dragBit: ", $bitElement.id, " : ", dragBitRect);
-  //   // console.log('-----------');
-
-  //   // show bottom snap guide
-  //   if (dragBitRect.top > (nearBitRect.bottom - snapThreshold)){
-  //     $(nearBitElement).addClass("near--bottom");
-  //     $(nearBitElement).removeClass("near--top");
-  //   }
-
-  //   // show top snap guide
-  //   if (dragBitRect.bottom < (nearBitRect.top + snapThreshold)){
-  //     $(nearBitElement).addClass("near--top");
-  //     $(nearBitElement).removeClass("near--bottom");
-  //   }
-  // }
 
 
 };

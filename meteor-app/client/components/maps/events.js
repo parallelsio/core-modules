@@ -145,7 +145,7 @@ function selectedBits(e) {
   $(".marquee-select").width(0).height(0);
 }
 
-
+// TODO: make this utility function
 function doObjectsCollide(a, b) {
     
   var aTop = a.offset().top;
