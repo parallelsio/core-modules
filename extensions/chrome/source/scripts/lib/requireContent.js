@@ -11,7 +11,7 @@ require.load = function (context, moduleName, url) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       //sourceURL is needed for debugging in chrome
-      eval(xhr.responseText + "\n//@ sourceURL=" + url); // jshint ignore:line
+      eval(xhr.responseText + "\n//# sourceURL=" + url); // jshint ignore:line
       context.completeLoad(moduleName);
     }
   };
