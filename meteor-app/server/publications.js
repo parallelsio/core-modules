@@ -9,14 +9,11 @@
 // This might be a solution: http://meteorpatterns.com/Sewdn/query-collections
 
 Meteor.publish('Drawer.bits', function() {
-  return Bits.find( {}, { limit: 40 }); 
+  return Bits.find( {}, { sort: { timestamp: -1 }, limit: 20 });
 });
 
 Meteor.publish('Canvas.bits', function(canvasId) {
-	// TODO: this will max the max available on the client for a canvas at 100 bits
-	// We should probably restrict this anyway what's in the viewport, keep things cached to some
-	// bounds outside of the viewport, then pull in bits as person scrolls the canvas
-  return Bits.find( {} , { limit: 100 }); 
+  return Bits.find( { canvasId: canvasId } , { limit: 100 }); 
 });
 
 Meteor.publish('errors', function() {
