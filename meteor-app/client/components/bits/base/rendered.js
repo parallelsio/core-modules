@@ -86,6 +86,7 @@ Template.bit.onRendered(function (){
     // TODO: should probably make this more explicit that it's bits inside the map, not the drawer
 
     var bit = Bits.findOne(bitDatabaseId);
+    if (!bit) { return } // if it's just been deleted from the canvas, nothing left to do
 
     // this utility function is scoped to the drawer   
     // if nothing is found, this will be empty

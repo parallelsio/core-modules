@@ -1,6 +1,7 @@
 // use lodash instead of underscore
 // https://github.com/meteor/meteor/issues/1009
 import * as _ from 'lodash';
+import * as verge from 'verge';
 
 Utilities = {
 
@@ -10,6 +11,8 @@ Utilities = {
     return $(bitHtmlElement).data('id');
   },
 
+  // TODO: confusing name, set refers to an application set of bits, but that's
+  // not intuitive with the get prefix
   getSetBitElement: function (bitDatabaseId){
     return $("[data-id='" + bitDatabaseId + "']");
   },
@@ -103,8 +106,8 @@ Utilities = {
 
   getElementCenter: function(rect){
     return { 
-      x: parseInt((rect.left + rect.right) / 2),
-      y: parseInt((rect.top + rect.bottom) / 2)
+      x: parseInt((rect.left + rect.right) / 2) + verge.scrollX(),
+      y: parseInt((rect.top + rect.bottom) / 2) + verge.scrollY()
     }     
   },
 

@@ -1,3 +1,9 @@
+// TODO: imports belong to Parallels.Animation.General.poof
+// https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies
+import mojs from 'mo-js';
+import MojsPlayer from 'mojs-player';
+
+
 BitEvents = {
 
   // prevents bits that were under the bit person is dragging, from starting to highlight
@@ -85,19 +91,44 @@ Template.bit.events({
   },
 
   'click .controls__icon-delete': function (event, template) {
+    var $bitElement = $(template.firstNode);
 
     Parallels.log.debug("starting bit:delete on ", template.data._id);
     Parallels.Audio.player.play('fx-tri');
 
-      Meteor.call('changeState', {
-        command: 'deleteBit',
-        data: {
-          canvasId: Session.get('canvasId'),
-          _id: template.data._id
-        }
-      });
+    Meteor.call('changeState', {
+      command: 'deleteBit',
+      data: {
+        canvasId: Session.get('canvasId'),
+        _id: template.data._id
+      }
+    });
 
     Session.set('textBitEditingId', null);
+
+    // TODO: use mouse movement momentum angle to affect direction of lines
+    // var x = event.pageX;
+    // var y = event.pageY;
+    // var coords = { x, y };
+
+    // use bit center point as spark point for animation
+    var bitRect = $bitElement[0].getClientRects()[0];
+    var coords = Utilities.getElementCenter(bitRect);
+
+    var options = {
+      seedPoint: coords
+    }
+
+    // skip a beat, then display the delete animation
+    // not just stylistic, added benefit of not overlapping with Greensock fade to decrease CPU use
+    // TODO: play reverse animation if undo.
+    Meteor.setTimeout(function(){
+      Parallels.Animation.General.poof(options);
+      }, 
+      325
+    );
+
+
   }
 
 });

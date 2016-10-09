@@ -94,6 +94,7 @@ Parallels.Keys = {
       var bitHoveringId = Session.get('bitHoveringId');
 
       if (bitHoveringId) {
+
         Parallels.log.debug("starting bit:delete on ", bitHoveringId);
         Parallels.Audio.player.play('fx-tri');
         Meteor.call('changeState', {
@@ -103,6 +104,33 @@ Parallels.Keys = {
             _id: bitHoveringId
           }
         });
+
+        Session.set('textBitEditingId', null);
+
+        // TODO: use mouse movement momentum angle to affect direction of lines
+        // var x = event.pageX;
+        // var y = event.pageY;
+        // var coords = { x, y };
+
+        var $bitElement = Utilities.getSetBitElement(bitHoveringId);
+
+        // use bit center point as spark point for animation
+        var bitRect = $bitElement[0].getClientRects()[0];
+        var coords = Utilities.getElementCenter(bitRect);
+
+        var options = {
+          seedPoint: coords
+        }
+
+        // skip a beat, then display the delete animation
+        // not just stylistic, added benefit of not overlapping with Greensock fade to decrease CPU use
+        // TODO: play reverse animation if undo.
+        Meteor.setTimeout(function(){
+          Parallels.Animation.General.poof(options);
+          }, 
+          325
+        );
+
       }
 
       else {

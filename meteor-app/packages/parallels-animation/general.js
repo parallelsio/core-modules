@@ -1,3 +1,7 @@
+// TODO: move dependencies into this Atmosphere package.js
+// depends on mojs package
+// https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies
+
 Parallels.Animation.General = {
 
   shimmer: function (options) {
@@ -160,9 +164,7 @@ Parallels.Animation.General = {
 
      TODO:
      * convert animations to use RequestAnimationFrame for better perf
-
      * experiment with using <canvas> instead of DOM, for better perf
-
      * include End function in here
      -----------------------------------------------------------
      */
@@ -219,6 +221,76 @@ Parallels.Animation.General = {
 
 
     tl.play();
+
+  },
+
+  poof: function (options){
+
+    /*
+     PURPOSE:
+     Displays poof, with sparks. Animate outward sparks from a center point
+     -----------------------------------------------------------
+
+     OPTIONS/PARAMS:
+     seedPoint:  // x,y point of animation center/seed point
+     -----------------------------------------------------------
+
+     TODO:
+     -----------------------------------------------------------
+     - make colors part of options
+
+     */
+
+    // Adapted by combining elements from:
+    // ---- https://codepen.io/sol0mka/full/03e9d8f2fbf886aa1505c61c81d782a0/
+    // ---- https://codepen.io/sol0mka/pen/AXRAkg
+    var burst1 = new mojs.Burst({
+      left: 0, top: 0,
+      count:          8,
+      radius:         { 50: 150 },
+      children: {
+        shape:        'line',
+        stroke:       [ 'white', '#FFE217', '#FC46AD', '#D0D202', '#B8E986', '#D0D202' ],
+        scale:        1,
+        scaleX:       { 1 : 0 },
+        // pathScale:    'rand(.5, 1.25)',
+        degreeShift:  'rand(-90, 90)',
+        radius:       'rand(20, 40)',
+        // duration:     200,
+        delay:        'rand(0, 150)',
+        isForce3d:    true
+      }
+    });
+
+    var cloud = new mojs.Burst({
+      left: 0, 
+      top: 0,
+      radius:   { 4: 49 },
+      angle:    45,
+      count:    12,
+      children: {
+        radius:       10,
+        fill:         'white',
+        scale:        { 1: 0, easing: 'sin.in' },
+        pathScale:    [ .7, null ],
+        degreeShift:  [ 13, null ],
+        duration:     [ 500, 700 ],
+        isShowEnd:    false,
+        isForce3d:    true
+      }
+    });
+
+    var timeline = new mojs.Timeline();
+    timeline.add( cloud, burst1 );
+
+    cloud.tune(options.seedPoint);
+    burst1
+      .tune(options.seedPoint)
+      .generate()
+    
+    timeline.replay();
+
+    return timeline; // if it's needed, for chaining
 
   }
 

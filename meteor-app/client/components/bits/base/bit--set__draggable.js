@@ -77,7 +77,7 @@ makeSetBitDraggable = function makeSetBitDraggable($bitElement, $dragHandle){
     },
 
     onDrag: function(e) {
-      var dragBitRect = $($bitElement)[0].getClientRects()[0];
+      var dragBitRect = $bitElement[0].getClientRects()[0];
       // console.log(dragBitRect);
 
       if (Session.equals('isSnapEnabled', true)){
