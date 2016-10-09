@@ -97,13 +97,6 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
       Parallels.Keys.bindSnapToggle();
       // Parallels.Keys.bindCatchSpace();
 
-      $bitElement.addClass('dragging');
-      $bitElement.toggleClass('near');
-
-      // allow bit to be dragged over the drop area, to indicate which set to add it to
-      $bitElement.zIndex = $modalContainer.zIndex() + 1;
-      $modalContainer.css("pointer-events", "all" );
-      $modalSets.css("pointer-events", "all");
     },
 
     onRelease: function(event){
@@ -133,6 +126,15 @@ makeDrawerBitDraggable = function makeDrawerBitDraggable($bitElement, $dragHandl
       $("body").addClass('u--scroll--vertical-only');
       $("body").removeClass('u--scroll--none');
 
+
+      $bitElement.addClass('dragging');
+      $bitElement.toggleClass('near');
+
+      // allow bit to be dragged over the drop area, to indicate which set to add it to
+      $bitElement.zIndex = $modalContainer.zIndex() + 1;
+      $modalContainer.css("pointer-events", "all" );
+      $modalSets.css("pointer-events", "all");
+      
       TweenMax.set($modalContainer, 
       { 
         x: verge.scrollX(),
