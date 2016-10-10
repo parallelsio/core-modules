@@ -79,12 +79,14 @@ Template.bit.onRendered(function (){
     makeSetBitDraggable($bitElement, $dragHandle);
   }
 
-  // Run relevant animations when a bit position is updated
-  // 3 current entry points into this function:
-  // -- when bits first render on the set/canvas
-  // -- when the drawer is opened, and a bit renders in the drawer 
-  // -- when a bit is rendered after undoing a bit:delete
+  // Run relevant animations when a bit is touched, when:
+  // -- bits first render on the set/canvas
+  // -- the drawer is opened, and a bit renders in the drawer 
+  // -- bit is rendered after undoing a bit:delete
+  // -- bit:edit
+  // -- bit:image:drag + dropped
   Tracker.autorun(function() {
+    console.log('bit:rendered - tracker, main');
 
     var timeline = new TimelineMax();
 
@@ -124,6 +126,7 @@ Template.bit.onRendered(function (){
 
   // Track upload status for new Bits
   Tracker.autorun(function (computation) {
+    console.log('bit:rendered - tracker, upload');
     var bitUpload = Parallels.FileUploads[$bitElement.data('upload-key')];
     if (!bitUpload) {
       computation.stop();

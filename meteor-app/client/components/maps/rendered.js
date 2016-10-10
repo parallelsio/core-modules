@@ -6,6 +6,8 @@ Template.map.onRendered(function () {
   mapElement.style.minWidth = Session.get("mapWidth") + "px";
 
   Parallels.Audio.player.play("fx-welcome-v2");
+  
+  wireMojsExplore1();
 
   mapElement._uihooks = {
 

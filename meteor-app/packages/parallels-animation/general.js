@@ -237,13 +237,15 @@ Parallels.Animation.General = {
 
      OPTIONS/PARAMS:
      seedPoint:  object: x,y point of animation center/seed point
-     direction:  string: "forward" or "backward",
+     direction:  string: "forward" or "backward"
+     speed:      int: multiplier, passed into timeline object for how fast/slow to play animation
 
      -----------------------------------------------------------
 
      TODO:
      -----------------------------------------------------------
      - make colors part of options
+     - create re-usable instances, vs adding/removing fx from DOM/ https://github.com/legomushroom/mojs/issues/62
 
      */
 
@@ -289,16 +291,11 @@ Parallels.Animation.General = {
     });
 
     var timeline = new mojs.Timeline({
-      speed: options.speed, // default to regular
+      speed: options.speed, 
       
-      // TODO: delete the shapes created here to avoid accumulation in DOM
-      // onPlaybackComplete: function(){
-
-      //  this is no good, because it'll delete *all shapes
-      // and make overlapping animations cut off
-      //   $(".mojs-shape").remove();
-      //   console.log("removing shapes");
-      // }
+      onPlaybackComplete: function(){
+        $(this.el).remove();
+      }
     });
 
     timeline.add( cloud, burst );
