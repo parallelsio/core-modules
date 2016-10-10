@@ -119,7 +119,8 @@ Parallels.Keys = {
         var coords = Utilities.getElementCenter(bitRect);
 
         var options = {
-          seedPoint: coords
+          seedPoint: coords,
+          direction: "forward"
         }
 
         // skip a beat, then display the delete animation

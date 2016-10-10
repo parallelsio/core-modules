@@ -79,24 +79,47 @@ Template.bit.onRendered(function (){
     makeSetBitDraggable($bitElement, $dragHandle);
   }
 
-  // When a Bit position is updated during a concurrent session (by someone else)
-  // move the bit to it's new position on all other sessions/clients
+  // Run relevant animations when a bit position is updated
+  // 3 current entry points into this function:
+  // -- when bits first render on the set/canvas
+  // -- when the drawer is opened, and a bit renders in the drawer 
+  // -- when a bit is rendered after undoing a bit:delete
   Tracker.autorun(function() {
-    // for tracking canvas bits, since it already exists
-    // TODO: should probably make this more explicit that it's bits inside the map, not the drawer
 
+    var timeline = new TimelineMax();
+
+    // TODO: should probably make this more explicit that it's bits inside the map/canvas/set, not the drawer
+    //       Right now, if drawer open, both drawer + canvas/set share the same html5 data attribute.
+    //       This is a shortcut, so we can reuse the same bit template
     var bit = Bits.findOne(bitDatabaseId);
-    if (!bit) { return } // if it's just been deleted from the canvas, nothing left to do
+    if (!bit) { return; } // if it's just been deleted from the canvas, nothing left to do
 
-    // this utility function is scoped to the drawer   
-    // if nothing is found, this will be empty
+    // if this bit is in the drawer (vs in a canvas set), nothing left to do
     var $drawerBit = Utilities.getDrawerBitElement(bit._id);
+    if ($drawerBit.length){ return; }
 
-    // only if it's a bit that's on the canvas, not in the drawer
-    if (bit && !$drawerBit.length) {
-      var timeline = new TimelineMax();
-      timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
-    }
+    var $bit = Utilities.getSetBitElement(bit._id);
+
+    // Is this bit autorun a result of a bit redo after a delete?
+    // if so, play the poof animation backwards.
+    // TODO: janky, need a better way of pinpointing this scenario
+    // TODO: also, overlapping animations are cut off on redo.
+    var bitRect = $bit[0].getClientRects()[0];
+    if (bitRect){
+      // Use bit center point as spark point for animation
+      var coords = Utilities.getElementCenter(bitRect);
+      var options = {
+        seedPoint: coords,
+        direction: "backward",
+        speed: 1.5
+      }
+
+      Parallels.Animation.General.poof(options);         
+    }  
+
+    // move the bit to it's new position on all other sessions/clients
+    timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
+
   });
 
   // Track upload status for new Bits

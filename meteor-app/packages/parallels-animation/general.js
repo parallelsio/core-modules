@@ -226,13 +226,19 @@ Parallels.Animation.General = {
 
   poof: function (options){
 
+    // setting defaults, if not passed in
+    options.speed = options.speed || 1;
+    options.direction = options.direction || "forward";
+
     /*
      PURPOSE:
      Displays poof, with sparks. Animate outward sparks from a center point
      -----------------------------------------------------------
 
      OPTIONS/PARAMS:
-     seedPoint:  // x,y point of animation center/seed point
+     seedPoint:  object: x,y point of animation center/seed point
+     direction:  string: "forward" or "backward",
+
      -----------------------------------------------------------
 
      TODO:
@@ -244,8 +250,9 @@ Parallels.Animation.General = {
     // Adapted by combining elements from:
     // ---- https://codepen.io/sol0mka/full/03e9d8f2fbf886aa1505c61c81d782a0/
     // ---- https://codepen.io/sol0mka/pen/AXRAkg
-    var burst1 = new mojs.Burst({
-      left: 0, top: 0,
+    var burst = new mojs.Burst({
+      left: 0, 
+      top: 0,
       count:          8,
       radius:         { 50: 150 },
       children: {
@@ -253,12 +260,13 @@ Parallels.Animation.General = {
         stroke:       [ 'white', '#FFE217', '#FC46AD', '#D0D202', '#B8E986', '#D0D202' ],
         scale:        1,
         scaleX:       { 1 : 0 },
-        // pathScale:    'rand(.5, 1.25)',
         degreeShift:  'rand(-90, 90)',
         radius:       'rand(20, 40)',
-        // duration:     200,
         delay:        'rand(0, 150)',
-        isForce3d:    true
+        // pathScale:    'rand(.5, 1.25)',
+        // duration:     200,
+        isForce3d:    true,
+        isShowEnd:    false
       }
     });
 
@@ -269,7 +277,7 @@ Parallels.Animation.General = {
       angle:    45,
       count:    12,
       children: {
-        radius:       10,
+        radius:       8,
         fill:         'white',
         scale:        { 1: 0, easing: 'sin.in' },
         pathScale:    [ .7, null ],
@@ -280,18 +288,35 @@ Parallels.Animation.General = {
       }
     });
 
-    var timeline = new mojs.Timeline();
-    timeline.add( cloud, burst1 );
+    var timeline = new mojs.Timeline({
+      speed: options.speed, // default to regular
+      
+      // TODO: delete the shapes created here to avoid accumulation in DOM
+      // onPlaybackComplete: function(){
+
+      //  this is no good, because it'll delete *all shapes
+      // and make overlapping animations cut off
+      //   $(".mojs-shape").remove();
+      //   console.log("removing shapes");
+      // }
+    });
+
+    timeline.add( cloud, burst );
 
     cloud.tune(options.seedPoint);
-    burst1
+    burst
       .tune(options.seedPoint)
       .generate()
     
-    timeline.replay();
+    if (options.direction === "forward"){
+      timeline.replay(); 
+    }
+
+    else if (options.direction === "backward"){
+      timeline.replayBackward();
+    }
 
     return timeline; // if it's needed, for chaining
-
   }
 
 }

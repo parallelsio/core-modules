@@ -130,3 +130,7 @@ hr{
 .u--scroll--none {
   overflow: hidden;
 }
+
+[data-name="mojs-shape"] {
+  pointer-events: none;
+}
