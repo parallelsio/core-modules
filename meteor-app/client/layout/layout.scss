@@ -25,8 +25,6 @@ body {
 strong, b   { font-weight: 700; }
 a           { color: #8B8BF5; }
 
-
-
 .button { 
   cursor: pointer;
   padding: 0;
@@ -36,8 +34,6 @@ a           { color: #8B8BF5; }
   color: white;
   border: 0;
 } 
-
-
 
 .noselect {
   -webkit-touch-callout: none;
@@ -49,7 +45,6 @@ a           { color: #8B8BF5; }
   /* No support for these yet, future proofing */
   -o-user-select: none;
   user-select: none;
-
 }
 
 .field { 
@@ -74,9 +69,7 @@ ul li {
 // font awesome icons that are inline with text
 .fa__inline {    
   margin: 0 0.05em 0 0.5em;
-  
 }
-  
 
 hr{
   margin: 2em 0;
@@ -89,8 +82,7 @@ hr{
 // font awesome icons that are preceding text inside of an li
 .fa__leading-li { margin: 0 1.25em 0 0.25em;  }
 
-
-.close-button{
+.close-button {
   position: absolute;
   right: 1em;
   top: 1em;
@@ -134,3 +126,9 @@ hr{
 [data-name="mojs-shape"] {
   pointer-events: none;
 }
+
+// for debugging
+#js-mojs-player {
+  z-index: 100000 
+};
+

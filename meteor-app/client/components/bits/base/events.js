@@ -1,9 +1,3 @@
-// TODO: imports belong to Parallels.Animation.General.poof
-// https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies
-import mojs from 'mo-js';
-import MojsPlayer from 'mojs-player';
-
-
 BitEvents = {
 
   // prevents bits that were under the bit person is dragging, from starting to highlight

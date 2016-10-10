@@ -86,7 +86,7 @@ Template.bit.onRendered(function (){
   // -- bit:edit
   // -- bit:image:drag + dropped
   Tracker.autorun(function() {
-    console.log('bit:rendered - tracker, main');
+    // console.log('bit:rendered - tracker, main');
 
     var timeline = new TimelineMax();
 
@@ -126,7 +126,7 @@ Template.bit.onRendered(function (){
 
   // Track upload status for new Bits
   Tracker.autorun(function (computation) {
-    console.log('bit:rendered - tracker, upload');
+    // console.log('bit:rendered - tracker, upload');
     var bitUpload = Parallels.FileUploads[$bitElement.data('upload-key')];
     if (!bitUpload) {
       computation.stop();

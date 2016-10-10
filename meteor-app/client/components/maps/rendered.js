@@ -1,13 +1,13 @@
 Template.map.onRendered(function () {
 
+  wireMojsExplore1();
+
   var template = this;
   var mapElement = template.find('.map');
   mapElement.style.minHeight = Session.get("mapHeight") + "px";
   mapElement.style.minWidth = Session.get("mapWidth") + "px";
 
-  Parallels.Audio.player.play("fx-welcome-v2");
-  
-  wireMojsExplore1();
+  Parallels.Audio.player.play("fx-welcome-v2");  
 
   mapElement._uihooks = {
 

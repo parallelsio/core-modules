@@ -229,6 +229,7 @@ Parallels.Animation.General = {
     // setting defaults, if not passed in
     options.speed = options.speed || 1;
     options.direction = options.direction || "forward";
+    options.debug = options.debug || false;
 
     /*
      PURPOSE:
@@ -239,7 +240,7 @@ Parallels.Animation.General = {
      seedPoint:  object: x,y point of animation center/seed point
      direction:  string: "forward" or "backward"
      speed:      int: multiplier, passed into timeline object for how fast/slow to play animation
-
+     
      -----------------------------------------------------------
 
      TODO:
@@ -253,10 +254,10 @@ Parallels.Animation.General = {
     // ---- https://codepen.io/sol0mka/full/03e9d8f2fbf886aa1505c61c81d782a0/
     // ---- https://codepen.io/sol0mka/pen/AXRAkg
     var burst = new mojs.Burst({
-      left: 0, 
-      top: 0,
+      left:           0, 
+      top:            0,
       count:          8,
-      radius:         { 50: 150 },
+      radius:         { 50 : 150 },
       children: {
         shape:        'line',
         stroke:       [ 'white', '#FFE217', '#FC46AD', '#D0D202', '#B8E986', '#D0D202' ],
@@ -272,16 +273,36 @@ Parallels.Animation.General = {
       }
     });
 
+    // If debugger is on, show mojs workflow tools https://vimeo.com/185587462
+    // otherwise, default to designed easing curve
+    // TODO: this is buggy, and causing crashing on multiple sequential actions
+    if (options.debug){
+      var cloudChildrenCurve = new MojsCurveEditor({ 
+        isSaveState: false, 
+        name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
+      });
+
+      var easeValue = cloudChildrenCurve.getEasing();
+      $('#js-mojs-player').css({ zIndex: 100000 });
+    }
+
+    else {
+      var easeValue = 'sin.in';
+    }
+
     var cloud = new mojs.Burst({
-      left: 0, 
-      top: 0,
-      radius:   { 4: 49 },
+      left:     0, 
+      top:      0,
+      radius:   { 4 : 49 },
       angle:    45,
       count:    12,
       children: {
         radius:       8,
         fill:         'white',
-        scale:        { 1: 0, easing: 'sin.in' },
+        scale:        { 
+                          1 : 0,  // from value : to value
+                          easing: easeValue
+        },
         pathScale:    [ .7, null ],
         degreeShift:  [ 13, null ],
         duration:     [ 500, 700 ],
@@ -312,6 +333,8 @@ Parallels.Animation.General = {
     else if (options.direction === "backward"){
       timeline.replayBackward();
     }
+
+    if (options.debug) { new MojsPlayer({ add: timeline }); };
 
     return timeline; // if it's needed, for chaining
   }
