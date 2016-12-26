@@ -16,47 +16,62 @@ wireMojsExplore1 = function mojsExplore1(){
 	// 	debug: true
 	// }
 
+
+
+	 // var cloud = new mojs.Burst({
+  //     left: 0, 
+  //     top: 0,
+  //     radius:   { 4 : 49 },
+  //     angle:    45,
+  //     count:    12,
+  //     children: {
+  //       radius:       8,
+  //       fill:         'white',
+  //       scale:        { 
+  //                         1 : 0,  // from value : to value
+  //                         easing: cloudChildrenCurve.getEasing() 
+  //       },
+  //       pathScale:    [ .7, null ],
+  //       degreeShift:  [ 13, null ],
+  //       duration:     [ 500, 700 ],
+  //       isShowEnd:    false,
+  //       isForce3d:    true
+  //     }
+  //   });
+
 	// dont reuse these name properties, as they are shared in localStorage.
-  var cloudChildrenCurve = new MojsCurveEditor({ 
-    isSaveState: false, 
-    name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
+  // var cloudChildrenCurve = new MojsCurveEditor({ 
+  //   isSaveState: false, 
+  //   name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
+  // });
+
+  var cloudChildrenCurve = new MojsCurveEditor({
+  	isSaveState:  false,
+  	name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
   });
 
-	 var cloud = new mojs.Burst({
-      left: 0, 
-      top: 0,
-      radius:   { 4 : 49 },
-      angle:    45,
-      count:    12,
-      children: {
-        radius:       8,
-        fill:         'white',
-        scale:        { 
-                          1 : 0,  // from value : to value
-                          easing: cloudChildrenCurve.getEasing() 
-        },
-        pathScale:    [ .7, null ],
-        degreeShift:  [ 13, null ],
-        duration:     [ 500, 700 ],
-        isShowEnd:    false,
-        isForce3d:    true
-      }
-    });
+	const polygon = new mojs.Shape({
+	  shape:  			'polygon',
+	  points:       5,
+	  left:         '75%',
+	  fill:         { 'deeppink' : '#00F87F' },
+	  x:            { 'rand(-100%, -200%)' : 0  },
+	  angle:        { 0 : 'rand(0, 360)' },
+	  radius:       { 25 : 3 },
 
-
-
-	// var square = new mojs.Html({
-	// 	el: '.car',
-	// 	y: { 0: 300 },
-	// 	duration: 2000 // ms
-	// });
+	  duration:     2000,
+	  easing: cloudChildrenCurve.getEasing()
+	});
 
 	// var timeline = Parallels.Animation.General.poof(options);
+	var timeline = new mojs.Timeline();
 
-		var timeline = new mojs.Timeline();
-  timeline.add( cloud);
+  timeline.add(
+  	// cloud, 
+  	polygon
+  );
 
-  cloud.tune( { x: 100, y: 100 });
+  // cloud.tune( { x: 100, y: 100 });
   timeline.replay(); 
 
 	new MojsPlayer({ add: timeline });
