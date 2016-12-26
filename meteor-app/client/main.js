@@ -1,8 +1,8 @@
 // core dep for animations
 // https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies
 import mojs from 'mo-js';
-import MojsPlayer from 'mojs-player';
-import MojsCurveEditor from 'mojs-curve-editor';
+// import MojsPlayer from 'mojs-player';
+// import MojsCurveEditor from 'mojs-curve-editor';
 
 
 Meteor.startup(function () {
