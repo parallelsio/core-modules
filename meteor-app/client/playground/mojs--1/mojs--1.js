@@ -74,7 +74,7 @@ wireMojsExplore1 = function mojsExplore1(){
   // cloud.tune( { x: 100, y: 100 });
   timeline.replay(); 
 
-	new MojsPlayer({ add: timeline });
-	$('#js-mojs-player').css({ zIndex: 100000 });
+	// new MojsPlayer({ add: timeline });
+	// $('#js-mojs-player').css({ zIndex: 100000 });
 
 }
