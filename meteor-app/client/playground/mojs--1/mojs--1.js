@@ -45,34 +45,34 @@ wireMojsExplore1 = function mojsExplore1(){
   //   name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
   // });
 
-  var cloudChildrenCurve = new MojsCurveEditor({
-  	isSaveState:  false,
-  	name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
-  });
+ //  var cloudChildrenCurve = new MojsCurveEditor({
+ //  	isSaveState:  false,
+ //  	name: 'cloudChildrenCurve' + _.random(0, 9999999999) 
+ //  });
 
-	const polygon = new mojs.Shape({
-	  shape:  			'polygon',
-	  points:       5,
-	  left:         '75%',
-	  fill:         { 'deeppink' : '#00F87F' },
-	  x:            { 'rand(-100%, -200%)' : 0  },
-	  angle:        { 0 : 'rand(0, 360)' },
-	  radius:       { 25 : 3 },
+	// const polygon = new mojs.Shape({
+	//   shape:  			'polygon',
+	//   points:       5,
+	//   left:         '75%',
+	//   fill:         { 'deeppink' : '#00F87F' },
+	//   x:            { 'rand(-100%, -200%)' : 0  },
+	//   angle:        { 0 : 'rand(0, 360)' },
+	//   radius:       { 25 : 3 },
 
-	  duration:     2000,
-	  easing: cloudChildrenCurve.getEasing()
-	});
+	//   duration:     2000,
+	//   easing: cloudChildrenCurve.getEasing()
+	// });
 
-	// var timeline = Parallels.Animation.General.poof(options);
-	var timeline = new mojs.Timeline();
+	// // var timeline = Parallels.Animation.General.poof(options);
+	// var timeline = new mojs.Timeline();
 
-  timeline.add(
-  	// cloud, 
-  	polygon
-  );
+ //  timeline.add(
+ //  	// cloud, 
+ //  	polygon
+ //  );
 
-  // cloud.tune( { x: 100, y: 100 });
-  timeline.replay(); 
+ //  // cloud.tune( { x: 100, y: 100 });
+ //  timeline.replay(); 
 
 	// new MojsPlayer({ add: timeline });
 	// $('#js-mojs-player').css({ zIndex: 100000 });
