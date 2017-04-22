@@ -1,12 +1,8 @@
 // core dep for animations
 // https://guide.meteor.com/writing-atmosphere-packages.html#npm-dependencies
-import mojs from 'mo-js';
-import MojsPlayer from 'mojs-player';
-import MojsCurveEditor from 'mojs-curve-editor';
-
 
 Meteor.startup(function () {
-  
+
   Parallels.log.debug("Meteor.startup begin.");
 
   // we enable the core *actions, ie
@@ -39,8 +35,8 @@ Meteor.startup(function () {
   Session.set('selectedBitsCount', 0);
   Session.set('mapWidth', 5000); // pixels
   Session.set('mapHeight', 5000); // pixels
-  Session.set('viewingDrawer', false); 
-  Session.set('debugAnimations', false); 
+  Session.set('viewingDrawer', false);
+  Session.set('debugAnimations', false);
 
   // TODO: make as util?
   $.fn.focusWithoutScrolling = function(){
@@ -48,5 +44,5 @@ Meteor.startup(function () {
     this.focus();
     window.scrollTo(x, y);
     return this;
-  };  
+  };
 });

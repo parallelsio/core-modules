@@ -7,8 +7,8 @@ Package.describe({
 });
 
 Npm.depends({
-  "sourced": "0.0.14",
-  "sourced-repo-mongo": "0.3.2",
+  "sourced": "0.1.4",
+  "sourced-repo-mongo": "0.3.12",
   "eventemitter2": "0.4.14"
 });
 
