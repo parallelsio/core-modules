@@ -1,5 +1,3 @@
-import Gifffer from 'Gifffer';
-
 
 Template.bit.onRendered(function (){
 
@@ -81,7 +79,7 @@ Template.bit.onRendered(function (){
 
   // Run relevant animations when a bit is touched, when:
   // -- bits first render on the set/canvas
-  // -- the drawer is opened, and a bit renders in the drawer 
+  // -- the drawer is opened, and a bit renders in the drawer
   // -- bit is rendered after undoing a bit:delete
   // -- bit:edit
   // -- bit:image:drag + dropped
@@ -116,8 +114,8 @@ Template.bit.onRendered(function (){
         speed: 1.5
       }
 
-      Parallels.Animation.General.poof(options);         
-    }  
+      Parallels.Animation.General.poof(options);
+    }
 
     // move the bit to it's new position on all other sessions/clients
     timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
@@ -171,12 +169,12 @@ Template.bit.onRendered(function (){
   });
 
   if (bit.filename && bit.filename.toUpperCase().split('.').pop() === "GIF"){
-    Gifffer(); 
+    Gifffer();
     $bitElement.addClass('bit--gif');
 
     // TODO:
-    // detect if a GIF is animated https://www.npmjs.com/package/animated-gif-detector. 
-    // If not animated, convert + save as JPG. This is so it doesnt get a Play button incorrectly via Gifffer, 
+    // detect if a GIF is animated https://www.npmjs.com/package/animated-gif-detector.
+    // If not animated, convert + save as JPG. This is so it doesnt get a Play button incorrectly via Gifffer,
     // which isnt smart enough to know
   }
 

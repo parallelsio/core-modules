@@ -11,9 +11,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "@babel/runtime": "^7.3.1",
+    "bcrypt-nodejs": "^0.0.3",
     "chroma-js": "^1.2.1",
-    "gifffer": "^1.4.0",
     "granim": "^1.0.31",
     "js-clipper": "^1.0.1",
     "lodash": "^4.15.0",
@@ -21,6 +21,7 @@
     "mo-js": "^0.288.1",
     "mojs-curve-editor": "^1.4.5",
     "mojs-player": "^0.43.15",
+    "name-this-color": "^1.0.2",
     "neo4j": "1.1.1",
     "verge": "^1.9.1"
   }

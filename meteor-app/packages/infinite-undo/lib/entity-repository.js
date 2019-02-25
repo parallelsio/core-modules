@@ -17,6 +17,10 @@ _.extend(EntityRepository.prototype, {
 
       if (!entity) {
         EntityRepository.super_.prototype.get.call(self, id, function (err, entity) {
+          if (!entity) {
+            entity = new self.entityType([], []);
+            entity.id = id;
+          }
           self.cache[id] = entity;
 
           InfiniteUndo.CommandRegistry.registeredEvents.forEach(function (event) {

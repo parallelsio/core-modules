@@ -37,34 +37,36 @@ Parallels.AppModes['preview-bit'] = {
       var tl = Parallels.Animation.Image.morph(options);
 
       tl
-        .to( 
-          $bit.find('.scale__container'), 
-          0.25, 
-          { 
+        .to(
+          $bit.find('.scale__container'),
+          0.25,
+          {
             width: 400,
             height: "100%",
-            opacity: 1, 
-            autoAlpha: 1, 
-            ease: Circ.easeIn 
+            opacity: 1,
+            autoAlpha: 1,
+            ease: Circ.easeIn
           },
           "-=0.1"
         )
-        
+
         .staggerTo(
           $bit.find('.scale__container .swatch'),
           0.1,
           {
             opacity: 1,
             autoAlpha: 1,
-            ease: Circ.easeIn 
+            ease: Circ.easeIn
           },
           0.05,
           "-=0.25"
         )
-      
+
       tl.play();
       Draggable.get( $bit ).disable();
-      classifyColors($bit); 
+      if (bit.type === 'image') {
+        classifyColors($bit);
+      }
 
       // $bit.removeClass('hovering');
       // Session.set('bitHoveringId', null);
@@ -106,21 +108,21 @@ Parallels.AppModes['preview-bit'] = {
       var tl = Parallels.Animation.Image.morph(options);
 
       tl
-        .to( 
-          $bit.find('.scale__container'), 
-          0.1, 
-          { 
-            opacity: 0, 
-            height: 0, 
-            width: 0, 
-            autoAlpha: 0, 
-            ease: Power4.easeOut 
-          }, 
+        .to(
+          $bit.find('.scale__container'),
+          0.1,
+          {
+            opacity: 0,
+            height: 0,
+            width: 0,
+            autoAlpha: 0,
+            ease: Power4.easeOut
+          },
           "-=0.4"
         )
 
         .set ($bit.find('.scale__container .swatch'), { opacity: 0, autoAlpha: 0 }  )
-      
+
       tl.play();
 
       Draggable.get( $bit ).enable();

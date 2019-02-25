@@ -6,6 +6,14 @@ import nameThisColor from 'name-this-color';
 // depends on vibrant.js, vendored. TODO: refactor via import
 
 
+getCrossOriginImage = function getCrossOriginImage(imgElement, cb) {
+  var downloadedImg = new Image;
+  downloadedImg.crossOrigin = "Anonymous";
+  downloadedImg.onload = function() {
+    cb(this);
+  };
+  downloadedImg.src = imgElement.src;
+};
 
 /////////////////////
 
@@ -14,23 +22,29 @@ classifyColors = function classifyColors($bitElement){
 
   var chromaNumStops = 10;
 
-  // load an image  
+  // load an image
   var imgElement = $bitElement.find('img').first()[0];
 
   // necessary for Vibrant to work because image is on :9000 and server is on :3000
   // probably can come out on production
-  // TODO: not working reliably. only every 3rd refresh? 
+  // TODO: not working reliably. only every 3rd refresh?
   // imgElement.setAttribute('crossOrigin', 'anonymous');
   imgElement.crossOrigin = 'anonymous';
 
-  var sample = sampleColorsWithVibrant(imgElement);
-  // var sample = sampleColorsWithKMeans(imgElement);
+  getCrossOriginImage(imgElement, function (img) {
+    var sample = sampleColorsWithVibrant(img);
+    makeAndShowVibrantScale(sample);
+    displayGradientAnimation($bitElement, sample);
+  });
+
+  // This destroys Chrome by eating CPU. Only un-comment for test/demo purposes.
+  // Look into processing on a background thread.
+  // sampleColorsWithKMeans(imgElement);
 
 
-  
   // TODO: Currently broken because of browser content policy, intermittently + and unreliably working.
   // Also, results are not great: washed out colors, because Vibrant.js quantizes colors before sampling
-  // K-means method gives better colors, re: perception. 
+  // K-means method gives better colors, re: perception.
   // Vibrant has useful population function though, which lets us show the ratio of colors.
   function sampleColorsWithVibrant(imgElement){
     var vibSwatchesArray = [];
@@ -38,7 +52,7 @@ classifyColors = function classifyColors($bitElement){
 
     try {
       vibrant = new Vibrant(imgElement);
-    } 
+    }
 
     catch (e) {
       console.log("Tainted canvas exception: aborting: ", e);
@@ -54,9 +68,9 @@ classifyColors = function classifyColors($bitElement){
       if (swatches.hasOwnProperty(swatch) && swatches[swatch]){
         // Parallels.log.debug(swatch, ": ", swatches[swatch].getHex(), ": ", swatches[swatch].population);
         populationSum = populationSum + swatches[swatch].population;
-        vibSwatchesArray.push( { 
-          name: swatch, 
-          hex: swatches[swatch].getHex(), 
+        vibSwatchesArray.push( {
+          name: swatch,
+          hex: swatches[swatch].getHex(),
           population: swatches[swatch].population
         })
       }
@@ -65,17 +79,17 @@ classifyColors = function classifyColors($bitElement){
     }
 
     // transform the vibrant population given, into a range between 0 and 1
-    // so we can later make predictably sized visualizations of color proportions  
+    // so we can later make predictably sized visualizations of color proportions
     // save each new population within range as a new property into each swatch
 
     // TODO: adjust for small % if less than 5%, show as 5% so it's visible
     _.each(vibSwatchesArray, function(value, key) {
 
        var options = {
-        oldNumber: value.population, 
-        oldMin: 0,               
-        oldMax: populationSum, 
-        newMin: 0, 
+        oldNumber: value.population,
+        oldMin: 0,
+        oldMax: populationSum,
+        newMin: 0,
         newMax: 1
       }
 
@@ -115,9 +129,8 @@ classifyColors = function classifyColors($bitElement){
         width: 0,
         height: 0,
         position: 'absolute'
-      })
-      .attr('crossOrigin', 'anonymous');
-      
+      });
+
     $bitElement.prepend($canvas);
 
     // using kmeans functions to sample images
@@ -126,19 +139,19 @@ classifyColors = function classifyColors($bitElement){
     var scale;
 
       // TODO: remove in production
-    ctxImg.setAttribute('crossOrigin', 'anonymous');
-    ctxImg.src = imgElement.src;
+    ctxImg.crossOrigin = 'Anonymous';
     ctxImg.onload = function() {
       var kMeansColorsArray;
 
       // TODO: move this to async function
       // TODO: process a smaller version of the image
       kMeansColorsArray = processImage(ctxImg, ctx);
-      scale = chroma.bezier(kMeansColorsArray).scale(); 
+      scale = chroma.bezier(kMeansColorsArray).scale();
       console.log(scale);
 
-      makeAndShowChromaScale();
+      makeAndShowChromaScale(scale);
     }
+    ctxImg.src = imgElement.src;
 
     // from http://charlesleifer.com/static/colors/
     // http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/
@@ -235,7 +248,7 @@ classifyColors = function classifyColors($bitElement){
 
     function processImage(img, ctx) {
       var points = [];
-      
+
       ctx.drawImage(img, 0, 0, 200, 200);
       data = ctx.getImageData(0, 0, 200, 200).data;
 
@@ -261,18 +274,18 @@ classifyColors = function classifyColors($bitElement){
   }
 
 
-  function makeAndShowChromaScale(){
+  function makeAndShowChromaScale(chromaScale){
 
     var $chromaScale = $('<div>').addClass('scale--chroma');
-    var scaleColors = sample.chromaScale.colors(chromaNumStops);
+    var scaleColors = chromaScale.colors(chromaNumStops);
 
      _.each(scaleColors, function(value, key) {
 
       var $swatch = $('<div>', {
-        // src: 
+        // src:
         class: 'swatch swatch--chroma' ,
         css: {
-          backgroundColor: sample.chromaScale(key *  (1/chromaNumStops) ).hex()
+          backgroundColor: chromaScale(key *  (1/chromaNumStops) ).hex()
         }
       });
 
@@ -281,10 +294,10 @@ classifyColors = function classifyColors($bitElement){
 
     var $scaleContainer = $('<div>').addClass('scale__container');
     $scaleContainer.prepend($chromaScale);
-    $bitElement.prepend($scaleContainer);  
+    $bitElement.prepend($scaleContainer);
   }
 
-  function makeAndShowVibrantScale(){
+  function makeAndShowVibrantScale(sample){
     var $vibrantScale = $('<div>').addClass('scale--vibrant');
 
     _.each(sample.vibSortedSwatches, function(value, key) {
@@ -296,11 +309,11 @@ classifyColors = function classifyColors($bitElement){
             backgroundColor: value.hex
         },
         // figure the % this color represents from the total
-        // then make the width of this box 
+        // then make the width of this box
         // TODO: adjust for small %
         width: colorPercent + "%"
       });
-      
+
       var colorName = nameThisColor(value.hex)[0].title;
       var colorText = value.name + ':' + colorPercent + ':' + colorName;
       // console.log('swatch color: ', colorName);
@@ -313,15 +326,15 @@ classifyColors = function classifyColors($bitElement){
 
     var $scaleContainer = $('<div>').addClass('scale__container');
     $scaleContainer.prepend($vibrantScale);
-    $bitElement.prepend($scaleContainer);    
+    $bitElement.prepend($scaleContainer);
 
   }
 
 
 };
 
-// TODO: check for image being loaded, and sample being processed before running this 
-// one thing we can do is move the classifying to when the image is uploaded, and store values in db 
+// TODO: check for image being loaded, and sample being processed before running this
+// one thing we can do is move the classifying to when the image is uploaded, and store values in db
 displayGradientAnimation = function displayGradientAnimation($bitElement, sample){
 
   var $gradientCanvas = $('<canvas>').addClass('granim__canvas');
@@ -329,7 +342,7 @@ displayGradientAnimation = function displayGradientAnimation($bitElement, sample
 
   // animate between colors in scale
   var granimInstance = new Granim({
-    element: $gradientCanvas,
+    element: '.granim__canvas',
     name: 'basic-gradient',
     direction: 'diagonal',
     opacity: [1, 1],

@@ -5,7 +5,7 @@
 // ******************** ALL BITS *************
 
 .bit {
-  display: none; // hide bits by default when map loads: animation functions display them 
+  display: none; // hide bits by default when map loads: animation functions display them
   position: absolute;
   -webkit-font-smoothing: antialiased;
   outline: none;
@@ -20,14 +20,14 @@
 
 // Emulate the border. Using this technique so bit isn't shifted by border
 // !important is needed, because bit drag/drop via Greensock Draggable
-// sets box-shadow via inline style, and we want this to take precedence 
+// sets box-shadow via inline style, and we want this to take precedence
 .near--bottom  { border-color: transparent; /* remove the border's colour */  @extend .ripple--bottom; }
 .near--top     { border-color: transparent; /* remove the border's colour */ @extend .ripple--top; }
 .near--left    { box-shadow: -6px 0 0 #3f75ff !important;  border-color: transparent; /* remove the border's colour */  @extend .ripple--left; }
 .near--right   { box-shadow: 6px 0 0 #3f75ff !important; border-color: transparent; /* remove the border's colour */  @extend .ripple--right; }
 .near          { box-shadow: 6px 0 6px #3f75ff !important; border-color: transparent; /* remove the border's colour */  @extend .ripple--top; @extend .ripple--bottom; }
 
-.ripple--bottom, 
+.ripple--bottom,
 .ripple--left,
 .ripple--right {
   animation-name: rippleBottom;
@@ -46,14 +46,14 @@
 }
 
 // adapted from: https://www.viget.com/uploads/file/boxshadows#
-@-webkit-keyframes rippleBottom{ 
+@-webkit-keyframes rippleBottom{
   0%   { box-shadow: 0 4px 0 0 rgba(63,117,255, 1.0) }
   15%  { box-shadow: 0 5px 0 0 rgba(63,117,255, 0.8) }
   50%  { box-shadow: 0 7px 0 0 rgba(63,117,255, 0.7) }
   100% { box-shadow: 0 4px 0 0 rgba(63,117,255, 0.9) }
 }
 
-@-webkit-keyframes rippleTop{ 
+@-webkit-keyframes rippleTop{
   0%   { box-shadow: 0 -4px 0 0 rgba(63,117,255, 1.0) }
   15%  { box-shadow: 0 -5px 0 0 rgba(63,117,255, 0.8) }
   50%  { box-shadow: 0 -7px 0 0 rgba(63,117,255, 0.7) }
@@ -92,7 +92,7 @@
 }
 
  /* (Optional) Apply a "closed-hand" cursor during drag operation. */
-.grabbable:active { 
+.grabbable:active {
     cursor: -moz-grabbing !important;
     cursor: -webkit-grabbing !important;
     cursor: grabbing !important;
@@ -108,7 +108,7 @@
 
 
 
-// ************** text bits 
+// ************** text bits
 
 .bit.text .bit__content {
   background: white;
@@ -132,7 +132,7 @@
   background:    -moz-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* FF3.6+ */
   background:     -ms-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* IE10 */
   background:      -o-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Opera 11.10+ */
-  background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */ 
+  background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */
 
 }
 
@@ -140,7 +140,7 @@
   position: absolute;
   display: none;
   text-align: center;
-  width: 100%;  
+  width: 100%;
   z-index: 2;
 }
 
@@ -160,19 +160,19 @@
 }
 
 .controls__icon:hover {
-  background-color: #3C9FFF; 
+  background-color: #3C9FFF;
   color: white;
   opacity: 0.75;
 }
 
 .bit__resize {
   position: absolute;
-  display: none; 
+  display: none;
 
   bottom: -1px;
   right: -1px;
-  height: 0; 
-  width: 0; 
+  height: 0;
+  width: 0;
 
   height: 30px;
   width: 30px;
@@ -185,11 +185,11 @@
 
   bottom: 0;
   right: 0;
-  height: 0; 
+  height: 0;
 
   height: 30px;
   width: 30px;
-  
+
   border-top: 30px solid transparent;
   border-right: 30px solid #8ec2f4;
 
@@ -202,7 +202,7 @@
   border: 0;
   width: 100%;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 // ******************** IMAGE BITS *************
@@ -222,13 +222,13 @@
   background:    -moz-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* FF3.6+ */
   background:     -ms-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* IE10 */
   background:      -o-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Opera 11.10+ */
-  background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
+  background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */
 
 }
 
 
 .bit.image .controls__icon-delete:hover {
-  background-color: lightcoral; 
+  background-color: lightcoral;
   color: white;
 }
 
@@ -296,16 +296,16 @@
 }
 
 .bit {
-  
+
   .success .success-mark {
     @include prefix((animation: passing-through 3s cubic-bezier(0.770, 0.000, 0.175, 1.000)));
   }
-  
+
   .error .error-mark {
     @include prefix((animation: slide-in 3s cubic-bezier(0.770, 0.000, 0.175, 1.000)));
     opacity: 1;
   }
-  
+
   .success-mark, .error-mark {
     display: block;
     position: absolute;
@@ -317,18 +317,18 @@
     margin-top: -1.5em;
     pointer-events: none;
   }
-  
+
   .success-mark svg, .error-mark svg {
     display: block;
     width: 3em;
     height: 3em;
   }
-  
+
   .processing .progress {
     @include prefix((transition: all 0.2s linear));
     opacity: 1;
   }
-  
+
   .complete .progress {
     @include prefix((transition: opacity 0.4s ease-in));
     opacity: 0;
@@ -353,7 +353,7 @@
     background: rgba(255, 255, 255, 0.9);
     border-radius: 0.5em;
     pointer-events: none;
-    
+
     .upload {
       @include prefix((transition: width 300ms ease-in-out));
       position: absolute;
@@ -392,7 +392,7 @@
     color: white;
     text-align: center;
     pointer-events: none;
-    
+
     &:after {
       position: absolute;
       content: '';
@@ -421,12 +421,12 @@
   background:    -moz-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* FF3.6+ */
   background:     -ms-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* IE10 */
   background:      -o-linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* Opera 11.10+ */
-  background:         linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* W3C */  
+  background:         linear-gradient(0deg, #fcc77d 10%, #fff279 110%); /* W3C */
 }
 
 
 .bit.webpage .controls__icon-delete:hover {
-  background-color: #fff279; 
+  background-color: #fff279;
   color: #caaf6d;
 }
 

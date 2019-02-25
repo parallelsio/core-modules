@@ -68,7 +68,7 @@ Template.sketchBit.onRendered(function () {
 
     if (sketchBit.isFocused()) {
       // remove the most recent stroke
-      sketchBit.ploma.setStrokes(_.dropRight(sketchBit.ploma.getStrokes()));
+      sketchBit.ploma.setStrokes(_.initial(sketchBit.ploma.getStrokes()));
       event.stopPropagation();
     }
   });
@@ -119,7 +119,8 @@ Template.sketchBit.onRendered(function () {
 
   mousetrap.bind('esc', function (event) {
     if (sketchBit.isFocused()) {
-      sketchBit.ploma.setStrokes(sketchBit.content);
+      //todo: need a better way persisting strokes to the database
+      // sketchBit.ploma.setStrokes(sketchBit.content);
       event.stopPropagation();
       Session.set('sketchBitEditingId', null);
     }
