@@ -1,7 +1,5 @@
 Template.map.onRendered(function () {
 
-  wireMojsExplore1();
-
   var template = this;
   var mapElement = template.find('.map');
   mapElement.style.minHeight = Session.get("mapHeight") + "px";

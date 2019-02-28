@@ -36,7 +36,6 @@ parallels-animation
 angelcabo:meteor-gsap
 parallels-canvas-manager
 practicalmeteor:loglevel
-fourseven:scss
 momentjs:moment
 raix:ui-dropped-event
 cwaring:modernizr
@@ -55,3 +54,4 @@ meteor-tool
 angelcabo:infinite-undo
 dynamic-import
 underscore
+fourseven:scss

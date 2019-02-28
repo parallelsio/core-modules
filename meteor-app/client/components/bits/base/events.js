@@ -114,14 +114,7 @@ Template.bit.events({
       direction: "forward"
     }
 
-    // skip a beat, then display the delete animation
-    // not just stylistic, added benefit of not overlapping with Greensock fade to decrease CPU use
-
-    Meteor.setTimeout(function(){
-      Parallels.Animation.General.poof(options);
-      }, 
-      325
-    );
+    
   }
 
 });

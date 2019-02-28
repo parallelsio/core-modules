@@ -117,21 +117,6 @@ Parallels.Keys = {
         // use bit center point as spark point for animation
         var bitRect = $bitElement[0].getClientRects()[0];
         var coords = Utilities.getElementCenter(bitRect);
-
-        var options = {
-          seedPoint: coords,
-          direction: "forward"
-        }
-
-        // skip a beat, then display the delete animation
-        // not just stylistic, added benefit of not overlapping with Greensock fade to decrease CPU use
-        // TODO: play reverse animation if undo.
-        Meteor.setTimeout(function(){
-          Parallels.Animation.General.poof(options);
-          }, 
-          325
-        );
-
       }
 
       else {

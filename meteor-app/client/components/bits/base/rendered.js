@@ -100,23 +100,6 @@ Template.bit.onRendered(function (){
 
     var $bit = Utilities.getSetBitElement(bit._id);
 
-    // Is this bit autorun a result of a bit redo after a delete?
-    // if so, play the poof animation backwards.
-    // TODO: janky, need a better way of pinpointing this scenario
-    // TODO: also, overlapping animations are cut off on redo.
-    var bitRect = $bit[0].getClientRects()[0];
-    if (bitRect){
-      // Use bit center point as spark point for animation
-      var coords = Utilities.getElementCenter(bitRect);
-      var options = {
-        seedPoint: coords,
-        direction: "backward",
-        speed: 1.5
-      }
-
-      Parallels.Animation.General.poof(options);
-    }
-
     // move the bit to it's new position on all other sessions/clients
     timeline.to($bitElement, 0, { x: bit.position.x, y: bit.position.y });
 
